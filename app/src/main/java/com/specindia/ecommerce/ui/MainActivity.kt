@@ -62,6 +62,5 @@ class MainActivity : AppCompatActivity() {
                 slideBack.start()
             }
         }
-
     }
 }
