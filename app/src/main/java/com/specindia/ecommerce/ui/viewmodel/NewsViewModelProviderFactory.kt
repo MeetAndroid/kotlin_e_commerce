@@ -3,7 +3,7 @@ package com.specindia.ecommerce.ui.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.specindia.ecommerce.repository.NewsRepository
-import com.specindia.ecommerce.ui.EcommerceApp
+import com.specindia.ecommerce.EcommerceApp
 
 class NewsViewModelProviderFactory(
     private val app: EcommerceApp,

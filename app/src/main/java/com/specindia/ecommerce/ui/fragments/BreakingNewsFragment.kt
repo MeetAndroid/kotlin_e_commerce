@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.specindia.ecommerce.databinding.FragmentBreakingNewsBinding
 import com.specindia.ecommerce.db.ArticleDatabase
 import com.specindia.ecommerce.repository.NewsRepository
-import com.specindia.ecommerce.ui.EcommerceApp
+import com.specindia.ecommerce.EcommerceApp
 import com.specindia.ecommerce.ui.adapters.NewsAdapter
 import com.specindia.ecommerce.ui.viewmodel.NewsViewModel
 import com.specindia.ecommerce.ui.viewmodel.NewsViewModelProviderFactory

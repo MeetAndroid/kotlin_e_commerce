@@ -6,7 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.specindia.ecommerce.R
 import com.specindia.ecommerce.models.NewsResponse
 import com.specindia.ecommerce.repository.NewsRepository
-import com.specindia.ecommerce.ui.EcommerceApp
+import com.specindia.ecommerce.EcommerceApp
 import com.specindia.ecommerce.util.Resource
 import com.specindia.ecommerce.util.isConnected
 import kotlinx.coroutines.delay

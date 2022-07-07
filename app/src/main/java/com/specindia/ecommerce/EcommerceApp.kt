@@ -1,4 +1,4 @@
-package com.specindia.ecommerce.ui
+package com.specindia.ecommerce
 
 import android.app.Application
 

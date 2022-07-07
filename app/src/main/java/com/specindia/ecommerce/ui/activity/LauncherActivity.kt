@@ -1,4 +1,4 @@
-package com.specindia.ecommerce.ui
+package com.specindia.ecommerce.ui.activity
 
 import android.animation.ObjectAnimator
 import android.os.Build
@@ -11,31 +11,30 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.animation.doOnEnd
 import androidx.core.splashscreen.SplashScreen
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
-import com.specindia.ecommerce.databinding.ActivityAuthBinding
-import java.util.*
-import kotlin.concurrent.schedule
+import com.specindia.ecommerce.databinding.ActivityLauncherBinding
+import com.specindia.ecommerce.util.startNewActivity
 
-class AuthActivity : AppCompatActivity() {
+class LauncherActivity : AppCompatActivity() {
     private val TAG = "Main Activity"
-//    private val networkMonitor = NetworkMonitorUtil(this)
+
+    //    private val networkMonitor = NetworkMonitorUtil(this)
     var contentHasLoaded = false
-    private lateinit var binding: ActivityAuthBinding
+    private lateinit var binding: ActivityLauncherBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        val splashScreen = installSplashScreen()
+        installSplashScreen()
         super.onCreate(savedInstanceState)
-        binding = ActivityAuthBinding.inflate(layoutInflater)
+        binding = ActivityLauncherBinding.inflate(layoutInflater)
 //        checkNetworkConnectivity()
         setContentView(binding.root)
         startLoadingContent()
-        setupSplashScreen(splashScreen)
+//        setupSplashScreen(splashScreen)
     }
 
     private fun startLoadingContent() {
         // For this example, the Timer delay represents awaiting a response from a network call
-        Timer().schedule(2000) {
-            contentHasLoaded = true
-        }
+        val activity = OnBoardingActivity::class.java
+        startNewActivity(activity)
     }
 
     private fun setupSplashScreen(splashScreen: SplashScreen) {
