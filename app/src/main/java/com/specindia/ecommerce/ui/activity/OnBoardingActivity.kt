@@ -25,7 +25,6 @@ class OnBoardingActivity : AppCompatActivity(), View.OnClickListener {
         setContentView(binding.root)
         setFullScreen()
         setUpViewPager()
-
     }
 
     private fun setFullScreen() {
