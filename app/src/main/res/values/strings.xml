@@ -15,4 +15,8 @@
     <string name="on_boarding_description_2">Real time tracking of your food on the app\nonce you place the order</string>
     <string name="on_boarding_description_3">Fast food delivery to your home. Office\nWhenever you are</string>
 
+    <string name="previous">Previous</string>
+    <string name="next">Next</string>
+    <string name="finish">Finish</string>
+
 </resources>

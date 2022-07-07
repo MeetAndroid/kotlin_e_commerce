@@ -2,16 +2,20 @@ package com.specindia.ecommerce.ui.activity
 
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
+import android.view.View
 import android.view.Window
 import android.view.WindowInsets
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
+import androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback
 import com.specindia.ecommerce.R
 import com.specindia.ecommerce.databinding.ActivityOnboardingBinding
 import com.specindia.ecommerce.ui.adapters.OnBoardingViewPagerAdapter
+import com.specindia.ecommerce.util.visible
 
 
-class OnBoardingActivity : AppCompatActivity() {
+class OnBoardingActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var binding: ActivityOnboardingBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -21,6 +25,7 @@ class OnBoardingActivity : AppCompatActivity() {
         setContentView(binding.root)
         setFullScreen()
         setUpViewPager()
+
     }
 
     private fun setFullScreen() {
@@ -37,8 +42,32 @@ class OnBoardingActivity : AppCompatActivity() {
 
     private fun setUpViewPager() {
         val adapter =
-            OnBoardingViewPagerAdapter(this@OnBoardingActivity,onBoardingContentList)
-        binding.viewPager.adapter = adapter
+            OnBoardingViewPagerAdapter(this@OnBoardingActivity, onBoardingContentList)
+        binding.apply {
+            viewPager.adapter = adapter
+
+            viewPager.registerOnPageChangeCallback(object : OnPageChangeCallback() {
+
+                override fun onPageSelected(position: Int) {
+                    super.onPageSelected(position)
+                    Log.d("Selected_Page", position.toString())
+                    if (position != 0) {
+                        binding.tvPrevious.visible(true)
+                    } else {
+                        binding.tvPrevious.visible(false)
+                    }
+
+                    if (position == 2) {
+                        binding.tvNext.text = getString(R.string.finish)
+                    } else {
+                        binding.tvNext.text = getString(R.string.next)
+                    }
+                }
+
+            })
+        }
+
+
     }
 
     data class OnBoardingData(val imageId: Int, val title: Int, val description: Int)
@@ -60,4 +89,19 @@ class OnBoardingActivity : AppCompatActivity() {
             R.string.on_boarding_description_3
         )
     )
+
+    private fun getItemOfViewPager(i: Int): Int {
+        return binding.viewPager.currentItem + i
+    }
+
+    override fun onClick(view: View?) {
+        when (view?.id) {
+            R.id.tvPrevious -> {
+                binding.viewPager.setCurrentItem(getItemOfViewPager(-1), true)
+            }
+            R.id.tvNext -> {
+                binding.viewPager.setCurrentItem(getItemOfViewPager(+1), true)
+            }
+        }
+    }
 }
