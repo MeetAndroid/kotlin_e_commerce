@@ -36,6 +36,6 @@ MVVM Architecture : Modal View ViewModel
 --
 - https://developer.android.com/topic/libraries/architecture/datastore?gclid=EAIaIQobChMIs6q566nh-AIVk5lmAh2ZlgXWEAAYASAAEgIo-vD_BwE&gclsrc=aw.ds
 
-Hilt : For dependency Injection
+9. Hilt : For dependency Injection
 --
 - https://developer.android.com/training/dependency-injection/hilt-android#kts
