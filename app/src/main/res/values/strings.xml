@@ -6,4 +6,13 @@
     <string name="message_wifi_connected">Wifi connected</string>
     <string name="message_cellular_connected">Cellular connected</string>
     <string name="message_no_internet_connection">No internet connection</string>
+
+    <string name="on_boarding_title_1">Find Food You Love</string>
+    <string name="on_boarding_title_2">Live Tracking</string>
+    <string name="on_boarding_title_3">Fast Delivery</string>
+
+    <string name="on_boarding_description_1">Discover the best foods from over 1,000\nrestaurants and fast delivery to your doorstep</string>
+    <string name="on_boarding_description_2">Real time tracking of your food on the app\nonce you place the order</string>
+    <string name="on_boarding_description_3">Fast food delivery to your home. Office\nWhenever you are</string>
+
 </resources>

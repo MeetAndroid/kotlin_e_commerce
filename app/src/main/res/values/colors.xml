@@ -46,4 +46,12 @@
     <color name="colorPrimary">#006837</color>
     <color name="colorPrimaryDark">#004012</color>
     <color name="colorAccent">#c75f00</color>
+
+    <color name="colorBlue">#09098A</color>
+
+    <color name="colorOnBoardingTitle">@color/colorBlue</color>
+    <color name="colorOnBoardingDescription">@color/black</color>
+    <color name="colorNextPreviousText">#FFC8171D</color>
+
+
 </resources>

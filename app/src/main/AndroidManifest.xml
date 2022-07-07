@@ -33,7 +33,7 @@
             android:name=".ui.activity.OnBoardingActivity"
             android:exported="true"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"
+            android:theme="@style/Theme.MaterialComponents.DayNight.NoActionBar"
             tools:ignore="LockedOrientationActivity" />
 
         <activity
