@@ -3,6 +3,7 @@ package com.specindia.ecommerce.ui
 import android.animation.ObjectAnimator
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.view.ViewTreeObserver
 import android.view.animation.DecelerateInterpolator
@@ -10,41 +11,29 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.animation.doOnEnd
 import androidx.core.splashscreen.SplashScreen
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
-import androidx.navigation.NavController
-import androidx.navigation.fragment.NavHostFragment
-import com.specindia.ecommerce.R
-import com.specindia.ecommerce.databinding.ActivityMainBinding
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
+import com.specindia.ecommerce.databinding.ActivityAuthBinding
 import java.util.*
 import kotlin.concurrent.schedule
 
-class MainActivity : AppCompatActivity() {
+class AuthActivity : AppCompatActivity() {
+    private val TAG = "Main Activity"
+//    private val networkMonitor = NetworkMonitorUtil(this)
     var contentHasLoaded = false
-    private lateinit var binding: ActivityMainBinding
+    private lateinit var binding: ActivityAuthBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         val splashScreen = installSplashScreen()
         super.onCreate(savedInstanceState)
-        binding = ActivityMainBinding.inflate(layoutInflater)
+        binding = ActivityAuthBinding.inflate(layoutInflater)
+//        checkNetworkConnectivity()
         setContentView(binding.root)
         startLoadingContent()
         setupSplashScreen(splashScreen)
-        loadNewsFragment()
-    }
-
-    private fun loadNewsFragment() {
-        val navHostFragment =
-            supportFragmentManager.findFragmentById(R.id.news_container_view) as NavHostFragment
-        val navController = navHostFragment.navController
-
     }
 
     private fun startLoadingContent() {
         // For this example, the Timer delay represents awaiting a response from a network call
-        Timer().schedule(3000) {
+        Timer().schedule(2000) {
             contentHasLoaded = true
         }
     }
@@ -56,6 +45,7 @@ class MainActivity : AppCompatActivity() {
                 object : ViewTreeObserver.OnPreDrawListener {
                     override fun onPreDraw(): Boolean {
                         return if (contentHasLoaded) {
+                            Log.d(TAG, "onPreDraw called...")
                             content.viewTreeObserver.removeOnPreDrawListener(this)
                             true
                         } else false
@@ -73,13 +63,49 @@ class MainActivity : AppCompatActivity() {
                     interpolator = DecelerateInterpolator()
                     duration = 800L
                     doOnEnd {
+                        Log.d(TAG, "Exit Animation End called...")
                         splashScreenView.remove()
+
                     }
                 }
                 slideBack.start()
             }
         }
-
-
     }
+
+    // -------------- Checking Network State
+//    private fun checkNetworkConnectivity() {
+//        networkMonitor.result = { isAvailable, type ->
+//            CoroutineScope(Dispatchers.Main).launch {
+//                when (isAvailable) {
+//                    true -> {
+//                        when (type) {
+//                            ConnectionType.Wifi -> {
+//                                //Toast.makeText(applicationContext,getString(R.string.message_wifi_connected),Toast.LENGTH_SHORT).show()
+//                            }
+//                            ConnectionType.Cellular -> {
+//                                //Toast.makeText(applicationContext,getString(R.string.message_cellular_connected),Toast.LENGTH_SHORT).show()
+//                            }
+//                            else -> {}
+//                        }
+//                    }
+//                    false -> {
+//                        //Toast.makeText(applicationContext,getString(R.string.message_no_internet_connection),Toast.LENGTH_SHORT).show()
+//                    }
+//                }
+//            }
+//        }
+//    }
+
+    // Register Network Monitor
+//    override fun onResume() {
+//        super.onResume()
+//        networkMonitor.register()
+//    }
+
+    // Unregister Network Monitor
+//    override fun onStop() {
+//        super.onStop()
+//        networkMonitor.unregister()
+//    }
 }

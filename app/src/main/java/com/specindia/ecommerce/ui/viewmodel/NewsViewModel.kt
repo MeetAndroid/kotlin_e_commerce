@@ -3,12 +3,12 @@ package com.specindia.ecommerce.ui.viewmodel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.bumptech.glide.util.Util
+import com.specindia.ecommerce.R
 import com.specindia.ecommerce.models.NewsResponse
 import com.specindia.ecommerce.repository.NewsRepository
 import com.specindia.ecommerce.ui.EcommerceApp
-import com.specindia.ecommerce.util.NetworkConnectionCheck
 import com.specindia.ecommerce.util.Resource
+import com.specindia.ecommerce.util.isConnected
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import retrofit2.Response
@@ -31,11 +31,11 @@ class NewsViewModel(
     fun getBreakingNews(countryCode: String) = viewModelScope.launch {
         breakingNews.postValue(Resource.Loading())
 
-        if (NetworkConnectionCheck.isInternetAvailable(app)) {
+        if (app.isConnected) {
             val response = newsRepository.getBreakingNews(countryCode, breakingNewsPage)
             breakingNews.postValue(handleBreakingNewsResponse(response))
         } else {
-            breakingNews.postValue(Resource.Error("No internet connection"))
+            breakingNews.postValue(Resource.Error(app.getString(R.string.message_no_internet_connection)))
         }
     }
 

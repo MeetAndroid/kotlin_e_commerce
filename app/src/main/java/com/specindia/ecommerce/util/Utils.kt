@@ -4,13 +4,11 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.net.ConnectivityManager
-import android.net.NetworkCapabilities
-import android.net.NetworkCapabilities.*
+import android.net.NetworkCapabilities.TRANSPORT_CELLULAR
+import android.net.NetworkCapabilities.TRANSPORT_WIFI
 import android.os.Build
 import android.view.View
 import com.google.android.material.snackbar.Snackbar
-import com.specindia.ecommerce.ui.EcommerceApp
-import dagger.hilt.android.internal.Contexts.getApplication
 
 fun <A : Activity> Activity.startNewActivity(activity: Class<A>) {
     Intent(this, activity).also {
@@ -43,32 +41,26 @@ fun Activity.snack(message: String) {
         .show()
 }
 
-object NetworkConnectionCheck{
-    fun isInternetAvailable(context: Context): Boolean {
-        var result = false
-        val cm = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager?
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            cm?.run {
-                cm.getNetworkCapabilities(cm.activeNetwork)?.run {
-                    result = when {
-                        hasTransport(TRANSPORT_WIFI) -> true
-                        hasTransport(TRANSPORT_CELLULAR) -> true
-                        hasTransport(TRANSPORT_ETHERNET) -> true
-                        else -> false
-                    }
+
+val Context.isConnected: Boolean
+    get() {
+        val connectivityManager =
+            this.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        return when {
+            Build.VERSION.SDK_INT >= Build.VERSION_CODES.M -> {
+                val nw = connectivityManager.activeNetwork ?: return false
+                val actNw = connectivityManager.getNetworkCapabilities(nw) ?: return false
+                when {
+                    actNw.hasTransport(TRANSPORT_WIFI) -> true
+                    actNw.hasTransport(TRANSPORT_CELLULAR) -> true
+                    else -> false
                 }
             }
-        } else {
-            cm?.run {
-                cm.activeNetworkInfo?.run {
-                    if (type == ConnectivityManager.TYPE_WIFI) {
-                        result = true
-                    } else if (type == ConnectivityManager.TYPE_MOBILE) {
-                        result = true
-                    }
-                }
+            else -> {
+                // Use depreciated methods only on older devices
+                val nwInfo = connectivityManager.activeNetworkInfo ?: return false
+                nwInfo.isConnected
             }
         }
-        return result
     }
-}
+

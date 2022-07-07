@@ -63,6 +63,7 @@ dependencies {
     def glideVersion = "4.13.2"
     def dataStoreVersion ="1.0.0"
     def hiltVersion ="2.38.1"
+    def brManagerVersion = "1.1.0"
 
     // Splash API to support Android 12 and higher devices
     implementation "androidx.core:core-splashscreen:$splashApiVersion"
@@ -107,6 +108,7 @@ dependencies {
     implementation "com.google.dagger:hilt-android:$hiltVersion"
     kapt "com.google.dagger:hilt-android-compiler:$hiltVersion"
 
+    implementation "androidx.localbroadcastmanager:localbroadcastmanager:$brManagerVersion"
 
     implementation 'androidx.core:core-ktx:1.8.0'
     implementation 'androidx.appcompat:appcompat:1.4.2'

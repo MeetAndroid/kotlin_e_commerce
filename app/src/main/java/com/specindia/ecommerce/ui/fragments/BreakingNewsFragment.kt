@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AbsListView
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -81,9 +80,6 @@ class BreakingNewsFragment : Fragment() {
                     hideProgressBar()
                     response.message?.let { message ->
                         requireActivity().snack(message)
-                        //Toast.makeText(activity?.applicationContext,message,Toast.LENGTH_LONG).show()
-                        Log.e(TAG, "An error occurred: $message")
-
                     }
                 }
                 is Resource.Loading -> {
@@ -136,4 +132,5 @@ class BreakingNewsFragment : Fragment() {
     private fun showProgressBar() {
         binding.paginationProgressBar.visibility = View.VISIBLE
     }
+
 }

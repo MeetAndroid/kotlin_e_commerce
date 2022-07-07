@@ -6,11 +6,13 @@
         <entry key="..\:/EcommerceApp/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.1" />
         <entry key="..\:/EcommerceApp/app/src/main/res/drawable/anim_brush.xml" value="0.116" />
         <entry key="..\:/EcommerceApp/app/src/main/res/drawable/splash_branding_image.xml" value="0.138" />
+        <entry key="..\:/EcommerceApp/app/src/main/res/layout/activity_auth.xml" value="0.1609375" />
         <entry key="..\:/EcommerceApp/app/src/main/res/layout/activity_main.xml" value="0.20416666666666666" />
         <entry key="..\:/EcommerceApp/app/src/main/res/layout/fragment_blank.xml" value="0.20416666666666666" />
         <entry key="..\:/EcommerceApp/app/src/main/res/layout/fragment_breaking_news.xml" value="0.18854166666666666" />
         <entry key="..\:/EcommerceApp/app/src/main/res/layout/row_breaking_news.xml" value="0.20416666666666666" />
         <entry key="..\:/EcommerceApp/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.1735" />
+        <entry key="..\:/EcommerceApp/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.181" />
       </map>
     </option>
   </component>

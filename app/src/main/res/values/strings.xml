@@ -3,4 +3,7 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="blank_fragment">Blank Fragment</string>
+    <string name="message_wifi_connected">Wifi connected</string>
+    <string name="message_cellular_connected">Cellular connected</string>
+    <string name="message_no_internet_connection">No internet connection</string>
 </resources>
