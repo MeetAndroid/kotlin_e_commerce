@@ -39,7 +39,6 @@
             android:name=".ui.activity.AuthActivity"
             android:exported="true"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"
             tools:ignore="LockedOrientationActivity" />
         <activity
             android:name=".ui.activity.HomeActivity"
