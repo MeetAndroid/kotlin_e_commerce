@@ -66,8 +66,8 @@ class OnBoardingActivity : AppCompatActivity() {
             OnBoardingViewPagerAdapter(this@OnBoardingActivity, onBoardingContentList)
         binding.apply {
             viewPager.adapter = adapter
-            binding.indicatorView.setIndicatorStyle(IndicatorStyle.ROUND_RECT)
-            binding.indicatorView.setupWithViewPager(viewPager)
+            indicatorView.setIndicatorStyle(IndicatorStyle.ROUND_RECT)
+            indicatorView.setupWithViewPager(viewPager)
 
             viewPager.registerOnPageChangeCallback(object : OnPageChangeCallback() {
 
@@ -75,17 +75,17 @@ class OnBoardingActivity : AppCompatActivity() {
                     super.onPageSelected(position)
                     Log.d("Selected_Page", position.toString())
                     if (position != 0) {
-                        binding.tvPrevious.visible(true)
+                        tvPrevious.visible(true)
                     } else {
-                        binding.tvPrevious.visible(false)
+                        tvPrevious.visible(false)
                     }
 
                     if (position == 2) {
-                        binding.tvNext.text = getString(R.string.finish)
+                        tvNext.text = getString(R.string.finish)
                         hasFinishClicked = true
 
                     } else {
-                        binding.tvNext.text = getString(R.string.next)
+                        tvNext.text = getString(R.string.next)
                     }
                 }
 

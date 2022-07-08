@@ -3,37 +3,10 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/EcommerceApp/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.1" />
-        <entry key="..\:/EcommerceApp/app/src/main/res/drawable/anim_brush.xml" value="0.116" />
-        <entry key="..\:/EcommerceApp/app/src/main/res/drawable/bg_on_boarding.xml" value="0.1495" />
-        <entry key="..\:/EcommerceApp/app/src/main/res/drawable/ic_android_black_24dp.xml" value="0.156" />
-        <entry key="..\:/EcommerceApp/app/src/main/res/drawable/ic_android_white_24dp.xml" value="0.156" />
-        <entry key="..\:/EcommerceApp/app/src/main/res/drawable/ic_baseline_baby_changing_station_108.xml" value="0.156" />
-        <entry key="..\:/EcommerceApp/app/src/main/res/drawable/ic_baseline_baby_changing_station_24.xml" value="0.156" />
-        <entry key="..\:/EcommerceApp/app/src/main/res/drawable/ic_baseline_eco_24.xml" value="0.156" />
-        <entry key="..\:/EcommerceApp/app/src/main/res/drawable/ic_launcher_background.xml" value="0.156" />
-        <entry key="..\:/EcommerceApp/app/src/main/res/drawable/ic_logo.xml" value="0.126" />
-        <entry key="..\:/EcommerceApp/app/src/main/res/drawable/img_red_filled_rectangle.xml" value="0.1495" />
-        <entry key="..\:/EcommerceApp/app/src/main/res/drawable/splash_branding_image.xml" value="0.138" />
-        <entry key="..\:/EcommerceApp/app/src/main/res/layout/activity_auth.xml" value="0.20416666666666666" />
-        <entry key="..\:/EcommerceApp/app/src/main/res/layout/activity_home.xml" value="0.1" />
-        <entry key="..\:/EcommerceApp/app/src/main/res/layout/activity_launcher.xml" value="0.20416666666666666" />
-        <entry key="..\:/EcommerceApp/app/src/main/res/layout/activity_main.xml" value="0.20416666666666666" />
-        <entry key="..\:/EcommerceApp/app/src/main/res/layout/activity_onboarding.xml" value="0.20416666666666666" />
-        <entry key="..\:/EcommerceApp/app/src/main/res/layout/fragment_auth.xml" value="0.1578125" />
         <entry key="..\:/EcommerceApp/app/src/main/res/layout/fragment_blank.xml" value="0.20416666666666666" />
+        <entry key="..\:/GitProject/kotlin_e_commerce/app/src/main/res/layout/activity_auth.xml" value="0.27291666666666664" />
         <entry key="..\:/GitProject/kotlin_e_commerce/app/src/main/res/layout/activity_onboarding.xml" value="0.1" />
         <entry key="..\:/GitProject/kotlin_e_commerce/app/src/main/res/layout/row_on_boarding_item.xml" value="0.2462962962962963" />
-        <entry key="..\:/EcommerceApp/app/src/main/res/layout/fragment_breaking_news.xml" value="0.18854166666666666" />
-        <entry key="..\:/EcommerceApp/app/src/main/res/layout/fragment_forgot_password.xml" value="0.151268115942029" />
-        <entry key="..\:/EcommerceApp/app/src/main/res/layout/fragment_home.xml" value="0.151268115942029" />
-        <entry key="..\:/EcommerceApp/app/src/main/res/layout/fragment_login.xml" value="0.13432835820895522" />
-        <entry key="..\:/EcommerceApp/app/src/main/res/layout/fragment_on_boarding.xml" value="0.20416666666666666" />
-        <entry key="..\:/EcommerceApp/app/src/main/res/layout/fragment_registration.xml" value="0.151268115942029" />
-        <entry key="..\:/EcommerceApp/app/src/main/res/layout/row_breaking_news.xml" value="0.20416666666666666" />
-        <entry key="..\:/EcommerceApp/app/src/main/res/layout/row_on_boarding_item.xml" value="0.20416666666666666" />
-        <entry key="..\:/EcommerceApp/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.1735" />
-        <entry key="..\:/EcommerceApp/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.181" />
       </map>
     </option>
   </component>
