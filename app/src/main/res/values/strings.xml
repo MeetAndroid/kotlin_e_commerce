@@ -18,5 +18,8 @@
     <string name="previous">Previous</string>
     <string name="next">Next</string>
     <string name="finish">Finish</string>
+    <string name="login_fragment">Login Fragment</string>
+    <string name="registration_fragment">Registration Fragment</string>
+    <string name="forgot_password">Forgot Password</string>
 
 </resources>

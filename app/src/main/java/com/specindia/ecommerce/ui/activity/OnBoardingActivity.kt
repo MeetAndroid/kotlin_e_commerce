@@ -3,7 +3,6 @@ package com.specindia.ecommerce.ui.activity
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
-import android.view.View
 import android.view.WindowInsets
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
@@ -11,12 +10,35 @@ import androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback
 import com.specindia.ecommerce.R
 import com.specindia.ecommerce.databinding.ActivityOnboardingBinding
 import com.specindia.ecommerce.ui.adapters.OnBoardingViewPagerAdapter
+import com.specindia.ecommerce.util.startNewActivity
 import com.specindia.ecommerce.util.visible
 import com.zhpan.indicator.enums.IndicatorStyle
 
 
-class OnBoardingActivity : AppCompatActivity(), View.OnClickListener {
+class OnBoardingActivity : AppCompatActivity() {
     private lateinit var binding: ActivityOnboardingBinding
+    private var hasFinishClicked: Boolean = false
+
+    data class OnBoardingData(val imageId: Int, val title: Int, val description: Int)
+
+
+    private val onBoardingContentList = listOf(
+        OnBoardingData(
+            R.drawable.ic_find_food_you_love,
+            R.string.on_boarding_title_1,
+            R.string.on_boarding_description_1
+        ),
+        OnBoardingData(
+            R.drawable.ic_fast_delivery,
+            R.string.on_boarding_title_2,
+            R.string.on_boarding_description_2
+        ),
+        OnBoardingData(
+            R.drawable.ic_find_food_you_love,
+            R.string.on_boarding_title_3,
+            R.string.on_boarding_description_3
+        )
+    )
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,6 +46,7 @@ class OnBoardingActivity : AppCompatActivity(), View.OnClickListener {
         setContentView(binding.root)
 //        setFullScreen()
         setUpViewPager()
+        setNextPreviousClick()
     }
 
     private fun setFullScreen() {
@@ -59,6 +82,8 @@ class OnBoardingActivity : AppCompatActivity(), View.OnClickListener {
 
                     if (position == 2) {
                         binding.tvNext.text = getString(R.string.finish)
+                        hasFinishClicked = true
+
                     } else {
                         binding.tvNext.text = getString(R.string.next)
                     }
@@ -67,41 +92,27 @@ class OnBoardingActivity : AppCompatActivity(), View.OnClickListener {
             })
         }
 
-
     }
 
-    data class OnBoardingData(val imageId: Int, val title: Int, val description: Int)
+    private fun setNextPreviousClick() {
+        binding.apply {
+            tvPrevious.setOnClickListener {
+                viewPager.setCurrentItem(getItemOfViewPager(-1), true)
+            }
 
-    private val onBoardingContentList = listOf(
-        OnBoardingData(
-            R.drawable.ic_find_food_you_love,
-            R.string.on_boarding_title_1,
-            R.string.on_boarding_description_1
-        ),
-        OnBoardingData(
-            R.drawable.ic_fast_delivery,
-            R.string.on_boarding_title_2,
-            R.string.on_boarding_description_2
-        ),
-        OnBoardingData(
-            R.drawable.ic_find_food_you_love,
-            R.string.on_boarding_title_3,
-            R.string.on_boarding_description_3
-        )
-    )
+            tvNext.setOnClickListener {
+                if (hasFinishClicked) {
+                    startNewActivity(AuthActivity::class.java)
+                } else {
+                    viewPager.setCurrentItem(getItemOfViewPager(+1), true)
+                }
+
+            }
+        }
+    }
 
     private fun getItemOfViewPager(i: Int): Int {
         return binding.viewPager.currentItem + i
     }
 
-    override fun onClick(view: View?) {
-        when (view?.id) {
-            R.id.tvPrevious -> {
-                binding.viewPager.setCurrentItem(getItemOfViewPager(-1), true)
-            }
-            R.id.tvNext -> {
-                binding.viewPager.setCurrentItem(getItemOfViewPager(+1), true)
-            }
-        }
-    }
 }
