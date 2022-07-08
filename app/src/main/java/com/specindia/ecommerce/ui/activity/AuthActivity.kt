@@ -7,7 +7,7 @@ import android.view.WindowInsets
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import com.specindia.ecommerce.databinding.ActivityAuthBinding
-import com.specindia.ecommerce.util.startNewActivity
+import kotlinx.android.synthetic.main.fragment_auth.*
 
 class AuthActivity : AppCompatActivity() {
     private val TAG = "Auth Activity"
@@ -18,6 +18,7 @@ class AuthActivity : AppCompatActivity() {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         binding = ActivityAuthBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
         @Suppress("DEPRECATION")
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
             window.insetsController?.hide(WindowInsets.Type.statusBars())
@@ -27,11 +28,5 @@ class AuthActivity : AppCompatActivity() {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN
             )
         }
-
-        binding.btnLogin.setOnClickListener {
-            startNewActivity(HomeActivity::class.java)
-        }
-
     }
-
 }

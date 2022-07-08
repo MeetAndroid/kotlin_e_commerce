@@ -6,18 +6,17 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
-import com.specindia.ecommerce.R
-import com.specindia.ecommerce.databinding.FragmentAuthBinding
+import com.specindia.ecommerce.databinding.FragmentRegistrationBinding
 
-class AuthFragment : Fragment() {
-    private lateinit var binding: FragmentAuthBinding
+class RegistrationFragment : Fragment() {
 
+    private lateinit var binding: FragmentRegistrationBinding
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
+        inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentAuthBinding.inflate(layoutInflater)
+        binding = FragmentRegistrationBinding.inflate(layoutInflater)
+
         return binding.root
     }
 
@@ -28,12 +27,13 @@ class AuthFragment : Fragment() {
 
     private fun setUpButtonClick(view: View) {
         binding.apply {
-            btnLogin.setOnClickListener {
-                view.findNavController().navigate(R.id.action_authFragment_to_loginFragment)
-            }
             btnRegister.setOnClickListener {
-                view.findNavController().navigate(R.id.action_authFragment_to_registrationFragment)
+                view.findNavController().popBackStack()
+            }
+            btnLogin.setOnClickListener {
+                view.findNavController().popBackStack()
             }
         }
     }
+
 }

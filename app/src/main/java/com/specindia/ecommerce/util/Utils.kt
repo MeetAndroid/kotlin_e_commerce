@@ -8,7 +8,11 @@ import android.net.NetworkCapabilities.TRANSPORT_CELLULAR
 import android.net.NetworkCapabilities.TRANSPORT_WIFI
 import android.os.Build
 import android.view.View
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import com.google.android.material.snackbar.Snackbar
+import com.specindia.ecommerce.ui.activity.HomeActivity
+import kotlinx.coroutines.launch
 
 fun <A : Activity> Activity.startNewActivity(activity: Class<A>) {
     Intent(this, activity).also {
@@ -41,6 +45,11 @@ fun Activity.snack(message: String) {
         .show()
 }
 
+fun Fragment.logout() = lifecycleScope.launch {
+    if (activity is HomeActivity) {
+        (activity as HomeActivity).performLogout()
+    }
+}
 
 val Context.isConnected: Boolean
     get() {
