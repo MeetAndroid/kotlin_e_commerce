@@ -29,12 +29,12 @@ class OnBoardingActivity : AppCompatActivity() {
             R.string.on_boarding_description_1
         ),
         OnBoardingData(
-            R.drawable.ic_fast_delivery,
+            R.drawable.ic_live_tracking,
             R.string.on_boarding_title_2,
             R.string.on_boarding_description_2
         ),
         OnBoardingData(
-            R.drawable.ic_find_food_you_love,
+            R.drawable.ic_delivery_vector,
             R.string.on_boarding_title_3,
             R.string.on_boarding_description_3
         )
