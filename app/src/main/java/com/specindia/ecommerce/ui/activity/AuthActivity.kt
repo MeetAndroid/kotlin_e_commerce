@@ -18,6 +18,7 @@ class AuthActivity : AppCompatActivity() {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         binding = ActivityAuthBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
         @Suppress("DEPRECATION")
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
             window.insetsController?.hide(WindowInsets.Type.statusBars())
