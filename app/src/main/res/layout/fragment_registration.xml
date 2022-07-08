@@ -4,32 +4,39 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/blue6"
     tools:context=".ui.fragments.RegistrationFragment">
 
-    <!-- Welcome Text -->
-    <TextView
-        android:id="@+id/tvWelcome"
+    <View
+        android:id="@+id/topView"
         android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="@color/activeIndicator"
+        app:layout_constraintBottom_toBottomOf="@id/centerGuideLine"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+    <!-- Welcome Text -->
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvWelcome"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingStart="16dp"
-        android:paddingTop="16dp"
-        android:paddingEnd="0dp"
+        android:layout_marginStart="24dp"
+        android:fontFamily="@font/roboto_bold"
+        android:paddingTop="24dp"
         android:text="@string/welcome_to_food_app"
-        android:textAppearance="@style/TextAppearance.AppCompat.Display2"
+        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
         android:textColor="@color/white"
-        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <!-- Welcome Description -->
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tvWelcomeDescription"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:paddingStart="16dp"
-        android:paddingTop="16dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="20dp"
+        android:fontFamily="@font/roboto_medium"
         android:paddingEnd="0dp"
         android:text="@string/your_favorite_foods_delivered_fast_at_your_doors"
         android:textAppearance="@style/TextAppearance.AppCompat.Headline"
@@ -38,7 +45,7 @@
         app:layout_constraintTop_toBottomOf="@id/tvWelcome" />
 
     <!-- Food Image -->
-    <ImageView
+    <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/ivFoodPlate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -58,6 +65,7 @@
         app:layout_constraintGuide_percent="0.5" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/clWithUs"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
@@ -67,71 +75,143 @@
         <View
             android:id="@+id/viewLeft"
             android:layout_width="100dp"
-            android:layout_height="20dp"
-            android:background="@color/black"
-            app:layout_constraintEnd_toStartOf="@+id/tvSignWithUs"
-            app:layout_constraintHorizontal_bias="0.5"
+            android:layout_height="2dp"
+            android:background="@color/colorOnBoardingTitle"
+            app:layout_constraintBottom_toBottomOf="@id/tvSignWithUs"
+            app:layout_constraintEnd_toStartOf="@id/tvSignWithUs"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@id/tvSignWithUs"
-         />
+            app:layout_constraintTop_toTopOf="@id/tvSignWithUs" />
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvSignWithUs"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/roboto_bold"
             android:gravity="center"
             android:text="@string/sign_with_us"
-            android:textAppearance="@style/TextAppearance.AppCompat.Large"
-            android:textColor="@color/colorBlue"
-            android:textStyle="bold"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:textColor="@color/colorOnBoardingTitle"
             app:layout_constraintEnd_toStartOf="@+id/viewRight"
-            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/viewLeft"
-            app:layout_constraintTop_toTopOf="@+id/viewLeft" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <View
             android:id="@+id/viewRight"
             android:layout_width="100dp"
-            android:layout_height="20dp"
-            android:background="@color/black"
+            android:layout_height="2dp"
+            android:background="@color/colorOnBoardingTitle"
             app:layout_constraintBottom_toBottomOf="@id/tvSignWithUs"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/tvSignWithUs" />
+            app:layout_constraintStart_toEndOf="@+id/tvSignWithUs"
+            app:layout_constraintTop_toTopOf="@id/tvSignWithUs" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnFacebook"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_button_signup"
+        android:drawableStart="@drawable/ic_fb"
+        android:drawablePadding="10dp"
+        android:fontFamily="@font/roboto_medium"
+        android:paddingStart="16dp"
+        android:paddingTop="8dp"
+        android:paddingEnd="16dp"
+        android:paddingBottom="8dp"
+        android:text="@string/facebook"
+        android:textAllCaps="true"
+        android:textColor="@color/colorOnBoardingTitle"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@id/btnRegister"
+        app:layout_constraintEnd_toStartOf="@+id/btnGooglePlus"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/clWithUs" />
 
-    <!--    <TextView-->
-    <!--        android:id="@+id/textView"-->
-    <!--        android:layout_width="wrap_content"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:layout_marginTop="48dp"-->
-    <!--        android:text="@string/registration_fragment"-->
-    <!--        android:textColor="@color/colorAccent"-->
-    <!--        android:textSize="24sp"-->
-    <!--        android:textStyle="bold"-->
-    <!--        app:layout_constraintEnd_toEndOf="parent"-->
-    <!--        app:layout_constraintStart_toStartOf="parent"-->
-    <!--        app:layout_constraintTop_toTopOf="parent" />-->
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnGooglePlus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_button_signup"
+        android:drawableStart="@drawable/ic_gplus"
+        android:drawablePadding="20dp"
+        android:fontFamily="@font/roboto_medium"
+        android:paddingStart="16dp"
+        android:paddingTop="8dp"
+        android:paddingEnd="16dp"
+        android:paddingBottom="8dp"
+        android:text="@string/google"
+        android:textAllCaps="true"
+        android:textColor="@color/colorOnBoardingTitle"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@id/btnRegister"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/btnFacebook"
+        app:layout_constraintTop_toBottomOf="@id/clWithUs" />
 
-    <!--    <Button-->
-    <!--        android:id="@+id/btnRegister"-->
-    <!--        android:layout_width="wrap_content"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:layout_marginTop="48dp"-->
-    <!--        android:text="Register"-->
-    <!--        app:layout_constraintEnd_toEndOf="parent"-->
-    <!--        app:layout_constraintStart_toStartOf="parent"-->
-    <!--        app:layout_constraintTop_toBottomOf="@+id/textView" />-->
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnRegister"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="30dp"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/bg_button_signup"
+        android:fontFamily="@font/roboto_regular"
+        android:paddingVertical="10dp"
+        android:text="@string/start_with_email_or_phone"
+        android:textAllCaps="false"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textColor="@color/colorBlue"
+        app:layout_constraintBottom_toTopOf="@id/tvAlreadyHaveAnAccount"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
-    <!--    <Button-->
-    <!--        android:id="@+id/btnLogin"-->
-    <!--        android:layout_width="wrap_content"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:layout_marginTop="48dp"-->
-    <!--        android:text="Login"-->
-    <!--        app:layout_constraintEnd_toEndOf="parent"-->
-    <!--        app:layout_constraintStart_toStartOf="parent"-->
-    <!--        app:layout_constraintTop_toBottomOf="@+id/btnRegister" />-->
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvAlreadyHaveAnAccount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:fontFamily="@font/roboto_medium"
+        android:gravity="center"
+        android:text="@string/already_have_an_account_login"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+
+    <!--        <TextView-->
+    <!--            android:id="@+id/textView"-->
+    <!--            android:layout_width="wrap_content"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:layout_marginTop="48dp"-->
+    <!--            android:text="@string/registration_fragment"-->
+    <!--            android:textColor="@color/colorAccent"-->
+    <!--            android:textSize="24sp"-->
+    <!--            android:textStyle="bold"-->
+    <!--            app:layout_constraintEnd_toEndOf="parent"-->
+    <!--            app:layout_constraintStart_toStartOf="parent"-->
+    <!--            app:layout_constraintTop_toTopOf="parent" />-->
+
+    <!--        <Button-->
+    <!--            android:id="@+id/btnRegister"-->
+    <!--            android:layout_width="wrap_content"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:layout_marginTop="48dp"-->
+    <!--            android:text="Register"-->
+    <!--            app:layout_constraintEnd_toEndOf="parent"-->
+    <!--            app:layout_constraintStart_toStartOf="parent"-->
+    <!--            app:layout_constraintTop_toBottomOf="@+id/textView" />-->
+
+    <!--        <Button-->
+    <!--            android:id="@+id/btnLogin"-->
+    <!--            android:layout_width="wrap_content"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:layout_marginTop="48dp"-->
+    <!--            android:text="Login"-->
+    <!--            app:layout_constraintEnd_toEndOf="parent"-->
+    <!--            app:layout_constraintStart_toStartOf="parent"-->
+    <!--            app:layout_constraintTop_toBottomOf="@+id/btnRegister" />-->
 </androidx.constraintlayout.widget.ConstraintLayout>
