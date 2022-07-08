@@ -112,7 +112,7 @@ dependencies {
     implementation "androidx.localbroadcastmanager:localbroadcastmanager:$brManagerVersion"
 
     //on boarding indicator
-    implementation 'com.github.zhpanvip:viewpagerindicator:1.2.1'
+    implementation "com.github.zhpanvip:viewpagerindicator:$indicator"
 
     implementation 'androidx.core:core-ktx:1.8.0'
     implementation 'androidx.appcompat:appcompat:1.4.2'

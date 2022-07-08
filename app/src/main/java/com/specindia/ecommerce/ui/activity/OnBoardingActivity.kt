@@ -5,22 +5,24 @@ import android.os.Bundle
 import android.util.Log
 import android.view.WindowInsets
 import android.view.WindowManager
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback
 import com.specindia.ecommerce.R
 import com.specindia.ecommerce.databinding.ActivityOnboardingBinding
 import com.specindia.ecommerce.ui.adapters.OnBoardingViewPagerAdapter
+import com.specindia.ecommerce.ui.viewmodel.DataViewModel
 import com.specindia.ecommerce.util.startNewActivity
 import com.specindia.ecommerce.util.visible
 import com.zhpan.indicator.enums.IndicatorStyle
+import dagger.hilt.android.AndroidEntryPoint
 
-
+@AndroidEntryPoint
 class OnBoardingActivity : AppCompatActivity() {
     private lateinit var binding: ActivityOnboardingBinding
-    private var hasFinishClicked: Boolean = false
+    private val viewModel by viewModels<DataViewModel>()
 
     data class OnBoardingData(val imageId: Int, val title: Int, val description: Int)
-
 
     private val onBoardingContentList = listOf(
         OnBoardingData(
@@ -82,7 +84,6 @@ class OnBoardingActivity : AppCompatActivity() {
 
                     if (position == 2) {
                         tvNext.text = getString(R.string.finish)
-                        hasFinishClicked = true
 
                     } else {
                         tvNext.text = getString(R.string.next)
@@ -101,9 +102,11 @@ class OnBoardingActivity : AppCompatActivity() {
             }
 
             tvNext.setOnClickListener {
-                if (hasFinishClicked) {
+                if (tvNext.text.equals(getString(R.string.finish))) {
+                    viewModel.saveIsFirstTime(true)
                     startNewActivity(AuthActivity::class.java)
                 } else {
+                    viewModel.saveIsFirstTime(false)
                     viewPager.setCurrentItem(getItemOfViewPager(+1), true)
                 }
 

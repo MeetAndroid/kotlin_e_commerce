@@ -1,9 +1,7 @@
 package com.specindia.ecommerce
 
 import android.app.Application
+import dagger.hilt.android.HiltAndroidApp
 
-class EcommerceApp:Application() {
-    override fun onCreate() {
-        super.onCreate()
-    }
-}
+@HiltAndroidApp
+class EcommerceApp:Application()

@@ -7,8 +7,9 @@ import android.view.WindowInsets
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import com.specindia.ecommerce.databinding.ActivityAuthBinding
-import kotlinx.android.synthetic.main.fragment_auth.*
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class AuthActivity : AppCompatActivity() {
     private val TAG = "Auth Activity"
     private lateinit var binding: ActivityAuthBinding
