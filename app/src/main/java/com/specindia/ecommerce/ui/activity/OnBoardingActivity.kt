@@ -4,7 +4,6 @@ import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.view.Window
 import android.view.WindowInsets
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
@@ -13,6 +12,7 @@ import com.specindia.ecommerce.R
 import com.specindia.ecommerce.databinding.ActivityOnboardingBinding
 import com.specindia.ecommerce.ui.adapters.OnBoardingViewPagerAdapter
 import com.specindia.ecommerce.util.visible
+import com.zhpan.indicator.enums.IndicatorStyle
 
 
 class OnBoardingActivity : AppCompatActivity(), View.OnClickListener {
@@ -20,10 +20,9 @@ class OnBoardingActivity : AppCompatActivity(), View.OnClickListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        requestWindowFeature(Window.FEATURE_NO_TITLE)
         binding = ActivityOnboardingBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        setFullScreen()
+//        setFullScreen()
         setUpViewPager()
     }
 
@@ -44,6 +43,8 @@ class OnBoardingActivity : AppCompatActivity(), View.OnClickListener {
             OnBoardingViewPagerAdapter(this@OnBoardingActivity, onBoardingContentList)
         binding.apply {
             viewPager.adapter = adapter
+            binding.indicatorView.setIndicatorStyle(IndicatorStyle.ROUND_RECT)
+            binding.indicatorView.setupWithViewPager(viewPager)
 
             viewPager.registerOnPageChangeCallback(object : OnPageChangeCallback() {
 

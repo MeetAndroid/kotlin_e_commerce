@@ -28,22 +28,26 @@
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_marginBottom="8dp"
-                app:layout_constraintBottom_toTopOf="@id/ivIndicator"
+                app:layout_constraintBottom_toTopOf="@id/indicator_view"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:background="?attr/colorPrimary" />
 
-            <ImageView
-                android:id="@+id/ivIndicator"
+            <com.zhpan.indicator.IndicatorView
+                android:id="@+id/indicator_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
-                android:contentDescription="@null"
-                android:src="@drawable/indicator_page_2"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_margin="16dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:vpi_slide_mode="smooth"
+                app:vpi_slider_checked_color="@color/activeIndicator"
+                app:vpi_slider_normal_color="@color/inActiveIndicator" />
+
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -64,13 +68,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="15dp"
-            android:padding="5dp"
             android:onClick="onClick"
-            android:visibility="invisible"
+            android:padding="5dp"
             android:text="@string/previous"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium"
             android:textColor="@color/colorNextPreviousText"
             android:textStyle="bold"
+            android:visibility="invisible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 

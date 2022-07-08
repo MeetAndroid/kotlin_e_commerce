@@ -2,7 +2,9 @@
 buildscript {
     repositories {
         google()
+        maven { url 'https://jitpack.io' }
     }
+
     dependencies {
         def navigationVersion = "2.5.0"
         classpath "androidx.navigation:navigation-safe-args-gradle-plugin:$navigationVersion"

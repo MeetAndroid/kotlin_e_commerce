@@ -53,5 +53,8 @@
     <color name="colorOnBoardingDescription">@color/black</color>
     <color name="colorNextPreviousText">#FFC8171D</color>
 
+    <color name="activeIndicator">#FFC8171D</color>
+    <color name="inActiveIndicator">#716C6C</color>
+
 
 </resources>
