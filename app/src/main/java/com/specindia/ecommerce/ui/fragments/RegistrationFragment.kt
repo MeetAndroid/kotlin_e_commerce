@@ -4,6 +4,7 @@ import android.graphics.Color
 import android.os.Bundle
 import android.text.Spannable
 import android.text.SpannableStringBuilder
+import android.text.method.LinkMovementMethod
 import android.text.style.ClickableSpan
 import android.text.style.ForegroundColorSpan
 import android.view.LayoutInflater
@@ -49,7 +50,13 @@ class RegistrationFragment : Fragment() {
             30, // end
             Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
         )
-        binding.tvAlreadyHaveAnAccount.setText(spanText, TextView.BufferType.SPANNABLE)
+        binding.apply {
+            tvAlreadyHaveAnAccount.setText(spanText, TextView.BufferType.SPANNABLE)
+            tvAlreadyHaveAnAccount.movementMethod = LinkMovementMethod.getInstance();
+
+        }
+
+
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

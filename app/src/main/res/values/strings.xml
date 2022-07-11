@@ -36,5 +36,10 @@
     <string name="offers">Offers</string>
     <string name="profile">Profile</string>
     <string name="more">More</string>
+    <string name="add_your_details_to_login">Add your details to login</string>
+    <string name="your_email">Your Email</string>
+    <string name="password">Password</string>
+    <string name="forgot_your_password">Forgot your Password?</string>
+    <string name="don_t_have_an_account_sign_up">Don\'t have an Account? Sign Up</string>
 
 </resources>
