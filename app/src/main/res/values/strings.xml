@@ -36,5 +36,13 @@
     <string name="offers">Offers</string>
     <string name="profile">Profile</string>
     <string name="more">More</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="add_your_details_to_sign_up">Add your details to sign up</string>
+    <string name="hint_name">Name</string>
+    <string name="hint_email">Email</string>
+    <string name="hint_mobile_no">Mobile No</string>
+    <string name="hint_address">Address</string>
+    <string name="hint_password">Password</string>
+    <string name="hint_confirm_password">Confirm Password</string>
 
 </resources>

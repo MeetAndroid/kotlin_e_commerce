@@ -34,7 +34,7 @@ class AuthFragment : Fragment() {
                 view.findNavController().navigate(R.id.action_authFragment_to_loginFragment)
             }
             btnRegister.setOnClickListener {
-                view.findNavController().navigate(R.id.action_authFragment_to_registrationFragment)
+                view.findNavController().navigate(R.id.action_authFragment_to_welcomeFragment)
             }
         }
     }
