@@ -5,18 +5,19 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.specindia.ecommerce.databinding.FragmentForgotPasswordBinding
+import com.specindia.ecommerce.R
+import com.specindia.ecommerce.databinding.FragmentOffersBinding
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class ForgotPasswordFragment : Fragment() {
+class OffersFragment : Fragment() {
 
-    private lateinit var binding: FragmentForgotPasswordBinding
+    private lateinit var binding:FragmentOffersBinding
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentForgotPasswordBinding.inflate(layoutInflater)
+        binding = FragmentOffersBinding.inflate(layoutInflater)
         return binding.root
     }
 

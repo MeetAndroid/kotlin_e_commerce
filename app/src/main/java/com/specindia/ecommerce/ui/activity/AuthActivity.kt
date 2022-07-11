@@ -4,6 +4,8 @@ package com.specindia.ecommerce.ui.activity
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.specindia.ecommerce.databinding.ActivityAuthBinding
+import com.specindia.ecommerce.util.hideActionBar
+import com.specindia.ecommerce.util.showFullScreen
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

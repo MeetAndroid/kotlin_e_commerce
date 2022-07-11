@@ -5,31 +5,27 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.specindia.ecommerce.databinding.FragmentHomeBinding
-import com.specindia.ecommerce.util.logout
+import androidx.navigation.findNavController
+import com.specindia.ecommerce.R
+import com.specindia.ecommerce.databinding.FragmentProfileBinding
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class HomeFragment : Fragment() {
-    private lateinit var binding: FragmentHomeBinding
+class ProfileFragment : Fragment() {
 
+    private lateinit var binding: FragmentProfileBinding
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
+        inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentHomeBinding.inflate(layoutInflater)
+        binding = FragmentProfileBinding.inflate(layoutInflater)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setUpButtonClick(view)
-    }
-
-    private fun setUpButtonClick(view: View) {
-        binding.btnLogout.setOnClickListener {
-            logout()
+        binding.btnProfileDetails.setOnClickListener {
+            view.findNavController().navigate(R.id.action_profileFragment_to_profileDetailsFragment)
         }
     }
 

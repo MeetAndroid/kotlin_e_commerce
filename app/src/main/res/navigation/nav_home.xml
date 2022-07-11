@@ -1,13 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_home"
-    app:startDestination="@id/homeFragment">
+    app:startDestination="@+id/nav_food_menu">
 
-    <fragment
-        android:id="@+id/homeFragment"
-        android:name="com.specindia.ecommerce.ui.fragments.HomeFragment"
-        android:label="fragment_home"
-        tools:layout="@layout/fragment_home" />
+    <include app:graph="@navigation/nav_food_menu" />
+    <include app:graph="@navigation/nav_offers" />
+    <include app:graph="@navigation/nav_profile" />
+    <include app:graph="@navigation/nav_more" />
+
+    <!--    <fragment-->
+    <!--        android:id="@+id/homeFragment"-->
+    <!--        android:name="com.specindia.ecommerce.ui.fragments.HomeFragment"-->
+    <!--        android:label="fragment_home"-->
+    <!--        tools:layout="@layout/fragment_home" />-->
+
+
 </navigation>

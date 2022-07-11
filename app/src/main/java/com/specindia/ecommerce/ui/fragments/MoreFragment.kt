@@ -5,20 +5,19 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.specindia.ecommerce.databinding.FragmentHomeBinding
+import com.specindia.ecommerce.databinding.FragmentMoreBinding
 import com.specindia.ecommerce.util.logout
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class HomeFragment : Fragment() {
-    private lateinit var binding: FragmentHomeBinding
+class MoreFragment : Fragment() {
 
+    private lateinit var binding: FragmentMoreBinding
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
+        inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentHomeBinding.inflate(layoutInflater)
+        binding = FragmentMoreBinding.inflate(layoutInflater)
         return binding.root
     }
 
@@ -32,5 +31,4 @@ class HomeFragment : Fragment() {
             logout()
         }
     }
-
 }

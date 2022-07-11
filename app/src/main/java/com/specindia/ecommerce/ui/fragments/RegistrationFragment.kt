@@ -15,7 +15,9 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import com.specindia.ecommerce.R
 import com.specindia.ecommerce.databinding.FragmentRegistrationBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class RegistrationFragment : Fragment() {
 
     private lateinit var binding: FragmentRegistrationBinding

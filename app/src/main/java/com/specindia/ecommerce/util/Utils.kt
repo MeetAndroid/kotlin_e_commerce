@@ -8,6 +8,8 @@ import android.net.NetworkCapabilities.TRANSPORT_CELLULAR
 import android.net.NetworkCapabilities.TRANSPORT_WIFI
 import android.os.Build
 import android.view.View
+import android.view.WindowInsets
+import android.view.WindowManager
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import com.google.android.material.snackbar.Snackbar
@@ -73,3 +75,20 @@ val Context.isConnected: Boolean
         }
     }
 
+fun showFullScreen(activity: Activity) {
+    @Suppress("DEPRECATION")
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+        activity.window.insetsController?.hide(WindowInsets.Type.statusBars())
+    } else {
+        activity.window.setFlags(
+            WindowManager.LayoutParams.FLAG_FULLSCREEN,
+            WindowManager.LayoutParams.FLAG_FULLSCREEN
+        )
+    }
+}
+
+fun hideActionBar(activity: Activity) {
+    if (activity.actionBar != null) {
+        activity.actionBar!!.hide();
+    }
+}

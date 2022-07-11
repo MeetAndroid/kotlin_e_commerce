@@ -8,7 +8,9 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import com.specindia.ecommerce.R
 import com.specindia.ecommerce.databinding.FragmentAuthBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class AuthFragment : Fragment() {
     private lateinit var binding: FragmentAuthBinding
 

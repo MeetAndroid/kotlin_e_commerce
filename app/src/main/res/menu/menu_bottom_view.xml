@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/nav_food_menu"
+        android:icon="@drawable/ic_menu_food"
+        android:title="@string/menu" />
+    <item
+        android:id="@+id/nav_offers"
+        android:icon="@drawable/ic_menu_offers"
+        android:title="@string/offers" />
+
+    <item
+        android:id="@+id/placeHolder"
+        android:title="" />
+
+    <item
+        android:id="@+id/nav_profile"
+        android:icon="@drawable/ic_menu_profile"
+        android:title="@string/profile" />
+    <item
+        android:id="@+id/nav_more"
+        android:icon="@drawable/ic_menu_more"
+        android:title="@string/more" />
+</menu>

@@ -3,12 +3,13 @@ package com.specindia.ecommerce.ui.activity
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.util.Log
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.specindia.ecommerce.databinding.ActivityLauncherBinding
 import com.specindia.ecommerce.ui.viewmodel.DataViewModel
 import com.specindia.ecommerce.util.Constants.Companion.SPLASH_SCREEN_TIME_OUT
+import com.specindia.ecommerce.util.hideActionBar
+import com.specindia.ecommerce.util.showFullScreen
 import com.specindia.ecommerce.util.startNewActivity
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -22,7 +23,6 @@ class LauncherActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityLauncherBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
         startLoadingContent()
     }
 
