@@ -10,6 +10,7 @@ import android.os.Build
 import android.view.View
 import android.view.WindowInsets
 import android.view.WindowManager
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import com.google.android.material.snackbar.Snackbar
@@ -92,3 +93,9 @@ fun hideActionBar(activity: Activity) {
         activity.actionBar!!.hide();
     }
 }
+
+fun Context.showShortToast(message: CharSequence) =
+    Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+
+fun Context.showLongToast(message: CharSequence) =
+    Toast.makeText(this, message, Toast.LENGTH_LONG).show()

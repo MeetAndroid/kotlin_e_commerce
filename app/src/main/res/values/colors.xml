@@ -43,18 +43,20 @@
     <color name="purple5">#9C27B0</color>
     <color name="purple6">#8E24AA</color>
 
-    <color name="colorPrimary">#006837</color>
-    <color name="colorPrimaryDark">#004012</color>
-    <color name="colorAccent">#c75f00</color>
+    <color name="color_primary">#006837</color>
+    <color name="color_primary_dark">#004012</color>
+    <color name="color_accent">#c75f00</color>
 
-    <color name="colorBlue">#09098A</color>
+    <color name="color_blue">#09098A</color>
 
-    <color name="colorOnBoardingTitle">@color/colorBlue</color>
-    <color name="colorOnBoardingDescription">@color/black</color>
-    <color name="colorNextPreviousText">#FFC8171D</color>
+    <color name="color_blue_or_white">@color/color_blue</color>
+    <color name="color_on_boarding_description">@color/black</color>
+    <color name="color_next_previous_text">#FFC8171D</color>
 
-    <color name="activeIndicator">#FFC8171D</color>
-    <color name="inActiveIndicator">#716C6C</color>
+    <color name="color_active_indicator">#FFC8171D</color>
+    <color name="color_in_active_indicator">#716C6C</color>
 
+    <color name="color_fb_button_text">#224d90</color>
+    <color name="color_g_plus_button_text">#d33e26</color>
 
 </resources>
