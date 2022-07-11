@@ -10,11 +10,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import com.specindia.ecommerce.R
 import com.specindia.ecommerce.databinding.FragmentRegistrationBinding
+import com.specindia.ecommerce.util.showShortToast
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -34,14 +34,14 @@ class RegistrationFragment : Fragment() {
         val spanText = SpannableStringBuilder(getString(R.string.already_have_an_account_login))
         val clickableString = object : ClickableSpan() {
             override fun onClick(view: View) {
-                Toast.makeText(view.context, "MindOrks Clicked!", Toast.LENGTH_SHORT).show()
+                view.findNavController().popBackStack()
             }
         }
         spanText.setSpan(
             clickableString,
-            0,
+            25,
             spanText.length,
-            0
+            30
         )
         spanText.setSpan(
             ForegroundColorSpan(Color.RED),
@@ -62,8 +62,13 @@ class RegistrationFragment : Fragment() {
             btnRegister.setOnClickListener {
                 view.findNavController().popBackStack()
             }
-            tvAlreadyHaveAnAccount.setOnClickListener {
-                view.findNavController().popBackStack()
+
+            btnFacebook.setOnClickListener {
+                requireActivity().showShortToast("Coming soon...")
+            }
+
+            btnGooglePlus.setOnClickListener {
+                requireActivity().showShortToast("Coming soon...")
             }
         }
     }

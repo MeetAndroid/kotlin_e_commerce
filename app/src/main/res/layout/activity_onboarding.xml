@@ -45,8 +45,8 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:vpi_slide_mode="smooth"
-                app:vpi_slider_checked_color="@color/activeIndicator"
-                app:vpi_slider_normal_color="@color/inActiveIndicator" />
+                app:vpi_slider_checked_color="@color/color_active_indicator"
+                app:vpi_slider_normal_color="@color/color_in_active_indicator" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -73,7 +73,7 @@
             android:visibility="invisible"
             android:text="@string/previous"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-            android:textColor="@color/colorNextPreviousText"
+            android:textColor="@color/color_next_previous_text"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
@@ -86,7 +86,7 @@
             android:padding="5dp"
             android:text="@string/next"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-            android:textColor="@color/colorNextPreviousText"
+            android:textColor="@color/color_next_previous_text"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />

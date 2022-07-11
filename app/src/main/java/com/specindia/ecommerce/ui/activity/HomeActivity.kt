@@ -16,6 +16,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.specindia.ecommerce.R
 import com.specindia.ecommerce.databinding.ActivityHomeBinding
 import com.specindia.ecommerce.ui.viewmodel.DataViewModel
+import com.specindia.ecommerce.util.showShortToast
 import com.specindia.ecommerce.util.startNewActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -64,7 +65,7 @@ class HomeActivity : AppCompatActivity() {
 
     private fun setUpFabClick() {
         binding.fabAdd.setOnClickListener {
-            Toast.makeText(this@HomeActivity, "Home Clicked", Toast.LENGTH_SHORT).show()
+            showShortToast("Home Fab clicked")
         }
     }
 
