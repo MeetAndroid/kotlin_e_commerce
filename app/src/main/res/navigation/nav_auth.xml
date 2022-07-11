@@ -9,7 +9,7 @@
         android:id="@+id/authFragment"
         android:name="com.specindia.ecommerce.ui.fragments.AuthFragment"
         android:label="Auth"
-        tools:layout="@layout/fragment_auth" >
+        tools:layout="@layout/fragment_auth">
         <action
             android:id="@+id/action_authFragment_to_loginFragment"
             app:destination="@id/loginFragment" />
@@ -22,10 +22,13 @@
         android:id="@+id/welcomeFragment"
         android:name="com.specindia.ecommerce.ui.fragments.WelcomeFragment"
         android:label="Welcome"
-        tools:layout="@layout/fragment_welcome" >
+        tools:layout="@layout/fragment_welcome">
         <action
             android:id="@+id/action_welcomeFragment_to_registrationFragment"
             app:destination="@id/registrationFragment" />
+        <action
+            android:id="@+id/action_welcomeFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
     </fragment>
     <fragment
         android:id="@+id/forgotPasswordFragment"
@@ -36,14 +39,25 @@
         android:id="@+id/loginFragment"
         android:name="com.specindia.ecommerce.ui.fragments.LoginFragment"
         android:label="Login"
-        tools:layout="@layout/fragment_login" >
+        tools:layout="@layout/fragment_login">
         <action
             android:id="@+id/action_loginFragment_to_forgotPasswordFragment"
             app:destination="@id/forgotPasswordFragment" />
+        <action
+            android:id="@+id/action_loginFragment_to_registrationFragment"
+            app:destination="@id/registrationFragment"
+            app:popUpTo="@id/loginFragment"
+            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/registrationFragment"
         android:name="com.specindia.ecommerce.ui.fragments.RegistrationFragment"
         android:label="fragment_registration"
-        tools:layout="@layout/fragment_registration" />
+        tools:layout="@layout/fragment_registration">
+        <action
+            android:id="@+id/action_registrationFragment_to_loginFragment"
+            app:destination="@id/loginFragment"
+            app:popUpTo="@id/registrationFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
 </navigation>

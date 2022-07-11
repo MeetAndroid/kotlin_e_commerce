@@ -15,7 +15,7 @@
             android:id="@+id/tvSingUp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="48dp"
+            android:layout_marginTop="25dp"
             android:fontFamily="@font/roboto_bold"
             android:text="@string/sign_up"
             android:textAppearance="@style/TextAppearance.AppCompat.Display1"
@@ -104,7 +104,10 @@
                     android:layout_height="wrap_content"
                     android:hint="@string/hint_mobile_no"
                     android:inputType="phone"
+                    android:imeOptions="actionNext"
                     android:lines="1"
+                    android:maxLength="10"
+                    android:digits="0123456789"
                     tools:text="9876543210" />
             </com.google.android.material.textfield.TextInputLayout>
 

@@ -35,7 +35,7 @@ class WelcomeFragment : Fragment() {
         val spanText = SpannableStringBuilder(getString(R.string.already_have_an_account_login))
         val clickableString = object : ClickableSpan() {
             override fun onClick(view: View) {
-                view.findNavController().popBackStack()
+                view.findNavController().navigate(R.id.action_welcomeFragment_to_loginFragment)
             }
         }
         spanText.setSpan(

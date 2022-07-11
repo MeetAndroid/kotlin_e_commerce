@@ -15,7 +15,11 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import com.specindia.ecommerce.R
 import com.specindia.ecommerce.databinding.FragmentRegistrationBinding
+import com.specindia.ecommerce.util.emptyEditText
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.android.synthetic.main.fragment_login.*
+import kotlinx.android.synthetic.main.fragment_login.etPassword
+import kotlinx.android.synthetic.main.fragment_registration.*
 
 @AndroidEntryPoint
 class RegistrationFragment : Fragment() {
@@ -25,15 +29,19 @@ class RegistrationFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentRegistrationBinding.inflate(layoutInflater)
-        setSpannableText()
         return binding.root
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        setSpannableText()
+        startEditTextSpace()
+    }
     private fun setSpannableText() {
         val spanText = SpannableStringBuilder(getString(R.string.already_have_an_account_login))
         val clickableString = object : ClickableSpan() {
             override fun onClick(view: View) {
-                view.findNavController().popBackStack()
+                view.findNavController().navigate(R.id.action_registrationFragment_to_loginFragment)
             }
         }
         spanText.setSpan(
@@ -53,6 +61,15 @@ class RegistrationFragment : Fragment() {
             tvAlreadyHaveAnAccount.movementMethod = LinkMovementMethod.getInstance();
         }
 
+    }
+
+    private fun startEditTextSpace() {
+        etName.emptyEditText(etName)
+        etEmail.emptyEditText(etEmail)
+        etMobileNo.emptyEditText(etMobileNo)
+        etAddress.emptyEditText(etAddress)
+        etPassword.emptyEditText(etPassword)
+        etConfirmPassword.emptyEditText(etConfirmPassword)
     }
 
 }

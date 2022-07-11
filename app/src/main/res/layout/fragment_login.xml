@@ -1,16 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:fillViewport="true"
-    tools:context=".ui.fragments.LoginFragment">
+    android:id="@+id/nestedScrollview"
+    android:layout_height="match_parent">
 
-    <androidx.appcompat.widget.LinearLayoutCompat
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        tools:context=".ui.fragments.LoginFragment">
+
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -20,10 +21,11 @@
                 android:id="@+id/tvLogin"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="25dp"
                 android:text="@string/login"
+                android:textAppearance="@style/TextAppearance.AppCompat.Display1"
                 android:textColor="@color/color_blue"
-                android:textSize="20sp"
-                app:fontFamily="@font/roboto_medium"
+                app:fontFamily="@font/roboto_bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -33,10 +35,10 @@
                 android:id="@+id/tvAddLoginDetails"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="7dp"
                 android:fontFamily="@font/roboto_regular"
                 android:text="@string/add_your_details_to_login"
-                android:textSize="14sp"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                 app:fontFamily="@font/roboto_medium"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -45,33 +47,63 @@
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/ivLogin"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
+                android:layout_height="175dp"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginTop="15dp"
+                android:scaleType="fitCenter"
                 app:layout_constraintTop_toBottomOf="@id/tvAddLoginDetails"
                 app:srcCompat="@drawable/ic_login" />
 
-            <androidx.appcompat.widget.AppCompatEditText
-                android:id="@+id/edtLoginEmail"
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tilLoginEmail"
+                style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginHorizontal="30dp"
                 android:layout_marginTop="20dp"
-                android:hint="@string/your_email"
-                app:layout_constraintTop_toBottomOf="@id/ivLogin" />
+                android:background="@android:color/transparent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/ivLogin">
 
-            <androidx.appcompat.widget.AppCompatEditText
-                android:id="@+id/edtLoginPassword"
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etLoginEmail"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:hint="@string/hint_email"
+                    android:inputType="textEmailAddress"
+                    android:lines="1"
+                    tools:text="nrup.parikh@spec-india.com" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tilPassword"
+                style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:hint="@string/password"
-                app:layout_constraintTop_toBottomOf="@id/edtLoginEmail" />
+                android:layout_marginHorizontal="30dp"
+                android:layout_marginTop="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tilLoginEmail"
+                app:passwordToggleEnabled="true">
 
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etPassword"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/hint_password"
+                    android:inputType="textPassword"
+                    tools:text="Test@1234" />
+            </com.google.android.material.textfield.TextInputLayout>
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btnLogin"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="20dp"
+                android:layout_marginHorizontal="30dp"
                 android:layout_marginTop="30dp"
                 android:background="@drawable/bg_button_login"
                 android:fontFamily="@font/roboto_regular"
@@ -79,7 +111,7 @@
                 android:textAllCaps="false"
                 android:textColor="@color/white"
                 android:textSize="16sp"
-                app:layout_constraintTop_toBottomOf="@id/edtLoginPassword" />
+                app:layout_constraintTop_toBottomOf="@id/tilPassword" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/btnForgotPassword"
@@ -115,5 +147,5 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-    </androidx.appcompat.widget.LinearLayoutCompat>
-</androidx.core.widget.NestedScrollView>
+    </androidx.core.widget.NestedScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>

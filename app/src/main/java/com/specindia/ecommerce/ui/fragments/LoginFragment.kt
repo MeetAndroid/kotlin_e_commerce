@@ -2,8 +2,10 @@ package com.specindia.ecommerce.ui.fragments
 
 import android.graphics.Color
 import android.os.Bundle
+import android.text.Editable
 import android.text.Spannable
 import android.text.SpannableStringBuilder
+import android.text.TextWatcher
 import android.text.method.LinkMovementMethod
 import android.text.style.ClickableSpan
 import android.text.style.ForegroundColorSpan
@@ -11,6 +13,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.SearchView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -19,8 +22,12 @@ import com.specindia.ecommerce.R
 import com.specindia.ecommerce.databinding.FragmentLoginBinding
 import com.specindia.ecommerce.ui.activity.HomeActivity
 import com.specindia.ecommerce.ui.viewmodel.DataViewModel
+import com.specindia.ecommerce.util.emptyEditText
+import com.specindia.ecommerce.util.snack
+import com.specindia.ecommerce.util.snackBar
 import com.specindia.ecommerce.util.startNewActivity
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.android.synthetic.main.fragment_login.*
 
 @AndroidEntryPoint
 class LoginFragment : Fragment() {
@@ -40,6 +47,7 @@ class LoginFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         setUpButtonClick(view)
         setSpannableText()
+        startEditTextSpace()
     }
 
     private fun setUpButtonClick(view: View) {
@@ -60,7 +68,7 @@ class LoginFragment : Fragment() {
         val spanText = SpannableStringBuilder(getString(R.string.don_t_have_an_account_sign_up))
         val clickableString = object : ClickableSpan() {
             override fun onClick(view: View) {
-                Log.e("DATA", "data")
+                view.findNavController().navigate(R.id.action_loginFragment_to_registrationFragment)
             }
         }
         spanText.setSpan(
@@ -80,6 +88,11 @@ class LoginFragment : Fragment() {
             tvDontHaveAnAccount.movementMethod = LinkMovementMethod.getInstance();
 
         }
-
     }
+
+    private fun startEditTextSpace() {
+        etLoginEmail.emptyEditText(etLoginEmail)
+        etPassword.emptyEditText(etPassword)
+    }
+
 }
