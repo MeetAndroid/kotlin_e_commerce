@@ -8,20 +8,25 @@
     <fragment
         android:id="@+id/authFragment"
         android:name="com.specindia.ecommerce.ui.fragments.AuthFragment"
-        android:label="fragment_auth"
+        android:label="Auth"
         tools:layout="@layout/fragment_auth" >
         <action
             android:id="@+id/action_authFragment_to_loginFragment"
             app:destination="@id/loginFragment" />
         <action
-            android:id="@+id/action_authFragment_to_registrationFragment"
-            app:destination="@id/registrationFragment" />
+            android:id="@+id/action_authFragment_to_welcomeFragment"
+            app:destination="@id/welcomeFragment" />
+
     </fragment>
     <fragment
-        android:id="@+id/registrationFragment"
-        android:name="com.specindia.ecommerce.ui.fragments.RegistrationFragment"
-        android:label="fragment_registration"
-        tools:layout="@layout/fragment_registration" />
+        android:id="@+id/welcomeFragment"
+        android:name="com.specindia.ecommerce.ui.fragments.WelcomeFragment"
+        android:label="Welcome"
+        tools:layout="@layout/fragment_welcome" >
+        <action
+            android:id="@+id/action_welcomeFragment_to_registrationFragment"
+            app:destination="@id/registrationFragment" />
+    </fragment>
     <fragment
         android:id="@+id/forgotPasswordFragment"
         android:name="com.specindia.ecommerce.ui.fragments.ForgotPasswordFragment"
@@ -30,10 +35,15 @@
     <fragment
         android:id="@+id/loginFragment"
         android:name="com.specindia.ecommerce.ui.fragments.LoginFragment"
-        android:label="fragment_login"
+        android:label="Login"
         tools:layout="@layout/fragment_login" >
         <action
             android:id="@+id/action_loginFragment_to_forgotPasswordFragment"
             app:destination="@id/forgotPasswordFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/registrationFragment"
+        android:name="com.specindia.ecommerce.ui.fragments.RegistrationFragment"
+        android:label="fragment_registration"
+        tools:layout="@layout/fragment_registration" />
 </navigation>
