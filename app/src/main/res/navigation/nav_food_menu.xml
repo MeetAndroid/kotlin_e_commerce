@@ -9,5 +9,13 @@
         android:id="@+id/foodMenuFragment"
         android:name="com.specindia.ecommerce.ui.fragments.FoodMenuFragment"
         android:label="Menu"
-        tools:layout="@layout/fragment_food_menu" />
+        tools:layout="@layout/fragment_food_menu" >
+        <action
+            android:id="@+id/action_foodMenuFragment_to_foodMenuDetailsFragment"
+            app:destination="@id/foodMenuDetailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/foodMenuDetailsFragment"
+        android:name="com.specindia.ecommerce.ui.fragments.FoodMenuDetailsFragment"
+        android:label="FoodMenuDetails" />
 </navigation>

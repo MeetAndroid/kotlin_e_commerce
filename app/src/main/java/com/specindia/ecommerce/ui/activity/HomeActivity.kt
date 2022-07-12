@@ -1,22 +1,18 @@
 package com.specindia.ecommerce.ui.activity
 
 import android.os.Bundle
-import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.get
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
-import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.specindia.ecommerce.R
 import com.specindia.ecommerce.databinding.ActivityHomeBinding
 import com.specindia.ecommerce.ui.viewmodel.DataViewModel
-import com.specindia.ecommerce.util.showShortToast
 import com.specindia.ecommerce.util.startNewActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -46,16 +42,18 @@ class HomeActivity : AppCompatActivity() {
         bottomNavigationView.setupWithNavController(navController)
 
         // Setup the ActionBar with navController and 3 top level destinations
-        appBarConfiguration = AppBarConfiguration(
-            setOf(
-                R.id.foodMenuFragment,
-                R.id.offersFragment,
-                R.id.profileFragment,
-                R.id.moreFragment
-            )
-        )
+//        appBarConfiguration = AppBarConfiguration(
+//            setOf(
+//                R.id.foodMenuFragment,
+//                R.id.offersFragment,
+//                R.id.profileFragment,
+//                R.id.moreFragment
+//            )
+//        )
+//        val toolbar = binding.toolbar
+//        setSupportActionBar(toolbar)
 
-        setupActionBarWithNavController(navController, appBarConfiguration)
+//        setupActionBarWithNavController(navController, appBarConfiguration)
     }
 
 
@@ -65,16 +63,16 @@ class HomeActivity : AppCompatActivity() {
 
     private fun setUpFabClick() {
         binding.fabAdd.setOnClickListener {
-            showShortToast("Home Fab clicked")
+            binding.bottomNavigationView.menu.performIdentifierAction(R.id.nav_home, 0)
         }
     }
 
     private fun modifyBottomNavigationView() {
         binding.apply {
             bottomNavigationView.background = null
-            bottomNavigationView.menu[2].isEnabled = false
         }
     }
+
 
     fun performLogout() = lifecycleScope.launch {
 

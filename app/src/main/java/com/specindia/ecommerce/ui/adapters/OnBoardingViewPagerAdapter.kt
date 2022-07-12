@@ -2,31 +2,34 @@ package com.specindia.ecommerce.ui.adapters
 
 import android.content.Context
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.specindia.ecommerce.R
+import com.specindia.ecommerce.databinding.RowOnBoardingItemBinding
 import com.specindia.ecommerce.ui.activity.OnBoardingActivity
-import kotlinx.android.synthetic.main.row_on_boarding_item.view.*
 
 class OnBoardingViewPagerAdapter(
     private val context: Context,
     private val array: List<OnBoardingActivity.OnBoardingData>
 ) : RecyclerView.Adapter<OnBoardingViewPagerAdapter.ViewPagerViewHolder>() {
 
-    inner class ViewPagerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
+    inner class ViewPagerViewHolder(val binding: RowOnBoardingItemBinding) :
+        RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewPagerViewHolder {
-        val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.row_on_boarding_item, parent, false)
-        return ViewPagerViewHolder(view)
+        val binding =
+            RowOnBoardingItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return ViewPagerViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: ViewPagerViewHolder, position: Int) {
         val currentData = array[position]
-        holder.itemView.ivOnBoardingImage.setImageResource(currentData.imageId)
-        holder.itemView.tvOnBoardingTitle.text =context.getString(currentData.title)
-        holder.itemView.tvOnBoardingDescription.text = context.getString(currentData.description)
+        with(holder) {
+            with(binding) {
+                ivOnBoardingImage.setImageResource(currentData.imageId)
+                tvOnBoardingTitle.text = context.getString(currentData.title)
+                tvOnBoardingDescription.text = context.getString(currentData.description)
+            }
+        }
     }
 
     override fun getItemCount(): Int {

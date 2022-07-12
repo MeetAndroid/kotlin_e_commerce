@@ -5,16 +5,8 @@
     android:layout_height="match_parent"
     tools:context=".ui.fragments.ProfileDetailsFragment">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="Profile Details Fragment"
-        android:textAppearance="@style/TextAppearance.AppCompat.Headline"
-        android:textStyle="bold"
-        android:layout_marginTop="48dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <include
+        android:id="@+id/profileDetailsScreenHeader"
+        layout="@layout/row_header" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

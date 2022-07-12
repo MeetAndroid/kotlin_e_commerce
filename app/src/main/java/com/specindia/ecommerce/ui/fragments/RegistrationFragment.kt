@@ -17,9 +17,6 @@ import com.specindia.ecommerce.R
 import com.specindia.ecommerce.databinding.FragmentRegistrationBinding
 import com.specindia.ecommerce.util.emptyEditText
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.fragment_login.*
-import kotlinx.android.synthetic.main.fragment_login.etPassword
-import kotlinx.android.synthetic.main.fragment_registration.*
 
 @AndroidEntryPoint
 class RegistrationFragment : Fragment() {
@@ -37,6 +34,7 @@ class RegistrationFragment : Fragment() {
         setSpannableText()
         startEditTextSpace()
     }
+
     private fun setSpannableText() {
         val spanText = SpannableStringBuilder(getString(R.string.already_have_an_account_login))
         val clickableString = object : ClickableSpan() {
@@ -64,12 +62,15 @@ class RegistrationFragment : Fragment() {
     }
 
     private fun startEditTextSpace() {
-        etName.emptyEditText(etName)
-        etEmail.emptyEditText(etEmail)
-        etMobileNo.emptyEditText(etMobileNo)
-        etAddress.emptyEditText(etAddress)
-        etPassword.emptyEditText(etPassword)
-        etConfirmPassword.emptyEditText(etConfirmPassword)
+        with(binding) {
+            etName.emptyEditText(etName)
+            etEmail.emptyEditText(etEmail)
+            etMobileNo.emptyEditText(etMobileNo)
+            etAddress.emptyEditText(etAddress)
+            etPassword.emptyEditText(etPassword)
+            etConfirmPassword.emptyEditText(etConfirmPassword)
+        }
+
     }
 
 }

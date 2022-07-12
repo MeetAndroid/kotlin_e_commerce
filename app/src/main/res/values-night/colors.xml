@@ -3,4 +3,7 @@
     <color name="color_blue_or_white">@color/white</color>
     <color name="color_on_boarding_description">@color/white</color>
     <color name="color_next_previous_text">@color/white</color>
+
+    <color name="colorStatusBar">#000000</color>
+    <color name="colorHeaderText">#716C6C</color>
 </resources>

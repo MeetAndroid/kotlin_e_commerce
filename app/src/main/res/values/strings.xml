@@ -35,6 +35,7 @@
     <string name="menu">Menu</string>
     <string name="offers">Offers</string>
     <string name="profile">Profile</string>
+    <string name="profile_details">Profile Details</string>
     <string name="more">More</string>
     <string name="add_your_details_to_login">Add your details to login</string>
     <string name="your_email">Your Email</string>
@@ -49,5 +50,6 @@
     <string name="hint_address">Address</string>
     <string name="hint_password">Password</string>
     <string name="hint_confirm_password">Confirm Password</string>
+    <string name="title_good_morning_user">Good morning, %1$s!</string>
 
 </resources>

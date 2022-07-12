@@ -59,4 +59,7 @@
     <color name="color_fb_button_text">#224d90</color>
     <color name="color_g_plus_button_text">#d33e26</color>
 
+    <color name="colorStatusBar">#FFFFFF</color>
+    <color name="colorHeaderText">#716C6C</color>
+
 </resources>

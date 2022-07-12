@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import com.specindia.ecommerce.R
 import com.specindia.ecommerce.databinding.FragmentProfileBinding
+import com.specindia.ecommerce.util.visible
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -24,8 +25,22 @@ class ProfileFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setUpHeader()
+
         binding.btnProfileDetails.setOnClickListener {
             view.findNavController().navigate(R.id.action_profileFragment_to_profileDetailsFragment)
+        }
+    }
+
+    private fun setUpHeader() {
+        with(binding) {
+            with(profileScreenHeader) {
+                tvHeaderTitle.visible(true)
+                tvHeaderTitle.text = getString(com.specindia.ecommerce.R.string.profile)
+                ivBack.visible(false)
+                ivFavorite.visible(false)
+                ivShoppingCart.visible(false)
+            }
         }
     }
 

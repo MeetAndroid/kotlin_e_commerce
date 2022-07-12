@@ -10,7 +10,7 @@
         android:title="@string/offers" />
 
     <item
-        android:id="@+id/placeHolder"
+        android:id="@+id/nav_home"
         android:title="" />
 
     <item
