@@ -7,6 +7,7 @@ import android.text.SpannableStringBuilder
 import android.text.method.LinkMovementMethod
 import android.text.style.ClickableSpan
 import android.text.style.ForegroundColorSpan
+import android.util.Patterns
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,6 +19,7 @@ import com.specindia.ecommerce.R
 import com.specindia.ecommerce.databinding.FragmentLoginBinding
 import com.specindia.ecommerce.ui.activity.HomeActivity
 import com.specindia.ecommerce.ui.viewmodel.DataViewModel
+import com.specindia.ecommerce.util.*
 import com.specindia.ecommerce.util.emptyEditText
 import com.specindia.ecommerce.util.startNewActivity
 import dagger.hilt.android.AndroidEntryPoint
@@ -46,8 +48,11 @@ class LoginFragment : Fragment() {
     private fun setUpButtonClick(view: View) {
         binding.apply {
             btnLogin.setOnClickListener {
-                viewModel.saveUserLoggedIn(true)
-                requireActivity().startNewActivity(HomeActivity::class.java)
+                if (isEmpty()) {
+                    requireActivity().startNewActivity(HomeActivity::class.java)
+//                viewModel.saveUserLoggedIn(true)
+                    showToast(requireContext(), "Login Successfully")
+                }
             }
 
             btnForgotPassword.setOnClickListener {
@@ -79,7 +84,6 @@ class LoginFragment : Fragment() {
         binding.apply {
             tvDontHaveAnAccount.setText(spanText, TextView.BufferType.SPANNABLE)
             tvDontHaveAnAccount.movementMethod = LinkMovementMethod.getInstance();
-
         }
     }
 
@@ -88,5 +92,23 @@ class LoginFragment : Fragment() {
             etLoginEmail.emptyEditText(etLoginEmail)
             etPassword.emptyEditText(etPassword)
         }
+    }
+
+    private fun isEmpty(): Boolean {
+        binding.apply {
+            if (etLoginEmail.text.toString().trim().isEmpty()) {
+                showMaterialSnack(requireContext(), nestedScrollview, "Please enter email")
+                return false
+            } else if (!Patterns.EMAIL_ADDRESS.matcher(etLoginEmail.text.toString().trim())
+                    .matches()
+            ) {
+                showMaterialSnack(requireContext(), nestedScrollview, "Please enter valid email")
+                return false
+            } else if (etPassword.text.toString().trim().isEmpty()) {
+                showMaterialSnack(requireContext(), nestedScrollview, "Please enter password")
+                return false
+            }
+        }
+        return true
     }
 }

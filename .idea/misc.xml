@@ -32,8 +32,21 @@
         <entry key="..\:/EcommerceApp/app/src/main/res/layout/fragment_welcome.xml" value="0.1675213675213675" />
         <entry key="..\:/EcommerceApp/app/src/main/res/layout/row_header.xml" value="0.17192982456140352" />
         <entry key="..\:/EcommerceApp/app/src/main/res/menu/menu_bottom_view.xml" value="0.1675213675213675" />
+        <entry key="..\:/GitProject/kotlin_e_commerce/app/src/main/res/drawable-v24/bg_button_signup.xml" value="0.1875" />
+        <entry key="..\:/GitProject/kotlin_e_commerce/app/src/main/res/drawable/bg_button_login.xml" value="0.1875" />
+        <entry key="..\:/GitProject/kotlin_e_commerce/app/src/main/res/drawable/bg_snackbar.xml" value="0.144" />
+        <entry key="..\:/GitProject/kotlin_e_commerce/app/src/main/res/drawable/ic_login.xml" value="0.147" />
+        <entry key="..\:/GitProject/kotlin_e_commerce/app/src/main/res/drawable/ic_rectangle_7.xml" value="0.1225" />
+        <entry key="..\:/GitProject/kotlin_e_commerce/app/src/main/res/drawable/ic_shaped_subtraction.xml" value="0.1875" />
+        <entry key="..\:/GitProject/kotlin_e_commerce/app/src/main/res/drawable/ic_subtraction_2.xml" value="0.1875" />
+        <entry key="..\:/GitProject/kotlin_e_commerce/app/src/main/res/drawable/img_red_filled_rectangle.xml" value="0.1225" />
+        <entry key="..\:/GitProject/kotlin_e_commerce/app/src/main/res/font/font.xml" value="0.22685185185185186" />
         <entry key="..\:/GitProject/kotlin_e_commerce/app/src/main/res/layout/activity_auth.xml" value="0.27291666666666664" />
         <entry key="..\:/GitProject/kotlin_e_commerce/app/src/main/res/layout/activity_onboarding.xml" value="0.1" />
+        <entry key="..\:/GitProject/kotlin_e_commerce/app/src/main/res/layout/fragment_auth.xml" value="0.1" />
+        <entry key="..\:/GitProject/kotlin_e_commerce/app/src/main/res/layout/fragment_forgot_password.xml" value="0.24259259259259258" />
+        <entry key="..\:/GitProject/kotlin_e_commerce/app/src/main/res/layout/fragment_login.xml" value="0.21" />
+        <entry key="..\:/GitProject/kotlin_e_commerce/app/src/main/res/layout/fragment_registration.xml" value="0.25" />
         <entry key="..\:/GitProject/kotlin_e_commerce/app/src/main/res/layout/row_on_boarding_item.xml" value="0.2462962962962963" />
       </map>
     </option>
