@@ -24,7 +24,7 @@
                 android:layout_marginTop="25dp"
                 android:text="@string/login"
                 android:textAppearance="@style/TextAppearance.AppCompat.Display1"
-                android:textColor="@color/color_blue"
+                android:textColor="@color/color_blue_or_white"
                 app:fontFamily="@font/roboto_bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

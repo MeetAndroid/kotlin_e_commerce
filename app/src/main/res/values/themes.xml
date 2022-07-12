@@ -33,4 +33,9 @@
         <item name="android:windowDisablePreview">true</item>
         <item name="android:statusBarColor">@color/white</item>
     </style>
+
+    <style name="CustomSnackbarTheme" parent="Widget.MaterialComponents.Snackbar">
+        <item name="android:textColor">@color/color_blue</item>
+    </style>
+
 </resources>

@@ -3,24 +3,27 @@ package com.specindia.ecommerce.util
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.content.res.AssetManager
+import android.content.res.Resources
+import android.graphics.Typeface
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities.TRANSPORT_CELLULAR
 import android.net.NetworkCapabilities.TRANSPORT_WIFI
 import android.os.Build
 import android.text.Editable
 import android.text.TextWatcher
-import android.view.View
-import android.view.WindowInsets
-import android.view.WindowManager
+import android.view.*
+import android.widget.TextView
 import android.widget.Toast
-import androidx.appcompat.widget.AppCompatEditText
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputEditText
+import com.specindia.ecommerce.R
 import com.specindia.ecommerce.ui.activity.HomeActivity
-import kotlinx.android.synthetic.main.fragment_login.*
 import kotlinx.coroutines.launch
+
 
 fun <A : Activity> Activity.startNewActivity(activity: Class<A>) {
     Intent(this, activity).also {
@@ -95,7 +98,7 @@ fun showFullScreen(activity: Activity) {
 
 fun hideActionBar(activity: Activity) {
     if (activity.actionBar != null) {
-        activity.actionBar!!.hide();
+        activity.actionBar!!.hide()
     }
 }
 
@@ -118,4 +121,17 @@ fun TextInputEditText.emptyEditText(editText: TextInputEditText) {
 
         override fun afterTextChanged(s: Editable?) {}
     })
+}
+
+fun showMaterialSnack(context: Context, view: View, message: String) {
+    val snack = Snackbar.make(context, view, message, Toast.LENGTH_SHORT)
+    val snackView = snack.view
+    snackView.background = ContextCompat.getDrawable(context, R.drawable.bg_snackbar)
+    snack.show()
+
+}
+
+fun showToast(context: Context, message: String) {
+    val toast = Toast.makeText(context, message, Toast.LENGTH_LONG)
+    toast.show()
 }
