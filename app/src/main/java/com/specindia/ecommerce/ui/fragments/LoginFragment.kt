@@ -19,8 +19,9 @@ import com.specindia.ecommerce.R
 import com.specindia.ecommerce.databinding.FragmentLoginBinding
 import com.specindia.ecommerce.ui.activity.HomeActivity
 import com.specindia.ecommerce.ui.viewmodel.DataViewModel
-import com.specindia.ecommerce.util.*
 import com.specindia.ecommerce.util.emptyEditText
+import com.specindia.ecommerce.util.showMaterialSnack
+import com.specindia.ecommerce.util.showToast
 import com.specindia.ecommerce.util.startNewActivity
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -50,7 +51,7 @@ class LoginFragment : Fragment() {
             btnLogin.setOnClickListener {
                 if (isEmpty()) {
                     requireActivity().startNewActivity(HomeActivity::class.java)
-//                viewModel.saveUserLoggedIn(true)
+                    viewModel.saveUserLoggedIn(true)
                     showToast(requireContext(), "Login Successfully")
                 }
             }

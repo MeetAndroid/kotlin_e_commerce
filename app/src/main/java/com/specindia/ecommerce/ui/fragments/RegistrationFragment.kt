@@ -19,10 +19,6 @@ import com.specindia.ecommerce.databinding.FragmentRegistrationBinding
 import com.specindia.ecommerce.util.emptyEditText
 import com.specindia.ecommerce.util.showMaterialSnack
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.activity_home.view.*
-import kotlinx.android.synthetic.main.fragment_login.*
-import kotlinx.android.synthetic.main.fragment_login.etPassword
-import kotlinx.android.synthetic.main.fragment_registration.*
 import java.util.regex.Matcher
 import java.util.regex.Pattern
 

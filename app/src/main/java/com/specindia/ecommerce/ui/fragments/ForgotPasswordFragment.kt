@@ -10,7 +10,6 @@ import androidx.navigation.findNavController
 import com.specindia.ecommerce.databinding.FragmentForgotPasswordBinding
 import com.specindia.ecommerce.util.showMaterialSnack
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.fragment_forgot_password.*
 
 @AndroidEntryPoint
 class ForgotPasswordFragment : Fragment() {
@@ -26,17 +25,24 @@ class ForgotPasswordFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.btnForgotPassword.setOnClickListener {
-            if (binding.etForgotPasswordEmail.text.toString().trim().isEmpty()) {
-                showMaterialSnack(requireContext(), nestedScrollview, "Please enter email")
-            }else if(!Patterns.EMAIL_ADDRESS.matcher(binding.etForgotPasswordEmail.text.toString().trim())
-                    .matches()){
-                showMaterialSnack(requireContext(), nestedScrollview, "Please enter valid email")
-            }
-            else{
-                view.findNavController().popBackStack()
+        binding.apply {
+            btnForgotPassword.setOnClickListener {
+                if (etForgotPasswordEmail.text.toString().trim().isEmpty()) {
+                    showMaterialSnack(requireContext(), nestedScrollview, "Please enter email")
+                } else if (!Patterns.EMAIL_ADDRESS.matcher(
+                        etForgotPasswordEmail.text.toString().trim()
+                    )
+                        .matches()
+                ) {
+                    showMaterialSnack(
+                        requireContext(),
+                        nestedScrollview,
+                        "Please enter valid email"
+                    )
+                } else {
+                    view.findNavController().popBackStack()
+                }
             }
         }
     }
-
 }
