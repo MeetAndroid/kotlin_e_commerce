@@ -22,7 +22,7 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class OnBoardingActivity : AppCompatActivity() {
     private lateinit var binding: ActivityOnboardingBinding
-    private val viewModel by viewModels<DataViewModel>()
+    private val dataStoreViewModel by viewModels<DataViewModel>()
 
     data class OnBoardingData(val imageId: Int, val title: Int, val description: Int)
 
@@ -105,10 +105,10 @@ class OnBoardingActivity : AppCompatActivity() {
 
             tvNext.setOnClickListener {
                 if (tvNext.text.equals(getString(R.string.finish))) {
-                    viewModel.saveIsFirstTime(true)
+                    dataStoreViewModel.saveIsFirstTime(true)
                     startNewActivity(AuthActivity::class.java)
                 } else {
-                    viewModel.saveIsFirstTime(false)
+                    dataStoreViewModel.saveIsFirstTime(false)
                     viewPager.setCurrentItem(getItemOfViewPager(+1), true)
                 }
 

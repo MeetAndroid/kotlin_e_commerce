@@ -7,29 +7,27 @@ import android.text.SpannableStringBuilder
 import android.text.method.LinkMovementMethod
 import android.text.style.ClickableSpan
 import android.text.style.ForegroundColorSpan
-import android.util.Patterns
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.gson.Gson
 import com.specindia.ecommerce.R
+import com.specindia.ecommerce.api.network.NetworkResult
 import com.specindia.ecommerce.databinding.FragmentLoginBinding
+import com.specindia.ecommerce.models.request.Parameters
+import com.specindia.ecommerce.ui.activity.AuthActivity
 import com.specindia.ecommerce.ui.activity.HomeActivity
-import com.specindia.ecommerce.ui.viewmodel.DataViewModel
-import com.specindia.ecommerce.util.emptyEditText
-import com.specindia.ecommerce.util.showMaterialSnack
-import com.specindia.ecommerce.util.showToast
-import com.specindia.ecommerce.util.startNewActivity
+import com.specindia.ecommerce.util.*
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class LoginFragment : Fragment() {
 
     private lateinit var binding: FragmentLoginBinding
-    private val viewModel by viewModels<DataViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -44,15 +42,15 @@ class LoginFragment : Fragment() {
         setUpButtonClick(view)
         setSpannableText()
         startEditTextSpace()
+
     }
 
     private fun setUpButtonClick(view: View) {
         binding.apply {
             btnLogin.setOnClickListener {
                 if (isEmpty()) {
-                    requireActivity().startNewActivity(HomeActivity::class.java)
-                    viewModel.saveUserLoggedIn(true)
-                    showToast(requireContext(), "Login Successfully")
+                    callLoginApi(binding)
+                    observeResponse()
                 }
             }
 
@@ -61,6 +59,51 @@ class LoginFragment : Fragment() {
                     .navigate(R.id.action_loginFragment_to_forgotPasswordFragment)
             }
         }
+    }
+
+    private fun callLoginApi(binding: FragmentLoginBinding) {
+        val parameter = Parameters(
+            email = binding.etLoginEmail.text.toString().trim(),
+            password = binding.etPassword.text.toString().trim(),
+            firstName = "",
+            lastName = "",
+            number = ""
+        )
+        (activity as AuthActivity).authViewModel.doLogin(Gson().toJson(parameter))
+    }
+
+    private fun observeResponse() {
+        (activity as AuthActivity).authViewModel.loginResponse.observe(viewLifecycleOwner) { response ->
+            binding.progressBarLayout.progressBar.visible(false)
+
+            when (response) {
+                is NetworkResult.Success -> {
+                    requireActivity().startNewActivity(HomeActivity::class.java)
+                    (activity as AuthActivity).dataStoreViewModel.saveUserLoggedIn(true)
+                }
+                is NetworkResult.Error -> {
+                    showDialog(response.message.toString())
+                }
+                is NetworkResult.Loading -> {
+                    binding.progressBarLayout.progressBar.visible(true)
+                }
+            }
+        }
+    }
+
+    private fun showDialog(message: String) {
+        MaterialAlertDialogBuilder(requireActivity())
+            .setTitle(getString(R.string.app_name))
+            .setMessage(message)
+            .setPositiveButton(getString(R.string.ok)) { _, _ ->
+                clearFields(binding)
+            }
+            .show()
+    }
+
+    private fun clearFields(binding: FragmentLoginBinding) {
+        binding.etLoginEmail.setText("")
+        binding.etPassword.setText("")
     }
 
     private fun setSpannableText() {
@@ -98,16 +141,35 @@ class LoginFragment : Fragment() {
     private fun isEmpty(): Boolean {
         binding.apply {
             if (etLoginEmail.text.toString().trim().isEmpty()) {
-                showMaterialSnack(requireContext(), nestedScrollview, "Please enter email")
+                showMaterialSnack(
+                    requireContext(),
+                    nestedScrollview,
+                    getString(R.string.val_msg_enter_email)
+                )
                 return false
-            } else if (!Patterns.EMAIL_ADDRESS.matcher(etLoginEmail.text.toString().trim())
-                    .matches()
-            ) {
-                showMaterialSnack(requireContext(), nestedScrollview, "Please enter valid email")
-                return false
-            } else if (etPassword.text.toString().trim().isEmpty()) {
-                showMaterialSnack(requireContext(), nestedScrollview, "Please enter password")
-                return false
+            } else {
+                if (!isValidEmail(etLoginEmail.text.toString().trim())) {
+                    showMaterialSnack(
+                        requireContext(),
+                        nestedScrollview,
+                        getString(R.string.val_msg_enter_valid_email)
+                    )
+                    return false
+                } else if (etPassword.text.toString().trim().isEmpty()) {
+                    showMaterialSnack(
+                        requireContext(),
+                        nestedScrollview,
+                        getString(R.string.val_msg_enter_password)
+                    )
+                    return false
+                } else if (!requireActivity().isConnected) {
+                    showMaterialSnack(
+                        requireContext(),
+                        nestedScrollview,
+                        getString(R.string.message_no_internet_connection)
+                    )
+                    return false
+                }
             }
         }
         return true

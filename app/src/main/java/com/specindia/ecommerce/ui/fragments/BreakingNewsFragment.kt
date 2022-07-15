@@ -18,7 +18,7 @@ import com.specindia.ecommerce.ui.adapters.NewsAdapter
 import com.specindia.ecommerce.ui.viewmodel.NewsViewModel
 import com.specindia.ecommerce.ui.viewmodel.NewsViewModelProviderFactory
 import com.specindia.ecommerce.util.Constants.Companion.QUERY_PAGE_SIZE
-import com.specindia.ecommerce.util.Resource
+import com.specindia.ecommerce.api.NewsResource
 import com.specindia.ecommerce.util.snack
 
 class BreakingNewsFragment : Fragment() {
@@ -67,7 +67,7 @@ class BreakingNewsFragment : Fragment() {
     private fun observeData() {
         viewModel.breakingNews.observe(viewLifecycleOwner) { response ->
             when (response) {
-                is Resource.Success -> {
+                is NewsResource.Success -> {
                     hideProgressBar()
                     response.data?.let { newsResponse ->
                         // set data to adapter
@@ -76,13 +76,13 @@ class BreakingNewsFragment : Fragment() {
                         isLastPage = viewModel.breakingNewsPage == totalPages
                     }
                 }
-                is Resource.Error -> {
+                is NewsResource.Error -> {
                     hideProgressBar()
                     response.message?.let { message ->
                         requireActivity().snack(message)
                     }
                 }
-                is Resource.Loading -> {
+                is NewsResource.Loading -> {
                     showProgressBar()
                 }
             }

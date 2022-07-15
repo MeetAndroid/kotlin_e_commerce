@@ -11,7 +11,7 @@ android {
     compileSdk 32
 
     defaultConfig {
-        applicationId "com.specindia.ecommerce"
+        applicationId "com.spec.spec_ecommerce"
         minSdk 21
         targetSdk 32
         compileSdkVersion 31
@@ -22,6 +22,11 @@ android {
     }
 
     buildTypes {
+
+        debug {
+            buildConfigField 'String', "BASE_URL", '"http://10.37.57.105:8080/apis/v1/customer/"'
+        }
+
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
@@ -64,6 +69,9 @@ dependencies {
     def hiltVersion = "2.38.1"
     def brManagerVersion = "1.1.0"
     def indicator = "1.2.1"
+    def facebook_sdk_version = "14.1.0"
+    def circular_image_view = "3.1.0"
+    def scalars_version = "2.5.0"
 
     // Splash API to support Android 12 and higher devices
     implementation "androidx.core:core-splashscreen:$splashApiVersion"
@@ -112,6 +120,15 @@ dependencies {
 
     //on boarding indicator
     implementation "com.github.zhpanvip:viewpagerindicator:$indicator"
+
+    //FB SDK
+    implementation "com.facebook.android:facebook-android-sdk:$facebook_sdk_version"
+
+    // Circular Image View
+    implementation "de.hdodenhof:circleimageview:$circular_image_view"
+
+    // Scalars for converting Request Model class to JSON String
+    implementation "com.squareup.retrofit2:converter-scalars:$scalars_version"
 
     implementation 'androidx.core:core-ktx:1.8.0'
     implementation 'androidx.appcompat:appcompat:1.4.2'

@@ -1,0 +1,75 @@
+{
+  "project_info": {
+    "project_number": "341955479174",
+    "firebase_url": "https://spec-ecommerce-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "spec-ecommerce",
+    "storage_bucket": "spec-ecommerce.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:341955479174:android:4461155431a7b77730f307",
+        "android_client_info": {
+          "package_name": "com.spec.spec_ecommerce"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "341955479174-5j23ntsrrui93e9vboaqdvoqg9g8sr3s.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.spec.spec_ecommerce",
+            "certificate_hash": "c196de9039ac2d36f4b25d7ad91317fa414f394d"
+          }
+        },
+        {
+          "client_id": "341955479174-6e59g41laqnma2p3ikajespmrs3jjjcv.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.spec.spec_ecommerce",
+            "certificate_hash": "f4bdbac3218b4b5021319b2b7ab2e55cf1350bf1"
+          }
+        },
+        {
+          "client_id": "341955479174-mccpsimo7qfrtrno8tuuf76r09gbtbn2.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.spec.spec_ecommerce",
+            "certificate_hash": "36f6e1e47bd044d0b07da6aa8d94caf2da4add81"
+          }
+        },
+        {
+          "client_id": "341955479174-pbhe6me86gs4b9m8bdj7mjveqo8uo4tq.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.spec.spec_ecommerce",
+            "certificate_hash": "3bc2fffe0a025963f2b483dd40c3d7e6fa6db2f6"
+          }
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC25GipNA1okdTLOEN0Me5_aTPcZ-ZMjDA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "341955479174-te1hb8388csh4hlg2ibu0h3q3gnuapuo.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "341955479174-3v35reghcnf6ofbsenjigo6as20qt1k0.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.specEcommerce"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

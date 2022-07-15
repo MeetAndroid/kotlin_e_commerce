@@ -15,6 +15,7 @@ class DataStoreRepositoryImpl @Inject constructor(
     private val context: Context
 ) : DataStoreRepository {
 
+
     // SET
     override suspend fun putString(key: String, value: String) {
         val preferencesKey = stringPreferencesKey(key)
@@ -94,5 +95,4 @@ class DataStoreRepositoryImpl @Inject constructor(
         val preferences = context.dataStore.data.first()
         return preferences[preferencesKey]
     }
-
 }

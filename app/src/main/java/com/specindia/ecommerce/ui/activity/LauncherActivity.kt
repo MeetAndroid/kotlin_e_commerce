@@ -8,8 +8,6 @@ import androidx.appcompat.app.AppCompatActivity
 import com.specindia.ecommerce.databinding.ActivityLauncherBinding
 import com.specindia.ecommerce.ui.viewmodel.DataViewModel
 import com.specindia.ecommerce.util.Constants.Companion.SPLASH_SCREEN_TIME_OUT
-import com.specindia.ecommerce.util.hideActionBar
-import com.specindia.ecommerce.util.showFullScreen
 import com.specindia.ecommerce.util.startNewActivity
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -17,7 +15,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class LauncherActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityLauncherBinding
-    private val viewModel by viewModels<DataViewModel>()
+    private val dataStoreViewModel by viewModels<DataViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,8 +25,8 @@ class LauncherActivity : AppCompatActivity() {
     }
 
     private fun startLoadingContent() {
-        val isOnBoardingFinished = viewModel.getIsFirstTime()
-        val isUserLoggedIn = viewModel.getUserLoggedIn()
+        val isOnBoardingFinished = dataStoreViewModel.getIsFirstTime()
+        val isUserLoggedIn = dataStoreViewModel.getUserLoggedIn()
 
         val authActivity = AuthActivity::class.java
         val onBoardingActivity = OnBoardingActivity::class.java

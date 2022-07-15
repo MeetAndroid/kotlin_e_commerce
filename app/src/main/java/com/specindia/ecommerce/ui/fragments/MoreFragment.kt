@@ -5,9 +5,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.facebook.login.LoginManager
 import com.specindia.ecommerce.databinding.FragmentMoreBinding
 import com.specindia.ecommerce.util.logout
-import com.specindia.ecommerce.util.showLongToast
 import com.specindia.ecommerce.util.visible
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -25,7 +25,7 @@ class MoreFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setUpButtonClick(view)
+        setUpButtonClick()
         setUpHeader()
     }
 
@@ -41,7 +41,7 @@ class MoreFragment : Fragment() {
         }
     }
 
-    private fun setUpButtonClick(view: View) {
+    private fun setUpButtonClick() {
         binding.btnLogout.setOnClickListener {
             logout()
         }

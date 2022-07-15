@@ -1,7 +1,7 @@
 package com.specindia.ecommerce.api
 
 import com.specindia.ecommerce.models.NewsResponse
-import com.specindia.ecommerce.util.Constants.Companion.API_KEY
+import com.specindia.ecommerce.util.Constants.Companion.NEWS_API_KEY
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Query
@@ -17,6 +17,6 @@ interface NewsApi {
         @Query("page")
         pageNumber: Int = 1,
         @Query("apiKey")
-        apiKey: String = API_KEY
+        apiKey: String = NEWS_API_KEY
     ): Response<NewsResponse>
 }

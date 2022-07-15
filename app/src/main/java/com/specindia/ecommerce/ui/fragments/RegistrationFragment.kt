@@ -7,24 +7,26 @@ import android.text.SpannableStringBuilder
 import android.text.method.LinkMovementMethod
 import android.text.style.ClickableSpan
 import android.text.style.ForegroundColorSpan
-import android.util.Patterns
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.gson.Gson
 import com.specindia.ecommerce.R
+import com.specindia.ecommerce.api.network.NetworkResult
 import com.specindia.ecommerce.databinding.FragmentRegistrationBinding
-import com.specindia.ecommerce.util.emptyEditText
-import com.specindia.ecommerce.util.showMaterialSnack
+import com.specindia.ecommerce.models.request.Parameters
+import com.specindia.ecommerce.ui.activity.AuthActivity
+import com.specindia.ecommerce.util.*
 import dagger.hilt.android.AndroidEntryPoint
-import java.util.regex.Matcher
-import java.util.regex.Pattern
 
 @AndroidEntryPoint
 class RegistrationFragment : Fragment() {
     private lateinit var binding: FragmentRegistrationBinding
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -39,10 +41,62 @@ class RegistrationFragment : Fragment() {
         startEditTextSpace()
         binding.btnRegister.setOnClickListener {
             if (isEmpty()) {
-                view.findNavController().popBackStack()
+                callRegistrationApi(binding)
+                observeResponse()
             }
         }
+    }
 
+    private fun callRegistrationApi(binding: FragmentRegistrationBinding) {
+        val parameter = Parameters(
+            firstName = binding.etName.text.toString().trim(),
+            lastName = "Hello",
+            email = binding.etEmail.text.toString().trim(),
+            number = binding.etMobileNo.text.toString().trim(),
+            password = binding.etPassword.text.toString().trim()
+        )
+        (activity as AuthActivity).authViewModel.doRegistration(Gson().toJson(parameter))
+    }
+
+    private fun observeResponse() {
+        (activity as AuthActivity).authViewModel.registrationResponse.observe(viewLifecycleOwner) { response ->
+            binding.progressBarLayout.progressBar.visible(false)
+
+            when (response) {
+                is NetworkResult.Success -> {
+                    showDialog(response.data?.message.toString(), true)
+                }
+                is NetworkResult.Error -> {
+                    showDialog(response.message.toString(), false)
+                }
+                is NetworkResult.Loading -> {
+                    binding.progressBarLayout.progressBar.visible(true)
+                }
+            }
+        }
+    }
+
+    private fun showDialog(message: String, status: Boolean) {
+        MaterialAlertDialogBuilder(requireActivity())
+            .setTitle(getString(R.string.app_name))
+            .setMessage(message)
+            .setPositiveButton(getString(R.string.ok)) { _, _ ->
+                binding.root.findNavController().popBackStack()
+            }
+            .show()
+
+        if (!status) {
+            clearFields(binding)
+        }
+    }
+
+    private fun clearFields(binding: FragmentRegistrationBinding) {
+        binding.etName.setText("")
+        binding.etEmail.setText("")
+        binding.etMobileNo.setText("")
+        binding.etAddress.setText("")
+        binding.etPassword.setText("")
+        binding.etConfirmPassword.setText("")
     }
 
     private fun setSpannableText() {
@@ -80,58 +134,72 @@ class RegistrationFragment : Fragment() {
             etPassword.emptyEditText(etPassword)
             etConfirmPassword.emptyEditText(etConfirmPassword)
         }
-
     }
 
     private fun isEmpty(): Boolean {
         binding.apply {
             if (etName.text.toString().trim().isEmpty()) {
-                showMaterialSnack(requireContext(), nestedScrollviewSignup, "Please enter name")
+                showMaterialSnack(
+                    requireContext(),
+                    nestedScrollviewSignup,
+                    getString(R.string.val_msg_enter_name)
+                )
                 return false
             } else if (etEmail.text.toString().trim().isEmpty()) {
-                showMaterialSnack(requireContext(), nestedScrollviewSignup, "Please enter email")
+                showMaterialSnack(
+                    requireContext(),
+                    nestedScrollviewSignup,
+                    getString(R.string.val_msg_enter_email)
+                )
                 return false
-            } else if (!Patterns.EMAIL_ADDRESS.matcher(etEmail.text.toString().trim())
-                    .matches()
+            } else if (!isValidEmail(etEmail.text.toString().trim())
             ) {
                 showMaterialSnack(
                     requireContext(),
                     nestedScrollviewSignup,
-                    "Please enter valid email"
+                    getString(R.string.val_msg_enter_valid_email)
                 )
                 return false
             } else if (etMobileNo.text.toString().trim().isEmpty()) {
                 showMaterialSnack(
                     requireContext(),
                     nestedScrollviewSignup,
-                    "Please enter mobile number"
+                    getString(R.string.val_msg_enter_mobile_number)
                 )
                 return false
             } else if (etMobileNo.text.toString().trim().length < 10) {
                 showMaterialSnack(
                     requireContext(),
                     nestedScrollviewSignup,
-                    "Please enter valid mobile number"
+                    getString(R.string.val_msg_enter_valid_mobile_number)
                 )
                 return false
             } else if (etAddress.text.toString().trim().isEmpty()) {
-                showMaterialSnack(requireContext(), nestedScrollviewSignup, "Please enter address")
+                showMaterialSnack(
+                    requireContext(),
+                    nestedScrollviewSignup,
+                    getString(R.string.val_msg_enter_address)
+                )
                 return false
             } else if (etPassword.text.toString().trim().isEmpty()) {
-                showMaterialSnack(requireContext(), nestedScrollviewSignup, "Please enter password")
+                showMaterialSnack(
+                    requireContext(),
+                    nestedScrollviewSignup,
+                    getString(R.string.val_msg_enter_password)
+                )
                 return false
             } else if (!isValidPassword(etPassword.text.toString().trim())) {
                 showMaterialSnack(
                     requireContext(),
                     nestedScrollviewSignup,
-                    "Password minimum 8 character with at least one uppercase,one small case,one special symbol"
+                    getString(R.string.val_msg_password_requirenments)
                 )
                 return false
             } else if (etConfirmPassword.text.toString().trim().isEmpty()) {
                 showMaterialSnack(
                     requireContext(),
                     nestedScrollviewSignup,
-                    "Please enter confirm password"
+                    getString(R.string.val_msg_enter_confirm_password)
                 )
                 return false
             } else if (etPassword.text?.trim().toString() != etConfirmPassword.text?.trim()
@@ -140,7 +208,14 @@ class RegistrationFragment : Fragment() {
                 showMaterialSnack(
                     requireContext(),
                     nestedScrollviewSignup,
-                    "Password doesn't match"
+                    getString(R.string.val_msg_password_not_matched)
+                )
+                return false
+            } else if (!requireActivity().isConnected) {
+                showMaterialSnack(
+                    requireContext(),
+                    nestedScrollviewSignup,
+                    getString(R.string.message_no_internet_connection)
                 )
                 return false
             }
@@ -148,11 +223,4 @@ class RegistrationFragment : Fragment() {
         return true
     }
 
-    fun isValidPassword(password: String?): Boolean {
-        val pattern: Pattern
-        val PASSWORD_PATTERN = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,}$"
-        pattern = Pattern.compile(PASSWORD_PATTERN)
-        val matcher: Matcher = pattern.matcher(password)
-        return matcher.matches()
-    }
 }

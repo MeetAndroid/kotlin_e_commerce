@@ -13,6 +13,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.specindia.ecommerce.R
 import com.specindia.ecommerce.databinding.ActivityHomeBinding
 import com.specindia.ecommerce.ui.viewmodel.DataViewModel
+import com.specindia.ecommerce.util.logoutFromFacebook
 import com.specindia.ecommerce.util.startNewActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -24,7 +25,7 @@ class HomeActivity : AppCompatActivity() {
     private lateinit var navController: NavController
     private lateinit var appBarConfiguration: AppBarConfiguration
 
-    private val viewModel by viewModels<DataViewModel>()
+    val dataStoreViewModel by viewModels<DataViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -75,8 +76,8 @@ class HomeActivity : AppCompatActivity() {
 
 
     fun performLogout() = lifecycleScope.launch {
-
-        viewModel.saveUserLoggedIn(false)
+        logoutFromFacebook()
+        dataStoreViewModel.saveUserLoggedIn(false)
         startNewActivity(AuthActivity::class.java)
     }
 }

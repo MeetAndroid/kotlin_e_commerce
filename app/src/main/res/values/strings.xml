@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">EcommerceApp</string>
+    <string name="app_name">Ecommerce App</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="auth_fragment">Auth Fragment</string>
     <string name="message_wifi_connected">Wifi connected</string>
@@ -44,12 +44,28 @@
     <string name="don_t_have_an_account_sign_up">Don\'t have an Account? Sign Up</string>
     <string name="sign_up">Sign Up</string>
     <string name="add_your_details_to_sign_up">Add your details to sign up</string>
+
     <string name="hint_name">Name</string>
     <string name="hint_email">Email</string>
     <string name="hint_mobile_no">Mobile No</string>
     <string name="hint_address">Address</string>
     <string name="hint_password">Password</string>
     <string name="hint_confirm_password">Confirm Password</string>
+
     <string name="title_good_morning_user">Good morning, %1$s!</string>
+
+    <string name="ok">OK</string>
+    <string name="cancel">Cancel</string>
+
+    <string name="val_msg_enter_name">Please enter name</string>
+    <string name="val_msg_enter_email">Please enter email</string>
+    <string name="val_msg_enter_valid_email">Please enter valid email</string>
+    <string name="val_msg_enter_mobile_number">Please enter mobile number</string>
+    <string name="val_msg_enter_valid_mobile_number">Please enter valid mobile number</string>
+    <string name="val_msg_enter_address">Please enter address</string>
+    <string name="val_msg_enter_password">Please enter password</string>
+    <string name="val_msg_enter_confirm_password">Please enter confirm password</string>
+    <string name="val_msg_password_requirenments">Password minimum 8 character with at least one uppercase,one small case,one special symbol</string>
+    <string name="val_msg_password_not_matched">Password doesn\'t match</string>
 
 </resources>

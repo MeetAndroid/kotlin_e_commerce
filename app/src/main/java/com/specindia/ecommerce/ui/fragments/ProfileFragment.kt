@@ -6,8 +6,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
+import com.bumptech.glide.Glide
 import com.specindia.ecommerce.R
 import com.specindia.ecommerce.databinding.FragmentProfileBinding
+import com.specindia.ecommerce.ui.activity.HomeActivity
 import com.specindia.ecommerce.util.visible
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -26,6 +28,7 @@ class ProfileFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setUpHeader()
+        setUpProfileData()
 
         binding.btnProfileDetails.setOnClickListener {
             view.findNavController().navigate(R.id.action_profileFragment_to_profileDetailsFragment)
@@ -44,4 +47,18 @@ class ProfileFragment : Fragment() {
         }
     }
 
+    private fun setUpProfileData() {
+        with(binding) {
+            with((activity as HomeActivity).dataStoreViewModel) {
+
+                Glide.with(ivProfileImage).load(getProfileUrl()).into(ivProfileImage)
+
+                tvToken.text = getFBAccessToken()
+                tvId.text = getUserId()
+                tvFirstName.text = getFirstName()
+                tvLastName.text = getLastName()
+                tvEmail.text = getEmail()
+            }
+        }
+    }
 }
