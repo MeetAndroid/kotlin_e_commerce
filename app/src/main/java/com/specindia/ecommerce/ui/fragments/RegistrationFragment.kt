@@ -98,7 +98,6 @@ class RegistrationFragment : Fragment() {
                 }
             }
             .show()
-
         if (!status) {
             clearFields(binding)
         }
