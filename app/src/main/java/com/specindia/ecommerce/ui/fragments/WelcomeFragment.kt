@@ -12,6 +12,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.ViewModelProvider
@@ -20,19 +21,21 @@ import androidx.navigation.findNavController
 import com.facebook.*
 import com.facebook.login.LoginManager
 import com.facebook.login.LoginResult
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.gson.Gson
 import com.specindia.ecommerce.R
+import com.specindia.ecommerce.api.network.NetworkResult
 import com.specindia.ecommerce.databinding.FragmentWelcomeBinding
+import com.specindia.ecommerce.models.request.Parameters
 import com.specindia.ecommerce.ui.activity.AuthActivity
 import com.specindia.ecommerce.ui.activity.HomeActivity
 import com.specindia.ecommerce.ui.viewmodel.FaceBookLoginViewModel
-import com.specindia.ecommerce.util.getUserDetailsFromFB
-import com.specindia.ecommerce.util.showLongToast
-import com.specindia.ecommerce.util.showShortToast
-import com.specindia.ecommerce.util.startNewActivity
+import com.specindia.ecommerce.util.*
+import com.specindia.ecommerce.util.Constants.Companion.SOCIAL_TYPE_FB
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.suspendCancellableCoroutine
+import org.json.JSONException
 import kotlin.coroutines.resumeWithException
 
 
@@ -41,7 +44,16 @@ class WelcomeFragment : Fragment() {
 
     private lateinit var binding: FragmentWelcomeBinding
     private lateinit var fbLoginViewModel: FaceBookLoginViewModel
-    private var accessTokenTracker: AccessTokenTracker? = null
+    private lateinit var customProgressDialog: AlertDialog
+
+    private var fbToken: String = ""
+    private var fbUserId: String = ""
+    private var fbUserFirstName: String = ""
+    private var fbUserLastName: String = ""
+    private var fbUserEmail: String = ""
+    private var fbUserProfileUrl: String = ""
+
+//    private var accessTokenTracker: AccessTokenTracker? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -50,10 +62,8 @@ class WelcomeFragment : Fragment() {
         binding = FragmentWelcomeBinding.inflate(layoutInflater)
         setSpannableText()
         fbLoginViewModel = ViewModelProvider(this)[FaceBookLoginViewModel::class.java]
-        accessTrackerToken()
         return binding.root
     }
-
 
     private fun setSpannableText() {
         val spanText = SpannableStringBuilder(getString(R.string.already_have_an_account_login))
@@ -84,6 +94,14 @@ class WelcomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setUpButtonClick(view)
+        setUpProgressDialog()
+    }
+
+    private fun setUpProgressDialog() {
+        customProgressDialog = showProgressDialog {
+            cancelable = false
+            isBackGroundTransparent = true
+        }
     }
 
     private fun setUpButtonClick(view: View) {
@@ -94,34 +112,74 @@ class WelcomeFragment : Fragment() {
             }
 
             btnFacebook.setOnClickListener {
-                requireActivity().showShortToast("Coming soon...")
+                customProgressDialog.show()
                 doFBLogin()
+                observeFBResponse()
             }
 
             btnGooglePlus.setOnClickListener {
-                requireActivity().showShortToast("Coming soon...")
+
             }
         }
     }
 
+    private fun observeFBResponse() {
+        (activity as AuthActivity).authViewModel.socialResponse.observe(viewLifecycleOwner) { response ->
 
-    private fun accessTrackerToken() {
-        accessTokenTracker = object : AccessTokenTracker() {
-            override fun onCurrentAccessTokenChanged(
-                oldAccessToken: AccessToken?,
-                currentAccessToken: AccessToken?
-            ) {
-                if (currentAccessToken == null) {
-                    // User is loggedOut
-                    // Clear data
-                    // User Logged Out
-                } else {
-                    getUserDetailsFromFB(currentAccessToken, (activity as AuthActivity))
+            when (response) {
+                is NetworkResult.Success -> {
+                    customProgressDialog.hide()
+
+                    saveUserFBDetails(
+                        (activity as AuthActivity),
+                        fbToken,
+                        fbUserId,
+                        fbUserEmail,
+                        fbUserFirstName,
+                        fbUserLastName,
+                        fbUserProfileUrl
+                    )
+                    requireActivity().showShortToast("FB Login Successfully ...")
+                    goToHomeActivity()
+
+                }
+                is NetworkResult.Error -> {
+                    customProgressDialog.hide()
+                    showDialog(response.message.toString())
+                }
+                is NetworkResult.Loading -> {
                 }
             }
         }
-
     }
+
+
+    private fun showDialog(message: String) {
+        MaterialAlertDialogBuilder(requireActivity())
+            .setTitle(getString(R.string.app_name))
+            .setMessage(message)
+            .setPositiveButton(getString(R.string.ok)) { _, _ ->
+
+            }
+            .show()
+    }
+//    private fun accessTrackerToken() {
+//        accessTokenTracker = object : AccessTokenTracker() {
+//            override fun onCurrentAccessTokenChanged(
+//                oldAccessToken: AccessToken?,
+//                currentAccessToken: AccessToken?
+//            ) {
+//                if (currentAccessToken == null) {
+//                    // User is loggedOut
+//                    // Clear data
+//                    // User Logged Out
+//                } else {
+//                    getUserDetailsFromFB(currentAccessToken, (activity as AuthActivity))
+//                }
+//            }
+//        }
+//
+//    }
 
     @OptIn(ExperimentalCoroutinesApi::class)
     private fun doFBLogin() {
@@ -132,15 +190,22 @@ class WelcomeFragment : Fragment() {
                 listOf("email", "public_profile")
             )
             fragmentActivity.finishFacebookLoginToThirdParty { loginResult ->
-                val fbAccessToken = loginResult.accessToken
-                val fbToken = fbAccessToken.token
-                Log.d("FB", "Token $fbToken")
-                Log.d("FB", "User Id ${fbAccessToken.userId}")
-                delay(2000)
-                goToHomeActivity()
+                fbToken = loginResult.accessToken.token
                 requireContext().showLongToast(fbToken)
             }
         }
+    }
+
+    private fun callSocialLoginApi(fbToken: String) {
+        val parameter = Parameters(
+            firstName = fbUserFirstName,
+            lastName = fbUserLastName,
+            socialId = fbToken,
+            socialType = SOCIAL_TYPE_FB
+
+        )
+        (activity as AuthActivity).authViewModel.doSocialLogin(Gson().toJson(parameter))
+
     }
 
     private fun goToHomeActivity() {
@@ -158,8 +223,10 @@ class WelcomeFragment : Fragment() {
 
                     override fun onSuccess(result: LoginResult) {
                         Log.d("FB", "Success $result")
-                        requireContext().showLongToast("Success")
-                        continuation.resume(result) {}
+                        getUserDetailsFromFB(result.accessToken)
+                        requireContext().showLongToast("FB Token got successfully....")
+                        continuation.resume(result) {
+                        }
                     }
 
                     override fun onCancel() {
@@ -195,7 +262,7 @@ class WelcomeFragment : Fragment() {
 
     override fun onDestroy() {
         super.onDestroy()
-        accessTokenTracker?.stopTracking()
+//        accessTokenTracker?.stopTracking()
     }
 
 //    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -206,4 +273,42 @@ class WelcomeFragment : Fragment() {
 //        super.onActivityResult(requestCode, resultCode, data)
 //    }
 
+
+    // Get FB details from Graph Request
+    fun getUserDetailsFromFB(accessToken: AccessToken) {
+        val request =
+            GraphRequest.newMeRequest(
+                accessToken
+            ) { obj, _ ->
+                try {
+                    fbUserId = obj?.optString(Constants.FIELD_FB_ID, "").toString()
+                    fbUserFirstName = obj?.optString(Constants.FIELD_FB_FIRST_NAME, "").toString()
+                    fbUserLastName = obj?.optString(Constants.FIELD_FB_LAST_NAME, "").toString()
+
+                    fbUserEmail = obj?.optString(Constants.FIELD_FB_EMAIL, "").toString()
+                    fbUserProfileUrl =
+                        obj?.getJSONObject(Constants.FIELD_FB_PICTURE)
+                            ?.getJSONObject(Constants.FIELD_FB_DATA)
+                            ?.getString(Constants.FIELD_FB_URL).toString()
+
+                    Log.d(
+                        "GRAPH", """UserID = $fbUserId
+                        |First Name = $fbUserFirstName
+                        |Last Name = $fbUserLastName
+                        |Email Id = $fbUserEmail
+                        |Profile URL = $fbUserProfileUrl
+                    """.trimMargin()
+                    )
+                    callSocialLoginApi(fbToken)
+
+                } catch (e: JSONException) {
+                    e.printStackTrace()
+                }
+            }
+
+        val bundle = Bundle()
+        bundle.putString(Constants.KEY_FIELDS, Constants.VALUE_FIELDS)
+        request.parameters = bundle
+        request.executeAsync()
+    }
 }

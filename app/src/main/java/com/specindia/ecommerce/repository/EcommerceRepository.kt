@@ -1,10 +1,11 @@
 package com.specindia.ecommerce.repository
 
 import com.specindia.ecommerce.api.datasource.EcommerceRemoteDataSource
-import com.specindia.ecommerce.models.response.registration.RegistrationResponse
 import com.specindia.ecommerce.api.network.BaseApiResponse
 import com.specindia.ecommerce.api.network.NetworkResult
 import com.specindia.ecommerce.models.response.login.LoginResponse
+import com.specindia.ecommerce.models.response.registration.RegistrationResponse
+import com.specindia.ecommerce.models.response.social.SocialLoginResponse
 import dagger.hilt.android.scopes.ActivityRetainedScoped
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -25,6 +26,12 @@ class EcommerceRepository @Inject constructor(
     suspend fun doLogin(parameters: String): Flow<NetworkResult<LoginResponse>> {
         return flow {
             emit(safeApiCall { remoteDataSource.doLogin(parameters) })
+        }.flowOn(Dispatchers.IO)
+    }
+
+    suspend fun doSocialLogin(parameters: String): Flow<NetworkResult<SocialLoginResponse>> {
+        return flow {
+            emit(safeApiCall { remoteDataSource.doSocialLogin(parameters) })
         }.flowOn(Dispatchers.IO)
     }
 }

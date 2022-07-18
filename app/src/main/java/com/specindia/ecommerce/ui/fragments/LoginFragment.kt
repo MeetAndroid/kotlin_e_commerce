@@ -58,6 +58,7 @@ class LoginFragment : Fragment() {
         binding.apply {
             btnLogin.setOnClickListener {
                 if (isEmpty()) {
+                    customProgressDialog.show()
                     callLoginApi(binding)
                     observeResponse()
                 }
@@ -73,10 +74,7 @@ class LoginFragment : Fragment() {
     private fun callLoginApi(binding: FragmentLoginBinding) {
         val parameter = Parameters(
             email = binding.etLoginEmail.text.toString().trim(),
-            password = binding.etPassword.text.toString().trim(),
-            firstName = "",
-            lastName = "",
-            number = ""
+            password = binding.etPassword.text.toString().trim()
         )
         (activity as AuthActivity).authViewModel.doLogin(Gson().toJson(parameter))
     }
@@ -87,6 +85,7 @@ class LoginFragment : Fragment() {
             when (response) {
                 is NetworkResult.Success -> {
                     customProgressDialog.hide()
+                    requireActivity().showShortToast("Login Successfully ...")
                     requireActivity().startNewActivity(HomeActivity::class.java)
                     (activity as AuthActivity).dataStoreViewModel.saveUserLoggedIn(true)
                 }

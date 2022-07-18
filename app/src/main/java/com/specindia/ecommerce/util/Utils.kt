@@ -197,41 +197,7 @@ fun logoutFromFacebook() {
     LoginManager.getInstance().logOut()
 }
 
-// Get FB details from Graph Request
-fun getUserDetailsFromFB(accessToken: AccessToken, activity: Activity) {
-    val request =
-        GraphRequest.newMeRequest(
-            accessToken
-        ) { obj, _ ->
-            try {
-                val id = obj?.optString(FIELD_FB_ID, "")
-                val firstName = obj?.optString(FIELD_FB_FIRST_NAME, "")
-                val lastName = obj?.optString(FIELD_FB_LAST_NAME, "")
-                val email = obj?.optString(FIELD_FB_EMAIL, "")
-                val imageUrl =
-                    obj?.getJSONObject(FIELD_FB_PICTURE)?.getJSONObject(FIELD_FB_DATA)
-                        ?.getString(FIELD_FB_URL)
 
-                saveUserFBDetails(
-                    activity,
-                    accessToken.token,
-                    id!!,
-                    email!!,
-                    firstName!!,
-                    lastName!!,
-                    imageUrl!!
-                )
-
-            } catch (e: JSONException) {
-                e.printStackTrace()
-            }
-        }
-
-    val bundle = Bundle()
-    bundle.putString(KEY_FIELDS, VALUE_FIELDS)
-    request.parameters = bundle
-    request.executeAsync()
-}
 
 // Save FB details in data store
 fun saveUserFBDetails(
