@@ -15,11 +15,12 @@ class Constants {
         const val WRITE_TIME_OUT = 120L
         const val CONNECTION_TIME_OUT = 120L
 
-        const val CONTENT_TYPE_JSON="Content-Type: application/json"
+        const val CONTENT_TYPE_JSON = "Content-Type: application/json"
 
         // End Point
         const val SIGN_UP = "signUp"
         const val LOGIN = "login"
+        const val SOCIAL_SIGN_UP = "socialSignUp"
 
         // Data Store Constants
         const val KEY_IS_FIRST_TIME = "isFirstTime"
@@ -28,6 +29,7 @@ class Constants {
         // FB Fields
         const val KEY_FIELDS = "fields"
         const val VALUE_FIELDS = "id,email,first_name,last_name,picture.type(large)"
+
 
         // FB JSON data
         const val FIELD_FB_ID = "id"
@@ -46,5 +48,8 @@ class Constants {
         const val KEY_USER_FIRST_NAME = "user_first_name"
         const val KEY_USER_LAST_NAME = "user_last_name"
         const val KEY_USER_PROFILE_URL = "user_profile_url"
+
+        const val SOCIAL_TYPE_FB = 1
+        const val SOCIAL_TYPE_GOOGLE = 2
     }
 }

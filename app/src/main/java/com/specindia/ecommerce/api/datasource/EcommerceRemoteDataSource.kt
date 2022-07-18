@@ -9,4 +9,7 @@ class EcommerceRemoteDataSource @Inject constructor(private val apiService: Ecom
 
     suspend fun doLogin(parameters: String) =
         apiService.doLogin(parameters)
+
+    suspend fun doSocialLogin(parameters: String) =
+        apiService.doSocialSignUp(parameters)
 }
