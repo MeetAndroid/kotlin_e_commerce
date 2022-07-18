@@ -1,44 +1,17 @@
 <resources>
-    <!-- Base application theme. -->
     <style name="Theme.EcommerceApp" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/purple_500</item>
-        <item name="colorPrimaryVariant">@color/purple_700</item>
-        <item name="colorOnPrimary">@color/white</item>
-        <!-- Secondary brand color. -->
-        <item name="colorSecondary">@color/teal_200</item>
-        <item name="colorSecondaryVariant">@color/teal_700</item>
-        <item name="colorOnSecondary">@color/black</item>
-        <!-- Status bar color. -->
-        <item name="android:windowLightStatusBar">true</item>
-        <item name="android:statusBarColor">@color/colorStatusBar</item>
-        <!-- Customize your theme here. -->
-    </style>
-
-    <style name="Theme.EcommerceApp.Home" parent="Theme.MaterialComponents.DayNight.NoActionBar">
-        <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/purple_500</item>
-        <item name="colorPrimaryVariant">@color/purple_700</item>
-        <item name="colorOnPrimary">@color/white</item>
-        <!-- Secondary brand color. -->
-        <item name="colorSecondary">@color/teal_200</item>
-        <item name="colorSecondaryVariant">@color/teal_700</item>
-        <item name="colorOnSecondary">@color/black</item>
-        <!-- Status bar color. -->
-        <item name="android:windowLightStatusBar">true</item>
-        <item name="android:statusBarColor">@color/colorStatusBar</item>
-        <!-- Customize your theme here. -->
-    </style>
-
-    <style name="SplashScreen" parent="Theme.AppCompat.DayNight.NoActionBar">
         <item name="android:windowDisablePreview">true</item>
-        <item name="android:statusBarColor">@color/white</item>
+        <item name="colorPrimary">@color/purple_500</item>
+        <item name="colorPrimaryVariant">@color/purple_700</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <!-- Secondary brand color. -->
+        <item name="colorSecondary">@color/teal_200</item>
+        <item name="colorSecondaryVariant">@color/teal_700</item>
+        <item name="colorOnSecondary">@color/black</item>
+        <!-- Status bar color. -->
         <item name="android:windowLightStatusBar">true</item>
+        <item name="android:statusBarColor">@color/colorStatusBar</item>
+        <!-- Customize your theme here. -->
     </style>
-
-    <style name="MyTheme.ActionBar.TitleTextStyle" parent="@android:style/TextAppearance">
-        <item name="android:textColor">#FF0000</item>
-        <item name="android:textSize">12sp</item>
-    </style>
-
 </resources>
