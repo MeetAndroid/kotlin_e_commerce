@@ -67,5 +67,6 @@
     <string name="val_msg_enter_confirm_password">Please enter confirm password</string>
     <string name="val_msg_password_requirenments">Password minimum 8 character with at least one uppercase,one small case,one special symbol</string>
     <string name="val_msg_password_not_matched">Password doesn\'t match</string>
+    <string name="submit">Submit</string>
 
 </resources>
