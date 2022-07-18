@@ -69,4 +69,8 @@
     <string name="val_msg_password_not_matched">Password doesn\'t match</string>
     <string name="submit">Submit</string>
 
+    <string name="verify_your_email">Verify your Email</string>
+    <string name="we_have_sent_an_otp_your_email">We have sent an OTP your email</string>
+    <string name="verify">Verify</string>
+    <string name="reset_password">Reset Password</string>
 </resources>

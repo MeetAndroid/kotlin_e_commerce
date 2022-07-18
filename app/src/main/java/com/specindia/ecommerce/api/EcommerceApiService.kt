@@ -13,6 +13,7 @@ import retrofit2.http.Headers
 import retrofit2.http.POST
 
 interface EcommerceApiService {
+
     @Headers(CONTENT_TYPE_JSON)
     @POST(SIGN_UP)
     suspend fun doRegistration(@Body parameters: String): Response<RegistrationResponse>

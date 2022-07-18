@@ -12,7 +12,7 @@ android {
 
     defaultConfig {
         applicationId "com.spec.spec_ecommerce"
-        minSdk 21
+        minSdk 22
         targetSdk 32
         compileSdkVersion 31
         versionCode 1
@@ -133,6 +133,9 @@ dependencies {
 
     // Lottie Animation Lib
     implementation "com.airbnb.android:lottie:$lottie_version"
+
+    //otp view
+    implementation 'com.github.pdrozz:pinview:1.0.2'
 
     implementation 'androidx.core:core-ktx:1.8.0'
     implementation 'androidx.appcompat:appcompat:1.4.2'
