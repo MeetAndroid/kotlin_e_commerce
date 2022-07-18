@@ -72,6 +72,7 @@ dependencies {
     def facebook_sdk_version = "14.1.0"
     def circular_image_view = "3.1.0"
     def scalars_version = "2.5.0"
+    def lottie_version =  "3.4.0"
 
     // Splash API to support Android 12 and higher devices
     implementation "androidx.core:core-splashscreen:$splashApiVersion"
@@ -129,6 +130,9 @@ dependencies {
 
     // Scalars for converting Request Model class to JSON String
     implementation "com.squareup.retrofit2:converter-scalars:$scalars_version"
+
+    // Lottie Animation Lib
+    implementation "com.airbnb.android:lottie:$lottie_version"
 
     implementation 'androidx.core:core-ktx:1.8.0'
     implementation 'androidx.appcompat:appcompat:1.4.2'

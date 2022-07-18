@@ -40,6 +40,7 @@ import com.specindia.ecommerce.util.Constants.Companion.FIELD_FB_PICTURE
 import com.specindia.ecommerce.util.Constants.Companion.FIELD_FB_URL
 import com.specindia.ecommerce.util.Constants.Companion.KEY_FIELDS
 import com.specindia.ecommerce.util.Constants.Companion.VALUE_FIELDS
+import com.specindia.ecommerce.util.dialogs.CustomProgressDialog
 import kotlinx.coroutines.launch
 import org.json.JSONException
 import java.security.MessageDigest
@@ -277,6 +278,15 @@ suspend inline fun AlertDialog.Builder.alert(
     this
 }
 
+inline fun Activity.showProgressDialog(func: CustomProgressDialog.() -> Unit): AlertDialog =
+    CustomProgressDialog(this).apply {
+        func()
+    }.create()
+
+inline fun Fragment.showProgressDialog(func: CustomProgressDialog.() -> Unit): AlertDialog =
+    CustomProgressDialog(this.requireContext()).apply {
+        func()
+    }.create()
 
 
 

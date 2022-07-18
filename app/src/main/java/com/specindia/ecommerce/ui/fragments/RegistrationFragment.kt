@@ -11,6 +11,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -23,10 +24,11 @@ import com.specindia.ecommerce.ui.activity.AuthActivity
 import com.specindia.ecommerce.util.*
 import dagger.hilt.android.AndroidEntryPoint
 
+
 @AndroidEntryPoint
 class RegistrationFragment : Fragment() {
     private lateinit var binding: FragmentRegistrationBinding
-
+    private lateinit var customProgressDialog: AlertDialog
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -39,11 +41,21 @@ class RegistrationFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         setSpannableText()
         startEditTextSpace()
+        setUpProgressDialog()
+
         binding.btnRegister.setOnClickListener {
             if (isEmpty()) {
+                customProgressDialog.show()
                 callRegistrationApi(binding)
                 observeResponse()
             }
+        }
+    }
+
+    private fun setUpProgressDialog() {
+        customProgressDialog = showProgressDialog {
+            cancelable = false
+            isBackGroundTransparent = true
         }
     }
 
@@ -60,17 +72,17 @@ class RegistrationFragment : Fragment() {
 
     private fun observeResponse() {
         (activity as AuthActivity).authViewModel.registrationResponse.observe(viewLifecycleOwner) { response ->
-            binding.progressBarLayout.progressBar.visible(false)
-
             when (response) {
                 is NetworkResult.Success -> {
+                    customProgressDialog.hide()
                     showDialog(response.data?.message.toString(), true)
                 }
                 is NetworkResult.Error -> {
+                    customProgressDialog.hide()
                     showDialog(response.message.toString(), false)
                 }
                 is NetworkResult.Loading -> {
-                    binding.progressBarLayout.progressBar.visible(true)
+
                 }
             }
         }
@@ -81,7 +93,9 @@ class RegistrationFragment : Fragment() {
             .setTitle(getString(R.string.app_name))
             .setMessage(message)
             .setPositiveButton(getString(R.string.ok)) { _, _ ->
-                binding.root.findNavController().popBackStack()
+                if (status) {
+                    binding.root.findNavController().popBackStack()
+                }
             }
             .show()
 

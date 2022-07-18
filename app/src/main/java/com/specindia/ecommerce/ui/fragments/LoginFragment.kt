@@ -11,6 +11,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -28,6 +29,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class LoginFragment : Fragment() {
 
     private lateinit var binding: FragmentLoginBinding
+    private lateinit var customProgressDialog: AlertDialog
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -42,7 +44,14 @@ class LoginFragment : Fragment() {
         setUpButtonClick(view)
         setSpannableText()
         startEditTextSpace()
+        setUpProgressDialog()
+    }
 
+    private fun setUpProgressDialog() {
+        customProgressDialog = showProgressDialog {
+            cancelable = false
+            isBackGroundTransparent = true
+        }
     }
 
     private fun setUpButtonClick(view: View) {
@@ -74,18 +83,18 @@ class LoginFragment : Fragment() {
 
     private fun observeResponse() {
         (activity as AuthActivity).authViewModel.loginResponse.observe(viewLifecycleOwner) { response ->
-            binding.progressBarLayout.progressBar.visible(false)
 
             when (response) {
                 is NetworkResult.Success -> {
+                    customProgressDialog.hide()
                     requireActivity().startNewActivity(HomeActivity::class.java)
                     (activity as AuthActivity).dataStoreViewModel.saveUserLoggedIn(true)
                 }
                 is NetworkResult.Error -> {
+                    customProgressDialog.hide()
                     showDialog(response.message.toString())
                 }
                 is NetworkResult.Loading -> {
-                    binding.progressBarLayout.progressBar.visible(true)
                 }
             }
         }
