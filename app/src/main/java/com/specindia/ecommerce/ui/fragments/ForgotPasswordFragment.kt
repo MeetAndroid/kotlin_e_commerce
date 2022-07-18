@@ -5,9 +5,12 @@ import android.util.Patterns
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
+import com.specindia.ecommerce.R
 import com.specindia.ecommerce.databinding.FragmentForgotPasswordBinding
+import com.specindia.ecommerce.util.emptyEditText
 import com.specindia.ecommerce.util.showMaterialSnack
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -26,6 +29,7 @@ class ForgotPasswordFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.apply {
+            etForgotPasswordEmail.emptyEditText(etForgotPasswordEmail)
             btnForgotPassword.setOnClickListener {
                 if (etForgotPasswordEmail.text.toString().trim().isEmpty()) {
                     showMaterialSnack(requireContext(), nestedScrollview, "Please enter email")
@@ -40,7 +44,10 @@ class ForgotPasswordFragment : Fragment() {
                         "Please enter valid email"
                     )
                 } else {
-                    view.findNavController().popBackStack()
+                    val email = binding.etForgotPasswordEmail.text.toString().trim()
+                    val bundle = bundleOf("key_email" to email)
+                    view.findNavController()
+                        .navigate(R.id.action_forgotPasswordFragment_to_otpFragment, bundle)
                 }
             }
         }
