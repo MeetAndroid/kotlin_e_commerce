@@ -42,6 +42,7 @@ class ResetPasswordFragment : Fragment() {
 
 
     private fun isEmpty(): Boolean {
+
         binding.apply {
             if (etPassword.text.toString().trim().isEmpty()) {
                 showMaterialSnack(requireContext(), llResetPassword, "Please enter password")
