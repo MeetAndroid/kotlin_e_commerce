@@ -16,7 +16,6 @@ import dagger.hilt.android.AndroidEntryPoint
 class ResetPasswordFragment : Fragment() {
 
     private lateinit var binding: FragmentResetPasswordBinding
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
