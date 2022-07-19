@@ -8,6 +8,8 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.LinearSnapHelper
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.gson.Gson
 import com.specindia.ecommerce.R
@@ -15,10 +17,9 @@ import com.specindia.ecommerce.api.network.NetworkResult
 import com.specindia.ecommerce.databinding.FragmentHomeBinding
 import com.specindia.ecommerce.models.response.AuthResponseData
 import com.specindia.ecommerce.ui.activity.HomeActivity
-import com.specindia.ecommerce.util.getHeaderMap
-import com.specindia.ecommerce.util.showLongToast
-import com.specindia.ecommerce.util.showProgressDialog
-import com.specindia.ecommerce.util.visible
+import com.specindia.ecommerce.ui.adapters.PopularRestaurantsAdapter
+import com.specindia.ecommerce.ui.adapters.TopProductsAdapter
+import com.specindia.ecommerce.util.*
 import dagger.hilt.android.AndroidEntryPoint
 
 
@@ -37,6 +38,7 @@ class HomeFragment : Fragment() {
         return binding.root
     }
 
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -46,10 +48,19 @@ class HomeFragment : Fragment() {
         val userData = (activity as HomeActivity).dataStoreViewModel.getLoggedInUserData()
         val data = Gson().fromJson(userData, AuthResponseData::class.java)
 
-//        setUpProgressDialog()
-//        getUserDetails(data)
-//        callDashBoardListApi(data)
-//        observeResponse()
+        setUpProgressDialog()
+        getUserDetails(data)
+        setUpRecyclerView()
+        callDashBoardListApi(data)
+        observeResponse()
+
+        restaurantsAdapter.setOnItemClickListener {
+            requireActivity().showLongToast("Restaurant clicked")
+        }
+
+        topProductAdapter.setOnItemClickListener {
+            requireActivity().showLongToast("Top Product clicked")
+        }
 
         binding.btnHomeMenuDetails.setOnClickListener {
             it.findNavController().navigate(R.id.action_homeFragment_to_homeDetailsFragment)
@@ -61,6 +72,31 @@ class HomeFragment : Fragment() {
             cancelable = false
             isBackGroundTransparent = true
         }
+    }
+
+    // Init recycler view
+    private fun setUpRecyclerView() {
+
+        // Top Restaurants
+        restaurantsAdapter = PopularRestaurantsAdapter()
+
+        val linearSnapHelper: LinearSnapHelper = SnapHelper()
+
+        binding.rvPopularRestaurants.apply {
+            adapter = restaurantsAdapter
+            layoutManager =
+                LinearLayoutManager(requireActivity(), LinearLayoutManager.HORIZONTAL, false)
+        }
+        linearSnapHelper.attachToRecyclerView(binding.rvPopularRestaurants)
+
+        // Top Products
+        topProductAdapter = TopProductsAdapter()
+        binding.rvTopProducts.apply {
+            adapter = topProductAdapter
+            layoutManager =
+                LinearLayoutManager(requireActivity(), LinearLayoutManager.HORIZONTAL, false)
+        }
+
     }
 
     private fun getUserDetails(data: AuthResponseData) {
@@ -102,7 +138,6 @@ class HomeFragment : Fragment() {
         }
     }
 
-
     private fun callDashBoardListApi(data: AuthResponseData) {
         customProgressDialog.show()
         (activity as HomeActivity).homeViewModel.getDashboardList(getHeaderMap(data.token, true))
@@ -114,7 +149,16 @@ class HomeFragment : Fragment() {
 
             when (response) {
                 is NetworkResult.Success -> {
-                    Log.d("DashBoard", Gson().toJson(response.data?.data))
+                    response.data?.let { dashboardListResponse ->
+
+                        if (dashboardListResponse.data.popularRestaurents.size > 0) {
+                            restaurantsAdapter.differ.submitList(dashboardListResponse.data.popularRestaurents.toList())
+                        }
+
+                        if (dashboardListResponse.data.topProduct.size > 0) {
+                            topProductAdapter.differ.submitList(dashboardListResponse.data.topProduct.toList())
+                        }
+                    }
                     customProgressDialog.hide()
                 }
                 is NetworkResult.Error -> {
