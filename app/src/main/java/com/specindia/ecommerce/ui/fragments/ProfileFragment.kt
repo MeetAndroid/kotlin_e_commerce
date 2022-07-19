@@ -1,14 +1,17 @@
 package com.specindia.ecommerce.ui.fragments
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import com.bumptech.glide.Glide
+import com.google.gson.Gson
 import com.specindia.ecommerce.R
 import com.specindia.ecommerce.databinding.FragmentProfileBinding
+import com.specindia.ecommerce.models.response.AuthResponseData
 import com.specindia.ecommerce.ui.activity.HomeActivity
 import com.specindia.ecommerce.util.visible
 import dagger.hilt.android.AndroidEntryPoint
@@ -48,17 +51,35 @@ class ProfileFragment : Fragment() {
     }
 
     private fun setUpProfileData() {
+
+        val userData = (activity as HomeActivity).dataStoreViewModel.getLoggedInUserData()
+        val data = Gson().fromJson(userData, AuthResponseData::class.java)
+        Log.d("LoggedInData", data.toString())
+
+
         with(binding) {
-            with((activity as HomeActivity).dataStoreViewModel) {
-
-                Glide.with(ivProfileImage).load(getProfileUrl()).into(ivProfileImage)
-
-                tvToken.text = getFBAccessToken()
-                tvId.text = getUserId()
-                tvFirstName.text = getFirstName()
-                tvLastName.text = getLastName()
-                tvEmail.text = getEmail()
-            }
+            Glide.with(ivProfileImage)
+                .load((activity as HomeActivity).dataStoreViewModel.getProfileUrl())
+                .into(ivProfileImage)
+            tvToken.text = data?.token
+            tvId.text = data?.id.toString()
+            tvFirstName.text = data?.firstName
+            tvLastName.text = data?.lastName
+            tvEmail.text = data?.email
         }
+
+//
+//        with(binding) {
+//            with((activity as HomeActivity).dataStoreViewModel) {
+//
+//                Glide.with(ivProfileImage).load(getProfileUrl()).into(ivProfileImage)
+//
+//                tvToken.text = getFBAccessToken()
+//                tvId.text = getUserId()
+//                tvFirstName.text = getFirstName()
+//                tvLastName.text = getLastName()
+//                tvEmail.text = getEmail()
+//            }
+//        }
     }
 }

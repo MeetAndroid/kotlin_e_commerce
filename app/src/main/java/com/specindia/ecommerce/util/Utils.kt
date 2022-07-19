@@ -9,7 +9,6 @@ import android.net.ConnectivityManager
 import android.net.NetworkCapabilities.TRANSPORT_CELLULAR
 import android.net.NetworkCapabilities.TRANSPORT_WIFI
 import android.os.Build
-import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Base64
@@ -23,26 +22,18 @@ import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
-import com.facebook.AccessToken
-import com.facebook.GraphRequest
 import com.facebook.login.LoginManager
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputEditText
 import com.specindia.ecommerce.R
 import com.specindia.ecommerce.ui.activity.AuthActivity
 import com.specindia.ecommerce.ui.activity.HomeActivity
-import com.specindia.ecommerce.util.Constants.Companion.FIELD_FB_DATA
-import com.specindia.ecommerce.util.Constants.Companion.FIELD_FB_EMAIL
-import com.specindia.ecommerce.util.Constants.Companion.FIELD_FB_FIRST_NAME
-import com.specindia.ecommerce.util.Constants.Companion.FIELD_FB_ID
-import com.specindia.ecommerce.util.Constants.Companion.FIELD_FB_LAST_NAME
-import com.specindia.ecommerce.util.Constants.Companion.FIELD_FB_PICTURE
-import com.specindia.ecommerce.util.Constants.Companion.FIELD_FB_URL
-import com.specindia.ecommerce.util.Constants.Companion.KEY_FIELDS
-import com.specindia.ecommerce.util.Constants.Companion.VALUE_FIELDS
+import com.specindia.ecommerce.util.Constants.Companion.APPLICATION_JSON
+import com.specindia.ecommerce.util.Constants.Companion.AUTHORIZATION
+import com.specindia.ecommerce.util.Constants.Companion.BEARER
+import com.specindia.ecommerce.util.Constants.Companion.CONTENT_TYPE
 import com.specindia.ecommerce.util.dialogs.CustomProgressDialog
 import kotlinx.coroutines.launch
-import org.json.JSONException
 import java.security.MessageDigest
 import java.security.NoSuchAlgorithmException
 import java.util.regex.Matcher
@@ -198,9 +189,8 @@ fun logoutFromFacebook() {
 }
 
 
-
 // Save FB details in data store
-fun saveUserFBDetails(
+fun saveLoggedInUserData(
     activity: Activity,
     token: String,
     id: String,
@@ -229,6 +219,15 @@ fun isValidPassword(password: String?): Boolean {
     pattern = Pattern.compile(passwordPattern)
     val matcher: Matcher = pattern.matcher(password)
     return matcher.matches()
+}
+
+// Add Request Headers here
+fun getHeaderMap(token: String, hasBearerToken: Boolean): Map<String, String> {
+    val headerMap = mutableMapOf<String, String>()
+    headerMap[CONTENT_TYPE] = APPLICATION_JSON
+    if (hasBearerToken) headerMap[AUTHORIZATION] = "$BEARER $token"
+    Log.d("headerMap", headerMap.toString())
+    return headerMap
 }
 
 // ============== Alert Dialogs

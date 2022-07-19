@@ -5,12 +5,19 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.gson.Gson
 import com.specindia.ecommerce.R
+import com.specindia.ecommerce.api.network.NetworkResult
 import com.specindia.ecommerce.databinding.FragmentHomeBinding
+import com.specindia.ecommerce.models.response.AuthResponseData
 import com.specindia.ecommerce.ui.activity.HomeActivity
+import com.specindia.ecommerce.util.getHeaderMap
 import com.specindia.ecommerce.util.showLongToast
+import com.specindia.ecommerce.util.showProgressDialog
 import com.specindia.ecommerce.util.visible
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -18,6 +25,7 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class HomeFragment : Fragment() {
     private lateinit var binding: FragmentHomeBinding
+    private lateinit var customProgressDialog: AlertDialog
     private var loggedInUserName: String = ""
 
     override fun onCreateView(
@@ -31,32 +39,46 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         setUpHeader()
         setUpHeaderItemClick()
+
+        val userData = (activity as HomeActivity).dataStoreViewModel.getLoggedInUserData()
+        val data = Gson().fromJson(userData, AuthResponseData::class.java)
+
+        setUpProgressDialog()
+        getUserDetails(data)
+        callDashBoardListApi(data)
+        observeResponse()
+
         binding.btnHomeMenuDetails.setOnClickListener {
             it.findNavController().navigate(R.id.action_homeFragment_to_homeDetailsFragment)
         }
-        getUserDetails()
     }
 
-    private fun getUserDetails() {
-
-        with(((activity as HomeActivity).dataStoreViewModel)) {
-            loggedInUserName = getFirstName().toString()
-            with(binding) {
-                homeMenuScreenHeader.tvHeaderTitle.text =
-                    getString(R.string.title_good_morning_user, loggedInUserName)
-            }
-            Log.d(
-                "FB", """
-                    |id = ${getUserId()}
-                    |First Name = ${getFirstName()}
-                    |Last Name =${getLastName()}
-                    |Email =${getEmail()}
-                    |Profile URL =${getProfileUrl()}
-                """.trimMargin()
-            )
+    private fun setUpProgressDialog() {
+        customProgressDialog = showProgressDialog {
+            cancelable = false
+            isBackGroundTransparent = true
         }
+    }
+
+    private fun getUserDetails(data: AuthResponseData) {
+        loggedInUserName = data.firstName
+        with(binding) {
+            homeMenuScreenHeader.tvHeaderTitle.text =
+                getString(R.string.title_good_morning_user, loggedInUserName)
+        }
+        Log.d(
+            "FB", """
+                    |id = ${data.id}
+                    |First Name = ${data.firstName}
+                    |Last Name =${data.lastName}
+                    |Email =${data.email}
+                    |Profile URL =${data.profileImage}
+                """.trimMargin()
+        )
+
     }
 
     private fun setUpHeader() {
@@ -80,4 +102,39 @@ class HomeFragment : Fragment() {
         }
     }
 
+
+    private fun callDashBoardListApi(data: AuthResponseData) {
+        customProgressDialog.show()
+        (activity as HomeActivity).homeViewModel.getDashboardList(getHeaderMap(data.token, true))
+    }
+
+
+    private fun observeResponse() {
+        (activity as HomeActivity).homeViewModel.dashboardListResponse.observe(viewLifecycleOwner) { response ->
+
+            when (response) {
+                is NetworkResult.Success -> {
+                    Log.d("DashBoard", Gson().toJson(response.data?.data))
+                    customProgressDialog.hide()
+                }
+                is NetworkResult.Error -> {
+                    customProgressDialog.hide()
+                    showDialog(response.message.toString())
+                }
+                is NetworkResult.Loading -> {
+                }
+            }
+        }
+    }
+
+    private fun showDialog(message: String) {
+        MaterialAlertDialogBuilder(requireActivity())
+            .setTitle(getString(R.string.app_name))
+            .setMessage(message)
+            .setPositiveButton(getString(R.string.ok)) { _, _ ->
+
+            }
+            .show()
+    }
 }
+

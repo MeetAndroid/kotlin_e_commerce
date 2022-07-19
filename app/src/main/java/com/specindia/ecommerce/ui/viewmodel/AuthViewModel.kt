@@ -35,24 +35,26 @@ class AuthViewModel @Inject constructor(
 
 
     // Call Registration API
-    fun doRegistration(parameters: String) = viewModelScope.launch() {
-        repository.doRegistration(parameters).collect { values ->
-            _registrationResponse.value = values
+    fun doRegistration(headerMap: Map<String, String>, parameters: String) =
+        viewModelScope.launch() {
+            repository.doRegistration(headerMap, parameters).collect { values ->
+                _registrationResponse.value = values
+            }
         }
-    }
 
     // Call Login API
-    fun doLogin(parameters: String) = viewModelScope.launch() {
-        repository.doLogin(parameters).collect { values ->
+    fun doLogin(headerMap: Map<String, String>, parameters: String) = viewModelScope.launch() {
+        repository.doLogin(headerMap, parameters).collect { values ->
             _loginResponse.value = values
         }
     }
 
     // Call Social Login API (Facebook and GPlus)
-    fun doSocialLogin(parameters: String) = viewModelScope.launch() {
-        repository.doSocialLogin(parameters).collect { values ->
-            _socialResponse.value = values
+    fun doSocialLogin(headerMap: Map<String, String>, parameters: String) =
+        viewModelScope.launch() {
+            repository.doSocialLogin(headerMap, parameters).collect { values ->
+                _socialResponse.value = values
+            }
         }
-    }
 
 }

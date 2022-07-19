@@ -3,6 +3,7 @@ package com.specindia.ecommerce.repository
 import com.specindia.ecommerce.api.datasource.EcommerceRemoteDataSource
 import com.specindia.ecommerce.api.network.BaseApiResponse
 import com.specindia.ecommerce.api.network.NetworkResult
+import com.specindia.ecommerce.models.response.home.DashboardListResponse
 import com.specindia.ecommerce.models.response.login.LoginResponse
 import com.specindia.ecommerce.models.response.registration.RegistrationResponse
 import com.specindia.ecommerce.models.response.social.SocialLoginResponse
@@ -17,21 +18,38 @@ import javax.inject.Inject
 class EcommerceRepository @Inject constructor(
     private val remoteDataSource: EcommerceRemoteDataSource
 ) : BaseApiResponse() {
-    suspend fun doRegistration(parameters: String): Flow<NetworkResult<RegistrationResponse>> {
+    suspend fun doRegistration(
+        headerMap: Map<String, String>,
+        parameters: String
+    ): Flow<NetworkResult<RegistrationResponse>> {
         return flow {
-            emit(safeApiCall { remoteDataSource.doRegistration(parameters) })
+            emit(safeApiCall { remoteDataSource.doRegistration(headerMap, parameters) })
         }.flowOn(Dispatchers.IO)
     }
 
-    suspend fun doLogin(parameters: String): Flow<NetworkResult<LoginResponse>> {
+    suspend fun doLogin(
+        headerMap: Map<String, String>,
+        parameters: String
+    ): Flow<NetworkResult<LoginResponse>> {
         return flow {
-            emit(safeApiCall { remoteDataSource.doLogin(parameters) })
+            emit(safeApiCall { remoteDataSource.doLogin(headerMap, parameters) })
         }.flowOn(Dispatchers.IO)
     }
 
-    suspend fun doSocialLogin(parameters: String): Flow<NetworkResult<SocialLoginResponse>> {
+    suspend fun doSocialLogin(
+        headerMap: Map<String, String>,
+        parameters: String
+    ): Flow<NetworkResult<SocialLoginResponse>> {
         return flow {
-            emit(safeApiCall { remoteDataSource.doSocialLogin(parameters) })
+            emit(safeApiCall { remoteDataSource.doSocialLogin(headerMap, parameters) })
+        }.flowOn(Dispatchers.IO)
+    }
+
+    suspend fun getDashboardList(
+        headerMap: Map<String, String>
+    ): Flow<NetworkResult<DashboardListResponse>> {
+        return flow {
+            emit(safeApiCall { remoteDataSource.getDashboardList(headerMap) })
         }.flowOn(Dispatchers.IO)
     }
 }

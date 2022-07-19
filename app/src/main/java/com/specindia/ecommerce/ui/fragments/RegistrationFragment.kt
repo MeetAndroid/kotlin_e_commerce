@@ -67,7 +67,10 @@ class RegistrationFragment : Fragment() {
             number = binding.etMobileNo.text.toString().trim(),
             password = binding.etPassword.text.toString().trim()
         )
-        (activity as AuthActivity).authViewModel.doRegistration(Gson().toJson(parameter))
+        (activity as AuthActivity).authViewModel.doRegistration(
+            getHeaderMap("", false),
+            Gson().toJson(parameter)
+        )
     }
 
     private fun observeResponse() {
@@ -133,7 +136,7 @@ class RegistrationFragment : Fragment() {
         )
         binding.apply {
             tvAlreadyHaveAnAccount.setText(spanText, TextView.BufferType.SPANNABLE)
-            tvAlreadyHaveAnAccount.movementMethod = LinkMovementMethod.getInstance();
+            tvAlreadyHaveAnAccount.movementMethod = LinkMovementMethod.getInstance()
         }
 
     }

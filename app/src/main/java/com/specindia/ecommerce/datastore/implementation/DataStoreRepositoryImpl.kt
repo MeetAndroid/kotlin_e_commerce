@@ -5,6 +5,7 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.*
 import androidx.datastore.preferences.preferencesDataStore
 import com.specindia.ecommerce.datastore.abstraction.DataStoreRepository
+import com.specindia.ecommerce.models.response.AuthResponseData
 import kotlinx.coroutines.flow.first
 import javax.inject.Inject
 
@@ -95,4 +96,5 @@ class DataStoreRepositoryImpl @Inject constructor(
         val preferences = context.dataStore.data.first()
         return preferences[preferencesKey]
     }
+
 }
