@@ -37,9 +37,7 @@ class ResetPasswordFragment : Fragment() {
                 }
             }
         }
-
     }
-
 
     private fun isEmpty(): Boolean {
 
