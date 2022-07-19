@@ -76,7 +76,10 @@ class LoginFragment : Fragment() {
             email = binding.etLoginEmail.text.toString().trim(),
             password = binding.etPassword.text.toString().trim()
         )
-        (activity as AuthActivity).authViewModel.doLogin(Gson().toJson(parameter))
+        (activity as AuthActivity).authViewModel.doLogin(
+            getHeaderMap("", false),
+            Gson().toJson(parameter)
+        )
     }
 
     private fun observeResponse() {
@@ -85,6 +88,11 @@ class LoginFragment : Fragment() {
             when (response) {
                 is NetworkResult.Success -> {
                     customProgressDialog.hide()
+
+                    //Save User response as a Json In Data Store
+                    val data = Gson().toJson(response.data?.data)
+                    (activity as AuthActivity).dataStoreViewModel.saveLoggedInUserData(data)
+
                     requireActivity().showShortToast("Login Successfully ...")
                     requireActivity().startNewActivity(HomeActivity::class.java)
                     (activity as AuthActivity).dataStoreViewModel.saveUserLoggedIn(true)

@@ -1,28 +1,42 @@
 package com.specindia.ecommerce.api
 
+import com.specindia.ecommerce.models.response.home.DashboardListResponse
 import com.specindia.ecommerce.models.response.login.LoginResponse
 import com.specindia.ecommerce.models.response.registration.RegistrationResponse
 import com.specindia.ecommerce.models.response.social.SocialLoginResponse
 import com.specindia.ecommerce.util.Constants.Companion.CONTENT_TYPE_JSON
+import com.specindia.ecommerce.util.Constants.Companion.DASH_BOARD_LIST
 import com.specindia.ecommerce.util.Constants.Companion.LOGIN
 import com.specindia.ecommerce.util.Constants.Companion.SIGN_UP
 import com.specindia.ecommerce.util.Constants.Companion.SOCIAL_SIGN_UP
 import retrofit2.Response
-import retrofit2.http.Body
-import retrofit2.http.Headers
-import retrofit2.http.POST
+import retrofit2.http.*
 
 interface EcommerceApiService {
 
-    @Headers(CONTENT_TYPE_JSON)
+
     @POST(SIGN_UP)
-    suspend fun doRegistration(@Body parameters: String): Response<RegistrationResponse>
+    suspend fun doRegistration(
+        @HeaderMap headers: Map<String, String>,
+        @Body parameters: String
+    ): Response<RegistrationResponse>
 
-    @Headers(CONTENT_TYPE_JSON)
     @POST(LOGIN)
-    suspend fun doLogin(@Body parameters: String): Response<LoginResponse>
+    suspend fun doLogin(
+        @HeaderMap headers: Map<String, String>,
+        @Body parameters: String
+    ): Response<LoginResponse>
 
-    @Headers(CONTENT_TYPE_JSON)
+
     @POST(SOCIAL_SIGN_UP)
-    suspend fun doSocialSignUp(@Body parameters: String): Response<SocialLoginResponse>
+    suspend fun doSocialSignUp(
+        @HeaderMap headers: Map<String, String>,
+        @Body parameters: String
+    ): Response<SocialLoginResponse>
+
+    @GET(DASH_BOARD_LIST)
+    suspend fun getDashboardList(
+        @HeaderMap headers: Map<String, String>
+    ): Response<DashboardListResponse>
+
 }

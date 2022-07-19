@@ -2,7 +2,7 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/nav_ecommerce_app"
-    app:startDestination="@+id/nav_food_menu">
+    app:startDestination="@+id/nav_home">
 
     <include app:graph="@navigation/nav_food_menu" />
     <include app:graph="@navigation/nav_offers" />

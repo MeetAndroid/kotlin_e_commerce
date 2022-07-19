@@ -2,10 +2,13 @@ package com.specindia.ecommerce.ui.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.google.gson.Gson
 import com.specindia.ecommerce.datastore.abstraction.DataStoreRepository
+import com.specindia.ecommerce.models.response.AuthResponseData
 import com.specindia.ecommerce.util.Constants.Companion.KEY_FB_ACCESS_TOKEN
 import com.specindia.ecommerce.util.Constants.Companion.KEY_IS_FIRST_TIME
 import com.specindia.ecommerce.util.Constants.Companion.KEY_IS_USER_LOGGED_IN
+import com.specindia.ecommerce.util.Constants.Companion.KEY_LOGGED_IN_USER_DATA
 import com.specindia.ecommerce.util.Constants.Companion.KEY_USER_EMAIL
 import com.specindia.ecommerce.util.Constants.Companion.KEY_USER_FIRST_NAME
 import com.specindia.ecommerce.util.Constants.Companion.KEY_USER_FULL_NAME
@@ -111,4 +114,17 @@ class DataViewModel @Inject constructor(
     fun getProfileUrl(): String? = runBlocking {
         repository.getString(KEY_USER_PROFILE_URL)
     }
+
+
+    // Save Login Response
+    fun saveLoggedInUserData(value: String) {
+        viewModelScope.launch {
+            repository.putString(KEY_LOGGED_IN_USER_DATA, value)
+        }
+    }
+
+    fun getLoggedInUserData(): String? = runBlocking {
+        repository.getString(KEY_LOGGED_IN_USER_DATA)
+    }
 }
+

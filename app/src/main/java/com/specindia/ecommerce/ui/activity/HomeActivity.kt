@@ -12,7 +12,9 @@ import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.specindia.ecommerce.R
 import com.specindia.ecommerce.databinding.ActivityHomeBinding
+import com.specindia.ecommerce.ui.viewmodel.AuthViewModel
 import com.specindia.ecommerce.ui.viewmodel.DataViewModel
+import com.specindia.ecommerce.ui.viewmodel.HomeViewModel
 import com.specindia.ecommerce.util.logoutFromFacebook
 import com.specindia.ecommerce.util.startNewActivity
 import dagger.hilt.android.AndroidEntryPoint
@@ -26,6 +28,7 @@ class HomeActivity : AppCompatActivity() {
     private lateinit var appBarConfiguration: AppBarConfiguration
 
     val dataStoreViewModel by viewModels<DataViewModel>()
+    val homeViewModel by viewModels<HomeViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

@@ -1,12 +1,11 @@
-package com.specindia.ecommerce.models.response.registration
+package com.specindia.ecommerce.models.response.home
 
 
 import com.google.gson.annotations.SerializedName
-import com.specindia.ecommerce.models.response.AuthResponseData
 
-data class RegistrationResponse(
+data class DashboardListResponse(
     @SerializedName("data")
-    val data: AuthResponseData,
+    val data: DashboardListData,
     @SerializedName("message")
     val message: String,
     @SerializedName("status")

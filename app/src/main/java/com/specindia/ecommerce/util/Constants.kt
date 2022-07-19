@@ -16,11 +16,18 @@ class Constants {
         const val CONNECTION_TIME_OUT = 120L
 
         const val CONTENT_TYPE_JSON = "Content-Type: application/json"
+        const val ACCEPT="accept"
+        const val CONTENT_TYPE ="Content-Type"
+        const val APPLICATION_JSON = "application/json"
 
         // End Point
+        const val AUTHORIZATION = "Authorization"
+        const val BEARER = "Bearer"
+
         const val SIGN_UP = "signUp"
         const val LOGIN = "login"
         const val SOCIAL_SIGN_UP = "socialSignUp"
+        const val DASH_BOARD_LIST = "getDashBoardAllList"
 
         // Data Store Constants
         const val KEY_IS_FIRST_TIME = "isFirstTime"
@@ -49,7 +56,12 @@ class Constants {
         const val KEY_USER_LAST_NAME = "user_last_name"
         const val KEY_USER_PROFILE_URL = "user_profile_url"
 
+        const val KEY_LOGGED_IN_USER_DATA = "logged_in_user_data"
+
         const val SOCIAL_TYPE_FB = 1
         const val SOCIAL_TYPE_GOOGLE = 2
+
+        // API
+        const val KEY_BEARER_TOKEN = "bearer_token"
     }
 }
