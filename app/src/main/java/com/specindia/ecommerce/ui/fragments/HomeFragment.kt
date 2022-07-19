@@ -46,10 +46,10 @@ class HomeFragment : Fragment() {
         val userData = (activity as HomeActivity).dataStoreViewModel.getLoggedInUserData()
         val data = Gson().fromJson(userData, AuthResponseData::class.java)
 
-        setUpProgressDialog()
-        getUserDetails(data)
-        callDashBoardListApi(data)
-        observeResponse()
+//        setUpProgressDialog()
+//        getUserDetails(data)
+//        callDashBoardListApi(data)
+//        observeResponse()
 
         binding.btnHomeMenuDetails.setOnClickListener {
             it.findNavController().navigate(R.id.action_homeFragment_to_homeDetailsFragment)

@@ -249,7 +249,7 @@ inline fun Activity.showProgressDialog(func: CustomProgressDialog.() -> Unit): A
     }.create()
 
 inline fun Fragment.showProgressDialog(func: CustomProgressDialog.() -> Unit): AlertDialog =
-    CustomProgressDialog(this.requireContext()).apply {
+    CustomProgressDialog(requireContext()).apply {
         func()
     }.create()
 
