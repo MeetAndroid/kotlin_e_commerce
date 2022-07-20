@@ -73,4 +73,9 @@
     <string name="we_have_sent_an_otp_your_email">We have sent an OTP your email</string>
     <string name="verify">Verify</string>
     <string name="reset_password">Reset Password</string>
+    <string name="popular_restaurants">Popular Restaurants</string>
+    <string name="top_dishes">Top dishes</string>
+    <string name="top_categories">Top Categories</string>
+    <string name="view_all">View all</string>
+    <string name="go_to_home_details">Go to Home Details</string>
 </resources>

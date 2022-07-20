@@ -7,7 +7,7 @@
     android:layout_marginEnd="16dp">
 
     <com.google.android.material.card.MaterialCardView
-        android:id="@+id/cvTopProduct"
+        android:id="@+id/cvCategory"
         android:layout_width="100dp"
         android:layout_height="100dp"
         app:cardCornerRadius="7dp"
@@ -15,26 +15,29 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/ivTopProduct"
+            android:id="@+id/ivCategory"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:background="@color/colorShimmerEffect"
             android:scaleType="centerCrop"
-            app:srcCompat="@drawable/img_food_plate" />
+            tools:srcCompat="@drawable/img_food_plate" />
 
     </com.google.android.material.card.MaterialCardView>
 
     <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/tvTopDishesName"
-        android:layout_width="wrap_content"
+        android:id="@+id/tvCategoryName"
+        android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
+        android:background="@color/colorShimmerEffect"
         android:fontFamily="@font/roboto_medium"
+        android:gravity="center"
         android:textAllCaps="false"
         android:textAppearance="@style/TextAppearance.AppCompat.Small"
         android:textColor="@color/color_blue_or_white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/cvTopProduct"
-        tools:text="Offers" />
+        app:layout_constraintTop_toBottomOf="@id/cvCategory"
+        tools:text="Category" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

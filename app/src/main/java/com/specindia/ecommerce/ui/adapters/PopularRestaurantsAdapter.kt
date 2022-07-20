@@ -44,6 +44,17 @@ class PopularRestaurantsAdapter :
         with(holder) {
             with(binding) {
                 Glide.with(itemView).load(restaurant.imageUrl).into(ivRestaurant)
+                tvRestaurantName.text = restaurant.name
+                tvRestaurantAddress.text = restaurant.address
+
+                if (position % 2 == 0) {
+                    totalRatings.text = "2.4"
+                    ratings.rating = 2.4f
+                } else {
+                    totalRatings.text = "3.6"
+                    ratings.rating = 3.6f
+                }
+
             }
 
             itemView.setOnClickListener {

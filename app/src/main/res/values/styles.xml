@@ -1,4 +1,5 @@
 <resources>
+
     <style name="CustomCardViewStyle" parent="@style/Widget.MaterialComponents.CardView">
         <item name="shapeAppearanceOverlay">@style/ShapeAppearanceOverlay_card_custom_corners</item>
     </style>
@@ -11,15 +12,18 @@
         <item name="cornerSizeBottomLeft">48dp</item>
     </style>
 
-    <style name="CornerCut" parent="">
-        <item name="cornerFamilyTopLeft">rounded</item>
-        <item name="cornerFamilyTopRight">cut</item>
-        <item name="cornerFamilyBottomLeft">cut</item>
-        <item name="cornerFamilyBottomRight">rounded</item>
-        <item name="cornerSizeTopLeft">50%</item>
-        <item name="cornerSizeTopRight">25%</item>
-        <item name="cornerSizeBottomLeft">25%</item>
-        <item name="cornerSizeBottomRight">50%</item>
 
+    <style name="RoundedImageView">
+        <item name="cornerSize">50%</item>
     </style>
+
+    <style name="RatingBar" parent="Theme.AppCompat">
+        <item name="colorControlNormal">@color/color_accent</item>
+        <item name="colorControlActivated">@color/color_primary</item>
+    </style>
+
+    <style name="RoundedCornerImageView">
+        <item name="cornerSize">7dp</item>
+    </style>
+
 </resources>
