@@ -25,7 +25,6 @@ class OnBoardingActivity : AppCompatActivity() {
     private val dataStoreViewModel by viewModels<DataViewModel>()
 
     data class OnBoardingData(val imageId: Int, val title: Int, val description: Int)
-
     private val onBoardingContentList = listOf(
         OnBoardingData(
             R.drawable.ic_find_food_you_love,

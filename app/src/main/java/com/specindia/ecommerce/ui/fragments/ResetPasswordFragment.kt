@@ -16,7 +16,6 @@ import dagger.hilt.android.AndroidEntryPoint
 class ResetPasswordFragment : Fragment() {
 
     private lateinit var binding: FragmentResetPasswordBinding
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -37,11 +36,10 @@ class ResetPasswordFragment : Fragment() {
                 }
             }
         }
-
     }
 
-
     private fun isEmpty(): Boolean {
+
         binding.apply {
             if (etPassword.text.toString().trim().isEmpty()) {
                 showMaterialSnack(requireContext(), llResetPassword, "Please enter password")

@@ -274,6 +274,7 @@ class HomeFragment : Fragment() {
             .setTitle(getString(R.string.app_name))
             .setMessage(message)
             .setPositiveButton(getString(R.string.ok)) { _, _ ->
+
             }
             .show()
     }
