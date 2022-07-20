@@ -68,6 +68,10 @@ class HomeFragment : Fragment() {
         binding.btnHomeMenuDetails.setOnClickListener {
             it.findNavController().navigate(R.id.action_homeFragment_to_homeDetailsFragment)
         }
+
+        binding.tvSearch.setOnClickListener {
+            it.findNavController().navigate(R.id.action_homeFragment_to_searchFragment)
+        }
     }
 
     private fun setUpProgressDialog() {

@@ -48,12 +48,20 @@
         <entry key="..\:/GitProject/kotlin_e_commerce/app/src/main/res/layout/activity_auth.xml" value="0.27291666666666664" />
         <entry key="..\:/GitProject/kotlin_e_commerce/app/src/main/res/layout/activity_onboarding.xml" value="0.1" />
         <entry key="..\:/GitProject/kotlin_e_commerce/app/src/main/res/layout/row_on_boarding_item.xml" value="0.2462962962962963" />
+        <entry key="..\:/GitProjects/EcommerceApp/app/src/main/res/drawable/bg_search.xml" value="0.1715" />
+        <entry key="..\:/GitProjects/EcommerceApp/app/src/main/res/drawable/ic_search.xml" value="0.1715" />
         <entry key="..\:/GitProjects/EcommerceApp/app/src/main/res/layout/activity_auth.xml" value="0.27291666666666664" />
+        <entry key="..\:/GitProjects/EcommerceApp/app/src/main/res/layout/activity_home.xml" value="0.26871794871794874" />
         <entry key="..\:/GitProjects/EcommerceApp/app/src/main/res/layout/activity_launcher.xml" value="0.26871794871794874" />
-        <entry key="..\:/GitProjects/EcommerceApp/app/src/main/res/layout/fragment_home.xml" value="0.27291666666666664" />
+        <entry key="..\:/GitProjects/EcommerceApp/app/src/main/res/layout/fragment_home.xml" value="0.22" />
+        <entry key="..\:/GitProjects/EcommerceApp/app/src/main/res/layout/fragment_home_details.xml" value="0.27291666666666664" />
         <entry key="..\:/GitProjects/EcommerceApp/app/src/main/res/layout/fragment_otp.xml" value="0.27291666666666664" />
         <entry key="..\:/GitProjects/EcommerceApp/app/src/main/res/layout/fragment_reset_password.xml" value="0.27291666666666664" />
+        <entry key="..\:/GitProjects/EcommerceApp/app/src/main/res/layout/fragment_search.xml" value="0.27291666666666664" />
         <entry key="..\:/GitProjects/EcommerceApp/app/src/main/res/layout/row_file_top_dishes.xml" value="0.27291666666666664" />
+        <entry key="..\:/GitProjects/EcommerceApp/app/src/main/res/layout/row_header.xml" value="0.27291666666666664" />
+        <entry key="..\:/GitProjects/EcommerceApp/app/src/main/res/layout/row_popular_restaurants.xml" value="0.27291666666666664" />
+        <entry key="..\:/GitProjects/EcommerceApp/app/src/main/res/layout/row_top_product.xml" value="0.27291666666666664" />
       </map>
     </option>
   </component>
