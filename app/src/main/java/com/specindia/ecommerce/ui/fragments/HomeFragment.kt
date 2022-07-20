@@ -5,7 +5,6 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -16,21 +15,26 @@ import com.specindia.ecommerce.R
 import com.specindia.ecommerce.api.network.NetworkResult
 import com.specindia.ecommerce.databinding.FragmentHomeBinding
 import com.specindia.ecommerce.models.response.AuthResponseData
+import com.specindia.ecommerce.models.response.home.DashboardListResponse
 import com.specindia.ecommerce.ui.activity.HomeActivity
+import com.specindia.ecommerce.ui.adapters.CategoryListAdapter
 import com.specindia.ecommerce.ui.adapters.PopularRestaurantsAdapter
 import com.specindia.ecommerce.ui.adapters.TopProductsAdapter
-import com.specindia.ecommerce.util.*
+import com.specindia.ecommerce.util.SnapHelper
+import com.specindia.ecommerce.util.getHeaderMap
+import com.specindia.ecommerce.util.showLongToast
+import com.specindia.ecommerce.util.visible
 import dagger.hilt.android.AndroidEntryPoint
 
 
 @AndroidEntryPoint
 class HomeFragment : Fragment() {
     private lateinit var binding: FragmentHomeBinding
-    private lateinit var customProgressDialog: AlertDialog
     private var loggedInUserName: String = ""
 
     private lateinit var restaurantsAdapter: PopularRestaurantsAdapter
     private lateinit var topProductAdapter: TopProductsAdapter
+    private lateinit var categoryListAdapter: CategoryListAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -41,6 +45,25 @@ class HomeFragment : Fragment() {
         return binding.root
     }
 
+    override fun onResume() {
+        super.onResume()
+        binding.apply {
+            shimmerViewTopProducts.startShimmer()
+            shimmerViewPopularRestaurants.startShimmer()
+            shimmerCategoryList.startShimmer()
+        }
+
+    }
+
+    override fun onPause() {
+        binding.apply {
+            shimmerViewPopularRestaurants.stopShimmer()
+            shimmerViewTopProducts.stopShimmer()
+            shimmerCategoryList.stopShimmer()
+        }
+
+        super.onPause()
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -51,18 +74,21 @@ class HomeFragment : Fragment() {
         val userData = (activity as HomeActivity).dataStoreViewModel.getLoggedInUserData()
         val data = Gson().fromJson(userData, AuthResponseData::class.java)
 
-        setUpProgressDialog()
         getUserDetails(data)
         setUpRecyclerView()
         callDashBoardListApi(data)
         observeResponse()
 
         restaurantsAdapter.setOnItemClickListener {
-            requireActivity().showLongToast("Restaurant clicked")
+            requireActivity().showLongToast("${it.name} clicked")
         }
 
         topProductAdapter.setOnItemClickListener {
-            requireActivity().showLongToast("Top Product clicked")
+            requireActivity().showLongToast("${it.productName} clicked")
+        }
+
+        categoryListAdapter.setOnItemClickListener {
+            requireActivity().showLongToast("${it.name} clicked")
         }
 
         binding.btnHomeMenuDetails.setOnClickListener {
@@ -74,12 +100,6 @@ class HomeFragment : Fragment() {
         }
     }
 
-    private fun setUpProgressDialog() {
-        customProgressDialog = showProgressDialog {
-            cancelable = false
-            isBackGroundTransparent = true
-        }
-    }
 
     // Init recycler view
     private fun setUpRecyclerView() {
@@ -100,6 +120,14 @@ class HomeFragment : Fragment() {
         topProductAdapter = TopProductsAdapter()
         binding.rvTopProducts.apply {
             adapter = topProductAdapter
+            layoutManager =
+                LinearLayoutManager(requireActivity(), LinearLayoutManager.HORIZONTAL, false)
+        }
+
+        // Category
+        categoryListAdapter = CategoryListAdapter()
+        binding.rvCategoryList.apply {
+            adapter = categoryListAdapter
             layoutManager =
                 LinearLayoutManager(requireActivity(), LinearLayoutManager.HORIZONTAL, false)
         }
@@ -146,7 +174,6 @@ class HomeFragment : Fragment() {
     }
 
     private fun callDashBoardListApi(data: AuthResponseData) {
-        customProgressDialog.show()
         (activity as HomeActivity).homeViewModel.getDashboardList(getHeaderMap(data.token, true))
     }
 
@@ -157,23 +184,91 @@ class HomeFragment : Fragment() {
             when (response) {
                 is NetworkResult.Success -> {
                     response.data?.let { dashboardListResponse ->
-
-                        if (dashboardListResponse.data.popularRestaurents.size > 0) {
-                            restaurantsAdapter.differ.submitList(dashboardListResponse.data.popularRestaurents.toList())
-                        }
-
-                        if (dashboardListResponse.data.topProduct.size > 0) {
-                            topProductAdapter.differ.submitList(dashboardListResponse.data.topProduct.toList())
-                        }
+                        stopShimmerEffect(binding)
+                        setUpTopDishUI(binding, dashboardListResponse)
+                        setUpPopularRestaurantUI(binding, dashboardListResponse)
+                        setUpCategoryListUI(binding, dashboardListResponse)
                     }
-                    customProgressDialog.hide()
                 }
                 is NetworkResult.Error -> {
-                    customProgressDialog.hide()
                     showDialog(response.message.toString())
                 }
                 is NetworkResult.Loading -> {
                 }
+            }
+        }
+    }
+
+
+    private fun stopShimmerEffect(binding: FragmentHomeBinding) {
+        binding.apply {
+            shimmerViewPopularRestaurants.stopShimmer()
+            shimmerViewPopularRestaurants.visible(false)
+            shimmerViewTopProducts.stopShimmer()
+            shimmerViewTopProducts.visible(false)
+            shimmerCategoryList.stopShimmer()
+            shimmerCategoryList.visible(false)
+        }
+    }
+
+    private fun setUpTopDishUI(
+        binding: FragmentHomeBinding,
+        dashboardListResponse: DashboardListResponse
+    ) {
+        binding.apply {
+            if (dashboardListResponse.data.topProduct.size > 0) {
+                headerTopDishes.listHeader.visible(true)
+                headerTopDishes.tvTitle.text =
+                    getString(R.string.top_dishes)
+                topProductAdapter.differ.submitList(dashboardListResponse.data.topProduct.toList())
+
+                headerTopDishes.tvViewAll.setOnClickListener {
+                    requireActivity().showLongToast("View All Top Dishes")
+                }
+            } else {
+                headerTopDishes.listHeader.visible(false)
+            }
+        }
+    }
+
+    private fun setUpPopularRestaurantUI(
+        binding: FragmentHomeBinding,
+        dashboardListResponse: DashboardListResponse
+    ) {
+        binding.apply {
+            if (dashboardListResponse.data.popularRestaurents.size > 0) {
+                headerPopularRestaurants.listHeader.visible(true)
+                headerPopularRestaurants.tvTitle.text =
+                    getString(R.string.popular_restaurants)
+                restaurantsAdapter.differ.submitList(dashboardListResponse.data.popularRestaurents.toList())
+
+                headerPopularRestaurants.tvViewAll.setOnClickListener {
+                    requireActivity().showLongToast("View All Popular Restaurants")
+                }
+            } else {
+                headerPopularRestaurants.listHeader.visible(false)
+            }
+        }
+
+    }
+
+
+    private fun setUpCategoryListUI(
+        binding: FragmentHomeBinding,
+        dashboardListResponse: DashboardListResponse
+    ) {
+        binding.apply {
+            if (dashboardListResponse.data.categoryList.size > 0) {
+                headerCategoryList.listHeader.visible(true)
+                headerCategoryList.tvTitle.text =
+                    getString(R.string.top_categories)
+                categoryListAdapter.differ.submitList(dashboardListResponse.data.categoryList.toList())
+
+                headerCategoryList.tvViewAll.setOnClickListener {
+                    requireActivity().showLongToast("View All Top Categories")
+                }
+            } else {
+                headerCategoryList.listHeader.visible(false)
             }
         }
     }
@@ -183,7 +278,6 @@ class HomeFragment : Fragment() {
             .setTitle(getString(R.string.app_name))
             .setMessage(message)
             .setPositiveButton(getString(R.string.ok)) { _, _ ->
-
             }
             .show()
     }

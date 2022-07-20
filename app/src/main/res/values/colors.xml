@@ -62,4 +62,7 @@
     <color name="colorStatusBar">#FFFFFF</color>
     <color name="colorHeaderText">#716C6C</color>
 
+    <color name="colorShimmerEffect">#dddddd</color>
+    <color name="colorOffWhite">#F8F0E3</color>
+
 </resources>

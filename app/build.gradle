@@ -70,9 +70,9 @@ dependencies {
     def brManagerVersion = "1.1.0"
     def indicator = "1.2.1"
     def facebook_sdk_version = "14.1.0"
-    def circular_image_view = "3.1.0"
     def scalars_version = "2.5.0"
     def lottie_version =  "3.4.0"
+    def shimmer_effect_version = "0.5.0"
 
     // Splash API to support Android 12 and higher devices
     implementation "androidx.core:core-splashscreen:$splashApiVersion"
@@ -125,9 +125,6 @@ dependencies {
     //FB SDK
     implementation "com.facebook.android:facebook-android-sdk:$facebook_sdk_version"
 
-    // Circular Image View
-    implementation "de.hdodenhof:circleimageview:$circular_image_view"
-
     // Scalars for converting Request Model class to JSON String
     implementation "com.squareup.retrofit2:converter-scalars:$scalars_version"
 
@@ -136,6 +133,9 @@ dependencies {
 
     //otp view
     implementation 'com.github.pdrozz:pinview:1.0.2'
+
+    //Shimmer Effect
+    implementation "com.facebook.shimmer:shimmer:$shimmer_effect_version"
 
     implementation 'androidx.core:core-ktx:1.8.0'
     implementation 'androidx.appcompat:appcompat:1.4.2'

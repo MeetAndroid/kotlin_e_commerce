@@ -8,97 +8,264 @@
 
     <include
         android:id="@+id/homeMenuScreenHeader"
-        layout="@layout/row_header" />
+        layout="@layout/row_header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvDelivering"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:fontFamily="@font/roboto_medium"
+        android:text="Delivering to"
+        android:textColor="#736D6D"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/homeMenuScreenHeader" />
+
+    <androidx.appcompat.widget.AppCompatSpinner
+        android:id="@+id/spinnerLocation"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:entries="@android:array/organizationTypes"
+        android:paddingVertical="10dp"
+        android:spinnerMode="dropdown"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvDelivering" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvSearch"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/bg_search"
+        android:drawableStart="@drawable/ic_search"
+        android:drawablePadding="5dp"
+        android:fontFamily="@font/roboto_medium"
+        android:paddingHorizontal="16dp"
+        android:paddingVertical="10dp"
+        android:text="Search food"
+        android:textColor="#736D6D"
+        android:textSize="16sp"
+        app:layout_constraintTop_toBottomOf="@+id/spinnerLocation" />
+
+
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:fillViewport="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/homeMenuScreenHeader">
+        app:layout_constraintTop_toBottomOf="@id/tvSearch">
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tvDelivering"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:fontFamily="@font/roboto_medium"
-            android:text="Delivering to"
-            android:textColor="#736D6D"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <androidx.appcompat.widget.AppCompatSpinner
-            android:id="@+id/spinnerLocation"
-            android:layout_width="200dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:entries="@android:array/organizationTypes"
-            android:paddingVertical="10dp"
-            android:spinnerMode="dropdown"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tvDelivering" />
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tvSearch"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="16dp"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/bg_search"
-            android:drawableStart="@drawable/ic_search"
-            android:drawablePadding="5dp"
-            android:fontFamily="@font/roboto_medium"
-            android:paddingHorizontal="16dp"
-            android:paddingVertical="10dp"
-            android:text="Search food"
-            android:textColor="#736D6D"
-            android:textSize="16sp"
-            app:layout_constraintTop_toBottomOf="@+id/spinnerLocation" />
+            android:layout_height="0dp">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvTopProducts"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="18dp"
-            android:clipToPadding="false"
-            android:orientation="horizontal"
-            android:paddingHorizontal="16dp"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvSearch"
-            tools:itemCount="5"
-            tools:listitem="@layout/row_top_product" />
+            <include
+                android:id="@+id/headerTopDishes"
+                layout="@layout/dash_board_list_header"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvPopularRestaurants"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="48dp"
-            android:clipToPadding="false"
-            android:orientation="horizontal"
-            android:paddingHorizontal="16dp"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/rvTopProducts"
-            tools:itemCount="5"
-            tools:listitem="@layout/row_popular_restaurants" />
+            <!-- Top Products -->
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvTopProducts"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clipToPadding="false"
+                android:orientation="horizontal"
+                android:paddingHorizontal="16dp"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/headerTopDishes"
+                tools:itemCount="5"
+                tools:listitem="@layout/row_top_product" />
+
+            <!-- Top Products Shimmer Layout-->
+            <com.facebook.shimmer.ShimmerFrameLayout
+                android:id="@+id/shimmerViewTopProducts"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clipToPadding="false"
+                android:orientation="horizontal"
+                android:paddingHorizontal="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/headerTopDishes"
+                app:shimmer_auto_start="true"
+                app:shimmer_duration="800">
+
+                <!-- Adding 7 rows of placeholders -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <include layout="@layout/row_top_product_shimmer" />
+
+                    <include layout="@layout/row_top_product_shimmer" />
+
+                    <include layout="@layout/row_top_product_shimmer" />
+
+                    <include layout="@layout/row_top_product_shimmer" />
+
+                    <include layout="@layout/row_top_product_shimmer" />
+
+                    <include layout="@layout/row_top_product_shimmer" />
+                </LinearLayout>
+
+            </com.facebook.shimmer.ShimmerFrameLayout>
+
+            <!-- Top Restaurants -->
+
+            <include
+                android:id="@+id/headerPopularRestaurants"
+                layout="@layout/dash_board_list_header"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/rvTopProducts"
+
+                />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvPopularRestaurants"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clipToPadding="false"
+                android:orientation="horizontal"
+                android:paddingHorizontal="16dp"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/headerPopularRestaurants"
+                tools:itemCount="5"
+                tools:listitem="@layout/row_popular_restaurants" />
+
+            <!-- Top Restaurants Shimmer Layout -->
+
+            <com.facebook.shimmer.ShimmerFrameLayout
+                android:id="@+id/shimmerViewPopularRestaurants"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingHorizontal="16dp"
+                android:visibility="visible"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/headerPopularRestaurants"
+                app:shimmer_auto_start="true"
+                app:shimmer_duration="800">
+
+                <!-- Adding 7 rows of placeholders -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <include layout="@layout/row_popular_restaurants_shimmer" />
+
+                    <include layout="@layout/row_popular_restaurants_shimmer" />
+
+                    <include layout="@layout/row_popular_restaurants_shimmer" />
+
+                    <include layout="@layout/row_popular_restaurants_shimmer" />
+
+                    <include layout="@layout/row_popular_restaurants_shimmer" />
+
+                    <include layout="@layout/row_popular_restaurants_shimmer" />
+
+                </LinearLayout>
+
+            </com.facebook.shimmer.ShimmerFrameLayout>
+
+            <!-- Category List -->
+
+            <include
+                android:id="@+id/headerCategoryList"
+                layout="@layout/dash_board_list_header"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/rvPopularRestaurants" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvCategoryList"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clipToPadding="false"
+                android:orientation="horizontal"
+                android:paddingHorizontal="16dp"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/headerCategoryList"
+                tools:itemCount="5"
+                tools:listitem="@layout/row_category_list_item" />
 
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btnHomeMenuDetails"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="48dp"
-            android:text="Go to Home Details"
-            android:visibility="invisible"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/rvPopularRestaurants" />
+            <!-- Top Products Shimmer Layout-->
+            <com.facebook.shimmer.ShimmerFrameLayout
+                android:id="@+id/shimmerCategoryList"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clipToPadding="false"
+                android:orientation="horizontal"
+                android:paddingHorizontal="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/headerCategoryList"
+                app:shimmer_auto_start="true"
+                app:shimmer_duration="800">
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+                <!-- Adding 7 rows of placeholders -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <include layout="@layout/row_category_list_item_shimmer" />
+
+                    <include layout="@layout/row_category_list_item_shimmer" />
+
+                    <include layout="@layout/row_category_list_item_shimmer" />
+
+                    <include layout="@layout/row_category_list_item_shimmer" />
+
+                    <include layout="@layout/row_category_list_item_shimmer" />
+
+                    <include layout="@layout/row_category_list_item_shimmer" />
+                </LinearLayout>
+
+            </com.facebook.shimmer.ShimmerFrameLayout>
+
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnHomeMenuDetails"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="48dp"
+                android:text="@string/go_to_home_details"
+                android:visibility="invisible"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/rvCategoryList" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

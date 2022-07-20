@@ -23,15 +23,18 @@
 
             <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/ivProfileImage"
+                app:shapeAppearanceOverlay="@style/RoundedImageView"
                 android:layout_width="96dp"
+                app:strokeColor="@color/color_blue_or_white"
+                app:strokeWidth="5dp"
                 android:layout_height="96dp"
                 android:adjustViewBounds="true"
+                android:padding="5dp"
                 android:scaleType="centerCrop"
-                android:src="@mipmap/ic_launcher"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:shapeAppearance="@style/CornerCut" />
+                app:srcCompat="@mipmap/ic_launcher" />
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/tvToken"
