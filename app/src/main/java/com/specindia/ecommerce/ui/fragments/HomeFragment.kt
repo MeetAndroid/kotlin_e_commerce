@@ -32,7 +32,6 @@ class HomeFragment : Fragment() {
     private lateinit var restaurantsAdapter: PopularRestaurantsAdapter
     private lateinit var topProductAdapter: TopProductsAdapter
 
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
