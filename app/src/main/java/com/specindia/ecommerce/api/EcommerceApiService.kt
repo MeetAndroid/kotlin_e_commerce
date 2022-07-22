@@ -23,7 +23,6 @@ interface EcommerceApiService {
 
     @POST(LOGIN)
     suspend fun doLogin(
-        @HeaderMap headers: Map<String, String>,
         @Body parameters: String
     ): Response<LoginResponse>
 

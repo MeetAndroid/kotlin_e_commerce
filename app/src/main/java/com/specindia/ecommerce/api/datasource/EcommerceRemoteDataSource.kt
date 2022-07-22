@@ -7,8 +7,8 @@ class EcommerceRemoteDataSource @Inject constructor(private val apiService: Ecom
     suspend fun doRegistration(headerMap: Map<String, String>,parameters: String) =
         apiService.doRegistration(headerMap,parameters)
 
-    suspend fun doLogin(headerMap: Map<String, String>,parameters: String) =
-        apiService.doLogin(headerMap,parameters)
+    suspend fun doLogin(parameters: String) =
+        apiService.doLogin(parameters)
 
     suspend fun doSocialLogin(headerMap: Map<String, String>,parameters: String) =
         apiService.doSocialSignUp(headerMap,parameters)

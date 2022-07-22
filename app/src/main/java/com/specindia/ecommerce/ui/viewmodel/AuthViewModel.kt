@@ -43,8 +43,8 @@ class AuthViewModel @Inject constructor(
         }
 
     // Call Login API
-    fun doLogin(headerMap: Map<String, String>, parameters: String) = viewModelScope.launch() {
-        repository.doLogin(headerMap, parameters).collect { values ->
+    fun doLogin(parameters: String) = viewModelScope.launch() {
+        repository.doLogin(parameters).collect { values ->
             _loginResponse.value = values
         }
     }

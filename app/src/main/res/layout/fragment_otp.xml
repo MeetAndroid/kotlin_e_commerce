@@ -13,11 +13,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="25dp"
         android:fontFamily="@font/roboto_regular"
         android:text="@string/verify_your_email"
         android:textColor="@color/color_blue_or_white"
-        android:textSize="16sp" />
+        android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:layout_width="wrap_content"

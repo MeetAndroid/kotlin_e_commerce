@@ -28,11 +28,10 @@ class EcommerceRepository @Inject constructor(
     }
 
     suspend fun doLogin(
-        headerMap: Map<String, String>,
         parameters: String
     ): Flow<NetworkResult<LoginResponse>> {
         return flow {
-            emit(safeApiCall { remoteDataSource.doLogin(headerMap, parameters) })
+            emit(safeApiCall { remoteDataSource.doLogin(parameters) })
         }.flowOn(Dispatchers.IO)
     }
 

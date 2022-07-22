@@ -17,6 +17,7 @@ import androidx.navigation.findNavController
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.gson.Gson
 import com.specindia.ecommerce.R
+import com.specindia.ecommerce.api.datasource.Session
 import com.specindia.ecommerce.api.network.NetworkResult
 import com.specindia.ecommerce.databinding.FragmentLoginBinding
 import com.specindia.ecommerce.models.request.Parameters
@@ -45,6 +46,8 @@ class LoginFragment : Fragment() {
         setSpannableText()
         startEditTextSpace()
         setUpProgressDialog()
+        binding.etLoginEmail.setText("shivam@gmail.com")
+        binding.etPassword.setText("Test@123")
     }
 
     private fun setUpProgressDialog() {
@@ -77,7 +80,6 @@ class LoginFragment : Fragment() {
             password = binding.etPassword.text.toString().trim()
         )
         (activity as AuthActivity).authViewModel.doLogin(
-            getHeaderMap("", false),
             Gson().toJson(parameter)
         )
     }
@@ -91,6 +93,7 @@ class LoginFragment : Fragment() {
 
                     //Save User response as a Json In Data Store
                     val data = Gson().toJson(response.data?.data)
+                    Session.userToken.userToken = response.data?.data?.token.toString()
                     (activity as AuthActivity).dataStoreViewModel.saveLoggedInUserData(data)
 
                     requireActivity().showShortToast("Login Successfully ...")
@@ -112,7 +115,7 @@ class LoginFragment : Fragment() {
             .setTitle(getString(R.string.app_name))
             .setMessage(message)
             .setPositiveButton(getString(R.string.ok)) { _, _ ->
-                clearFields(binding)
+//                clearFields(binding)
             }
             .show()
     }
