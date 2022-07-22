@@ -63,6 +63,7 @@
     <color name="colorHeaderText">#716C6C</color>
 
     <color name="colorShimmerEffect">#dddddd</color>
+    <color name="colorShimmerEffectDark">#A89797</color>
     <color name="colorOffWhite">#F8F0E3</color>
 
     <color name="color_red">#FFC8171D</color>

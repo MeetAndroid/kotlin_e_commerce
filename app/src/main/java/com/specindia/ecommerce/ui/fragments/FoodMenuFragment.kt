@@ -71,7 +71,7 @@ class FoodMenuFragment : Fragment() {
     private fun setUpRecyclerView() {
         // Menus
         menuList = ArrayList()
-        menuListAdapter = MenuListAdapter(requireContext(), menuList)
+        menuListAdapter = MenuListAdapter(menuList)
         binding.rvMenu.apply {
             adapter = menuListAdapter
 //            addItemDecoration(SpaceItemDecoration(10, false))
