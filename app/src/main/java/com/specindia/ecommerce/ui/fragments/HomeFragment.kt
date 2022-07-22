@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -23,10 +24,8 @@ import com.specindia.ecommerce.ui.activity.HomeActivity
 import com.specindia.ecommerce.ui.adapters.CategoryListAdapter
 import com.specindia.ecommerce.ui.adapters.PopularRestaurantsAdapter
 import com.specindia.ecommerce.ui.adapters.TopProductsAdapter
-import com.specindia.ecommerce.util.SnapHelper
-import com.specindia.ecommerce.util.getHeaderMap
-import com.specindia.ecommerce.util.showLongToast
-import com.specindia.ecommerce.util.visible
+import com.specindia.ecommerce.util.*
+import com.specindia.ecommerce.util.Constants.Companion.KEY_RESTAURANT_ID
 import dagger.hilt.android.AndroidEntryPoint
 
 
@@ -71,9 +70,17 @@ class HomeFragment : Fragment() {
 
         topProductAdapter.setOnItemClickListener {
             requireActivity().showLongToast("${it.productName} clicked")
+
         }
         restaurantsAdapter.setOnItemClickListener {
             requireActivity().showLongToast("${it.name} clicked")
+            val restaurantId = it.id
+            Log.d("restaurantId", restaurantId.toString())
+            val bundle = bundleOf(KEY_RESTAURANT_ID to restaurantId)
+
+//            val action = ActionHomeFragmentToRestaurantDetailsFragment().setRestaurantId(restaurantId)
+            view.findNavController()
+                .navigate(R.id.action_homeFragment_to_restaurantDetailsFragment, bundle)
         }
         categoryListAdapter.setOnItemClickListener {
             requireActivity().showLongToast("${it.name} clicked")

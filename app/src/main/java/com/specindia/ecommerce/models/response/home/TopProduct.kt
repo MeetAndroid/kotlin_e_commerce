@@ -2,7 +2,9 @@ package com.specindia.ecommerce.models.response.home
 
 
 import com.google.gson.annotations.SerializedName
+import kotlinx.serialization.Serializable
 
+@Serializable
 data class TopProduct(
     @SerializedName("categoryId")
     val categoryId: Int,

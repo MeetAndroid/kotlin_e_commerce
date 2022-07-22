@@ -31,6 +31,7 @@ class Constants {
         const val SOCIAL_SIGN_UP = "socialSignUp"
         const val DASH_BOARD_LIST = "getDashBoardAllList"
         const val GET_MENU_LIST = "getMenuList"
+        const val GET_RESTAURANT_DETAILS = "getRestaurantDetails/{id}"
 
         // Data Store Constants
         const val KEY_IS_FIRST_TIME = "isFirstTime"
@@ -66,6 +67,9 @@ class Constants {
 
         // API
         const val KEY_BEARER_TOKEN = "bearer_token"
+
+        // Bundle Key
+        const val KEY_RESTAURANT_ID ="key_restaurant_id"
     }
 
 
