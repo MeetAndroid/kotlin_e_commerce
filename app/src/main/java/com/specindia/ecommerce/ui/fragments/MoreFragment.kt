@@ -37,6 +37,7 @@ class MoreFragment : Fragment() {
                 ivBack.visible(false)
                 ivFavorite.visible(false)
                 ivShoppingCart.visible(true)
+                ivSearch.visible(false)
             }
         }
     }

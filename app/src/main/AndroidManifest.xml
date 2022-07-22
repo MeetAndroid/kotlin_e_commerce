@@ -55,6 +55,14 @@
             android:name="com.facebook.sdk.ClientToken"
             android:value="@string/facebook_client_token" />
 
+        <activity
+            android:name=".ui.activity.DataStoreActivity"
+            android:exported="true"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity" >
+
+        </activity>
+
     </application>
 
     <!--

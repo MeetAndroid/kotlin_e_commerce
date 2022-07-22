@@ -31,7 +31,7 @@
         android:fontFamily="@font/roboto_medium"
         android:textAllCaps="false"
         android:textAppearance="@style/TextAppearance.AppCompat.Small"
-        android:textColor="@color/color_blue_or_white"
+        android:textColor="@color/colorGray"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/cvTopProduct"

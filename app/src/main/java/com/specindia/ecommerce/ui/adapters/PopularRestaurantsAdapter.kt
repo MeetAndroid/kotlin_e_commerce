@@ -2,35 +2,16 @@ package com.specindia.ecommerce.ui.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.recyclerview.widget.AsyncListDiffer
-import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.specindia.ecommerce.databinding.RowPopularRestaurantsBinding
 import com.specindia.ecommerce.models.response.home.PopularRestaurent
 
-class PopularRestaurantsAdapter :
+class PopularRestaurantsAdapter(private val arrayList: ArrayList<PopularRestaurent>) :
     RecyclerView.Adapter<PopularRestaurantsAdapter.RestaurantsViewHolder>() {
+
     inner class RestaurantsViewHolder(val binding: RowPopularRestaurantsBinding) :
         RecyclerView.ViewHolder(binding.root)
-
-    private val differCallback = object : DiffUtil.ItemCallback<PopularRestaurent>() {
-        override fun areItemsTheSame(
-            oldItem: PopularRestaurent,
-            newItem: PopularRestaurent
-        ): Boolean {
-            return oldItem.id == newItem.id
-        }
-
-        override fun areContentsTheSame(
-            oldItem: PopularRestaurent,
-            newItem: PopularRestaurent
-        ): Boolean {
-            return oldItem == newItem
-        }
-    }
-
-    val differ = AsyncListDiffer(this, differCallback)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RestaurantsViewHolder {
         val binding =
@@ -39,7 +20,7 @@ class PopularRestaurantsAdapter :
     }
 
     override fun onBindViewHolder(holder: RestaurantsViewHolder, position: Int) {
-        val restaurant = differ.currentList[position]
+        val restaurant = arrayList[position]
 
         with(holder) {
             with(binding) {
@@ -64,7 +45,7 @@ class PopularRestaurantsAdapter :
     }
 
     override fun getItemCount(): Int {
-        return differ.currentList.size
+        return arrayList.size
     }
 
     private var onItemClickListener: ((PopularRestaurent) -> Unit)? = null

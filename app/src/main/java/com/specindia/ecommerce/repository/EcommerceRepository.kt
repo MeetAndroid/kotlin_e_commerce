@@ -5,6 +5,7 @@ import com.specindia.ecommerce.api.network.BaseApiResponse
 import com.specindia.ecommerce.api.network.NetworkResult
 import com.specindia.ecommerce.models.response.home.DashboardListResponse
 import com.specindia.ecommerce.models.response.login.LoginResponse
+import com.specindia.ecommerce.models.response.menulist.MenuListResponse
 import com.specindia.ecommerce.models.response.registration.RegistrationResponse
 import com.specindia.ecommerce.models.response.social.SocialLoginResponse
 import dagger.hilt.android.scopes.ActivityRetainedScoped
@@ -50,6 +51,14 @@ class EcommerceRepository @Inject constructor(
     ): Flow<NetworkResult<DashboardListResponse>> {
         return flow {
             emit(safeApiCall { remoteDataSource.getDashboardList(headerMap) })
+        }.flowOn(Dispatchers.IO)
+    }
+
+    suspend fun getMenuList(
+        headerMap: Map<String, String>
+    ): Flow<NetworkResult<MenuListResponse>> {
+        return flow {
+            emit(safeApiCall { remoteDataSource.getMenuList(headerMap) })
         }.flowOn(Dispatchers.IO)
     }
 }

@@ -78,4 +78,6 @@
     <string name="top_categories">Top Categories</string>
     <string name="view_all">View all</string>
     <string name="go_to_home_details">Go to Home Details</string>
+    <string name="delivering_to">Delivering to</string>
+    <string name="search_food">Search food</string>
 </resources>

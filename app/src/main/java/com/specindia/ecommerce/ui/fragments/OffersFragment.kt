@@ -35,6 +35,7 @@ class OffersFragment : Fragment() {
                 ivBack.visible(false)
                 ivFavorite.visible(false)
                 ivShoppingCart.visible(false)
+                ivSearch.visible(false)
             }
         }
     }

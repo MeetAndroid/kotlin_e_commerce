@@ -15,7 +15,10 @@ import com.specindia.ecommerce.R
 import com.specindia.ecommerce.api.network.NetworkResult
 import com.specindia.ecommerce.databinding.FragmentHomeBinding
 import com.specindia.ecommerce.models.response.AuthResponseData
+import com.specindia.ecommerce.models.response.home.Category
 import com.specindia.ecommerce.models.response.home.DashboardListResponse
+import com.specindia.ecommerce.models.response.home.PopularRestaurent
+import com.specindia.ecommerce.models.response.home.TopProduct
 import com.specindia.ecommerce.ui.activity.HomeActivity
 import com.specindia.ecommerce.ui.adapters.CategoryListAdapter
 import com.specindia.ecommerce.ui.adapters.PopularRestaurantsAdapter
@@ -32,9 +35,16 @@ class HomeFragment : Fragment() {
     private lateinit var binding: FragmentHomeBinding
     private var loggedInUserName: String = ""
 
-    private lateinit var restaurantsAdapter: PopularRestaurantsAdapter
+    private lateinit var data: AuthResponseData
+
     private lateinit var topProductAdapter: TopProductsAdapter
+    private lateinit var restaurantsAdapter: PopularRestaurantsAdapter
     private lateinit var categoryListAdapter: CategoryListAdapter
+
+    private lateinit var topProductList: ArrayList<TopProduct>
+    private lateinit var restaurantList: ArrayList<PopularRestaurent>
+    private lateinit var categoryList: ArrayList<Category>
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -45,26 +55,6 @@ class HomeFragment : Fragment() {
         return binding.root
     }
 
-    override fun onResume() {
-        super.onResume()
-        binding.apply {
-            shimmerViewTopProducts.startShimmer()
-            shimmerViewPopularRestaurants.startShimmer()
-            shimmerCategoryList.startShimmer()
-        }
-
-    }
-
-    override fun onPause() {
-        binding.apply {
-            shimmerViewPopularRestaurants.stopShimmer()
-            shimmerViewTopProducts.stopShimmer()
-            shimmerCategoryList.stopShimmer()
-        }
-
-        super.onPause()
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -72,21 +62,19 @@ class HomeFragment : Fragment() {
         setUpHeaderItemClick()
 
         val userData = (activity as HomeActivity).dataStoreViewModel.getLoggedInUserData()
-        val data = Gson().fromJson(userData, AuthResponseData::class.java)
+        data = Gson().fromJson(userData, AuthResponseData::class.java)
 
         getUserDetails(data)
         setUpRecyclerView()
         callDashBoardListApi(data)
         observeResponse()
 
-        restaurantsAdapter.setOnItemClickListener {
-            requireActivity().showLongToast("${it.name} clicked")
-        }
-
         topProductAdapter.setOnItemClickListener {
             requireActivity().showLongToast("${it.productName} clicked")
         }
-
+        restaurantsAdapter.setOnItemClickListener {
+            requireActivity().showLongToast("${it.name} clicked")
+        }
         categoryListAdapter.setOnItemClickListener {
             requireActivity().showLongToast("${it.name} clicked")
         }
@@ -98,14 +86,33 @@ class HomeFragment : Fragment() {
         binding.tvSearch.setOnClickListener {
             it.findNavController().navigate(R.id.action_homeFragment_to_searchFragment)
         }
+
+
+        binding.swipeRefreshLayout.setOnRefreshListener {
+            binding.swipeRefreshLayout.isRefreshing = false
+
+            startShimmerEffect(binding)
+            callDashBoardListApi(data)
+        }
     }
 
 
     // Init recycler view
     private fun setUpRecyclerView() {
+        topProductList = ArrayList()
+        restaurantList = ArrayList()
+        categoryList = ArrayList()
+
+        // Top Products
+        topProductAdapter = TopProductsAdapter(topProductList)
+        binding.rvTopProducts.apply {
+            adapter = topProductAdapter
+            layoutManager =
+                LinearLayoutManager(requireActivity(), LinearLayoutManager.HORIZONTAL, false)
+        }
 
         // Top Restaurants
-        restaurantsAdapter = PopularRestaurantsAdapter()
+        restaurantsAdapter = PopularRestaurantsAdapter(restaurantList)
 
         val linearSnapHelper: LinearSnapHelper = SnapHelper()
 
@@ -116,16 +123,9 @@ class HomeFragment : Fragment() {
         }
         linearSnapHelper.attachToRecyclerView(binding.rvPopularRestaurants)
 
-        // Top Products
-        topProductAdapter = TopProductsAdapter()
-        binding.rvTopProducts.apply {
-            adapter = topProductAdapter
-            layoutManager =
-                LinearLayoutManager(requireActivity(), LinearLayoutManager.HORIZONTAL, false)
-        }
 
         // Category
-        categoryListAdapter = CategoryListAdapter()
+        categoryListAdapter = CategoryListAdapter(categoryList)
         binding.rvCategoryList.apply {
             adapter = categoryListAdapter
             layoutManager =
@@ -149,7 +149,6 @@ class HomeFragment : Fragment() {
                     |Profile URL =${data.profileImage}
                 """.trimMargin()
         )
-
     }
 
     private fun setUpHeader() {
@@ -159,6 +158,7 @@ class HomeFragment : Fragment() {
                 ivBack.visible(false)
                 ivFavorite.visible(false)
                 ivShoppingCart.visible(true)
+                ivSearch.visible(true)
             }
         }
     }
@@ -168,6 +168,7 @@ class HomeFragment : Fragment() {
             with(homeMenuScreenHeader) {
                 ivShoppingCart.setOnClickListener {
                     requireActivity().showLongToast("Add to cart")
+                    callDashBoardListApi(data)
                 }
             }
         }
@@ -176,7 +177,6 @@ class HomeFragment : Fragment() {
     private fun callDashBoardListApi(data: AuthResponseData) {
         (activity as HomeActivity).homeViewModel.getDashboardList(getHeaderMap(data.token, true))
     }
-
 
     private fun observeResponse() {
         (activity as HomeActivity).homeViewModel.dashboardListResponse.observe(viewLifecycleOwner) { response ->
@@ -199,7 +199,6 @@ class HomeFragment : Fragment() {
         }
     }
 
-
     private fun stopShimmerEffect(binding: FragmentHomeBinding) {
         binding.apply {
             shimmerViewPopularRestaurants.stopShimmer()
@@ -211,16 +210,32 @@ class HomeFragment : Fragment() {
         }
     }
 
+    private fun startShimmerEffect(binding: FragmentHomeBinding) {
+        binding.apply {
+            shimmerViewPopularRestaurants.startShimmer()
+            shimmerViewPopularRestaurants.visible(true)
+            shimmerViewTopProducts.startShimmer()
+            shimmerViewTopProducts.visible(true)
+            shimmerCategoryList.startShimmer()
+            shimmerCategoryList.visible(true)
+        }
+    }
+
     private fun setUpTopDishUI(
         binding: FragmentHomeBinding,
         dashboardListResponse: DashboardListResponse
     ) {
         binding.apply {
-            if (dashboardListResponse.data.topProduct.size > 0) {
+            topProductList.clear()
+            if (dashboardListResponse.data.topProduct.isNotEmpty()) {
                 headerTopDishes.listHeader.visible(true)
+                headerTopDishes.tvViewAll.visible(true)
                 headerTopDishes.tvTitle.text =
                     getString(R.string.top_dishes)
-                topProductAdapter.differ.submitList(dashboardListResponse.data.topProduct.toList())
+
+
+                topProductList.addAll(dashboardListResponse.data.topProduct.toList())
+                topProductAdapter.notifyDataSetChanged()
 
                 headerTopDishes.tvViewAll.setOnClickListener {
                     requireActivity().showLongToast("View All Top Dishes")
@@ -236,11 +251,15 @@ class HomeFragment : Fragment() {
         dashboardListResponse: DashboardListResponse
     ) {
         binding.apply {
-            if (dashboardListResponse.data.popularRestaurents.size > 0) {
+            restaurantList.clear()
+            if (dashboardListResponse.data.popularRestaurents.isNotEmpty()) {
                 headerPopularRestaurants.listHeader.visible(true)
+                headerPopularRestaurants.tvViewAll.visible(true)
                 headerPopularRestaurants.tvTitle.text =
                     getString(R.string.popular_restaurants)
-                restaurantsAdapter.differ.submitList(dashboardListResponse.data.popularRestaurents.toList())
+
+                restaurantList.addAll(dashboardListResponse.data.popularRestaurents.toList())
+                restaurantsAdapter.notifyDataSetChanged()
 
                 headerPopularRestaurants.tvViewAll.setOnClickListener {
                     requireActivity().showLongToast("View All Popular Restaurants")
@@ -249,20 +268,22 @@ class HomeFragment : Fragment() {
                 headerPopularRestaurants.listHeader.visible(false)
             }
         }
-
     }
-
 
     private fun setUpCategoryListUI(
         binding: FragmentHomeBinding,
         dashboardListResponse: DashboardListResponse
     ) {
         binding.apply {
-            if (dashboardListResponse.data.categoryList.size > 0) {
+            categoryList.clear()
+            if (dashboardListResponse.data.categoryList.isNotEmpty()) {
                 headerCategoryList.listHeader.visible(true)
+                headerCategoryList.tvViewAll.visible(true)
                 headerCategoryList.tvTitle.text =
                     getString(R.string.top_categories)
-                categoryListAdapter.differ.submitList(dashboardListResponse.data.categoryList.toList())
+
+                categoryList.addAll(dashboardListResponse.data.categoryList.toList())
+                categoryListAdapter.notifyDataSetChanged()
 
                 headerCategoryList.tvViewAll.setOnClickListener {
                     requireActivity().showLongToast("View All Top Categories")

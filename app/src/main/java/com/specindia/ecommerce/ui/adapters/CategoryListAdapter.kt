@@ -2,35 +2,16 @@ package com.specindia.ecommerce.ui.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.recyclerview.widget.AsyncListDiffer
-import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.specindia.ecommerce.databinding.RowCategoryListItemBinding
 import com.specindia.ecommerce.models.response.home.Category
 
-class CategoryListAdapter :
+class CategoryListAdapter(private val arrayList: ArrayList<Category>) :
     RecyclerView.Adapter<CategoryListAdapter.CategoryListViewHolder>() {
+
     inner class CategoryListViewHolder(val binding: RowCategoryListItemBinding) :
         RecyclerView.ViewHolder(binding.root)
-
-    private val differCallback = object : DiffUtil.ItemCallback<Category>() {
-        override fun areItemsTheSame(
-            oldItem: Category,
-            newItem: Category
-        ): Boolean {
-            return oldItem.id == newItem.id
-        }
-
-        override fun areContentsTheSame(
-            oldItem: Category,
-            newItem: Category
-        ): Boolean {
-            return oldItem == newItem
-        }
-    }
-
-    val differ = AsyncListDiffer(this, differCallback)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CategoryListViewHolder {
         val binding =
@@ -39,7 +20,7 @@ class CategoryListAdapter :
     }
 
     override fun onBindViewHolder(holder: CategoryListViewHolder, position: Int) {
-        val category = differ.currentList[position]
+        val category = arrayList[position]
 
         with(holder) {
             with(binding) {
@@ -54,7 +35,7 @@ class CategoryListAdapter :
     }
 
     override fun getItemCount(): Int {
-        return differ.currentList.size
+        return arrayList.size
     }
 
     private var onItemClickListener: ((Category) -> Unit)? = null

@@ -36,6 +36,7 @@ class ProfileDetailsFragment : Fragment() {
                 ivBack.visible(true)
                 ivFavorite.visible(false)
                 ivShoppingCart.visible(false)
+                ivSearch.visible(false)
             }
         }
     }

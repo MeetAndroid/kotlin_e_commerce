@@ -1,5 +1,7 @@
 package com.specindia.ecommerce.util
 
+import androidx.datastore.preferences.core.stringPreferencesKey
+
 class Constants {
     companion object {
         const val NEWS_API_KEY = "8be6b5fd90574ef9bf33c38f65309b6c"
@@ -28,6 +30,7 @@ class Constants {
         const val LOGIN = "login"
         const val SOCIAL_SIGN_UP = "socialSignUp"
         const val DASH_BOARD_LIST = "getDashBoardAllList"
+        const val GET_MENU_LIST = "getMenuList"
 
         // Data Store Constants
         const val KEY_IS_FIRST_TIME = "isFirstTime"
@@ -63,5 +66,11 @@ class Constants {
 
         // API
         const val KEY_BEARER_TOKEN = "bearer_token"
+    }
+
+
+    object DataStore {
+        val DATA = stringPreferencesKey("data")
+        val SECURED_DATA = stringPreferencesKey("secured_data")
     }
 }

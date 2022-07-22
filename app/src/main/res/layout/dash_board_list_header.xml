@@ -31,7 +31,7 @@
         android:padding="8dp"
         android:text="@string/view_all"
         android:textAppearance="@style/TextAppearance.AppCompat.Small"
-        android:textColor="@color/color_blue_or_white"
+        android:textColor="@color/color_red"
         app:layout_constraintBottom_toBottomOf="@+id/tvTitle"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/tvTitle" />

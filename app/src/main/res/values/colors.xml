@@ -65,4 +65,7 @@
     <color name="colorShimmerEffect">#dddddd</color>
     <color name="colorOffWhite">#F8F0E3</color>
 
+    <color name="color_red">#FFC8171D</color>
+    <color name="colorGray">#716C6C</color>
+
 </resources>

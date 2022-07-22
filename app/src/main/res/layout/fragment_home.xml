@@ -8,18 +8,17 @@
 
     <include
         android:id="@+id/homeMenuScreenHeader"
-        layout="@layout/row_header"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        layout="@layout/row_header" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tvDelivering"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
         android:fontFamily="@font/roboto_medium"
-        android:text="Delivering to"
-        android:textColor="#736D6D"
+        android:text="@string/delivering_to"
+        android:textColor="@color/colorHeaderText"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/homeMenuScreenHeader" />
 
@@ -27,7 +26,7 @@
         android:id="@+id/spinnerLocation"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
+        android:layout_marginStart="12dp"
         android:entries="@android:array/organizationTypes"
         android:paddingVertical="10dp"
         android:spinnerMode="dropdown"
@@ -46,16 +45,17 @@
         android:fontFamily="@font/roboto_medium"
         android:paddingHorizontal="16dp"
         android:paddingVertical="10dp"
-        android:text="Search food"
-        android:textColor="#736D6D"
-        android:textSize="16sp"
+        android:text="@string/search_food"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small"
+        android:textColor="@color/colorHeaderText"
+        android:visibility="gone"
         app:layout_constraintTop_toBottomOf="@+id/spinnerLocation" />
 
-
-    <androidx.core.widget.NestedScrollView
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipeRefreshLayout"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:fillViewport="true"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -63,209 +63,226 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="0dp">
+            android:layout_height="match_parent"
+            android:paddingTop="8dp">
 
-            <include
-                android:id="@+id/headerTopDishes"
-                layout="@layout/dash_board_list_header"
+            <androidx.core.widget.NestedScrollView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
+                android:layout_height="match_parent"
+                android:fillViewport="true"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent">
 
-            <!-- Top Products -->
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rvTopProducts"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:clipToPadding="false"
-                android:orientation="horizontal"
-                android:paddingHorizontal="16dp"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/headerTopDishes"
-                tools:itemCount="5"
-                tools:listitem="@layout/row_top_product" />
-
-            <!-- Top Products Shimmer Layout-->
-            <com.facebook.shimmer.ShimmerFrameLayout
-                android:id="@+id/shimmerViewTopProducts"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:clipToPadding="false"
-                android:orientation="horizontal"
-                android:paddingHorizontal="16dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/headerTopDishes"
-                app:shimmer_auto_start="true"
-                app:shimmer_duration="800">
-
-                <!-- Adding 7 rows of placeholders -->
-                <LinearLayout
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:layout_height="0dp">
 
-                    <include layout="@layout/row_top_product_shimmer" />
+                    <include
+                        android:id="@+id/headerTopDishes"
+                        layout="@layout/dash_board_list_header"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
-                    <include layout="@layout/row_top_product_shimmer" />
+                    <!-- Top Products -->
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rvTopProducts"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:clipToPadding="false"
+                        android:orientation="horizontal"
+                        android:paddingHorizontal="16dp"
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/headerTopDishes"
+                        tools:itemCount="5"
+                        tools:listitem="@layout/row_top_product" />
 
-                    <include layout="@layout/row_top_product_shimmer" />
+                    <!-- Top Products Shimmer Layout-->
+                    <com.facebook.shimmer.ShimmerFrameLayout
+                        android:id="@+id/shimmerViewTopProducts"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:clipToPadding="false"
+                        android:orientation="horizontal"
+                        android:paddingHorizontal="16dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/headerTopDishes"
+                        app:shimmer_auto_start="true"
+                        app:shimmer_duration="2000">
 
-                    <include layout="@layout/row_top_product_shimmer" />
+                        <!-- Adding 7 rows of placeholders -->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
 
-                    <include layout="@layout/row_top_product_shimmer" />
+                            <include layout="@layout/row_top_product_shimmer" />
 
-                    <include layout="@layout/row_top_product_shimmer" />
-                </LinearLayout>
+                            <include layout="@layout/row_top_product_shimmer" />
 
-            </com.facebook.shimmer.ShimmerFrameLayout>
+                            <include layout="@layout/row_top_product_shimmer" />
 
-            <!-- Top Restaurants -->
+                            <include layout="@layout/row_top_product_shimmer" />
 
-            <include
-                android:id="@+id/headerPopularRestaurants"
-                layout="@layout/dash_board_list_header"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/rvTopProducts"
+                            <include layout="@layout/row_top_product_shimmer" />
 
-                />
+                            <include layout="@layout/row_top_product_shimmer" />
+                        </LinearLayout>
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rvPopularRestaurants"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:clipToPadding="false"
-                android:orientation="horizontal"
-                android:paddingHorizontal="16dp"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/headerPopularRestaurants"
-                tools:itemCount="5"
-                tools:listitem="@layout/row_popular_restaurants" />
+                    </com.facebook.shimmer.ShimmerFrameLayout>
 
-            <!-- Top Restaurants Shimmer Layout -->
+                    <!-- Top Restaurants -->
 
-            <com.facebook.shimmer.ShimmerFrameLayout
-                android:id="@+id/shimmerViewPopularRestaurants"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:paddingHorizontal="16dp"
-                android:visibility="visible"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/headerPopularRestaurants"
-                app:shimmer_auto_start="true"
-                app:shimmer_duration="800">
+                    <include
+                        android:id="@+id/headerPopularRestaurants"
+                        layout="@layout/dash_board_list_header"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/rvTopProducts"
 
-                <!-- Adding 7 rows of placeholders -->
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                        />
 
-                    <include layout="@layout/row_popular_restaurants_shimmer" />
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rvPopularRestaurants"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:clipToPadding="false"
+                        android:orientation="horizontal"
+                        android:paddingHorizontal="16dp"
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/headerPopularRestaurants"
+                        tools:itemCount="5"
+                        tools:listitem="@layout/row_popular_restaurants" />
 
-                    <include layout="@layout/row_popular_restaurants_shimmer" />
+                    <!-- Top Restaurants Shimmer Layout -->
 
-                    <include layout="@layout/row_popular_restaurants_shimmer" />
+                    <com.facebook.shimmer.ShimmerFrameLayout
+                        android:id="@+id/shimmerViewPopularRestaurants"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:paddingHorizontal="16dp"
+                        android:visibility="visible"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/headerPopularRestaurants"
+                        app:shimmer_auto_start="true"
+                        app:shimmer_duration="2000">
 
-                    <include layout="@layout/row_popular_restaurants_shimmer" />
+                        <!-- Adding 7 rows of placeholders -->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
 
-                    <include layout="@layout/row_popular_restaurants_shimmer" />
+                            <include layout="@layout/row_popular_restaurants_shimmer" />
 
-                    <include layout="@layout/row_popular_restaurants_shimmer" />
+                            <include layout="@layout/row_popular_restaurants_shimmer" />
 
-                </LinearLayout>
+                            <include layout="@layout/row_popular_restaurants_shimmer" />
 
-            </com.facebook.shimmer.ShimmerFrameLayout>
+                            <include layout="@layout/row_popular_restaurants_shimmer" />
 
-            <!-- Category List -->
+                            <include layout="@layout/row_popular_restaurants_shimmer" />
 
-            <include
-                android:id="@+id/headerCategoryList"
-                layout="@layout/dash_board_list_header"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/rvPopularRestaurants" />
+                            <include layout="@layout/row_popular_restaurants_shimmer" />
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rvCategoryList"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:clipToPadding="false"
-                android:orientation="horizontal"
-                android:paddingHorizontal="16dp"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/headerCategoryList"
-                tools:itemCount="5"
-                tools:listitem="@layout/row_category_list_item" />
+                        </LinearLayout>
 
+                    </com.facebook.shimmer.ShimmerFrameLayout>
 
-            <!-- Top Products Shimmer Layout-->
-            <com.facebook.shimmer.ShimmerFrameLayout
-                android:id="@+id/shimmerCategoryList"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:clipToPadding="false"
-                android:orientation="horizontal"
-                android:paddingHorizontal="16dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/headerCategoryList"
-                app:shimmer_auto_start="true"
-                app:shimmer_duration="800">
+                    <!-- Category List -->
 
-                <!-- Adding 7 rows of placeholders -->
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    <include
+                        android:id="@+id/headerCategoryList"
+                        layout="@layout/dash_board_list_header"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/rvPopularRestaurants" />
 
-                    <include layout="@layout/row_category_list_item_shimmer" />
-
-                    <include layout="@layout/row_category_list_item_shimmer" />
-
-                    <include layout="@layout/row_category_list_item_shimmer" />
-
-                    <include layout="@layout/row_category_list_item_shimmer" />
-
-                    <include layout="@layout/row_category_list_item_shimmer" />
-
-                    <include layout="@layout/row_category_list_item_shimmer" />
-                </LinearLayout>
-
-            </com.facebook.shimmer.ShimmerFrameLayout>
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rvCategoryList"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:clipToPadding="false"
+                        android:orientation="horizontal"
+                        android:paddingHorizontal="16dp"
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/headerCategoryList"
+                        tools:itemCount="5"
+                        tools:listitem="@layout/row_category_list_item" />
 
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btnHomeMenuDetails"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="48dp"
-                android:text="@string/go_to_home_details"
-                android:visibility="invisible"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/rvCategoryList" />
+                    <!-- Top Products Shimmer Layout-->
+                    <com.facebook.shimmer.ShimmerFrameLayout
+                        android:id="@+id/shimmerCategoryList"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:clipToPadding="false"
+                        android:orientation="horizontal"
+                        android:paddingHorizontal="16dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/headerCategoryList"
+                        app:shimmer_auto_start="true"
+                        app:shimmer_duration="2000">
 
+                        <!-- Adding 7 rows of placeholders -->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <include layout="@layout/row_category_list_item_shimmer" />
+
+                            <include layout="@layout/row_category_list_item_shimmer" />
+
+                            <include layout="@layout/row_category_list_item_shimmer" />
+
+                            <include layout="@layout/row_category_list_item_shimmer" />
+
+                            <include layout="@layout/row_category_list_item_shimmer" />
+
+                            <include layout="@layout/row_category_list_item_shimmer" />
+                        </LinearLayout>
+
+                    </com.facebook.shimmer.ShimmerFrameLayout>
+
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnHomeMenuDetails"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="48dp"
+                        android:text="@string/go_to_home_details"
+                        android:visibility="invisible"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/rvCategoryList" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.core.widget.NestedScrollView>
         </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.core.widget.NestedScrollView>
+
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

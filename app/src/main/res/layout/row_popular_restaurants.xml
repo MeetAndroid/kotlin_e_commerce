@@ -36,8 +36,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:shapeAppearanceOverlay="@style/RoundedCornerImageView"
-                tools:src="@color/color_blue_or_white" />
+                app:shapeAppearanceOverlay="@style/RoundedCornerImageView" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -72,7 +71,7 @@
                         android:layout_height="wrap_content"
                         android:background="@android:color/transparent"
                         android:fontFamily="@font/roboto_light"
-                        android:textColor="@color/color_blue_or_white"
+                        android:textColor="@color/yellow6"
                         android:textSize="12sp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -88,10 +87,8 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="8dp"
                     android:numStars="5"
-                    android:progressTint="@color/color_blue_or_white"
                     android:rating="3.6"
                     android:stepSize="0.1"
-                    android:theme="@style/RatingBar"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent" />
             </androidx.constraintlayout.widget.ConstraintLayout>
