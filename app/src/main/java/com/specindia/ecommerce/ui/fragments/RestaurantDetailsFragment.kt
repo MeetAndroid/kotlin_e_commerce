@@ -53,6 +53,10 @@ class RestaurantDetailsFragment : Fragment() {
         binding.clTopPart.setRandomBackgroundColor()
         callRestaurantDetailsApi(data)
         observeRestaurantDetailsResponse()
+
+        binding.ivMenuItem.setOnClickListener {
+            view.findNavController().navigate(R.id.action_restaurantDetailsFragment_to_productDetailsFragment)
+        }
     }
 
     private fun setUpHeader() {

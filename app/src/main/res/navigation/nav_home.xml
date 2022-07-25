@@ -38,6 +38,14 @@
 <!--            android:name="restaurant_id"-->
 <!--            app:argType="int"-->
 <!--            android:defaultValue="0" />-->
+        <action
+            android:id="@+id/action_restaurantDetailsFragment_to_productDetailsFragment"
+            app:destination="@id/productDetailsFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/productDetailsFragment"
+        android:name="com.specindia.ecommerce.ui.fragments.ProductDetailsFragment"
+        android:label="fragment_product_details"
+        tools:layout="@layout/fragment_product_details" />
 
 </navigation>
