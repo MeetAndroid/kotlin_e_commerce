@@ -50,7 +50,7 @@
         <entry key="..\:/EcommerceApp/app/src/main/res/layout/fragment_profile.xml" value="0.1" />
         <entry key="..\:/EcommerceApp/app/src/main/res/layout/fragment_profile_details.xml" value="0.1675213675213675" />
         <entry key="..\:/EcommerceApp/app/src/main/res/layout/fragment_registration.xml" value="0.17192982456140352" />
-        <entry key="..\:/EcommerceApp/app/src/main/res/layout/fragment_restaurant_details.xml" value="0.22" />
+        <entry key="..\:/EcommerceApp/app/src/main/res/layout/fragment_restaurant_details.xml" value="0.2035306334371755" />
         <entry key="..\:/EcommerceApp/app/src/main/res/layout/fragment_search.xml" value="0.1" />
         <entry key="..\:/EcommerceApp/app/src/main/res/layout/fragment_welcome.xml" value="0.1675213675213675" />
         <entry key="..\:/EcommerceApp/app/src/main/res/layout/layout_no_data_found.xml" value="0.1587719298245614" />
@@ -66,6 +66,7 @@
         <entry key="..\:/EcommerceApp/app/src/main/res/layout/row_popular_restaurants.xml" value="0.25" />
         <entry key="..\:/EcommerceApp/app/src/main/res/layout/row_popular_restaurants_shimmer.xml" value="0.17192982456140352" />
         <entry key="..\:/EcommerceApp/app/src/main/res/layout/row_popular_restaurents.xml" value="0.17192982456140352" />
+        <entry key="..\:/EcommerceApp/app/src/main/res/layout/row_product_list_item.xml" value="0.14605263157894738" />
         <entry key="..\:/EcommerceApp/app/src/main/res/layout/row_top_dishes.xml" value="0.17192982456140352" />
         <entry key="..\:/EcommerceApp/app/src/main/res/layout/row_top_product.xml" value="0.1" />
         <entry key="..\:/EcommerceApp/app/src/main/res/layout/row_top_product_shimmer.xml" value="0.17192982456140352" />
