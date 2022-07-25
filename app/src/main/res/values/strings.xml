@@ -81,4 +81,5 @@
     <string name="delivering_to">Delivering to</string>
     <string name="search_food">Search food</string>
     <string name="no_data_found">No data Found</string>
+    <string name="add">Add</string>
 </resources>

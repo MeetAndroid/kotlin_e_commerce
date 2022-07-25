@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.gson.Gson
@@ -15,10 +16,14 @@ import com.specindia.ecommerce.api.network.NetworkResult
 import com.specindia.ecommerce.databinding.FragmentRestaurantDetailsBinding
 import com.specindia.ecommerce.models.request.Parameters
 import com.specindia.ecommerce.models.response.AuthResponseData
+import com.specindia.ecommerce.models.response.home.productsbyrestaurant.ProductsByRestaurantData
+import com.specindia.ecommerce.models.response.home.productsbyrestaurant.ProductsByRestaurantResponse
 import com.specindia.ecommerce.ui.activity.HomeActivity
+import com.specindia.ecommerce.ui.adapters.ProductListAdapter
 import com.specindia.ecommerce.util.Constants.Companion.KEY_RESTAURANT_ID
 import com.specindia.ecommerce.util.getHeaderMap
 import com.specindia.ecommerce.util.setRandomBackgroundColor
+import com.specindia.ecommerce.util.showLongToast
 import com.specindia.ecommerce.util.visible
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -27,6 +32,9 @@ class RestaurantDetailsFragment : Fragment() {
     private lateinit var binding: FragmentRestaurantDetailsBinding
     private lateinit var data: AuthResponseData
     private var restaurantId: Int = 0
+
+    private lateinit var productListAdapter: ProductListAdapter
+    private lateinit var productList: ArrayList<ProductsByRestaurantData>
 
     // get the arguments from the Registration fragment
 //    val args: RestaurantDetailsFragmentArgs by navArgs()
@@ -54,9 +62,6 @@ class RestaurantDetailsFragment : Fragment() {
         callRestaurantDetailsApi(data)
         observeRestaurantDetailsResponse()
 
-        binding.ivMenuItem.setOnClickListener {
-            view.findNavController().navigate(R.id.action_restaurantDetailsFragment_to_productDetailsFragment)
-        }
     }
 
     private fun setUpHeader() {
@@ -79,6 +84,19 @@ class RestaurantDetailsFragment : Fragment() {
                     it.findNavController().popBackStack()
                 }
             }
+        }
+    }
+
+    private fun setUpRecyclerView() {
+        // Products
+        productList = ArrayList()
+        productListAdapter = ProductListAdapter(productList)
+        binding.rvProducts.apply {
+            adapter = productListAdapter
+            setHasFixedSize(false)
+            isNestedScrollingEnabled = false
+            layoutManager =
+                LinearLayoutManager(requireActivity())
         }
     }
 
@@ -112,8 +130,17 @@ class RestaurantDetailsFragment : Fragment() {
                                 .error(android.R.drawable.ic_dialog_alert)
                                 .into(ivMenuItem)
                         }
+
+                        // Product List
+                        setUpRecyclerView()
                         callProductsByRestaurantApi(restaurantData.data.id)
                         observeProductsByRestaurantResponse()
+
+                        productListAdapter.let {
+                            productListAdapter.setOnItemClickListener {
+                                requireActivity().showLongToast("${it.productName} clicked")
+                            }
+                        }
                     }
 
                 }
@@ -150,10 +177,9 @@ class RestaurantDetailsFragment : Fragment() {
 
             when (response) {
                 is NetworkResult.Success -> {
-                    response.data?.let { products ->
-                        with(binding) {
-                            Log.d("products", products.toString())
-                        }
+                    response.data?.let { productListResponse ->
+                        Log.d("products", productListResponse.toString())
+                        setUpProductListUI(binding, productListResponse)
                     }
                 }
                 is NetworkResult.Error -> {
@@ -161,6 +187,27 @@ class RestaurantDetailsFragment : Fragment() {
                 }
                 is NetworkResult.Loading -> {
                 }
+            }
+        }
+    }
+
+    private fun setUpProductListUI(
+        binding: FragmentRestaurantDetailsBinding,
+        productListResponse: ProductsByRestaurantResponse
+    ) {
+        binding.apply {
+            productList.clear()
+            noDataFound.clNoDataFound.visible(true)
+            rvProducts.visible(false)
+            if (productListResponse.data.isNotEmpty()) {
+                rvProducts.visible(true)
+                noDataFound.clNoDataFound.visible(false)
+                productList.addAll(productListResponse.data.toList())
+                productListAdapter.showShimmer = false
+                productListAdapter.notifyDataSetChanged()
+            } else {
+                noDataFound.clNoDataFound.visible(true)
+                rvProducts.visible(false)
             }
         }
     }
