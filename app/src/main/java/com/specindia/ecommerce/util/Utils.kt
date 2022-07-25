@@ -133,7 +133,6 @@ fun TextInputEditText.emptyEditText(editText: TextInputEditText) {
                 editText.setText("")
             }
         }
-
         override fun afterTextChanged(s: Editable?) {}
     })
 }
