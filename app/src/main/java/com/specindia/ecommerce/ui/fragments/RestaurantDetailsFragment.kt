@@ -13,6 +13,7 @@ import com.google.gson.Gson
 import com.specindia.ecommerce.R
 import com.specindia.ecommerce.api.network.NetworkResult
 import com.specindia.ecommerce.databinding.FragmentRestaurantDetailsBinding
+import com.specindia.ecommerce.models.request.Parameters
 import com.specindia.ecommerce.models.response.AuthResponseData
 import com.specindia.ecommerce.ui.activity.HomeActivity
 import com.specindia.ecommerce.util.Constants.Companion.KEY_RESTAURANT_ID
@@ -51,9 +52,8 @@ class RestaurantDetailsFragment : Fragment() {
 
         binding.clTopPart.setRandomBackgroundColor()
         callRestaurantDetailsApi(data)
-        observeResponse()
+        observeRestaurantDetailsResponse()
     }
-
 
     private fun setUpHeader() {
         with(binding) {
@@ -78,6 +78,7 @@ class RestaurantDetailsFragment : Fragment() {
         }
     }
 
+    // Call Restaurant Details API
     private fun callRestaurantDetailsApi(data: AuthResponseData) {
         (activity as HomeActivity).homeViewModel.getRestaurantDetails(
             getHeaderMap(
@@ -88,7 +89,8 @@ class RestaurantDetailsFragment : Fragment() {
         )
     }
 
-    private fun observeResponse() {
+    // Observe Restaurant Details Response
+    private fun observeRestaurantDetailsResponse() {
         (activity as HomeActivity).homeViewModel.restaurantDetailsResponse.observe(
             viewLifecycleOwner
         ) { response ->
@@ -106,7 +108,48 @@ class RestaurantDetailsFragment : Fragment() {
                                 .error(android.R.drawable.ic_dialog_alert)
                                 .into(ivMenuItem)
                         }
+                        callProductsByRestaurantApi(restaurantData.data.id)
+                        observeProductsByRestaurantResponse()
+                    }
 
+                }
+                is NetworkResult.Error -> {
+                    showDialog(response.message.toString())
+                }
+                is NetworkResult.Loading -> {
+                }
+            }
+        }
+    }
+
+    // Call Products By Restaurant api
+    private fun callProductsByRestaurantApi(id: Int) {
+        val parameter = Parameters(
+            restaurantId = id,
+            pageNo = 1,
+            limit = 10
+        )
+        (activity as HomeActivity).homeViewModel.getProductsByRestaurant(
+            getHeaderMap(
+                data.token,
+                true
+            ),
+            Gson().toJson(parameter)
+        )
+    }
+
+    // Observe Products By Restaurant Response
+    private fun observeProductsByRestaurantResponse() {
+        (activity as HomeActivity).homeViewModel.productsByRestaurant.observe(
+            viewLifecycleOwner
+        ) { response ->
+
+            when (response) {
+                is NetworkResult.Success -> {
+                    response.data?.let { products ->
+                        with(binding) {
+                            Log.d("products", products.toString())
+                        }
                     }
                 }
                 is NetworkResult.Error -> {
@@ -117,6 +160,7 @@ class RestaurantDetailsFragment : Fragment() {
             }
         }
     }
+
 
     private fun showDialog(message: String) {
         MaterialAlertDialogBuilder(requireActivity())

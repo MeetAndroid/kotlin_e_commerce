@@ -4,7 +4,8 @@ import com.specindia.ecommerce.api.datasource.EcommerceRemoteDataSource
 import com.specindia.ecommerce.api.network.BaseApiResponse
 import com.specindia.ecommerce.api.network.NetworkResult
 import com.specindia.ecommerce.models.response.home.DashboardListResponse
-import com.specindia.ecommerce.models.response.home.RestaurantDetailsResponse
+import com.specindia.ecommerce.models.response.home.productsbyrestaurant.ProductsByRestaurantResponse
+import com.specindia.ecommerce.models.response.home.restaurantDetails.RestaurantDetailsResponse
 import com.specindia.ecommerce.models.response.login.LoginResponse
 import com.specindia.ecommerce.models.response.menulist.MenuListResponse
 import com.specindia.ecommerce.models.response.registration.RegistrationResponse
@@ -71,4 +72,14 @@ class EcommerceRepository @Inject constructor(
             emit(safeApiCall { remoteDataSource.getRestaurantDetails(headerMap,id) })
         }.flowOn(Dispatchers.IO)
     }
+
+    suspend fun getProductsByRestaurant(
+        headerMap: Map<String, String>,
+        parameters: String
+    ): Flow<NetworkResult<ProductsByRestaurantResponse>> {
+        return flow {
+            emit(safeApiCall { remoteDataSource.getProductsByRestaurant(headerMap,parameters) })
+        }.flowOn(Dispatchers.IO)
+    }
+
 }
