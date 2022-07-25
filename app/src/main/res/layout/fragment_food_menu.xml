@@ -9,9 +9,13 @@
         android:id="@+id/foodMenuScreenHeader"
         layout="@layout/row_header" />
 
+    <include
+        android:id="@+id/noDataFound"
+        layout="@layout/layout_no_data_found"
+        android:visibility="gone" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/headerMenuList"
+        android:id="@+id/clMenuList"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"

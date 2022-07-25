@@ -18,7 +18,6 @@ import com.specindia.ecommerce.models.response.menulist.Menu
 import com.specindia.ecommerce.models.response.menulist.MenuListResponse
 import com.specindia.ecommerce.ui.activity.HomeActivity
 import com.specindia.ecommerce.ui.adapters.MenuListAdapter
-import com.specindia.ecommerce.util.SpaceItemDecoration
 import com.specindia.ecommerce.util.getHeaderMap
 import com.specindia.ecommerce.util.showLongToast
 import com.specindia.ecommerce.util.visible
@@ -63,7 +62,6 @@ class FoodMenuFragment : Fragment() {
 
         binding.swipeRefreshLayout.setOnRefreshListener {
             binding.swipeRefreshLayout.isRefreshing = false
-//            startShimmerEffect(binding)
             callMenuListApi(data)
         }
     }
@@ -74,7 +72,6 @@ class FoodMenuFragment : Fragment() {
         menuListAdapter = MenuListAdapter(menuList)
         binding.rvMenu.apply {
             adapter = menuListAdapter
-//            addItemDecoration(SpaceItemDecoration(10, false))
             layoutManager =
                 GridLayoutManager(requireActivity(), 2)
         }
@@ -114,7 +111,6 @@ class FoodMenuFragment : Fragment() {
             when (response) {
                 is NetworkResult.Success -> {
                     response.data?.let { menuListResponse ->
-//                        stopShimmerEffect(binding)
                         setUpMenuListUI(binding, menuListResponse)
                     }
                 }
@@ -133,11 +129,17 @@ class FoodMenuFragment : Fragment() {
     ) {
         binding.apply {
             menuList.clear()
+            noDataFound.clNoDataFound.visible(true)
+            clMenuList.visible(false)
             if (menuListResponse.data.menu.isNotEmpty()) {
+                clMenuList.visible(true)
+                noDataFound.clNoDataFound.visible(false)
                 menuList.addAll(menuListResponse.data.menu.toList())
+                menuListAdapter.showShimmer = false
                 menuListAdapter.notifyDataSetChanged()
             } else {
-                // No Data Found
+                noDataFound.clNoDataFound.visible(true)
+                clMenuList.visible(false)
             }
         }
     }

@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.specindia.ecommerce.R
 import com.specindia.ecommerce.databinding.RowPopularRestaurantsBinding
 import com.specindia.ecommerce.models.response.home.PopularRestaurent
 
@@ -24,7 +25,12 @@ class PopularRestaurantsAdapter(private val arrayList: ArrayList<PopularRestaure
 
         with(holder) {
             with(binding) {
-                Glide.with(itemView).load(restaurant.imageUrl).into(ivRestaurant)
+                Glide.with(itemView)
+                    .load(restaurant.imageUrl)
+                    .placeholder(R.drawable.ic_launcher_foreground)
+                    .error(android.R.drawable.ic_dialog_alert)
+                    .into(ivRestaurant)
+
                 tvRestaurantName.text = restaurant.name
                 tvRestaurantAddress.text = restaurant.address
 

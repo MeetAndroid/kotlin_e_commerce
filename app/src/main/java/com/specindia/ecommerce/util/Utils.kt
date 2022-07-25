@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageInfo
 import android.content.pm.PackageManager
+import android.graphics.Color
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities.TRANSPORT_CELLULAR
 import android.net.NetworkCapabilities.TRANSPORT_WIFI
@@ -36,6 +37,7 @@ import com.specindia.ecommerce.util.dialogs.CustomProgressDialog
 import kotlinx.coroutines.launch
 import java.security.MessageDigest
 import java.security.NoSuchAlgorithmException
+import java.util.*
 import java.util.regex.Matcher
 import java.util.regex.Pattern
 
@@ -228,6 +230,12 @@ fun getHeaderMap(token: String, hasBearerToken: Boolean): Map<String, String> {
     if (hasBearerToken) headerMap[AUTHORIZATION] = "$BEARER $token"
     Log.d("headerMap", headerMap.toString())
     return headerMap
+}
+
+fun View.setRandomBackgroundColor() {
+    val rnd = Random()
+    val color: Int = Color.argb(255, rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256))
+    this.setBackgroundColor(color)
 }
 
 // ============== Alert Dialogs

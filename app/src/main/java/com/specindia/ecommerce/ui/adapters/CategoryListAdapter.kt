@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.specindia.ecommerce.R
 import com.specindia.ecommerce.databinding.RowCategoryListItemBinding
 import com.specindia.ecommerce.models.response.home.Category
 
@@ -24,7 +25,11 @@ class CategoryListAdapter(private val arrayList: ArrayList<Category>) :
 
         with(holder) {
             with(binding) {
-                Glide.with(itemView).load(category.image).into(ivCategory)
+                Glide.with(itemView)
+                    .load(category.image)
+                    .placeholder(R.drawable.ic_launcher_foreground)
+                    .error(android.R.drawable.ic_dialog_alert)
+                    .into(ivCategory)
                 tvCategoryName.text = category.name
             }
 
