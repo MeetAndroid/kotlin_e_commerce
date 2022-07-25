@@ -6,7 +6,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.specindia.ecommerce.api.network.NetworkResult
 import com.specindia.ecommerce.models.response.home.DashboardListResponse
-import com.specindia.ecommerce.models.response.home.RestaurantDetailsResponse
+import com.specindia.ecommerce.models.response.home.productsbyrestaurant.ProductsByRestaurantResponse
+import com.specindia.ecommerce.models.response.home.restaurantDetails.RestaurantDetailsResponse
 import com.specindia.ecommerce.models.response.menulist.MenuListResponse
 import com.specindia.ecommerce.repository.EcommerceRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -24,6 +25,9 @@ class HomeViewModel @Inject constructor(
     private val _restaurantDetailsResponse =
         MutableLiveData<NetworkResult<RestaurantDetailsResponse>>()
 
+    private val _productsByRestauranResponse =
+        MutableLiveData<NetworkResult<ProductsByRestaurantResponse>>()
+
     // Live Data
     val dashboardListResponse: LiveData<NetworkResult<DashboardListResponse>>
         get() = _dashboardListResponse
@@ -33,6 +37,9 @@ class HomeViewModel @Inject constructor(
 
     val restaurantDetailsResponse: LiveData<NetworkResult<RestaurantDetailsResponse>>
         get() = _restaurantDetailsResponse
+
+    val productsByRestaurant: LiveData<NetworkResult<ProductsByRestaurantResponse>>
+        get() = _productsByRestauranResponse
 
     // Call dashboard list api
     fun getDashboardList(headerMap: Map<String, String>) =
@@ -51,10 +58,18 @@ class HomeViewModel @Inject constructor(
         }
 
     // Call Restaurant Details api
-    fun getRestaurantDetails(headerMap: Map<String, String>,id:Int) =
+    fun getRestaurantDetails(headerMap: Map<String, String>, id: Int) =
         viewModelScope.launch() {
-            repository.getRestaurantDetails(headerMap,id).collect { values ->
+            repository.getRestaurantDetails(headerMap, id).collect { values ->
                 _restaurantDetailsResponse.value = values
+            }
+        }
+
+    // Call Restaurant's Products api
+    fun getProductsByRestaurant(headerMap: Map<String, String>, parameters: String) =
+        viewModelScope.launch() {
+            repository.getProductsByRestaurant(headerMap, parameters).collect { values ->
+                _productsByRestauranResponse.value = values
             }
         }
 }

@@ -1,4 +1,4 @@
-package com.specindia.ecommerce.models.response.home
+package com.specindia.ecommerce.models.response.home.restaurantDetails
 
 
 import com.google.gson.annotations.SerializedName

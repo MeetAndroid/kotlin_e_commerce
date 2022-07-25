@@ -17,21 +17,29 @@ class Constants {
         const val WRITE_TIME_OUT = 120L
         const val CONNECTION_TIME_OUT = 120L
 
+        // Headers
         const val CONTENT_TYPE_JSON = "Content-Type: application/json"
-        const val ACCEPT="accept"
-        const val CONTENT_TYPE ="Content-Type"
+        const val ACCEPT = "accept"
+        const val CONTENT_TYPE = "Content-Type"
         const val APPLICATION_JSON = "application/json"
-
-        // End Point
         const val AUTHORIZATION = "Authorization"
         const val BEARER = "Bearer"
 
+        // End Points
+        const val CUSTOMER_END_POINT = "customer/"
+        const val PRODUCT_END_POINT = "product/"
+        const val CART_END_POINT = "cart/"
+        const val ADDRESS_END_POINT = "address/"
+        const val ORDER_END_POINT = "order/"
+
+        // Methods
         const val SIGN_UP = "signUp"
         const val LOGIN = "login"
         const val SOCIAL_SIGN_UP = "socialSignUp"
         const val DASH_BOARD_LIST = "getDashBoardAllList"
         const val GET_MENU_LIST = "getMenuList"
         const val GET_RESTAURANT_DETAILS = "getRestaurantDetails/{id}"
+        const val GET_PRODUCT_BY_RESTRAUNT = "getProductByRestraunt"
 
         // Data Store Constants
         const val KEY_IS_FIRST_TIME = "isFirstTime"
@@ -40,7 +48,6 @@ class Constants {
         // FB Fields
         const val KEY_FIELDS = "fields"
         const val VALUE_FIELDS = "id,email,first_name,last_name,picture.type(large)"
-
 
         // FB JSON data
         const val FIELD_FB_ID = "id"
@@ -69,7 +76,7 @@ class Constants {
         const val KEY_BEARER_TOKEN = "bearer_token"
 
         // Bundle Key
-        const val KEY_RESTAURANT_ID ="key_restaurant_id"
+        const val KEY_RESTAURANT_ID = "key_restaurant_id"
     }
 
 
