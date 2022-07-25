@@ -18,4 +18,7 @@ class EcommerceRemoteDataSource @Inject constructor(private val apiService: Ecom
 
     suspend fun getMenuList(headerMap: Map<String, String>) =
         apiService.getMenuList(headerMap)
+
+    suspend fun getRestaurantDetails(headerMap: Map<String, String>,id:Int) =
+        apiService.getRestaurantDetails(headerMap,id)
 }

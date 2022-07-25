@@ -14,6 +14,7 @@
         <entry key="..\:/EcommerceApp/app/src/main/res/drawable/ic_fb.xml" value="0.2115" />
         <entry key="..\:/EcommerceApp/app/src/main/res/drawable/ic_find_food_you_love.xml" value="0.1015" />
         <entry key="..\:/EcommerceApp/app/src/main/res/drawable/ic_gplus.xml" value="0.1445" />
+        <entry key="..\:/EcommerceApp/app/src/main/res/drawable/ic_location_pin.xml" value="0.139" />
         <entry key="..\:/EcommerceApp/app/src/main/res/drawable/ic_menu_food.xml" value="0.1525" />
         <entry key="..\:/EcommerceApp/app/src/main/res/drawable/ic_menu_food_new.xml" value="0.164" />
         <entry key="..\:/EcommerceApp/app/src/main/res/drawable/ic_menu_home.xml" value="0.1525" />
@@ -23,6 +24,7 @@
         <entry key="..\:/EcommerceApp/app/src/main/res/drawable/ic_menu_offers_new.xml" value="0.164" />
         <entry key="..\:/EcommerceApp/app/src/main/res/drawable/ic_menu_profile.xml" value="0.1525" />
         <entry key="..\:/EcommerceApp/app/src/main/res/drawable/ic_menu_profile_new.xml" value="0.164" />
+        <entry key="..\:/EcommerceApp/app/src/main/res/drawable/ic_restaurant_location.xml" value="0.139" />
         <entry key="..\:/EcommerceApp/app/src/main/res/drawable/ic_search.xml" value="0.195" />
         <entry key="..\:/EcommerceApp/app/src/main/res/drawable/ic_shopping_cart.xml" value="0.195" />
         <entry key="..\:/EcommerceApp/app/src/main/res/drawable/img_red_filled_rectangle.xml" value="0.1795" />
@@ -47,6 +49,7 @@
         <entry key="..\:/EcommerceApp/app/src/main/res/layout/fragment_profile.xml" value="0.1" />
         <entry key="..\:/EcommerceApp/app/src/main/res/layout/fragment_profile_details.xml" value="0.1675213675213675" />
         <entry key="..\:/EcommerceApp/app/src/main/res/layout/fragment_registration.xml" value="0.17192982456140352" />
+        <entry key="..\:/EcommerceApp/app/src/main/res/layout/fragment_restaurant_details.xml" value="0.22" />
         <entry key="..\:/EcommerceApp/app/src/main/res/layout/fragment_search.xml" value="0.1" />
         <entry key="..\:/EcommerceApp/app/src/main/res/layout/fragment_welcome.xml" value="0.1675213675213675" />
         <entry key="..\:/EcommerceApp/app/src/main/res/layout/layout_progress_bar.xml" value="0.17192982456140352" />
