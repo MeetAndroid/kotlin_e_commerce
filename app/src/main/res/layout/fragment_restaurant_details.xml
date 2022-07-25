@@ -13,7 +13,6 @@
         android:id="@+id/clTopPart"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/color_red"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/homeDetailsScreenHeader">
@@ -63,7 +62,7 @@
             android:maxLines="2"
             android:paddingStart="16dp"
             android:paddingEnd="0dp"
-            android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
             android:textColor="@color/colorHeaderText"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

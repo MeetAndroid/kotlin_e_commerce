@@ -17,6 +17,7 @@ import com.specindia.ecommerce.models.response.AuthResponseData
 import com.specindia.ecommerce.ui.activity.HomeActivity
 import com.specindia.ecommerce.util.Constants.Companion.KEY_RESTAURANT_ID
 import com.specindia.ecommerce.util.getHeaderMap
+import com.specindia.ecommerce.util.setRandomBackgroundColor
 import com.specindia.ecommerce.util.visible
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -48,6 +49,7 @@ class RestaurantDetailsFragment : Fragment() {
         val userData = (activity as HomeActivity).dataStoreViewModel.getLoggedInUserData()
         data = Gson().fromJson(userData, AuthResponseData::class.java)
 
+        binding.clTopPart.setRandomBackgroundColor()
         callRestaurantDetailsApi(data)
         observeResponse()
     }
@@ -98,7 +100,10 @@ class RestaurantDetailsFragment : Fragment() {
                             tvRestaurantName.text = restaurantData.data.name
                             tvRestaurantAddress.text = restaurantData.data.address
 
-                            Glide.with(ivMenuItem).load(restaurantData.data.imageUrl)
+                            Glide.with(ivMenuItem)
+                                .load(restaurantData.data.imageUrl)
+                                .placeholder(R.drawable.ic_launcher_foreground)
+                                .error(android.R.drawable.ic_dialog_alert)
                                 .into(ivMenuItem)
                         }
 

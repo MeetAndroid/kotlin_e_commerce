@@ -61,6 +61,8 @@ class ProfileFragment : Fragment() {
         with(binding) {
             Glide.with(ivProfileImage)
                 .load((activity as HomeActivity).dataStoreViewModel.getProfileUrl())
+                .placeholder(R.drawable.ic_launcher_foreground)
+                .error(android.R.drawable.ic_dialog_alert)
                 .into(ivProfileImage)
             tvToken.text = data?.token
             tvId.text = data?.id.toString()

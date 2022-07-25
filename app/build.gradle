@@ -24,6 +24,7 @@ android {
     buildTypes {
 
         debug {
+            debuggable true
             buildConfigField 'String', "BASE_URL", '"http://10.37.57.105:8080/apis/v1/customer/"'
         }
 

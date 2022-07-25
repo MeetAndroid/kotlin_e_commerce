@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.specindia.ecommerce.R
 import com.specindia.ecommerce.databinding.RowBreakingNewsBinding
 import com.specindia.ecommerce.models.Article
 
@@ -36,7 +37,11 @@ class NewsAdapter : RecyclerView.Adapter<NewsAdapter.ArticleViewHolder>() {
 
         with(holder) {
             with(binding) {
-                Glide.with(itemView).load(article.urlToImage).into(ivArticleImage)
+                Glide.with(itemView)
+                    .load(article.urlToImage)
+                    .placeholder(R.drawable.ic_launcher_foreground)
+                    .error(android.R.drawable.ic_dialog_alert)
+                    .into(ivArticleImage)
                 tvSource.text = article.source.name
                 tvTitle.text = article.title
                 tvDescription.text = article.description

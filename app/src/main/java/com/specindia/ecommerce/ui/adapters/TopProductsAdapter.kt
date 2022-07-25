@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.specindia.ecommerce.R
 import com.specindia.ecommerce.databinding.RowTopProductBinding
 import com.specindia.ecommerce.models.response.home.TopProduct
 
@@ -24,7 +25,11 @@ class TopProductsAdapter(private val arrayList: ArrayList<TopProduct>) :
 
         with(holder) {
             with(binding) {
-                Glide.with(itemView).load(dishes.productImage).into(ivTopProduct)
+                Glide.with(itemView)
+                    .load(dishes.productImage)
+                    .placeholder(R.drawable.ic_launcher_foreground)
+                    .error(android.R.drawable.ic_dialog_alert)
+                    .into(ivTopProduct)
                 tvTopDishesName.text = dishes.productName
             }
 
