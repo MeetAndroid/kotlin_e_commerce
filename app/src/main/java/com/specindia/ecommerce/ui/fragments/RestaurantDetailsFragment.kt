@@ -143,6 +143,14 @@ class RestaurantDetailsFragment : Fragment() {
                             productListAdapter.setOnItemClickListener {
                                 requireActivity().showLongToast("${it.productName} clicked")
                             }
+
+                            productListAdapter.setOnAddButtonClickListener {
+
+                            }
+
+                            productListAdapter.setOnRemoveButtonClickListener {
+
+                            }
                         }
                     }
 
