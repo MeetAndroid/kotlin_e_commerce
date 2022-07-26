@@ -76,6 +76,7 @@ class LoginFragment : Fragment() {
             email = binding.etLoginEmail.text.toString().trim(),
             password = binding.etPassword.text.toString().trim()
         )
+
         (activity as AuthActivity).authViewModel.doLogin(
             getHeaderMap("", false),
             Gson().toJson(parameter)
