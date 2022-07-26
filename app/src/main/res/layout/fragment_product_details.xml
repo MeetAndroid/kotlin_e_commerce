@@ -27,14 +27,14 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:paddingBottom="20dp"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:paddingBottom="20dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/clTopPart"
-                    app:layout_constraintTop_toTopOf="parent"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toTopOf="parent">
 
 
                     <com.google.android.material.imageview.ShapeableImageView
@@ -96,37 +96,54 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
                     android:fontFamily="@font/roboto_medium"
-                    android:text="Dark Chocolate Cake"
                     android:textAppearance="@style/TextAppearance.AppCompat.Headline"
                     android:textColor="@color/color_blue_or_white"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/clTopPart" />
+                    app:layout_constraintTop_toBottomOf="@id/clTopPart"
+                    tools:text="Dark Chocolate Cake" />
 
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/tvPrice"
-                    android:layout_width="wrap_content"
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/clPrice"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:fontFamily="@font/roboto_medium"
-                    android:text="Rs. 250"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Headline"
-                    android:textColor="@color/color_blue_or_white"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tvTitle" />
+                    app:layout_constraintTop_toBottomOf="@id/tvTitle">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvPrice"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/roboto_medium"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+                        android:textColor="@color/color_blue_or_white"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/appCompatTextView"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintHorizontal_chainStyle="packed"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:text="Rs. 250" />
 
 
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/roboto_medium"
-                    android:text="/ per Portion"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Small"
-                    android:textColor="@color/color_blue_or_white"
-                    app:layout_constraintBottom_toBottomOf="@+id/tvPrice"
-                    app:layout_constraintStart_toEndOf="@+id/tvPrice"
-                    app:layout_constraintTop_toTopOf="@+id/tvPrice" />
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/appCompatTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/roboto_medium"
+                        android:text="@string/per_portion"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                        android:textColor="@color/color_blue_or_white"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toEndOf="@+id/tvPrice"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/tvDescription"
@@ -135,11 +152,11 @@
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="10dp"
                     android:fontFamily="@font/roboto_medium"
-                    android:text="Description"
+                    android:text="@string/description"
                     android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                     android:textColor="@color/color_blue_or_white"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tvPrice"
+                    app:layout_constraintTop_toBottomOf="@id/clPrice"
                     app:layout_goneMarginStart="16dp" />
 
 
@@ -148,16 +165,16 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
-                    android:layout_marginEnd="16dp"
                     android:layout_marginTop="10dp"
+                    android:layout_marginEnd="16dp"
                     android:fontFamily="@font/roboto_medium"
-                    android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit.Omare leo non molis id cursus. Eu euismod faucibus in leo malesuada."
                     android:textAppearance="@style/TextAppearance.AppCompat.Small"
                     android:textColor="@color/color_blue_or_white"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/tvDescription"
-                    app:layout_goneMarginStart="16dp" />
+                    app:layout_goneMarginStart="16dp"
+                    tools:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit.Omare leo non molis id cursus. Eu euismod faucibus in leo malesuada." />
 
 
                 <androidx.appcompat.widget.AppCompatImageView
@@ -193,7 +210,7 @@
                             android:layout_marginTop="10dp"
                             android:layout_weight="1"
                             android:fontFamily="@font/roboto_medium"
-                            android:text="Calories"
+                            android:text="@string/calories"
                             android:textAppearance="@style/TextAppearance.AppCompat.Small"
                             android:textColor="@color/color_blue_or_white"
                             app:layout_constraintEnd_toEndOf="parent"
@@ -203,19 +220,20 @@
 
 
                         <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/tvCalories"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="10dp"
                             android:layout_marginTop="10dp"
                             android:layout_weight="1"
                             android:fontFamily="@font/roboto_medium"
-                            android:text="147"
                             android:textAppearance="@style/TextAppearance.AppCompat.Small"
                             android:textColor="@color/color_blue_or_white"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@id/tvDescription"
-                            app:layout_goneMarginStart="16dp" />
+                            app:layout_goneMarginStart="16dp"
+                            tools:text="147" />
 
                     </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -232,7 +250,7 @@
                             android:layout_marginTop="10dp"
                             android:layout_weight="1"
                             android:fontFamily="@font/roboto_medium"
-                            android:text="Fat"
+                            android:text="@string/fat"
                             android:textAppearance="@style/TextAppearance.AppCompat.Small"
                             android:textColor="@color/color_blue_or_white"
                             app:layout_constraintEnd_toEndOf="parent"
@@ -242,19 +260,20 @@
 
 
                         <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/tvFat"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="10dp"
                             android:layout_marginTop="10dp"
                             android:layout_weight="1"
                             android:fontFamily="@font/roboto_medium"
-                            android:text="2.9g"
                             android:textAppearance="@style/TextAppearance.AppCompat.Small"
                             android:textColor="@color/color_blue_or_white"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@id/tvDescription"
-                            app:layout_goneMarginStart="16dp" />
+                            app:layout_goneMarginStart="16dp"
+                            tools:text="2.9g" />
 
                     </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -284,7 +303,7 @@
                             android:layout_marginTop="10dp"
                             android:layout_weight="1"
                             android:fontFamily="@font/roboto_medium"
-                            android:text="Carbs"
+                            android:text="@string/carbs"
                             android:textAppearance="@style/TextAppearance.AppCompat.Small"
                             android:textColor="@color/color_blue_or_white"
                             app:layout_constraintEnd_toEndOf="parent"
@@ -294,19 +313,20 @@
 
 
                         <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/tvCarbs"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="10dp"
                             android:layout_marginTop="10dp"
                             android:layout_weight="1"
                             android:fontFamily="@font/roboto_medium"
-                            android:text="127g"
                             android:textAppearance="@style/TextAppearance.AppCompat.Small"
                             android:textColor="@color/color_blue_or_white"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@id/tvDescription"
-                            app:layout_goneMarginStart="16dp" />
+                            app:layout_goneMarginStart="16dp"
+                            tools:text="127g" />
 
                     </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -323,7 +343,7 @@
                             android:layout_marginTop="10dp"
                             android:layout_weight="1"
                             android:fontFamily="@font/roboto_medium"
-                            android:text="Protaine"
+                            android:text="@string/protein"
                             android:textAppearance="@style/TextAppearance.AppCompat.Small"
                             android:textColor="@color/color_blue_or_white"
                             app:layout_constraintEnd_toEndOf="parent"
@@ -333,19 +353,20 @@
 
 
                         <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/tvProtein"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="10dp"
                             android:layout_marginTop="10dp"
                             android:layout_weight="1"
                             android:fontFamily="@font/roboto_medium"
-                            android:text="17g"
                             android:textAppearance="@style/TextAppearance.AppCompat.Small"
                             android:textColor="@color/color_blue_or_white"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@id/tvDescription"
-                            app:layout_goneMarginStart="16dp" />
+                            app:layout_goneMarginStart="16dp"
+                            tools:text="17g" />
 
                     </androidx.appcompat.widget.LinearLayoutCompat>
 

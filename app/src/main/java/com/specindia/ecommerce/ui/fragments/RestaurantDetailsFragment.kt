@@ -62,7 +62,8 @@ class RestaurantDetailsFragment : Fragment() {
         callRestaurantDetailsApi(data)
         observeRestaurantDetailsResponse()
         binding.clTopPart.setOnClickListener {
-            view.findNavController().navigate(R.id.action_restaurantDetailsFragment_to_productDetailsFragment)
+            view.findNavController()
+                .navigate(R.id.action_restaurantDetailsFragment_to_productDetailsFragment)
         }
 
     }
@@ -141,7 +142,12 @@ class RestaurantDetailsFragment : Fragment() {
 
                         productListAdapter.let {
                             productListAdapter.setOnItemClickListener {
-                                requireActivity().showLongToast("${it.productName} clicked")
+                                val action =
+                                    RestaurantDetailsFragmentDirections.actionRestaurantDetailsFragmentToProductDetailsFragment(
+                                        it.id
+                                    )
+                                view?.findNavController()
+                                    ?.navigate(action)
                             }
 
                             productListAdapter.setOnAddButtonClickListener {
@@ -225,7 +231,6 @@ class RestaurantDetailsFragment : Fragment() {
             }
         }
     }
-
 
     private fun showDialog(message: String) {
         MaterialAlertDialogBuilder(requireActivity())

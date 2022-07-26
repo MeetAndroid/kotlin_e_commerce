@@ -33,11 +33,11 @@
         android:id="@+id/restaurantDetailsFragment"
         android:name="com.specindia.ecommerce.ui.fragments.RestaurantDetailsFragment"
         android:label="fragment_restaurant_details"
-        tools:layout="@layout/fragment_restaurant_details" >
-<!--        <argument-->
-<!--            android:name="restaurant_id"-->
-<!--            app:argType="int"-->
-<!--            android:defaultValue="0" />-->
+        tools:layout="@layout/fragment_restaurant_details">
+        <!--        <argument-->
+        <!--            android:name="restaurant_id"-->
+        <!--            app:argType="int"-->
+        <!--            android:defaultValue="0" />-->
         <action
             android:id="@+id/action_restaurantDetailsFragment_to_productDetailsFragment"
             app:destination="@id/productDetailsFragment" />
@@ -46,6 +46,13 @@
         android:id="@+id/productDetailsFragment"
         android:name="com.specindia.ecommerce.ui.fragments.ProductDetailsFragment"
         android:label="fragment_product_details"
-        tools:layout="@layout/fragment_product_details" />
+        tools:layout="@layout/fragment_product_details">
+
+        <argument
+            android:name="product_id"
+            android:defaultValue="0"
+            app:argType="integer" />
+
+    </fragment>
 
 </navigation>

@@ -7,14 +7,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.navArgs
+import com.bumptech.glide.Glide
 import com.google.gson.Gson
 import com.specindia.ecommerce.R
-import com.specindia.ecommerce.databinding.FragmentOtpBinding
 import com.specindia.ecommerce.databinding.FragmentProductDetailsBinding
-import com.specindia.ecommerce.databinding.FragmentProfileBinding
-import com.specindia.ecommerce.models.response.AuthResponseData
+import com.specindia.ecommerce.models.response.home.productsbyrestaurant.ProductsByRestaurantData
 import com.specindia.ecommerce.ui.activity.HomeActivity
-import com.specindia.ecommerce.util.Constants
 import com.specindia.ecommerce.util.setRandomBackgroundColor
 import com.specindia.ecommerce.util.visible
 import dagger.hilt.android.AndroidEntryPoint
@@ -23,7 +22,8 @@ import dagger.hilt.android.AndroidEntryPoint
 class ProductDetailsFragment : Fragment() {
 
     private lateinit var binding: FragmentProductDetailsBinding
-
+    private lateinit var productsByRestaurantData: ProductsByRestaurantData
+    private val args: ProductDetailsFragmentArgs by navArgs()
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -38,6 +38,32 @@ class ProductDetailsFragment : Fragment() {
         setUpHeader()
         setUpHeaderItemClick()
         binding.clTopPart.setRandomBackgroundColor()
+        setUpData()
+    }
+
+    private fun setUpData() {
+        val productId = args.productId
+        val productList =
+            (activity as HomeActivity).homeViewModel.productsByRestaurant.value?.data?.data
+        val data = productList?.filter { it.id == productId }
+        productsByRestaurantData = data!!.first()
+        Log.d("Product Data", Gson().toJson(productsByRestaurantData))
+        with(binding) {
+            Glide.with(requireActivity())
+                .load(productsByRestaurantData.productImage)
+                .placeholder(R.drawable.ic_launcher_foreground)
+                .error(android.R.drawable.ic_dialog_alert)
+                .into(ivRestaurant)
+            tvTitle.text = productsByRestaurantData.productName
+            tvPrice.text =
+                getString(R.string.currency_amount, productsByRestaurantData.price.toString())
+            tvContent.text = productsByRestaurantData.description
+            tvCalories.text = "147"
+            tvCarbs.text = "127g"
+            tvFat.text = "2.9g"
+            tvProtein.text = "17g"
+
+        }
     }
 
     private fun setUpHeader() {
