@@ -61,6 +61,9 @@ class RestaurantDetailsFragment : Fragment() {
         binding.clTopPart.setRandomBackgroundColor()
         callRestaurantDetailsApi(data)
         observeRestaurantDetailsResponse()
+        binding.clTopPart.setOnClickListener {
+            view.findNavController().navigate(R.id.action_restaurantDetailsFragment_to_productDetailsFragment)
+        }
 
     }
 
@@ -202,6 +205,7 @@ class RestaurantDetailsFragment : Fragment() {
             if (productListResponse.data.isNotEmpty()) {
                 rvProducts.visible(true)
                 noDataFound.clNoDataFound.visible(false)
+                productList.addAll(productListResponse.data.toList())
                 productList.addAll(productListResponse.data.toList())
                 productListAdapter.showShimmer = false
                 productListAdapter.notifyDataSetChanged()
