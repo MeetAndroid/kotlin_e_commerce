@@ -1,6 +1,7 @@
 package com.specindia.ecommerce.models.response.home.productsbyrestaurant
 
 
+import androidx.room.Ignore
 import com.google.gson.annotations.SerializedName
 
 data class ProductsByRestaurantData(
@@ -23,5 +24,7 @@ data class ProductsByRestaurantData(
     @SerializedName("RestaurantId")
     val restaurantId: Int,
     @SerializedName("updatedAt")
-    val updatedAt: String
+    val updatedAt: String,
+    @Ignore
+    var totalQty: Int = 0
 )

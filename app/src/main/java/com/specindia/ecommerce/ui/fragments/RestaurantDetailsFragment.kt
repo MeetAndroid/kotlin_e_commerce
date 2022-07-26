@@ -140,6 +140,14 @@ class RestaurantDetailsFragment : Fragment() {
                             productListAdapter.setOnItemClickListener {
                                 requireActivity().showLongToast("${it.productName} clicked")
                             }
+
+                            productListAdapter.setOnAddButtonClickListener {
+
+                            }
+
+                            productListAdapter.setOnRemoveButtonClickListener {
+
+                            }
                         }
                     }
 
@@ -202,6 +210,7 @@ class RestaurantDetailsFragment : Fragment() {
             if (productListResponse.data.isNotEmpty()) {
                 rvProducts.visible(true)
                 noDataFound.clNoDataFound.visible(false)
+                productList.addAll(productListResponse.data.toList())
                 productList.addAll(productListResponse.data.toList())
                 productListAdapter.showShimmer = false
                 productListAdapter.notifyDataSetChanged()
