@@ -49,19 +49,13 @@ class ProductListAdapter(private val arrayList: ArrayList<ProductsByRestaurantDa
                     }
 
                     btnRemoveProduct.setOnClickListener {
-                        var qty = etQty.text.toString().toInt()
-                        with(etQty) {
-                            setText(qty--.toString())
-                            product.totalQty = qty--
-                        }
                         onRemoveButtonClickListener?.let { it(product) }
                     }
 
                     btnAddProduct.setOnClickListener {
-                        onAddButtonClickListener?.let {
-                            it(product)
-                        }
+                        onRemoveButtonClickListener?.let { it(product) }
                     }
+
                 }
 
                 itemView.setOnClickListener {

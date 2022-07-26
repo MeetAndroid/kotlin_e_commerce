@@ -145,11 +145,13 @@ class RestaurantDetailsFragment : Fragment() {
                             }
 
                             productListAdapter.setOnAddButtonClickListener {
-
+                                requireActivity().showLongToast("Add Product")
+                                it.totalQty = it.totalQty++
                             }
 
                             productListAdapter.setOnRemoveButtonClickListener {
-
+                                requireActivity().showLongToast("Remove Product")
+                                it.totalQty = it.totalQty--
                             }
                         }
                     }

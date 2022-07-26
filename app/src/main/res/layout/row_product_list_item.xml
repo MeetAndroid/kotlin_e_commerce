@@ -154,6 +154,8 @@
                             android:digits="0123456789"
                             android:fontFamily="@font/roboto_bold"
                             android:gravity="center"
+                            android:focusableInTouchMode="false"
+                            android:focusable="false"
                             android:inputType="number"
                             android:maxLength="3"
                             android:textColor="@color/black"
