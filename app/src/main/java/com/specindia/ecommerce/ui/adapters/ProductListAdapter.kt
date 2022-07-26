@@ -51,12 +51,12 @@ class ProductListAdapter(private val arrayList: ArrayList<ProductsByRestaurantDa
                     }
 
                     btnRemoveProduct.setOnClickListener {
-                        Log.d("Adapter","Removed")
+                        Log.d("Adapter", "Removed")
                         onRemoveButtonClickListener?.let { Pair(product, position) }
                     }
 
                     btnAddProduct.setOnClickListener {
-                        Log.d("Adapter","Added")
+                        Log.d("Adapter", "Added")
                         onAddButtonClickListener?.let { Pair(product, position) }
                     }
 

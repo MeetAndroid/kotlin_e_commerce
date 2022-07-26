@@ -42,7 +42,7 @@ class RestaurantDetailsFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View {
         binding = FragmentRestaurantDetailsBinding.inflate(layoutInflater)
         return binding.root
@@ -140,26 +140,28 @@ class RestaurantDetailsFragment : Fragment() {
                         callProductsByRestaurantApi(restaurantData.data.id)
                         observeProductsByRestaurantResponse()
 
-                        productListAdapter.let {
-                            productListAdapter.setOnItemClickListener {
-                                val action =
-                                    RestaurantDetailsFragmentDirections.actionRestaurantDetailsFragmentToProductDetailsFragment(
-                                        it.id
-                                    )
-                                view?.findNavController()
-                                    ?.navigate(action)
-                            }
 
-                            productListAdapter.setOnAddButtonClickListener {
-                                requireActivity().showLongToast("Add Product")
-                                it.totalQty = it.totalQty++
-                            }
-
-                            productListAdapter.setOnRemoveButtonClickListener {
-                                requireActivity().showLongToast("Remove Product")
-                                it.totalQty = it.totalQty--
-                            }
+                        productListAdapter.setOnItemClickListener {
+                            val action =
+                                RestaurantDetailsFragmentDirections.actionRestaurantDetailsFragmentToProductDetailsFragment(
+                                    it.id
+                                )
+                            view?.findNavController()
+                                ?.navigate(action)
                         }
+
+                        productListAdapter.setOnRemoveButtonClickListener { data, position ->
+                            requireActivity().showLongToast("Product Removed")
+                            data.totalQty = data.totalQty--
+                            productListAdapter.notifyItemChanged(position)
+                        }
+
+                        productListAdapter.setOnAddButtonClickListener() { data, position ->
+                            requireActivity().showLongToast("Product Added")
+                            data.totalQty = data.totalQty++
+                            productListAdapter.notifyItemChanged(position)
+                        }
+
                     }
 
                 }
@@ -212,7 +214,7 @@ class RestaurantDetailsFragment : Fragment() {
 
     private fun setUpProductListUI(
         binding: FragmentRestaurantDetailsBinding,
-        productListResponse: ProductsByRestaurantResponse
+        productListResponse: ProductsByRestaurantResponse,
     ) {
         binding.apply {
             productList.clear()
