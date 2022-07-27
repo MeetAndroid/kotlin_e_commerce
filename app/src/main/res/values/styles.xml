@@ -28,10 +28,7 @@
         <item name="cornerSize">50%</item>
     </style>
 
-    <style name="RatingBar" parent="Theme.AppCompat">
-        <item name="colorControlNormal">@color/white</item>
-        <item name="colorControlHighlight">@android:color/transparent</item>
-    </style>
+
 
     <style name="RoundedCornerImageView">
         <item name="cornerSize">7dp</item>

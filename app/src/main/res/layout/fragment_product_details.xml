@@ -54,7 +54,7 @@
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:id="@+id/clTop"
                         android:layout_width="match_parent"
-                        android:layout_height="50dp"
+                        android:layout_height="35dp"
                         android:background="@drawable/bg_semi_black"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -65,17 +65,17 @@
                             android:layout_height="wrap_content"
                             android:layout_marginEnd="10dp"
                             android:background="@drawable/ic_rating_bg"
-                            android:padding="10dp"
+                            android:gravity="center"
                             android:text="5.0"
                             android:textColor="#ffffff"
-                            android:textSize="14sp"
+                            android:textSize="12sp"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toStartOf="@id/ratings"
                             app:layout_constraintTop_toTopOf="parent" />
 
                         <androidx.appcompat.widget.AppCompatRatingBar
                             android:id="@+id/ratings"
-                            style="?android:attr/ratingBarStyleIndicator"
+                            style="?android:attr/ratingBarStyleSmall"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_margin="8dp"
@@ -83,6 +83,7 @@
                             android:numStars="5"
                             android:rating="3.6"
                             android:stepSize="0.1"
+                            android:theme="@style/RatingBar"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent" />
                     </androidx.constraintlayout.widget.ConstraintLayout>

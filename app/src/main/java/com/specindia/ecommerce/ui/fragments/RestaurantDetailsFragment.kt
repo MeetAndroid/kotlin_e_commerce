@@ -61,10 +61,10 @@ class RestaurantDetailsFragment : Fragment() {
         binding.clTopPart.setRandomBackgroundColor()
         callRestaurantDetailsApi(data)
         observeRestaurantDetailsResponse()
-        binding.clTopPart.setOnClickListener {
-            view.findNavController()
-                .navigate(R.id.action_restaurantDetailsFragment_to_productDetailsFragment)
-        }
+//        binding.clTopPart.setOnClickListener {
+//            view.findNavController()
+//                .navigate(R.id.action_restaurantDetailsFragment_to_productDetailsFragment)
+//        }
 
     }
 
