@@ -1,5 +1,6 @@
 package com.specindia.ecommerce.ui.adapters
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -42,6 +43,7 @@ class ProductListAdapter(private val arrayList: ArrayList<ProductsByRestaurantDa
                         .into(ivProductImage)
                     tvProductName.text = product.productName
                     tvProductPrice.text = product.price.toString()
+                    tvQty.text = product.totalQty.toString()
 
                     btnAdd.setOnClickListener {
                         btnAdd.visible(false)
@@ -49,11 +51,13 @@ class ProductListAdapter(private val arrayList: ArrayList<ProductsByRestaurantDa
                     }
 
                     btnRemoveProduct.setOnClickListener {
-                        onRemoveButtonClickListener?.let { it(product) }
+                        Log.d("Adapter", "Removed")
+                        onRemoveButtonClickListener?.let { Pair(product, position) }
                     }
 
                     btnAddProduct.setOnClickListener {
-                        onRemoveButtonClickListener?.let { it(product) }
+                        Log.d("Adapter", "Added")
+                        onAddButtonClickListener?.let { Pair(product, position) }
                     }
 
                 }
@@ -71,19 +75,26 @@ class ProductListAdapter(private val arrayList: ArrayList<ProductsByRestaurantDa
 
     private var onItemClickListener: ((ProductsByRestaurantData) -> Unit)? = null
 
-    private var onAddButtonClickListener: ((ProductsByRestaurantData) -> Unit)? = null
+    private var onAddButtonClickListener: ((data: ProductsByRestaurantData, position: Int) -> Unit)? =
+        null
 
-    private var onRemoveButtonClickListener: ((ProductsByRestaurantData) -> Unit)? = null
+    private var onRemoveButtonClickListener: ((data: ProductsByRestaurantData, position: Int) -> Unit)? =
+        null
 
     fun setOnItemClickListener(listener: (ProductsByRestaurantData) -> Unit) {
         onItemClickListener = listener
     }
 
-    fun setOnAddButtonClickListener(listener: (ProductsByRestaurantData) -> Unit) {
+    fun setOnRemoveButtonClickListener(
+        listener: (data: ProductsByRestaurantData, position: Int) -> Unit,
+    ) {
+        onRemoveButtonClickListener = listener
+    }
+
+    fun setOnAddButtonClickListener(
+        listener: (data: ProductsByRestaurantData, position: Int) -> Unit,
+    ) {
         onAddButtonClickListener = listener
     }
 
-    fun setOnRemoveButtonClickListener(listener: (ProductsByRestaurantData) -> Unit) {
-        onRemoveButtonClickListener = listener
-    }
 }
