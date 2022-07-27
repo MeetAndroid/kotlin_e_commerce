@@ -91,6 +91,15 @@
     <string name="protein">Protein</string>
     <string name="fat">Fat</string>
     <string name="currency_amount">Rs %1$s</string>
+    <string name="order_details">Order Details</string>
+    <string name="order_placed">Order Placed</string>
+    <string name="order_placed_msg">Your order is placed successfully</string>
+    <string name="estimated_time_for_order">Estimated time of delivery 12 hours</string>
+    <string name="order_in_kitchen">Order in Kitchen</string>
+    <string name="your_order_is_placed_successfully_our_chef_will_soon_begin_his_magic">Your order is placed successfully! Our chef will soon begin his magic.</string>
+    <string name="estimated_time_of_delivery_30_minutes">Estimated time of delivery 30 minutes.</string>
+    <string name="order_delivered">Order Delivered</string>
+    <string name="your_order_is_placed_successfully">Your order is placed successfully</string>
 
     <string-array name="location_array_list">
         <item>S.G Highway</item>
