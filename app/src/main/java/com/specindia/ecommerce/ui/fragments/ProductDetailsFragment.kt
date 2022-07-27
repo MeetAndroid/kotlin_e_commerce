@@ -27,7 +27,7 @@ class ProductDetailsFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View {
         binding = FragmentProductDetailsBinding.inflate(layoutInflater)
         return binding.root
@@ -39,6 +39,10 @@ class ProductDetailsFragment : Fragment() {
         setUpHeaderItemClick()
         binding.clTopPart.setRandomBackgroundColor()
         setUpData()
+        binding.clTopPart.setOnClickListener {
+            view.findNavController()
+                .navigate(ProductDetailsFragmentDirections.actionProductDetailsFragmentToOrderDetailsFragment())
+        }
     }
 
     private fun setUpData() {

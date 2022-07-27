@@ -52,7 +52,14 @@
             android:name="product_id"
             android:defaultValue="0"
             app:argType="integer" />
+        <action
+            android:id="@+id/action_productDetailsFragment_to_orderDetailsFragment"
+            app:destination="@id/orderDetailsFragment" />
 
     </fragment>
+    <fragment
+        android:id="@+id/orderDetailsFragment"
+        android:name="com.specindia.ecommerce.ui.fragments.OrderDetailsFragment"
+        android:label="OrderDetailsFragment" />
 
 </navigation>

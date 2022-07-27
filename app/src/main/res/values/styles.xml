@@ -23,6 +23,17 @@
         <item name="cornerSizeBottomLeft">15dp</item>
     </style>
 
+    <style name="OrderDetailsCardViewStyle" parent="@style/Widget.MaterialComponents.CardView">
+        <item name="shapeAppearanceOverlay">@style/OrderDetailsCard</item>
+    </style>
+
+    <style name="OrderDetailsCard" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSizeTopRight">15dp</item>
+        <item name="cornerSizeTopLeft">33%</item>
+        <item name="cornerSizeBottomRight">15dp</item>
+        <item name="cornerSizeBottomLeft">33%</item>
+    </style>
 
     <style name="RoundedImageView">
         <item name="cornerSize">50%</item>
