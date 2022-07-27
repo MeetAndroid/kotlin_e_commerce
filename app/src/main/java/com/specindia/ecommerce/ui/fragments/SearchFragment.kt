@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import com.specindia.ecommerce.databinding.FragmentSearchBinding
-import com.specindia.ecommerce.util.visible
 
 class SearchFragment : Fragment() {
 
@@ -15,7 +14,7 @@ class SearchFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View {
         binding = FragmentSearchBinding.inflate(layoutInflater)
         return binding.root
@@ -23,28 +22,20 @@ class SearchFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setUpHeader()
         setUpHeaderItemClick()
-    }
-
-    private fun setUpHeader() {
-        with(binding) {
-            with(homeMenuScreenHeader) {
-                tvHeaderTitle.visible(true)
-                tvHeaderTitle.visible(false)
-                ivBack.visible(true)
-                ivFavorite.visible(false)
-                ivShoppingCart.visible(false)
-            }
-        }
     }
 
     private fun setUpHeaderItemClick() {
         with(binding) {
-            with(homeMenuScreenHeader) {
-                ivBack.setOnClickListener {
-                    it.findNavController().popBackStack()
-                }
+            searchView.apply {
+                setIconifiedByDefault(true)
+                isFocusable = true
+                isIconified = false
+                clearFocus()
+                requestFocusFromTouch()
+            }
+            ivBack.setOnClickListener {
+                it.findNavController().popBackStack()
             }
         }
     }

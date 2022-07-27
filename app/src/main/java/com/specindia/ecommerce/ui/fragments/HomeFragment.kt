@@ -24,8 +24,11 @@ import com.specindia.ecommerce.ui.activity.HomeActivity
 import com.specindia.ecommerce.ui.adapters.CategoryListAdapter
 import com.specindia.ecommerce.ui.adapters.PopularRestaurantsAdapter
 import com.specindia.ecommerce.ui.adapters.TopProductsAdapter
-import com.specindia.ecommerce.util.*
 import com.specindia.ecommerce.util.Constants.Companion.KEY_RESTAURANT_ID
+import com.specindia.ecommerce.util.SnapHelper
+import com.specindia.ecommerce.util.getHeaderMap
+import com.specindia.ecommerce.util.showLongToast
+import com.specindia.ecommerce.util.visible
 import dagger.hilt.android.AndroidEntryPoint
 
 
@@ -48,7 +51,7 @@ class HomeFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View {
         binding = FragmentHomeBinding.inflate(layoutInflater)
         return binding.root
@@ -166,6 +169,10 @@ class HomeFragment : Fragment() {
                 ivFavorite.visible(false)
                 ivShoppingCart.visible(true)
                 ivSearch.visible(true)
+
+                ivSearch.setOnClickListener {
+                    view?.findNavController()?.navigate(R.id.action_homeFragment_to_searchFragment)
+                }
             }
         }
     }
@@ -230,7 +237,7 @@ class HomeFragment : Fragment() {
 
     private fun setUpTopDishUI(
         binding: FragmentHomeBinding,
-        dashboardListResponse: DashboardListResponse
+        dashboardListResponse: DashboardListResponse,
     ) {
         binding.apply {
             topProductList.clear()
@@ -255,7 +262,7 @@ class HomeFragment : Fragment() {
 
     private fun setUpPopularRestaurantUI(
         binding: FragmentHomeBinding,
-        dashboardListResponse: DashboardListResponse
+        dashboardListResponse: DashboardListResponse,
     ) {
         binding.apply {
             restaurantList.clear()
@@ -279,7 +286,7 @@ class HomeFragment : Fragment() {
 
     private fun setUpCategoryListUI(
         binding: FragmentHomeBinding,
-        dashboardListResponse: DashboardListResponse
+        dashboardListResponse: DashboardListResponse,
     ) {
         binding.apply {
             categoryList.clear()

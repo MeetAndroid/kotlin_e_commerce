@@ -92,4 +92,14 @@
     <string name="fat">Fat</string>
     <string name="currency_amount">Rs %1$s</string>
 
+    <string-array name="location_array_list">
+        <item>S.G Highway</item>
+        <item>Naroda</item>
+        <item>Ghatlodia</item>
+        <item>Navrangpura</item>
+        <item>Naranpura</item>
+        <item>Thaltej</item>
+        <item>Narol</item>
+    </string-array>
+
 </resources>
