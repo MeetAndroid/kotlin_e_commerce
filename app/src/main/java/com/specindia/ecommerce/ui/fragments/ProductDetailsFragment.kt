@@ -62,7 +62,6 @@ class ProductDetailsFragment : Fragment() {
             tvCarbs.text = "127g"
             tvFat.text = "2.9g"
             tvProtein.text = "17g"
-
         }
     }
 
