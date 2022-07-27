@@ -1,6 +1,5 @@
 package com.specindia.ecommerce.ui.adapters
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -10,9 +9,13 @@ import com.specindia.ecommerce.databinding.RowProductListItemBinding
 import com.specindia.ecommerce.models.response.home.productsbyrestaurant.ProductsByRestaurantData
 import com.specindia.ecommerce.util.visible
 
-class ProductListAdapter(private val arrayList: ArrayList<ProductsByRestaurantData>) :
+class ProductListAdapter(
+    private val arrayList: ArrayList<ProductsByRestaurantData>,
+    private val onProductItemClickListener: OnProductItemClickListener,
+) :
     RecyclerView.Adapter<ProductListAdapter.ProductListViewHolder>() {
     var showShimmer: Boolean = true
+
 
     inner class ProductListViewHolder(val binding: RowProductListItemBinding) :
         RecyclerView.ViewHolder(binding.root)
@@ -45,25 +48,31 @@ class ProductListAdapter(private val arrayList: ArrayList<ProductsByRestaurantDa
                     tvProductPrice.text = product.price.toString()
                     tvQty.text = product.totalQty.toString()
 
+                    if (product.totalQty > 0) {
+                        btnAdd.visible(false)
+                        clAddOrRemoveProduct.visible(true)
+                    } else {
+                        btnAdd.visible(true)
+                        clAddOrRemoveProduct.visible(false)
+                    }
+
                     btnAdd.setOnClickListener {
                         btnAdd.visible(false)
                         clAddOrRemoveProduct.visible(true)
+                        onProductItemClickListener.onAddButtonClick(product, position)
                     }
 
                     btnRemoveProduct.setOnClickListener {
-                        Log.d("Adapter", "Removed")
-                        onRemoveButtonClickListener?.let { Pair(product, position) }
+                        onProductItemClickListener.onRemoveProductButtonClick(product, position)
                     }
 
                     btnAddProduct.setOnClickListener {
-                        Log.d("Adapter", "Added")
-                        onAddButtonClickListener?.let { Pair(product, position) }
+                        onProductItemClickListener.onAddProductButtonClick(product, position)
                     }
-
                 }
 
                 itemView.setOnClickListener {
-                    onItemClickListener?.let { it(product) }
+                    onProductItemClickListener.onItemClick(product, position)
                 }
             }
         }
@@ -73,28 +82,10 @@ class ProductListAdapter(private val arrayList: ArrayList<ProductsByRestaurantDa
         return arrayList.size
     }
 
-    private var onItemClickListener: ((ProductsByRestaurantData) -> Unit)? = null
-
-    private var onAddButtonClickListener: ((data: ProductsByRestaurantData, position: Int) -> Unit)? =
-        null
-
-    private var onRemoveButtonClickListener: ((data: ProductsByRestaurantData, position: Int) -> Unit)? =
-        null
-
-    fun setOnItemClickListener(listener: (ProductsByRestaurantData) -> Unit) {
-        onItemClickListener = listener
+    interface OnProductItemClickListener {
+        fun onItemClick(data: ProductsByRestaurantData, position: Int)
+        fun onAddButtonClick(data: ProductsByRestaurantData, position: Int)
+        fun onAddProductButtonClick(data: ProductsByRestaurantData, position: Int)
+        fun onRemoveProductButtonClick(data: ProductsByRestaurantData, position: Int)
     }
-
-    fun setOnRemoveButtonClickListener(
-        listener: (data: ProductsByRestaurantData, position: Int) -> Unit,
-    ) {
-        onRemoveButtonClickListener = listener
-    }
-
-    fun setOnAddButtonClickListener(
-        listener: (data: ProductsByRestaurantData, position: Int) -> Unit,
-    ) {
-        onAddButtonClickListener = listener
-    }
-
 }

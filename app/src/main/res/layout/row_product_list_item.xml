@@ -105,7 +105,7 @@
                         android:textAllCaps="false"
                         android:textColor="@color/white"
                         android:textSize="16sp"
-                        android:visibility="gone"
+                        android:visibility="invisible"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
@@ -116,7 +116,7 @@
                         android:id="@+id/clAddOrRemoveProduct"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:visibility="visible">
+                        android:visibility="gone">
 
                         <androidx.appcompat.widget.AppCompatButton
                             android:id="@+id/btnRemoveProduct"

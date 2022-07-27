@@ -23,12 +23,11 @@ import com.specindia.ecommerce.ui.adapters.ProductListAdapter
 import com.specindia.ecommerce.util.Constants.Companion.KEY_RESTAURANT_ID
 import com.specindia.ecommerce.util.getHeaderMap
 import com.specindia.ecommerce.util.setRandomBackgroundColor
-import com.specindia.ecommerce.util.showLongToast
 import com.specindia.ecommerce.util.visible
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class RestaurantDetailsFragment : Fragment() {
+class RestaurantDetailsFragment : Fragment(), ProductListAdapter.OnProductItemClickListener {
     private lateinit var binding: FragmentRestaurantDetailsBinding
     private lateinit var data: AuthResponseData
     private var restaurantId: Int = 0
@@ -94,7 +93,7 @@ class RestaurantDetailsFragment : Fragment() {
     private fun setUpRecyclerView() {
         // Products
         productList = ArrayList()
-        productListAdapter = ProductListAdapter(productList)
+        productListAdapter = ProductListAdapter(productList, this)
         binding.rvProducts.apply {
             adapter = productListAdapter
             setHasFixedSize(false)
@@ -139,29 +138,6 @@ class RestaurantDetailsFragment : Fragment() {
                         setUpRecyclerView()
                         callProductsByRestaurantApi(restaurantData.data.id)
                         observeProductsByRestaurantResponse()
-
-
-                        productListAdapter.setOnItemClickListener {
-                            val action =
-                                RestaurantDetailsFragmentDirections.actionRestaurantDetailsFragmentToProductDetailsFragment(
-                                    it.id
-                                )
-                            view?.findNavController()
-                                ?.navigate(action)
-                        }
-
-                        productListAdapter.setOnRemoveButtonClickListener { data, position ->
-                            requireActivity().showLongToast("Product Removed")
-                            data.totalQty = data.totalQty--
-                            productListAdapter.notifyItemChanged(position)
-                        }
-
-                        productListAdapter.setOnAddButtonClickListener() { data, position ->
-                            requireActivity().showLongToast("Product Added")
-                            data.totalQty = data.totalQty++
-                            productListAdapter.notifyItemChanged(position)
-                        }
-
                     }
 
                 }
@@ -173,6 +149,7 @@ class RestaurantDetailsFragment : Fragment() {
             }
         }
     }
+
 
     // Call Products By Restaurant api
     private fun callProductsByRestaurantApi(id: Int) {
@@ -241,6 +218,30 @@ class RestaurantDetailsFragment : Fragment() {
             .setPositiveButton(getString(R.string.ok)) { _, _ ->
             }
             .show()
+    }
+
+    override fun onItemClick(data: ProductsByRestaurantData, position: Int) {
+        val action =
+            RestaurantDetailsFragmentDirections.actionRestaurantDetailsFragmentToProductDetailsFragment(
+                data.id
+            )
+        view?.findNavController()
+            ?.navigate(action)
+    }
+
+    override fun onAddProductButtonClick(data: ProductsByRestaurantData, position: Int) {
+        data.totalQty = data.totalQty + 1
+        productListAdapter.notifyItemChanged(position)
+    }
+
+    override fun onRemoveProductButtonClick(data: ProductsByRestaurantData, position: Int) {
+        data.totalQty = data.totalQty - 1
+        productListAdapter.notifyItemChanged(position)
+    }
+
+    override fun onAddButtonClick(data: ProductsByRestaurantData, position: Int) {
+        data.totalQty = 1
+        productListAdapter.notifyItemChanged(position)
     }
 
 }
