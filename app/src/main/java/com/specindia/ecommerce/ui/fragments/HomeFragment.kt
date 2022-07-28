@@ -48,18 +48,23 @@ class HomeFragment : Fragment() {
     private lateinit var categoryList: ArrayList<Category>
 
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        Log.d("Home","onCreate called")
+    }
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
+        Log.d("Home","onCreateView called")
         binding = FragmentHomeBinding.inflate(layoutInflater)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        Log.d("Home","onViewCreated called")
         setUpHeader()
         setUpHeaderItemClick()
 
