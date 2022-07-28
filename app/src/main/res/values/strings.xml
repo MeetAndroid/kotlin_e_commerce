@@ -100,6 +100,11 @@
     <string name="estimated_time_of_delivery_30_minutes">Estimated time of delivery 30 minutes.</string>
     <string name="order_delivered">Order Delivered</string>
     <string name="your_order_is_placed_successfully">Your order is placed successfully</string>
+    <string name="payment_details">Payment Details</string>
+    <string name="my_orders">My Orders</string>
+    <string name="notifications">Notifications</string>
+    <string name="inbox">Inbox</string>
+    <string name="about_us">About Us</string>
 
     <string-array name="location_array_list">
         <item>S.G Highway</item>
