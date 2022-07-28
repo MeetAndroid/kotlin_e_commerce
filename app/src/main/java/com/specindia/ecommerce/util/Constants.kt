@@ -74,9 +74,6 @@ class Constants {
 
         // API
         const val KEY_BEARER_TOKEN = "bearer_token"
-
-        // Bundle Key
-        const val KEY_RESTAURANT_ID = "key_restaurant_id"
     }
 
 

@@ -33,7 +33,7 @@ class LoginFragment : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View {
         binding = FragmentLoginBinding.inflate(layoutInflater)
         return binding.root
@@ -66,7 +66,7 @@ class LoginFragment : Fragment() {
 
             btnForgotPassword.setOnClickListener {
                 view.findNavController()
-                    .navigate(R.id.action_loginFragment_to_forgotPasswordFragment)
+                    .navigate(LoginFragmentDirections.actionLoginFragmentToForgotPasswordFragment())
             }
         }
     }
@@ -127,7 +127,8 @@ class LoginFragment : Fragment() {
         val spanText = SpannableStringBuilder(getString(R.string.don_t_have_an_account_sign_up))
         val clickableString = object : ClickableSpan() {
             override fun onClick(view: View) {
-                view.findNavController().navigate(R.id.action_loginFragment_to_registrationFragment)
+                view.findNavController()
+                    .navigate(LoginFragmentDirections.actionLoginFragmentToRegistrationFragment())
             }
         }
         spanText.setSpan(

@@ -75,12 +75,10 @@ class HomeActivity : AppCompatActivity() {
         params.behavior = object : HideListenableBottomAppBarBehavior() {
             override fun onSlideDown() {
                 binding.fabAdd.hide()
-//                scan_button.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_top))
             }
 
             override fun onSlideUp() {
                 binding.fabAdd.show()
-//                scan_button.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_add))
             }
         }
     }

@@ -8,12 +8,12 @@
     <fragment
         android:id="@+id/authFragment"
         android:name="com.specindia.ecommerce.ui.fragments.AuthFragment"
-        android:label="fragment_auth"
+        android:label="Auth"
         tools:layout="@layout/fragment_auth" />
     <fragment
         android:id="@+id/breakingNewsFragment"
         android:name="com.specindia.ecommerce.ui.fragments.BreakingNewsFragment"
-        android:label="fragment_breaking_news"
+        android:label="Breaking News"
         tools:layout="@layout/fragment_breaking_news" />
 
 </navigation>

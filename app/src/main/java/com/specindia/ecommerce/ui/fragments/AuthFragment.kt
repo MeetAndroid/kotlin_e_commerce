@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
-import com.specindia.ecommerce.R
 import com.specindia.ecommerce.databinding.FragmentAuthBinding
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -17,7 +16,7 @@ class AuthFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View {
         binding = FragmentAuthBinding.inflate(layoutInflater)
         return binding.root
@@ -31,10 +30,12 @@ class AuthFragment : Fragment() {
     private fun setUpButtonClick(view: View) {
         binding.apply {
             btnLogin.setOnClickListener {
-                view.findNavController().navigate(R.id.action_authFragment_to_loginFragment)
+                view.findNavController()
+                    .navigate(AuthFragmentDirections.actionAuthFragmentToLoginFragment())
             }
             btnRegister.setOnClickListener {
-                view.findNavController().navigate(R.id.action_authFragment_to_welcomeFragment)
+                view.findNavController()
+                    .navigate(AuthFragmentDirections.actionAuthFragmentToWelcomeFragment())
             }
         }
     }
