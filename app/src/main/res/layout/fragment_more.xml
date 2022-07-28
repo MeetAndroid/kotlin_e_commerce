@@ -15,8 +15,324 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="48dp"
         android:text="Logout"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/MoreScreenHeader" />
 
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/bg_layout"
+        android:elevation="5dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/MoreScreenHeader">
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/clPayment"
+                    android:layout_width="match_parent"
+                    android:layout_height="80dp"
+                    android:layout_marginStart="30dp"
+                    android:layout_marginTop="50dp"
+                    android:layout_marginEnd="50dp"
+                    android:layout_marginBottom="5dp"
+                    android:background="@drawable/bg_more_layout"
+                    android:elevation="5dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/ivPayment"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_marginStart="30dp"
+                        android:background="@drawable/bg_circle"
+                        android:padding="10dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:srcCompat="@drawable/ic_payment" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp"
+                        android:fontFamily="@font/roboto_medium"
+                        android:text="@string/payment_details"
+                        android:textColor="@color/black"
+                        android:textSize="16sp"
+                        app:layout_constraintBottom_toBottomOf="@id/ivPayment"
+                        app:layout_constraintStart_toEndOf="@id/ivPayment"
+                        app:layout_constraintTop_toTopOf="@id/ivPayment" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/cvPayment"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:elevation="5dp"
+                    app:cardBackgroundColor="@color/colorOffWhite"
+                    app:cardCornerRadius="100dp"
+                    app:cardElevation="5dp"
+                    app:layout_constraintBottom_toBottomOf="@id/clPayment"
+                    app:layout_constraintEnd_toEndOf="@id/clPayment"
+                    app:layout_constraintStart_toEndOf="@id/clPayment"
+                    app:layout_constraintTop_toTopOf="@id/clPayment">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/ivPaymentNext"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:padding="10dp"
+                        app:srcCompat="@drawable/ic_next" />
+                </com.google.android.material.card.MaterialCardView>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/clMyOrder"
+                    android:layout_width="match_parent"
+                    android:layout_height="80dp"
+                    android:layout_marginStart="30dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginEnd="50dp"
+                    android:layout_marginBottom="5dp"
+                    android:background="@drawable/bg_more_layout"
+                    android:elevation="5dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/clPayment">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/ivMyOrder"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_marginStart="30dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:srcCompat="@drawable/ic_my_order" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp"
+                        android:fontFamily="@font/roboto_medium"
+                        android:text="@string/my_orders"
+                        android:textColor="@color/black"
+                        android:textSize="16sp"
+                        app:layout_constraintBottom_toBottomOf="@id/ivMyOrder"
+                        app:layout_constraintStart_toEndOf="@id/ivMyOrder"
+                        app:layout_constraintTop_toTopOf="@id/ivMyOrder" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/cvMyOrder"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:elevation="5dp"
+                    app:cardBackgroundColor="@color/colorOffWhite"
+                    app:cardCornerRadius="100dp"
+                    app:cardElevation="5dp"
+                    app:layout_constraintBottom_toBottomOf="@id/clMyOrder"
+                    app:layout_constraintEnd_toEndOf="@id/clMyOrder"
+                    app:layout_constraintStart_toEndOf="@id/clMyOrder"
+                    app:layout_constraintTop_toTopOf="@id/clMyOrder">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/ivMyOrderNext"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:padding="10dp"
+                        app:srcCompat="@drawable/ic_next" />
+                </com.google.android.material.card.MaterialCardView>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/clNotification"
+                    android:layout_width="match_parent"
+                    android:layout_height="80dp"
+                    android:layout_marginStart="30dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginEnd="50dp"
+                    android:layout_marginBottom="5dp"
+                    android:background="@drawable/bg_more_layout"
+                    android:elevation="5dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/clMyOrder">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/ivNotification"
+                        android:layout_width="65dp"
+                        android:layout_height="65dp"
+                        android:layout_marginStart="22dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:srcCompat="@drawable/ic_notification" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="13dp"
+                        android:fontFamily="@font/roboto_medium"
+                        android:text="@string/notifications"
+                        android:textColor="@color/black"
+                        android:textSize="16sp"
+                        app:layout_constraintBottom_toBottomOf="@id/ivNotification"
+                        app:layout_constraintStart_toEndOf="@id/ivNotification"
+                        app:layout_constraintTop_toTopOf="@id/ivNotification" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/cvNotification"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:elevation="5dp"
+                    app:cardBackgroundColor="@color/colorOffWhite"
+                    app:cardCornerRadius="100dp"
+                    app:cardElevation="5dp"
+                    app:layout_constraintBottom_toBottomOf="@id/clNotification"
+                    app:layout_constraintEnd_toEndOf="@id/clNotification"
+                    app:layout_constraintStart_toEndOf="@id/clNotification"
+                    app:layout_constraintTop_toTopOf="@id/clNotification">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/ivNotificationNext"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:padding="10dp"
+                        app:srcCompat="@drawable/ic_next" />
+                </com.google.android.material.card.MaterialCardView>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/clInbox"
+                    android:layout_width="match_parent"
+                    android:layout_height="80dp"
+                    android:layout_marginStart="30dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginEnd="50dp"
+                    android:layout_marginBottom="5dp"
+                    android:background="@drawable/bg_more_layout"
+                    android:elevation="5dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/clNotification">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/ivInbox"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_marginStart="30dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:srcCompat="@drawable/ic_inbox" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp"
+                        android:fontFamily="@font/roboto_medium"
+                        android:text="@string/inbox"
+                        android:textColor="@color/black"
+                        android:textSize="16sp"
+                        app:layout_constraintBottom_toBottomOf="@id/ivInbox"
+                        app:layout_constraintStart_toEndOf="@id/ivInbox"
+                        app:layout_constraintTop_toTopOf="@id/ivInbox" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/cvInbox"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:elevation="5dp"
+                    app:cardBackgroundColor="@color/colorOffWhite"
+                    app:cardCornerRadius="100dp"
+                    app:cardElevation="5dp"
+                    app:layout_constraintBottom_toBottomOf="@id/clInbox"
+                    app:layout_constraintEnd_toEndOf="@id/clInbox"
+                    app:layout_constraintStart_toEndOf="@id/clInbox"
+                    app:layout_constraintTop_toTopOf="@id/clInbox">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/ivInboxNext"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:padding="10dp"
+                        app:srcCompat="@drawable/ic_next" />
+                </com.google.android.material.card.MaterialCardView>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/clAboutUs"
+                    android:layout_width="match_parent"
+                    android:layout_height="80dp"
+                    android:layout_marginStart="30dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginEnd="50dp"
+                    android:layout_marginBottom="5dp"
+                    android:background="@drawable/bg_more_layout"
+                    android:elevation="5dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/clInbox">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/ivAboutUs"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_marginStart="30dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:srcCompat="@drawable/ic_about_us" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp"
+                        android:fontFamily="@font/roboto_medium"
+                        android:text="@string/about_us"
+                        android:textColor="@color/black"
+                        android:textSize="16sp"
+                        app:layout_constraintBottom_toBottomOf="@id/ivAboutUs"
+                        app:layout_constraintStart_toEndOf="@id/ivAboutUs"
+                        app:layout_constraintTop_toTopOf="@id/ivAboutUs" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/cvAboutUs"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:elevation="5dp"
+                    app:cardBackgroundColor="@color/colorOffWhite"
+                    app:cardCornerRadius="100dp"
+                    app:cardElevation="5dp"
+                    app:layout_constraintBottom_toBottomOf="@id/clAboutUs"
+                    app:layout_constraintEnd_toEndOf="@id/clAboutUs"
+                    app:layout_constraintStart_toEndOf="@id/clAboutUs"
+                    app:layout_constraintTop_toTopOf="@id/clAboutUs">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/ivAboutUsNext"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:padding="10dp"
+                        app:srcCompat="@drawable/ic_next" />
+                </com.google.android.material.card.MaterialCardView>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.core.widget.NestedScrollView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
