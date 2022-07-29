@@ -62,6 +62,15 @@
         android:id="@+id/orderDetailsFragment"
         tools:layout="@layout/fragment_order_details"
         android:name="com.specindia.ecommerce.ui.fragments.OrderDetailsFragment"
-        android:label="Order Details" />
+        android:label="Order Details" >
+        <action
+            android:id="@+id/action_orderDetailsFragment_to_checkOutFragment"
+            app:destination="@id/checkOutFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/checkOutFragment"
+        tools:layout="@layout/fragment_checkout"
+        android:name="com.specindia.ecommerce.ui.fragments.CheckOutFragment"
+        android:label="CheckOut" />
 
 </navigation>

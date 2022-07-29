@@ -109,6 +109,16 @@
     <string name="val_msg_enter_valid_otp">Please enter valid otp</string>
     <string name="logout">Logout</string>
     <string name="sub_total">Sub Total</string>
+    <string name="delivery_address">Delivery Address</string>
+    <string name="change">Change</string>
+    <string name="payment_method">Payment method</string>
+    <string name="add_card">+ Add Card</string>
+    <string name="cash_on_delivery">Cash on Delivery</string>
+    <string name="_1234">*** *** *** 1234</string>
+    <string name="delivery_cost">Delivery Cost</string>
+    <string name="discount">Discount</string>
+    <string name="total">Total</string>
+    <string name="check_out">Checkout</string>
 
     <string-array name="location_array_list">
         <item>S.G Highway</item>
