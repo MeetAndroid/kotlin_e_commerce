@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.specindia.ecommerce.api.network.NetworkResult
 import com.specindia.ecommerce.models.response.home.DashboardListResponse
+import com.specindia.ecommerce.models.response.home.order.OrderDetailsResponse
 import com.specindia.ecommerce.models.response.home.productsbyrestaurant.ProductsByRestaurantResponse
 import com.specindia.ecommerce.models.response.home.restaurantDetails.RestaurantDetailsResponse
 import com.specindia.ecommerce.models.response.menulist.MenuListResponse
@@ -16,7 +17,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    private val repository: EcommerceRepository
+    private val repository: EcommerceRepository,
 ) : ViewModel() {
 
     // Mutable Live Data
@@ -24,6 +25,9 @@ class HomeViewModel @Inject constructor(
     private val _menuListResponse = MutableLiveData<NetworkResult<MenuListResponse>>()
     private val _restaurantDetailsResponse =
         MutableLiveData<NetworkResult<RestaurantDetailsResponse>>()
+
+    private val _orderDetailsResponse =
+        MutableLiveData<NetworkResult<OrderDetailsResponse>>()
 
     private val _productsByRestauranResponse =
         MutableLiveData<NetworkResult<ProductsByRestaurantResponse>>()
@@ -40,6 +44,9 @@ class HomeViewModel @Inject constructor(
 
     val productsByRestaurant: LiveData<NetworkResult<ProductsByRestaurantResponse>>
         get() = _productsByRestauranResponse
+
+    val orderDetailsResponse: LiveData<NetworkResult<OrderDetailsResponse>>
+        get() = _orderDetailsResponse
 
     // Call dashboard list api
     fun getDashboardList(headerMap: Map<String, String>) =
@@ -70,6 +77,14 @@ class HomeViewModel @Inject constructor(
         viewModelScope.launch() {
             repository.getProductsByRestaurant(headerMap, parameters).collect { values ->
                 _productsByRestauranResponse.value = values
+            }
+        }
+
+    // Call Order Details api
+    fun getOrderDetails(headerMap: Map<String, String>, id: Int) =
+        viewModelScope.launch() {
+            repository.getOrderDetails(headerMap, id).collect { values ->
+                _orderDetailsResponse.value = values
             }
         }
 }

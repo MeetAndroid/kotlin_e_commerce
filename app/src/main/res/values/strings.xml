@@ -108,6 +108,7 @@
     <string name="val_msg_enter_otp">Please enter otp</string>
     <string name="val_msg_enter_valid_otp">Please enter valid otp</string>
     <string name="logout">Logout</string>
+    <string name="sub_total">Sub Total</string>
 
     <string-array name="location_array_list">
         <item>S.G Highway</item>
