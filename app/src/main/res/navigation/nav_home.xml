@@ -71,6 +71,16 @@
         android:name="com.specindia.ecommerce.ui.fragments.ViewAllProductFragment"
         android:label="ViewAllProductFragment"
         tools:layout="@layout/fragment_view_all_product">
+        android:label="Order Details" >
+        <action
+            android:id="@+id/action_orderDetailsFragment_to_checkOutFragment"
+            app:destination="@id/checkOutFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/checkOutFragment"
+        tools:layout="@layout/fragment_checkout"
+        android:name="com.specindia.ecommerce.ui.fragments.CheckOutFragment"
+        android:label="CheckOut" />
 
         <argument
             android:name="tag"

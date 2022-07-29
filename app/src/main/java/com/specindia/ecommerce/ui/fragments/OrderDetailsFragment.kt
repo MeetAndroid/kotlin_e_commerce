@@ -43,6 +43,13 @@ class OrderDetailsFragment : Fragment() {
 
         callOrderDetailsApi(data)
         observeOrderDetailsResponse()
+
+        binding.clOrders.setOnClickListener {
+            view.findNavController()
+                .navigate(OrderDetailsFragmentDirections.actionOrderDetailsFragmentToCheckOutFragment())
+        }
+
+        (activity as HomeActivity).showOrHideBottomAppBarAndFloatingActionButtonOnScroll()
     }
 
     private fun setUpData(data: OrderDetailsData) {
@@ -52,6 +59,10 @@ class OrderDetailsFragment : Fragment() {
                 .placeholder(R.drawable.ic_launcher_foreground)
                 .error(android.R.drawable.ic_dialog_alert)
                 .into(binding.ivProductImage)
+
+            tvProductName.text = "Mulberry Pizza by Josh"
+            tvProductPrice.text = "250.00 Rs"
+            tvOrderCount.text = "2"
 
             tvDiscount.text = "4"
             tvDeliveryCost.text = data.extraCharges
@@ -71,6 +82,7 @@ class OrderDetailsFragment : Fragment() {
                 ivBack.visible(true)
                 ivFavorite.visible(false)
                 ivShoppingCart.visible(false)
+                ivSearch.visible(false)
             }
         }
     }

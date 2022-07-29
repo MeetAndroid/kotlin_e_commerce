@@ -5,11 +5,11 @@ import com.google.gson.annotations.SerializedName
 
 data class DashboardListData(
     @SerializedName("categoryList")
-    val categoryList: MutableList<Category>,
+    val categoryList: ArrayList<Category>,
     @SerializedName("favoritesRestaurants")
-    val favoritesRestaurants: MutableList<Any>,
+    val favoritesRestaurants: ArrayList<Any>,
     @SerializedName("popularRestaurents")
-    val popularRestaurents: MutableList<PopularRestaurent>,
+    val popularRestaurents: ArrayList<PopularRestaurent>,
     @SerializedName("topProduct")
-    val topProduct: MutableList<TopProduct>
+    val topProduct: ArrayList<TopProduct>
 )

@@ -19,6 +19,7 @@
         android:layout_height="0dp"
         android:layout_marginTop="20dp"
         android:elevation="5dp"
+        android:paddingBottom="?attr/actionBarSize"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/orderDetailsScreenHeader">
 
@@ -101,7 +102,7 @@
                                     app:layout_constraintEnd_toEndOf="parent"
                                     app:layout_constraintStart_toStartOf="parent"
                                     app:layout_constraintTop_toTopOf="parent"
-                                    android:text="Mulberry Pizza by Josh" />
+                                    tools:text="Mulberry Pizza by Josh" />
 
                                 <com.google.android.material.textview.MaterialTextView
                                     android:id="@+id/tvProductPrice"
@@ -118,7 +119,7 @@
                                     android:textStyle="bold"
                                     app:layout_constraintStart_toStartOf="parent"
                                     app:layout_constraintTop_toBottomOf="@id/tvProductName"
-                                    android:text="250.00 Rs" />
+                                    tools:text="250.00 Rs" />
 
                                 <com.google.android.material.textview.MaterialTextView
                                     android:id="@+id/tvOrderCount"
@@ -134,7 +135,7 @@
                                     android:textStyle="bold"
                                     app:layout_constraintEnd_toEndOf="@+id/tvProductName"
                                     app:layout_constraintTop_toBottomOf="@id/tvProductName"
-                                    android:text="2" />
+                                    tools:text="2" />
 
                             </androidx.constraintlayout.widget.ConstraintLayout>
                         </com.google.android.material.card.MaterialCardView>
@@ -395,10 +396,10 @@
                 <com.google.android.material.card.MaterialCardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="8dp"
+                    android:layout_marginTop="16dp"
                     app:cardCornerRadius="10dp"
                     app:cardElevation="8dp"
-                    app:cardUseCompatPadding="true"
+                    app:cardBackgroundColor="@color/colorOffWhite"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/clTopPart">
@@ -406,7 +407,7 @@
                     <TableLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:padding="8dp"
+                        android:padding="16dp"
                         android:stretchColumns="*">
 
                         <TableRow
@@ -428,9 +429,9 @@
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/roboto_bold"
                                 android:gravity="end"
-                                tools:text="Rs. 68"
                                 android:textAppearance="@style/TextAppearance.AppCompat.Small"
-                                android:textColor="@color/color_red" />
+                                android:textColor="@color/color_red"
+                                tools:text="Rs. 68" />
                         </TableRow>
 
                         <TableRow
@@ -444,7 +445,7 @@
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/roboto_bold"
                                 android:gravity="start"
-                                android:text="Delivery Cost"
+                                android:text="@string/delivery_cost"
                                 android:textAppearance="@style/TextAppearance.AppCompat.Small"
                                 android:textColor="@color/colorGray" />
 
@@ -454,9 +455,9 @@
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/roboto_bold"
                                 android:gravity="end"
-                                tools:text="Rs. 2"
                                 android:textAppearance="@style/TextAppearance.AppCompat.Small"
-                                android:textColor="@color/color_red" />
+                                android:textColor="@color/color_red"
+                                tools:text="Rs. 2" />
                         </TableRow>
 
                         <TableRow
@@ -468,7 +469,7 @@
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/roboto_bold"
                                 android:gravity="start"
-                                android:text="Discount"
+                                android:text="@string/discount"
                                 android:textAppearance="@style/TextAppearance.AppCompat.Small"
                                 android:textColor="@color/colorGray" />
 
@@ -478,16 +479,16 @@
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/roboto_bold"
                                 android:gravity="end"
-                                tools:text="- Rs. 4"
                                 android:textAppearance="@style/TextAppearance.AppCompat.Small"
-                                android:textColor="@color/color_red" />
+                                android:textColor="@color/color_red"
+                                tools:text="- Rs. 4" />
                         </TableRow>
 
                         <com.google.android.material.divider.MaterialDivider
                             android:layout_width="0dp"
                             android:layout_height="2dp"
                             android:layout_marginVertical="4dp"
-                            android:background="@color/colorOffWhite" />
+                            android:background="@color/white" />
 
                         <TableRow
                             android:layout_width="match_parent"
@@ -499,7 +500,7 @@
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/roboto_bold"
                                 android:gravity="start"
-                                android:text="Total"
+                                android:text="@string/total"
                                 android:textAppearance="@style/TextAppearance.AppCompat.Small"
                                 android:textColor="@color/colorGray" />
 
@@ -509,9 +510,9 @@
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/roboto_bold"
                                 android:gravity="end"
-                                tools:text="Rs. 66"
                                 android:textAppearance="@style/TextAppearance.AppCompat.Small"
-                                android:textColor="@color/color_red" />
+                                android:textColor="@color/color_red"
+                                tools:text="Rs. 66" />
                         </TableRow>
 
                     </TableLayout>
