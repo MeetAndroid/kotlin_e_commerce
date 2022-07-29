@@ -58,7 +58,7 @@
         <entry key="..\:/EcommerceApp/app/src/main/res/layout/fragment_login.xml" value="0.25" />
         <entry key="..\:/EcommerceApp/app/src/main/res/layout/fragment_more.xml" value="0.1675213675213675" />
         <entry key="..\:/EcommerceApp/app/src/main/res/layout/fragment_offers.xml" value="0.1675213675213675" />
-        <entry key="..\:/EcommerceApp/app/src/main/res/layout/fragment_order_details.xml" value="0.22" />
+        <entry key="..\:/EcommerceApp/app/src/main/res/layout/fragment_order_details.xml" value="0.18" />
         <entry key="..\:/EcommerceApp/app/src/main/res/layout/fragment_product_details.xml" value="0.25" />
         <entry key="..\:/EcommerceApp/app/src/main/res/layout/fragment_profile.xml" value="0.1" />
         <entry key="..\:/EcommerceApp/app/src/main/res/layout/fragment_profile_details.xml" value="0.1675213675213675" />
@@ -114,10 +114,11 @@
         <entry key="..\:/GitProjects/EcommerceApp/app/src/main/res/layout/fragment_offers.xml" value="0.27291666666666664" />
         <entry key="..\:/GitProjects/EcommerceApp/app/src/main/res/layout/fragment_otp.xml" value="0.27291666666666664" />
         <entry key="..\:/GitProjects/EcommerceApp/app/src/main/res/layout/fragment_product_details.xml" value="0.14" />
+        <entry key="..\:/GitProjects/EcommerceApp/app/src/main/res/layout/fragment_registration.xml" value="0.1" />
         <entry key="..\:/GitProjects/EcommerceApp/app/src/main/res/layout/fragment_reset_password.xml" value="0.27291666666666664" />
         <entry key="..\:/GitProjects/EcommerceApp/app/src/main/res/layout/fragment_restaurant_details.xml" value="0.2" />
         <entry key="..\:/GitProjects/EcommerceApp/app/src/main/res/layout/fragment_search.xml" value="0.27291666666666664" />
-        <entry key="..\:/GitProjects/EcommerceApp/app/src/main/res/layout/fragment_welcome.xml" value="0.27291666666666664" />
+        <entry key="..\:/GitProjects/EcommerceApp/app/src/main/res/layout/fragment_welcome.xml" value="0.1" />
         <entry key="..\:/GitProjects/EcommerceApp/app/src/main/res/layout/layout_no_data_found.xml" value="0.27291666666666664" />
         <entry key="..\:/GitProjects/EcommerceApp/app/src/main/res/layout/layout_progress_bar.xml" value="0.27291666666666664" />
         <entry key="..\:/GitProjects/EcommerceApp/app/src/main/res/layout/row_breaking_news.xml" value="0.27291666666666664" />
