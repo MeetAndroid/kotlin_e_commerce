@@ -40,6 +40,8 @@
         <entry key="..\:/EcommerceApp/app/src/main/res/drawable/ic_order_delivered.xml" value="0.1545" />
         <entry key="..\:/EcommerceApp/app/src/main/res/drawable/ic_order_in_kitchen.xml" value="0.1545" />
         <entry key="..\:/EcommerceApp/app/src/main/res/drawable/ic_paypal.xml" value="0.132" />
+        <entry key="..\:/EcommerceApp/app/src/main/res/drawable/ic_red_dot_with_stroke.xml" value="0.129" />
+        <entry key="..\:/EcommerceApp/app/src/main/res/drawable/ic_red_ring.xml" value="0.129" />
         <entry key="..\:/EcommerceApp/app/src/main/res/drawable/ic_rupee_symbol.xml" value="0.1545" />
         <entry key="..\:/EcommerceApp/app/src/main/res/drawable/ic_rupee_symbol_black__1_.xml" value="0.1545" />
         <entry key="..\:/EcommerceApp/app/src/main/res/drawable/ic_search.xml" value="0.195" />
@@ -48,6 +50,7 @@
         <entry key="..\:/EcommerceApp/app/src/main/res/drawable/ic_visa.xml" value="0.1095" />
         <entry key="..\:/EcommerceApp/app/src/main/res/drawable/img_red_filled_rectangle.xml" value="0.1795" />
         <entry key="..\:/EcommerceApp/app/src/main/res/drawable/indicator_page_2.xml" value="0.1445" />
+        <entry key="..\:/EcommerceApp/app/src/main/res/drawable/selector_custom_check_box.xml" value="0.129" />
         <entry key="..\:/EcommerceApp/app/src/main/res/layout/activity_auth.xml" value="0.11068376068376068" />
         <entry key="..\:/EcommerceApp/app/src/main/res/layout/activity_data_store.xml" value="0.17192982456140352" />
         <entry key="..\:/EcommerceApp/app/src/main/res/layout/activity_home.xml" value="0.1" />
@@ -69,9 +72,8 @@
         <entry key="..\:/EcommerceApp/app/src/main/res/layout/fragment_login.xml" value="0.25" />
         <entry key="..\:/EcommerceApp/app/src/main/res/layout/fragment_more.xml" value="0.2" />
         <entry key="..\:/EcommerceApp/app/src/main/res/layout/fragment_offers.xml" value="0.1675213675213675" />
-        <entry key="..\:/EcommerceApp/app/src/main/res/layout/fragment_order_details.xml" value="0.14" />
-        <entry key="..\:/EcommerceApp/app/src/main/res/layout/fragment_otp.xml" value="0.16842105263157894" />
         <entry key="..\:/EcommerceApp/app/src/main/res/layout/fragment_order_details.xml" value="0.18" />
+        <entry key="..\:/EcommerceApp/app/src/main/res/layout/fragment_otp.xml" value="0.16842105263157894" />
         <entry key="..\:/EcommerceApp/app/src/main/res/layout/fragment_product_details.xml" value="0.25" />
         <entry key="..\:/EcommerceApp/app/src/main/res/layout/fragment_profile.xml" value="0.1" />
         <entry key="..\:/EcommerceApp/app/src/main/res/layout/fragment_profile_details.xml" value="0.1675213675213675" />
