@@ -195,7 +195,6 @@ class RestaurantDetailsFragment : Fragment(), ProductListAdapter.OnProductItemCl
                 rvProducts.visible(true)
                 noDataFound.clNoDataFound.visible(false)
                 productList.addAll(productListResponse.data.toList())
-                productList.addAll(productListResponse.data.toList())
                 productListAdapter.showShimmer = false
                 productListAdapter.notifyDataSetChanged()
             } else {

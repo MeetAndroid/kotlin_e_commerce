@@ -18,6 +18,9 @@
         <action
             android:id="@+id/action_homeFragment_to_restaurantDetailsFragment"
             app:destination="@id/restaurantDetailsFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_viewAllProductFragment"
+            app:destination="@id/viewAllProductFragment" />
     </fragment>
     <fragment
         android:id="@+id/homeDetailsFragment"
@@ -27,8 +30,8 @@
 
     <fragment
         android:id="@+id/searchFragment"
-        android:label="Search Fragment"
         android:name="com.specindia.ecommerce.ui.fragments.SearchFragment"
+        android:label="Search Fragment"
         tools:layout="@layout/fragment_search" />
     <fragment
         android:id="@+id/restaurantDetailsFragment"
@@ -60,8 +63,18 @@
     </fragment>
     <fragment
         android:id="@+id/orderDetailsFragment"
-        tools:layout="@layout/fragment_order_details"
         android:name="com.specindia.ecommerce.ui.fragments.OrderDetailsFragment"
-        android:label="Order Details" />
+        android:label="Order Details"
+        tools:layout="@layout/fragment_order_details" />
+    <fragment
+        android:id="@+id/viewAllProductFragment"
+        android:name="com.specindia.ecommerce.ui.fragments.ViewAllProductFragment"
+        android:label="ViewAllProductFragment"
+        tools:layout="@layout/fragment_view_all_product">
 
+        <argument
+            android:name="tag"
+            android:defaultValue=""
+            app:argType="string" />
+    </fragment>
 </navigation>

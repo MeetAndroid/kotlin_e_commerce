@@ -23,10 +23,7 @@ import com.specindia.ecommerce.ui.activity.HomeActivity
 import com.specindia.ecommerce.ui.adapters.CategoryListAdapter
 import com.specindia.ecommerce.ui.adapters.PopularRestaurantsAdapter
 import com.specindia.ecommerce.ui.adapters.TopProductsAdapter
-import com.specindia.ecommerce.util.SnapHelper
-import com.specindia.ecommerce.util.getHeaderMap
-import com.specindia.ecommerce.util.showLongToast
-import com.specindia.ecommerce.util.visible
+import com.specindia.ecommerce.util.*
 import dagger.hilt.android.AndroidEntryPoint
 
 
@@ -249,7 +246,9 @@ class HomeFragment : Fragment() {
                 topProductAdapter.notifyDataSetChanged()
 
                 headerTopDishes.tvViewAll.setOnClickListener {
-                    requireActivity().showLongToast("View All Top Dishes")
+                    view?.findNavController()?.navigate(
+                        HomeFragmentDirections.actionHomeFragmentToViewAllProductFragment(Constants.TOP_DISHES)
+                    )
                 }
             } else {
                 headerTopDishes.listHeader.visible(false)
@@ -273,7 +272,9 @@ class HomeFragment : Fragment() {
                 restaurantsAdapter.notifyDataSetChanged()
 
                 headerPopularRestaurants.tvViewAll.setOnClickListener {
-                    requireActivity().showLongToast("View All Popular Restaurants")
+                    view?.findNavController()?.navigate(
+                        HomeFragmentDirections.actionHomeFragmentToViewAllProductFragment(Constants.RESTAURANT)
+                    )
                 }
             } else {
                 headerPopularRestaurants.listHeader.visible(false)
@@ -297,7 +298,9 @@ class HomeFragment : Fragment() {
                 categoryListAdapter.notifyDataSetChanged()
 
                 headerCategoryList.tvViewAll.setOnClickListener {
-                    requireActivity().showLongToast("View All Top Categories")
+                    view?.findNavController()?.navigate(
+                        HomeFragmentDirections.actionHomeFragmentToViewAllProductFragment(Constants.CATEGORY)
+                    )
                 }
             } else {
                 headerCategoryList.listHeader.visible(false)
