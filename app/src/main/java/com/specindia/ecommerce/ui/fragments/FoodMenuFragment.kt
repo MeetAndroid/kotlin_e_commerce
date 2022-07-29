@@ -34,7 +34,7 @@ class FoodMenuFragment : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View {
         binding = FragmentFoodMenuBinding.inflate(layoutInflater)
         return binding.root
@@ -53,7 +53,8 @@ class FoodMenuFragment : Fragment() {
         observeResponse()
 
         binding.btnFoodMenuDetails.setOnClickListener {
-            it.findNavController().navigate(R.id.action_foodMenuFragment_to_foodMenuDetailsFragment)
+            it.findNavController()
+                .navigate(FoodMenuFragmentDirections.actionFoodMenuFragmentToFoodMenuDetailsFragment())
         }
 
         menuListAdapter.setOnItemClickListener {
@@ -125,7 +126,7 @@ class FoodMenuFragment : Fragment() {
 
     private fun setUpMenuListUI(
         binding: FragmentFoodMenuBinding,
-        menuListResponse: MenuListResponse
+        menuListResponse: MenuListResponse,
     ) {
         binding.apply {
             menuList.clear()

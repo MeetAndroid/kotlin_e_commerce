@@ -15,355 +15,512 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/clOrders"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="20dp"
+        android:elevation="5dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/orderDetailsScreenHeader">
 
-        <com.google.android.material.imageview.ShapeableImageView
-            android:id="@+id/ivProductImage"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_marginStart="58dp"
-            android:adjustViewBounds="true"
-            android:background="@color/colorShimmerEffectDark"
-            android:contentDescription="@null"
-            android:elevation="8dp"
-            android:padding="5dp"
-            android:scaleType="centerCrop"
-            app:layout_constraintBottom_toBottomOf="@+id/credentials_card"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/credentials_card"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@id/credentials_card"
-            app:shapeAppearanceOverlay="@style/RoundedImageView"
-            app:srcCompat="@color/colorGray" />
-
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/credentials_card"
-            style="@style/OrderDetailsCardViewStyle"
+        <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
-            android:layout_height="120dp"
-            android:layout_marginStart="58dp"
-            android:layout_marginTop="32dp"
-            android:layout_marginEnd="16dp"
-            app:cardBackgroundColor="@color/colorOffWhite"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.281">
+            android:layout_height="match_parent"
+            android:fillViewport="true">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
-                <com.google.android.material.textview.MaterialTextView
-                    android:id="@+id/tvProductName"
-                    android:layout_width="0dp"
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/clTopPart"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="58dp"
-                    android:layout_marginTop="16dp"
-                    android:layout_marginEnd="8dp"
-                    android:ellipsize="end"
-                    android:fontFamily="@font/roboto_bold"
-                    android:lines="1"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                    android:textColor="@android:color/black"
-                    android:textStyle="bold"
+                    android:background="@drawable/bg_layout"
+                    android:paddingVertical="24dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    tools:text="Mulberry Pizza by Josh" />
+                    app:layout_constraintTop_toTopOf="parent">
 
-                <com.google.android.material.textview.MaterialTextView
-                    android:id="@+id/tvProductPrice"
-                    android:layout_width="wrap_content"
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/clOrders"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <com.google.android.material.imageview.ShapeableImageView
+                            android:id="@+id/ivProductImage"
+                            android:layout_width="100dp"
+                            android:layout_height="100dp"
+                            android:layout_marginStart="60dp"
+                            android:adjustViewBounds="true"
+                            android:background="@color/colorShimmerEffectDark"
+                            android:contentDescription="@null"
+                            android:elevation="8dp"
+                            android:padding="5dp"
+                            android:scaleType="centerCrop"
+                            app:layout_constraintBottom_toBottomOf="@+id/credentials_card"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintEnd_toStartOf="@id/credentials_card"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="@id/credentials_card"
+                            app:shapeAppearanceOverlay="@style/RoundedImageView"
+                            app:srcCompat="@color/colorGray" />
+
+                        <com.google.android.material.card.MaterialCardView
+                            android:id="@+id/credentials_card"
+                            style="@style/OrderDetailsCardViewStyle"
+                            android:layout_width="match_parent"
+                            android:layout_height="120dp"
+                            android:layout_marginStart="60dp"
+                            android:layout_marginEnd="24dp"
+                            app:cardBackgroundColor="@color/white"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintVertical_bias="0.281">
+
+                            <androidx.constraintlayout.widget.ConstraintLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent">
+
+                                <com.google.android.material.textview.MaterialTextView
+                                    android:id="@+id/tvProductName"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="58dp"
+                                    android:layout_marginTop="16dp"
+                                    android:layout_marginEnd="8dp"
+                                    android:ellipsize="end"
+                                    android:fontFamily="@font/roboto_bold"
+                                    android:lines="1"
+                                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                                    android:textColor="@android:color/black"
+                                    android:textStyle="bold"
+                                    app:layout_constraintEnd_toEndOf="parent"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintTop_toTopOf="parent"
+                                    android:text="Mulberry Pizza by Josh" />
+
+                                <com.google.android.material.textview.MaterialTextView
+                                    android:id="@+id/tvProductPrice"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="58dp"
+                                    android:layout_marginTop="4dp"
+                                    android:layout_marginEnd="8dp"
+                                    android:ellipsize="end"
+                                    android:fontFamily="@font/roboto_bold"
+                                    android:lines="1"
+                                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                                    android:textColor="@color/color_red"
+                                    android:textStyle="bold"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintTop_toBottomOf="@id/tvProductName"
+                                    android:text="250.00 Rs" />
+
+                                <com.google.android.material.textview.MaterialTextView
+                                    android:id="@+id/tvOrderCount"
+                                    android:layout_width="40dp"
+                                    android:layout_height="40dp"
+                                    android:layout_marginTop="4dp"
+                                    android:background="@drawable/bg_order_count"
+                                    android:elevation="4dp"
+                                    android:fontFamily="@font/roboto_bold"
+                                    android:gravity="center"
+                                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                                    android:textColor="@color/color_red"
+                                    android:textStyle="bold"
+                                    app:layout_constraintEnd_toEndOf="@+id/tvProductName"
+                                    app:layout_constraintTop_toBottomOf="@id/tvProductName"
+                                    android:text="2" />
+
+                            </androidx.constraintlayout.widget.ConstraintLayout>
+                        </com.google.android.material.card.MaterialCardView>
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/ivCircle1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="32dp"
+                        android:contentDescription="@string/app_name"
+                        android:src="@drawable/ic_red_dot_with_stroke"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/clOrders" />
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/ivDashed1"
+                        android:layout_width="1dp"
+                        android:layout_height="0dp"
+                        android:background="@drawable/bg_dotted_vertical"
+                        app:layout_constraintBottom_toTopOf="@id/ivCircle2"
+                        app:layout_constraintEnd_toEndOf="@id/ivCircle1"
+                        app:layout_constraintStart_toStartOf="@id/ivCircle1"
+                        app:layout_constraintTop_toBottomOf="@id/ivCircle1" />
+
+                    <!-- Order Placed Part-->
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/clOrderPlaced"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="32dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/ivCircle1"
+                        app:layout_constraintTop_toBottomOf="@id/clOrders">
+
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:id="@+id/ivOrderPlaced"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="12dp"
+                            android:contentDescription="@string/app_name"
+                            android:src="@drawable/ic_check_green"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <androidx.appcompat.widget.LinearLayoutCompat
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="8dp"
+                            android:orientation="vertical"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@id/ivOrderPlaced"
+                            app:layout_constraintTop_toTopOf="parent">
+
+                            <com.google.android.material.textview.MaterialTextView
+                                android:id="@+id/tvOrderStatus"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginHorizontal="8dp"
+                                android:ellipsize="end"
+                                android:fontFamily="@font/roboto_bold"
+                                android:lines="1"
+                                android:text="@string/order_placed"
+                                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                                android:textColor="@android:color/black"
+                                android:textStyle="bold" />
+
+                            <com.google.android.material.textview.MaterialTextView
+                                android:id="@+id/tvOrderStatusDescription"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginHorizontal="8dp"
+                                android:layout_marginTop="2dp"
+                                android:fontFamily="@font/roboto_bold"
+                                android:lineSpacingExtra="2dp"
+                                android:text="@string/order_placed_msg"
+                                android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                                android:textColor="@color/colorGray"
+                                android:textStyle="bold" />
+
+                            <com.google.android.material.textview.MaterialTextView
+                                android:id="@+id/tvEstimatedTimeForOrder"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginHorizontal="8dp"
+                                android:layout_marginTop="2dp"
+                                android:fontFamily="@font/roboto_bold"
+                                android:lineSpacingExtra="2dp"
+                                android:text="@string/estimated_time_for_order"
+                                android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                                android:textColor="@color/colorGray" />
+                        </androidx.appcompat.widget.LinearLayoutCompat>
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                    <!-- End of Order Placed Part -->
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/ivCircle2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="16dp"
+                        android:contentDescription="@string/app_name"
+                        android:src="@drawable/ic_red_ring"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/clOrderPlaced" />
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/ivDashed2"
+                        android:layout_width="1dp"
+                        android:layout_height="0dp"
+                        android:background="@drawable/bg_dotted_vertical"
+                        app:layout_constraintBottom_toTopOf="@id/ivCircle3"
+                        app:layout_constraintEnd_toEndOf="@id/ivCircle2"
+                        app:layout_constraintStart_toStartOf="@id/ivCircle2"
+                        app:layout_constraintTop_toBottomOf="@id/ivCircle2" />
+
+                    <!-- Order in Kitchen -->
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/clOrderInKitchen"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/ivCircle2"
+                        app:layout_constraintTop_toBottomOf="@id/clOrderPlaced">
+
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:id="@+id/ivOrderInKitchen"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="12dp"
+                            android:contentDescription="@string/app_name"
+                            android:src="@drawable/ic_order_in_kitchen"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <androidx.appcompat.widget.LinearLayoutCompat
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="8dp"
+                            android:orientation="vertical"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@id/ivOrderInKitchen"
+                            app:layout_constraintTop_toTopOf="parent">
+
+                            <com.google.android.material.textview.MaterialTextView
+                                android:id="@+id/tvOrderInKitchenStatus"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginHorizontal="8dp"
+                                android:ellipsize="end"
+                                android:fontFamily="@font/roboto_bold"
+                                android:lines="1"
+                                android:text="@string/order_in_kitchen"
+                                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                                android:textColor="@android:color/black"
+                                android:textStyle="bold" />
+
+                            <com.google.android.material.textview.MaterialTextView
+                                android:id="@+id/tvOrderInKitchenStatusDescription"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginHorizontal="8dp"
+                                android:layout_marginTop="2dp"
+                                android:fontFamily="@font/roboto_bold"
+                                android:lineSpacingExtra="2dp"
+                                android:text="@string/your_order_is_placed_successfully_our_chef_will_soon_begin_his_magic"
+                                android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                                android:textColor="@color/colorGray"
+                                android:textStyle="bold" />
+
+                            <com.google.android.material.textview.MaterialTextView
+                                android:id="@+id/tvEstimatedTimeForOrderInKitchen"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginHorizontal="8dp"
+                                android:layout_marginTop="2dp"
+                                android:fontFamily="@font/roboto_bold"
+                                android:lineSpacingExtra="2dp"
+                                android:text="@string/estimated_time_of_delivery_30_minutes"
+                                android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                                android:textColor="@color/colorGray" />
+                        </androidx.appcompat.widget.LinearLayoutCompat>
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                    <!-- End of Order in Kitchen -->
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/ivCircle3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="16dp"
+                        android:contentDescription="@string/app_name"
+                        android:src="@drawable/ic_red_ring"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/clOrderInKitchen" />
+
+                    <!-- Order Delivered Part -->
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/ivCircle3"
+                        app:layout_constraintTop_toBottomOf="@id/clOrderInKitchen">
+
+
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:id="@+id/ivOrderDelivered"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="12dp"
+                            android:contentDescription="@string/app_name"
+                            android:src="@drawable/ic_order_delivered"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <androidx.appcompat.widget.LinearLayoutCompat
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="8dp"
+                            android:orientation="vertical"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@id/ivOrderDelivered"
+                            app:layout_constraintTop_toTopOf="parent">
+
+                            <com.google.android.material.textview.MaterialTextView
+                                android:id="@+id/tvOrderDeliveredStatus"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginHorizontal="8dp"
+                                android:ellipsize="end"
+                                android:fontFamily="@font/roboto_bold"
+                                android:lines="1"
+                                android:text="@string/order_delivered"
+                                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                                android:textColor="@android:color/black"
+                                android:textStyle="bold" />
+
+                            <com.google.android.material.textview.MaterialTextView
+                                android:id="@+id/tvOrderDeliveredDescription"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginHorizontal="8dp"
+                                android:layout_marginTop="2dp"
+                                android:fontFamily="@font/roboto_bold"
+                                android:lineSpacingExtra="2dp"
+                                android:text="@string/your_order_is_placed_successfully"
+                                android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                                android:textColor="@color/colorGray"
+                                android:textStyle="bold" />
+                        </androidx.appcompat.widget.LinearLayoutCompat>
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                    <!-- End of Order Delivered Part -->
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="58dp"
-                    android:layout_marginTop="4dp"
-                    android:layout_marginEnd="8dp"
-                    android:ellipsize="end"
-                    android:fontFamily="@font/roboto_bold"
-                    android:lines="1"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                    android:textColor="@color/color_red"
-                    android:textStyle="bold"
+                    android:layout_margin="8dp"
+                    app:cardCornerRadius="10dp"
+                    app:cardElevation="8dp"
+                    app:cardUseCompatPadding="true"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tvProductName"
-                    tools:text="250.00 Rs" />
+                    app:layout_constraintTop_toBottomOf="@id/clTopPart">
 
-                <com.google.android.material.textview.MaterialTextView
-                    android:id="@+id/tvOrderCount"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:layout_marginTop="4dp"
-                    android:background="@drawable/bg_order_count"
-                    android:elevation="4dp"
-                    android:fontFamily="@font/roboto_bold"
-                    android:gravity="center"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                    android:textColor="@color/color_red"
-                    android:textStyle="bold"
-                    app:layout_constraintEnd_toEndOf="@+id/tvProductName"
-                    app:layout_constraintTop_toBottomOf="@id/tvProductName"
-                    tools:text="2" />
+                    <TableLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:padding="8dp"
+                        android:stretchColumns="*">
 
+                        <TableRow
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <com.google.android.material.textview.MaterialTextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/roboto_bold"
+                                android:gravity="start"
+                                android:text="@string/sub_total"
+                                android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                                android:textColor="@color/colorGray" />
+
+                            <com.google.android.material.textview.MaterialTextView
+                                android:id="@+id/tvSubTotal"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/roboto_bold"
+                                android:gravity="end"
+                                tools:text="Rs. 68"
+                                android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                                android:textColor="@color/color_red" />
+                        </TableRow>
+
+                        <TableRow
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:layout_marginBottom="4dp">
+
+                            <com.google.android.material.textview.MaterialTextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/roboto_bold"
+                                android:gravity="start"
+                                android:text="Delivery Cost"
+                                android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                                android:textColor="@color/colorGray" />
+
+                            <com.google.android.material.textview.MaterialTextView
+                                android:id="@+id/tvDeliveryCost"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/roboto_bold"
+                                android:gravity="end"
+                                tools:text="Rs. 2"
+                                android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                                android:textColor="@color/color_red" />
+                        </TableRow>
+
+                        <TableRow
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <com.google.android.material.textview.MaterialTextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/roboto_bold"
+                                android:gravity="start"
+                                android:text="Discount"
+                                android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                                android:textColor="@color/colorGray" />
+
+                            <com.google.android.material.textview.MaterialTextView
+                                android:id="@+id/tvDiscount"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/roboto_bold"
+                                android:gravity="end"
+                                tools:text="- Rs. 4"
+                                android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                                android:textColor="@color/color_red" />
+                        </TableRow>
+
+                        <com.google.android.material.divider.MaterialDivider
+                            android:layout_width="0dp"
+                            android:layout_height="2dp"
+                            android:layout_marginVertical="4dp"
+                            android:background="@color/colorOffWhite" />
+
+                        <TableRow
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp">
+
+                            <com.google.android.material.textview.MaterialTextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/roboto_bold"
+                                android:gravity="start"
+                                android:text="Total"
+                                android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                                android:textColor="@color/colorGray" />
+
+                            <com.google.android.material.textview.MaterialTextView
+                                android:id="@+id/tvTotal"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/roboto_bold"
+                                android:gravity="end"
+                                tools:text="Rs. 66"
+                                android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                                android:textColor="@color/color_red" />
+                        </TableRow>
+
+                    </TableLayout>
+
+                </com.google.android.material.card.MaterialCardView>
             </androidx.constraintlayout.widget.ConstraintLayout>
-        </com.google.android.material.card.MaterialCardView>
+        </androidx.core.widget.NestedScrollView>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/ivCircle1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:contentDescription="@string/app_name"
-        android:src="@drawable/ic_red_dot_with_stroke"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/clOrders" />
-
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/ivDashed1"
-        android:layout_width="1dp"
-        android:layout_height="0dp"
-        android:background="@drawable/bg_dotted_vertical"
-        app:layout_constraintBottom_toTopOf="@id/ivCircle2"
-        app:layout_constraintEnd_toEndOf="@id/ivCircle1"
-        app:layout_constraintStart_toStartOf="@id/ivCircle1"
-        app:layout_constraintTop_toBottomOf="@id/ivCircle1" />
-
-    <!-- Order Placed Part-->
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/clOrderPlaced"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/ivCircle1"
-        app:layout_constraintTop_toBottomOf="@id/clOrders">
-
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/ivOrderPlaced"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="12dp"
-            android:contentDescription="@string/app_name"
-            android:src="@drawable/ic_check_green"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <androidx.appcompat.widget.LinearLayoutCompat
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="8dp"
-            android:orientation="vertical"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/ivOrderPlaced"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/tvOrderStatus"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="8dp"
-                android:ellipsize="end"
-                android:fontFamily="@font/roboto_bold"
-                android:lines="1"
-                android:text="@string/order_placed"
-                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                android:textColor="@android:color/black"
-                android:textStyle="bold" />
-
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/tvOrderStatusDescription"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="8dp"
-                android:layout_marginTop="2dp"
-                android:fontFamily="@font/roboto_bold"
-                android:lineSpacingExtra="2dp"
-                android:text="@string/order_placed_msg"
-                android:textAppearance="@style/TextAppearance.AppCompat.Small"
-                android:textColor="@color/colorGray"
-                android:textStyle="bold" />
-
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/tvEstimatedTimeForOrder"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="8dp"
-                android:layout_marginTop="2dp"
-                android:fontFamily="@font/roboto_bold"
-                android:lineSpacingExtra="2dp"
-                android:text="@string/estimated_time_for_order"
-                android:textAppearance="@style/TextAppearance.AppCompat.Small"
-                android:textColor="@color/colorGray" />
-        </androidx.appcompat.widget.LinearLayoutCompat>
-    </androidx.constraintlayout.widget.ConstraintLayout>
-    <!-- End of Order Placed Part -->
-
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/ivCircle2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:contentDescription="@string/app_name"
-        android:src="@drawable/ic_red_ring"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/clOrderPlaced" />
-
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/ivDashed2"
-        android:layout_width="1dp"
-        android:layout_height="0dp"
-        android:background="@drawable/bg_dotted_vertical"
-        app:layout_constraintBottom_toTopOf="@id/ivCircle3"
-        app:layout_constraintEnd_toEndOf="@id/ivCircle2"
-        app:layout_constraintStart_toStartOf="@id/ivCircle2"
-        app:layout_constraintTop_toBottomOf="@id/ivCircle2" />
-
-    <!-- Order in Kitchen -->
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/clOrderInKitchen"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/ivCircle2"
-        app:layout_constraintTop_toBottomOf="@id/clOrderPlaced">
-
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/ivOrderInKitchen"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="12dp"
-            android:contentDescription="@string/app_name"
-            android:src="@drawable/ic_order_in_kitchen"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <androidx.appcompat.widget.LinearLayoutCompat
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="8dp"
-            android:orientation="vertical"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/ivOrderInKitchen"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/tvOrderInKitchenStatus"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="8dp"
-                android:ellipsize="end"
-                android:fontFamily="@font/roboto_bold"
-                android:lines="1"
-                android:text="@string/order_in_kitchen"
-                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                android:textColor="@android:color/black"
-                android:textStyle="bold" />
-
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/tvOrderInKitchenStatusDescription"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="8dp"
-                android:layout_marginTop="2dp"
-                android:fontFamily="@font/roboto_bold"
-                android:lineSpacingExtra="2dp"
-                android:text="@string/your_order_is_placed_successfully_our_chef_will_soon_begin_his_magic"
-                android:textAppearance="@style/TextAppearance.AppCompat.Small"
-                android:textColor="@color/colorGray"
-                android:textStyle="bold" />
-
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/tvEstimatedTimeForOrderInKitchen"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="8dp"
-                android:layout_marginTop="2dp"
-                android:fontFamily="@font/roboto_bold"
-                android:lineSpacingExtra="2dp"
-                android:text="@string/estimated_time_of_delivery_30_minutes"
-                android:textAppearance="@style/TextAppearance.AppCompat.Small"
-                android:textColor="@color/colorGray" />
-        </androidx.appcompat.widget.LinearLayoutCompat>
-    </androidx.constraintlayout.widget.ConstraintLayout>
-    <!-- End of Order in Kitchen -->
-
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/ivCircle3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:contentDescription="@string/app_name"
-        android:src="@drawable/ic_red_ring"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/clOrderInKitchen" />
-
-    <!-- Order Delivered Part -->
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/ivCircle3"
-        app:layout_constraintTop_toBottomOf="@id/clOrderInKitchen">
-
-
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/ivOrderDelivered"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="12dp"
-            android:contentDescription="@string/app_name"
-            android:src="@drawable/ic_order_delivered"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <androidx.appcompat.widget.LinearLayoutCompat
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="8dp"
-            android:orientation="vertical"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/ivOrderDelivered"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/tvOrderDeliveredStatus"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="8dp"
-                android:ellipsize="end"
-                android:fontFamily="@font/roboto_bold"
-                android:lines="1"
-                android:text="@string/order_delivered"
-                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                android:textColor="@android:color/black"
-                android:textStyle="bold" />
-
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/tvOrderDeliveredDescription"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="8dp"
-                android:layout_marginTop="2dp"
-                android:fontFamily="@font/roboto_bold"
-                android:lineSpacingExtra="2dp"
-                android:text="@string/your_order_is_placed_successfully"
-                android:textAppearance="@style/TextAppearance.AppCompat.Small"
-                android:textColor="@color/colorGray"
-                android:textStyle="bold" />
-        </androidx.appcompat.widget.LinearLayoutCompat>
-    </androidx.constraintlayout.widget.ConstraintLayout>
-    <!-- End of Order Delivered Part -->
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 

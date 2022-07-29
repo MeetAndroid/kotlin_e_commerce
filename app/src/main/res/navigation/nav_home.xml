@@ -27,17 +27,18 @@
 
     <fragment
         android:id="@+id/searchFragment"
+        android:label="Search Fragment"
         android:name="com.specindia.ecommerce.ui.fragments.SearchFragment"
         tools:layout="@layout/fragment_search" />
     <fragment
         android:id="@+id/restaurantDetailsFragment"
         android:name="com.specindia.ecommerce.ui.fragments.RestaurantDetailsFragment"
-        android:label="fragment_restaurant_details"
+        android:label="Restaurant Details"
         tools:layout="@layout/fragment_restaurant_details">
-        <!--        <argument-->
-        <!--            android:name="restaurant_id"-->
-        <!--            app:argType="int"-->
-        <!--            android:defaultValue="0" />-->
+        <argument
+            android:name="restaurant_id"
+            android:defaultValue="0"
+            app:argType="integer" />
         <action
             android:id="@+id/action_restaurantDetailsFragment_to_productDetailsFragment"
             app:destination="@id/productDetailsFragment" />
@@ -45,7 +46,7 @@
     <fragment
         android:id="@+id/productDetailsFragment"
         android:name="com.specindia.ecommerce.ui.fragments.ProductDetailsFragment"
-        android:label="fragment_product_details"
+        android:label="Product Details"
         tools:layout="@layout/fragment_product_details">
 
         <argument
@@ -59,7 +60,8 @@
     </fragment>
     <fragment
         android:id="@+id/orderDetailsFragment"
+        tools:layout="@layout/fragment_order_details"
         android:name="com.specindia.ecommerce.ui.fragments.OrderDetailsFragment"
-        android:label="OrderDetailsFragment" />
+        android:label="Order Details" />
 
 </navigation>

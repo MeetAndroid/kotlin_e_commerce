@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -20,7 +21,6 @@ import com.specindia.ecommerce.models.response.home.productsbyrestaurant.Product
 import com.specindia.ecommerce.models.response.home.productsbyrestaurant.ProductsByRestaurantResponse
 import com.specindia.ecommerce.ui.activity.HomeActivity
 import com.specindia.ecommerce.ui.adapters.ProductListAdapter
-import com.specindia.ecommerce.util.Constants.Companion.KEY_RESTAURANT_ID
 import com.specindia.ecommerce.util.getHeaderMap
 import com.specindia.ecommerce.util.setRandomBackgroundColor
 import com.specindia.ecommerce.util.visible
@@ -28,15 +28,14 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class RestaurantDetailsFragment : Fragment(), ProductListAdapter.OnProductItemClickListener {
+
     private lateinit var binding: FragmentRestaurantDetailsBinding
+    private val args: RestaurantDetailsFragmentArgs by navArgs()
     private lateinit var data: AuthResponseData
     private var restaurantId: Int = 0
 
     private lateinit var productListAdapter: ProductListAdapter
     private lateinit var productList: ArrayList<ProductsByRestaurantData>
-
-    // get the arguments from the Registration fragment
-//    val args: RestaurantDetailsFragmentArgs by navArgs()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -49,8 +48,7 @@ class RestaurantDetailsFragment : Fragment(), ProductListAdapter.OnProductItemCl
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        restaurantId = arguments?.getInt(KEY_RESTAURANT_ID) ?: 0
-        Log.d("restaurantId", restaurantId.toString())
+        restaurantId = args.restaurantId
         setUpHeader()
         setUpHeaderItemClick()
 
@@ -60,11 +58,7 @@ class RestaurantDetailsFragment : Fragment(), ProductListAdapter.OnProductItemCl
         binding.clTopPart.setRandomBackgroundColor()
         callRestaurantDetailsApi(data)
         observeRestaurantDetailsResponse()
-//        binding.clTopPart.setOnClickListener {
-//            view.findNavController()
-//                .navigate(R.id.action_restaurantDetailsFragment_to_productDetailsFragment)
-//        }
-
+        (activity as HomeActivity).showOrHideBottomAppBarAndFloatingActionButtonOnScroll()
     }
 
     private fun setUpHeader() {
@@ -221,12 +215,10 @@ class RestaurantDetailsFragment : Fragment(), ProductListAdapter.OnProductItemCl
     }
 
     override fun onItemClick(data: ProductsByRestaurantData, position: Int) {
-        val action =
-            RestaurantDetailsFragmentDirections.actionRestaurantDetailsFragmentToProductDetailsFragment(
-                data.id
-            )
         view?.findNavController()
-            ?.navigate(action)
+            ?.navigate(RestaurantDetailsFragmentDirections.actionRestaurantDetailsFragmentToProductDetailsFragment(
+                data.id
+            ))
     }
 
     override fun onAddProductButtonClick(data: ProductsByRestaurantData, position: Int) {

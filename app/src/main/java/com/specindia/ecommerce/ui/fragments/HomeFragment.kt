@@ -5,7 +5,6 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -24,7 +23,6 @@ import com.specindia.ecommerce.ui.activity.HomeActivity
 import com.specindia.ecommerce.ui.adapters.CategoryListAdapter
 import com.specindia.ecommerce.ui.adapters.PopularRestaurantsAdapter
 import com.specindia.ecommerce.ui.adapters.TopProductsAdapter
-import com.specindia.ecommerce.util.Constants.Companion.KEY_RESTAURANT_ID
 import com.specindia.ecommerce.util.SnapHelper
 import com.specindia.ecommerce.util.getHeaderMap
 import com.specindia.ecommerce.util.showLongToast
@@ -50,23 +48,24 @@ class HomeFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        Log.d("Home","onCreate called")
+        Log.d("Home", "onCreate called")
     }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        Log.d("Home","onCreateView called")
+        Log.d("Home", "onCreateView called")
         binding = FragmentHomeBinding.inflate(layoutInflater)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        Log.d("Home","onViewCreated called")
         setUpHeader()
         setUpHeaderItemClick()
+        (activity as HomeActivity).showOrHideBottomAppBarAndFloatingActionButtonOnScroll()
 
         val userData = (activity as HomeActivity).dataStoreViewModel.getLoggedInUserData()
         data = Gson().fromJson(userData, AuthResponseData::class.java)
@@ -81,25 +80,16 @@ class HomeFragment : Fragment() {
 
         }
         restaurantsAdapter.setOnItemClickListener {
-            requireActivity().showLongToast("${it.name} clicked")
-            val restaurantId = it.id
-            Log.d("restaurantId", restaurantId.toString())
-            val bundle = bundleOf(KEY_RESTAURANT_ID to restaurantId)
-
-//            val action = ActionHomeFragmentToRestaurantDetailsFragment().setRestaurantId(restaurantId)
             view.findNavController()
-                .navigate(R.id.action_homeFragment_to_restaurantDetailsFragment, bundle)
+                .navigate(HomeFragmentDirections.actionHomeFragmentToRestaurantDetailsFragment(it.id))
         }
         categoryListAdapter.setOnItemClickListener {
             requireActivity().showLongToast("${it.name} clicked")
         }
 
-        binding.btnHomeMenuDetails.setOnClickListener {
-            it.findNavController().navigate(R.id.action_homeFragment_to_homeDetailsFragment)
-        }
-
         binding.tvSearch.setOnClickListener {
-            it.findNavController().navigate(R.id.action_homeFragment_to_searchFragment)
+            it.findNavController()
+                .navigate(HomeFragmentDirections.actionHomeFragmentToSearchFragment())
         }
 
 
@@ -136,6 +126,7 @@ class HomeFragment : Fragment() {
             layoutManager =
                 LinearLayoutManager(requireActivity(), LinearLayoutManager.HORIZONTAL, false)
         }
+
         linearSnapHelper.attachToRecyclerView(binding.rvPopularRestaurants)
 
 
@@ -176,7 +167,8 @@ class HomeFragment : Fragment() {
                 ivSearch.visible(true)
 
                 ivSearch.setOnClickListener {
-                    view?.findNavController()?.navigate(R.id.action_homeFragment_to_searchFragment)
+                    view?.findNavController()
+                        ?.navigate(HomeFragmentDirections.actionHomeFragmentToSearchFragment())
                 }
             }
         }

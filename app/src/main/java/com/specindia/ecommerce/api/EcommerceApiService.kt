@@ -1,6 +1,7 @@
 package com.specindia.ecommerce.api
 
 import com.specindia.ecommerce.models.response.home.DashboardListResponse
+import com.specindia.ecommerce.models.response.home.order.OrderDetailsResponse
 import com.specindia.ecommerce.models.response.home.productsbyrestaurant.ProductsByRestaurantResponse
 import com.specindia.ecommerce.models.response.home.restaurantDetails.RestaurantDetailsResponse
 import com.specindia.ecommerce.models.response.login.LoginResponse
@@ -10,9 +11,11 @@ import com.specindia.ecommerce.models.response.social.SocialLoginResponse
 import com.specindia.ecommerce.util.Constants.Companion.CUSTOMER_END_POINT
 import com.specindia.ecommerce.util.Constants.Companion.DASH_BOARD_LIST
 import com.specindia.ecommerce.util.Constants.Companion.GET_MENU_LIST
+import com.specindia.ecommerce.util.Constants.Companion.GET_ORDER_DETAILS
 import com.specindia.ecommerce.util.Constants.Companion.GET_PRODUCT_BY_RESTRAUNT
 import com.specindia.ecommerce.util.Constants.Companion.GET_RESTAURANT_DETAILS
 import com.specindia.ecommerce.util.Constants.Companion.LOGIN
+import com.specindia.ecommerce.util.Constants.Companion.ORDER_END_POINT
 import com.specindia.ecommerce.util.Constants.Companion.PRODUCT_END_POINT
 import com.specindia.ecommerce.util.Constants.Companion.SIGN_UP
 import com.specindia.ecommerce.util.Constants.Companion.SOCIAL_SIGN_UP
@@ -65,4 +68,9 @@ interface EcommerceApiService {
         @Body parameters: String
     ): Response<ProductsByRestaurantResponse>
 
+    @GET("""$ORDER_END_POINT$GET_ORDER_DETAILS""")
+    suspend fun getOrderDetails(
+        @HeaderMap headers: Map<String, String>,
+        @Path("id") id: Int
+    ): Response<OrderDetailsResponse>
 }

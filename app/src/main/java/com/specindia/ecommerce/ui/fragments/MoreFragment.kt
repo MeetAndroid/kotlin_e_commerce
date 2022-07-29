@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.facebook.login.LoginManager
 import com.specindia.ecommerce.databinding.FragmentMoreBinding
+import com.specindia.ecommerce.ui.activity.HomeActivity
 import com.specindia.ecommerce.util.logout
 import com.specindia.ecommerce.util.visible
 import dagger.hilt.android.AndroidEntryPoint
@@ -27,6 +28,7 @@ class MoreFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         setUpButtonClick()
         setUpHeader()
+        (activity as HomeActivity).showOrHideBottomAppBarAndFloatingActionButtonOnScroll()
     }
 
     private fun setUpHeader() {
@@ -43,7 +45,7 @@ class MoreFragment : Fragment() {
     }
 
     private fun setUpButtonClick() {
-        binding.btnLogout.setOnClickListener {
+        binding.clLogout.setOnClickListener {
             logout()
         }
     }

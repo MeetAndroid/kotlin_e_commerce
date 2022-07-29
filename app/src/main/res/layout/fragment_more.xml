@@ -9,22 +9,10 @@
         android:id="@+id/MoreScreenHeader"
         layout="@layout/row_header" />
 
-    <Button
-        android:id="@+id/btnLogout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="48dp"
-        android:text="Logout"
-        android:visibility="gone"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/MoreScreenHeader" />
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginTop="20dp"
-        android:layout_marginBottom="10dp"
         android:background="@drawable/bg_layout"
         android:elevation="5dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -37,6 +25,7 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
+                android:paddingBottom="?attr/actionBarSize"
                 android:layout_height="match_parent">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -82,7 +71,7 @@
                     android:layout_width="40dp"
                     android:layout_height="40dp"
                     android:elevation="5dp"
-                    app:cardBackgroundColor="@color/colorOffWhite"
+                    app:cardBackgroundColor="@color/color_red"
                     app:cardCornerRadius="100dp"
                     app:cardElevation="5dp"
                     app:layout_constraintBottom_toBottomOf="@id/clPayment"
@@ -140,7 +129,7 @@
                     android:layout_width="40dp"
                     android:layout_height="40dp"
                     android:elevation="5dp"
-                    app:cardBackgroundColor="@color/colorOffWhite"
+                    app:cardBackgroundColor="@color/color_red"
                     app:cardCornerRadius="100dp"
                     app:cardElevation="5dp"
                     app:layout_constraintBottom_toBottomOf="@id/clMyOrder"
@@ -198,7 +187,7 @@
                     android:layout_width="40dp"
                     android:layout_height="40dp"
                     android:elevation="5dp"
-                    app:cardBackgroundColor="@color/colorOffWhite"
+                    app:cardBackgroundColor="@color/color_red"
                     app:cardCornerRadius="100dp"
                     app:cardElevation="5dp"
                     app:layout_constraintBottom_toBottomOf="@id/clNotification"
@@ -256,7 +245,7 @@
                     android:layout_width="40dp"
                     android:layout_height="40dp"
                     android:elevation="5dp"
-                    app:cardBackgroundColor="@color/colorOffWhite"
+                    app:cardBackgroundColor="@color/color_red"
                     app:cardCornerRadius="100dp"
                     app:cardElevation="5dp"
                     app:layout_constraintBottom_toBottomOf="@id/clInbox"
@@ -314,7 +303,7 @@
                     android:layout_width="40dp"
                     android:layout_height="40dp"
                     android:elevation="5dp"
-                    app:cardBackgroundColor="@color/colorOffWhite"
+                    app:cardBackgroundColor="@color/color_red"
                     app:cardCornerRadius="100dp"
                     app:cardElevation="5dp"
                     app:layout_constraintBottom_toBottomOf="@id/clAboutUs"
@@ -330,6 +319,43 @@
                         android:padding="10dp"
                         app:srcCompat="@drawable/ic_next" />
                 </com.google.android.material.card.MaterialCardView>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/clLogout"
+                    android:layout_width="match_parent"
+                    android:layout_height="80dp"
+                    android:layout_marginStart="30dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginEnd="50dp"
+                    android:background="@drawable/bg_more_layout"
+                    android:elevation="5dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/clAboutUs">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/ivLogout"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_marginStart="30dp"
+                        android:background="@drawable/bg_circle"
+                        android:padding="12dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:srcCompat="@drawable/ic_log_out" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp"
+                        android:fontFamily="@font/roboto_medium"
+                        android:text="@string/logout"
+                        android:textColor="@color/black"
+                        android:textSize="16sp"
+                        app:layout_constraintBottom_toBottomOf="@id/ivLogout"
+                        app:layout_constraintStart_toEndOf="@id/ivLogout"
+                        app:layout_constraintTop_toTopOf="@id/ivLogout" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.core.widget.NestedScrollView>

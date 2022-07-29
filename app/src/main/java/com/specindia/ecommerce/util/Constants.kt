@@ -41,6 +41,9 @@ class Constants {
         const val GET_RESTAURANT_DETAILS = "getRestaurantDetails/{id}"
         const val GET_PRODUCT_BY_RESTRAUNT = "getProductByRestraunt"
 
+        // Order
+        const val GET_ORDER_DETAILS="getOrderDetails/{id}"
+
         // Data Store Constants
         const val KEY_IS_FIRST_TIME = "isFirstTime"
         const val KEY_IS_USER_LOGGED_IN = "isUserLoggedIn"
@@ -74,9 +77,6 @@ class Constants {
 
         // API
         const val KEY_BEARER_TOKEN = "bearer_token"
-
-        // Bundle Key
-        const val KEY_RESTAURANT_ID = "key_restaurant_id"
     }
 
 

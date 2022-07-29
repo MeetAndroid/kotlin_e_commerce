@@ -1,5 +1,7 @@
 package com.specindia.ecommerce.ui.adapters
 
+import android.os.Handler
+import android.os.Looper
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -23,26 +25,29 @@ class MenuListAdapter(private val arrayList: ArrayList<Menu>) :
 
     override fun onBindViewHolder(holder: MenuListViewHolder, position: Int) {
         val menuData = arrayList[position]
-
         with(holder) {
             with(binding) {
-                if (showShimmer) {
-                    shimmerLayout.startShimmer()
-                } else {
-                    shimmerLayout.stopShimmer()
-                    shimmerLayout.setShimmer(null)
-                    ivMenu.background = null
-                    tvMenu.background = null
+                Handler(Looper.getMainLooper()).postDelayed(
+                    {
+                        if (showShimmer) {
+                            shimmerLayout.startShimmer()
+                        } else {
+                            shimmerLayout.stopShimmer()
+                            shimmerLayout.setShimmer(null)
+                            ivMenu.background = null
+                            tvMenu.background = null
 
-                    Glide.with(itemView)
-                        .load(menuData.image)
-                        .placeholder(R.drawable.ic_launcher_foreground)
-                        .error(android.R.drawable.ic_dialog_alert)
-                        .into(ivMenu)
-                    tvMenu.text = menuData.name
-//                }
+                            Glide.with(itemView)
+                                .load(menuData.image)
+                                .placeholder(R.drawable.ic_launcher_foreground)
+                                .error(android.R.drawable.ic_dialog_alert)
+                                .into(ivMenu)
+                            tvMenu.text = menuData.name
 
-                }
+                        }
+                    }, 2000
+                )
+
 
                 itemView.setOnClickListener {
                     onItemClickListener?.let { it(menuData) }

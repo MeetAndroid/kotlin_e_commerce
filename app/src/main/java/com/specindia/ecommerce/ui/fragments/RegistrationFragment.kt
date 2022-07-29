@@ -120,7 +120,8 @@ class RegistrationFragment : Fragment() {
         val spanText = SpannableStringBuilder(getString(R.string.already_have_an_account_login))
         val clickableString = object : ClickableSpan() {
             override fun onClick(view: View) {
-                view.findNavController().navigate(R.id.action_registrationFragment_to_loginFragment)
+                view.findNavController()
+                    .navigate(RegistrationFragmentDirections.actionRegistrationFragmentToLoginFragment())
             }
         }
         spanText.setSpan(

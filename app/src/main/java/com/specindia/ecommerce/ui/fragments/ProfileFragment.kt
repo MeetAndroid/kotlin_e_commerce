@@ -22,7 +22,7 @@ class ProfileFragment : Fragment() {
     private lateinit var binding: FragmentProfileBinding
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View {
         binding = FragmentProfileBinding.inflate(layoutInflater)
         return binding.root
@@ -34,7 +34,8 @@ class ProfileFragment : Fragment() {
         setUpProfileData()
 
         binding.btnProfileDetails.setOnClickListener {
-            view.findNavController().navigate(R.id.action_profileFragment_to_profileDetailsFragment)
+            view.findNavController()
+                .navigate(ProfileFragmentDirections.actionProfileFragmentToProfileDetailsFragment())
         }
     }
 

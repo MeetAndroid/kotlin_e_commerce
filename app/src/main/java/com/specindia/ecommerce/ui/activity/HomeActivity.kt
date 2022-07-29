@@ -3,6 +3,7 @@ package com.specindia.ecommerce.ui.activity
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
@@ -12,9 +13,9 @@ import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.specindia.ecommerce.R
 import com.specindia.ecommerce.databinding.ActivityHomeBinding
-import com.specindia.ecommerce.ui.viewmodel.AuthViewModel
 import com.specindia.ecommerce.ui.viewmodel.DataViewModel
 import com.specindia.ecommerce.ui.viewmodel.HomeViewModel
+import com.specindia.ecommerce.util.HideListenableBottomAppBarBehavior
 import com.specindia.ecommerce.util.logoutFromFacebook
 import com.specindia.ecommerce.util.startNewActivity
 import dagger.hilt.android.AndroidEntryPoint
@@ -22,7 +23,6 @@ import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class HomeActivity : AppCompatActivity() {
-    private val TAG = "Home Activity"
     private lateinit var binding: ActivityHomeBinding
     private lateinit var navController: NavController
     private lateinit var appBarConfiguration: AppBarConfiguration
@@ -44,20 +44,6 @@ class HomeActivity : AppCompatActivity() {
         // Setup the bottom navigation view with navController
         val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottomNavigationView)
         bottomNavigationView.setupWithNavController(navController)
-
-        // Setup the ActionBar with navController and 3 top level destinations
-//        appBarConfiguration = AppBarConfiguration(
-//            setOf(
-//                R.id.foodMenuFragment,
-//                R.id.offersFragment,
-//                R.id.profileFragment,
-//                R.id.moreFragment
-//            )
-//        )
-//        val toolbar = binding.toolbar
-//        setSupportActionBar(toolbar)
-
-//        setupActionBarWithNavController(navController, appBarConfiguration)
     }
 
 
@@ -82,5 +68,18 @@ class HomeActivity : AppCompatActivity() {
         logoutFromFacebook()
         dataStoreViewModel.saveUserLoggedIn(false)
         startNewActivity(AuthActivity::class.java)
+    }
+
+    fun showOrHideBottomAppBarAndFloatingActionButtonOnScroll() {
+        val params = binding.bottomAppBar.layoutParams as CoordinatorLayout.LayoutParams
+        params.behavior = object : HideListenableBottomAppBarBehavior() {
+            override fun onSlideDown() {
+                binding.fabAdd.hide()
+            }
+
+            override fun onSlideUp() {
+                binding.fabAdd.show()
+            }
+        }
     }
 }

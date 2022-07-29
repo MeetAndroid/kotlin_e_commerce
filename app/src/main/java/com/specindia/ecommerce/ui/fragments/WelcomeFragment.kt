@@ -55,7 +55,7 @@ class WelcomeFragment : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View {
         binding = FragmentWelcomeBinding.inflate(layoutInflater)
         setSpannableText()
@@ -67,7 +67,8 @@ class WelcomeFragment : Fragment() {
         val spanText = SpannableStringBuilder(getString(R.string.already_have_an_account_login))
         val clickableString = object : ClickableSpan() {
             override fun onClick(view: View) {
-                view.findNavController().navigate(R.id.action_welcomeFragment_to_loginFragment)
+                view.findNavController()
+                    .navigate(WelcomeFragmentDirections.actionWelcomeFragmentToLoginFragment())
             }
         }
         spanText.setSpan(
@@ -106,7 +107,7 @@ class WelcomeFragment : Fragment() {
         binding.apply {
             btnStartWithEmailOrPhone.setOnClickListener {
                 view.findNavController()
-                    .navigate(R.id.action_welcomeFragment_to_registrationFragment)
+                    .navigate(WelcomeFragmentDirections.actionWelcomeFragmentToRegistrationFragment())
             }
 
             btnFacebook.setOnClickListener {
@@ -234,7 +235,7 @@ class WelcomeFragment : Fragment() {
 
     @ExperimentalCoroutinesApi
     fun FragmentActivity.finishFacebookLoginToThirdParty(
-        onCredential: suspend (LoginResult) -> Unit
+        onCredential: suspend (LoginResult) -> Unit,
     ) {
         this.lifecycleScope.launchWhenStarted {
             try {
