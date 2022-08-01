@@ -1,10 +1,10 @@
 package com.specindia.ecommerce.ui.fragments
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.navArgs
@@ -23,6 +23,7 @@ import com.specindia.ecommerce.ui.activity.HomeActivity
 import com.specindia.ecommerce.ui.adapters.ProductListAdapter
 import com.specindia.ecommerce.util.getHeaderMap
 import com.specindia.ecommerce.util.setRandomBackgroundColor
+import com.specindia.ecommerce.util.showProgressDialog
 import com.specindia.ecommerce.util.visible
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -33,6 +34,7 @@ class RestaurantDetailsFragment : Fragment(), ProductListAdapter.OnProductItemCl
     private val args: RestaurantDetailsFragmentArgs by navArgs()
     private lateinit var data: AuthResponseData
     private var restaurantId: Int = 0
+    private lateinit var customProgressDialog: AlertDialog
 
     private lateinit var productListAdapter: ProductListAdapter
     private lateinit var productList: ArrayList<ProductsByRestaurantData>
@@ -51,6 +53,7 @@ class RestaurantDetailsFragment : Fragment(), ProductListAdapter.OnProductItemCl
         restaurantId = args.restaurantId
         setUpHeader()
         setUpHeaderItemClick()
+        setUpProgressDialog()
 
         val userData = (activity as HomeActivity).dataStoreViewModel.getLoggedInUserData()
         data = Gson().fromJson(userData, AuthResponseData::class.java)
@@ -97,8 +100,16 @@ class RestaurantDetailsFragment : Fragment(), ProductListAdapter.OnProductItemCl
         }
     }
 
+    private fun setUpProgressDialog() {
+        customProgressDialog = showProgressDialog {
+            cancelable = false
+            isBackGroundTransparent = true
+        }
+    }
+
     // Call Restaurant Details API
     private fun callRestaurantDetailsApi(data: AuthResponseData) {
+
         (activity as HomeActivity).homeViewModel.getRestaurantDetails(
             getHeaderMap(
                 data.token,
@@ -106,6 +117,7 @@ class RestaurantDetailsFragment : Fragment(), ProductListAdapter.OnProductItemCl
             ),
             id = restaurantId
         )
+
     }
 
     // Observe Restaurant Details Response
@@ -116,6 +128,7 @@ class RestaurantDetailsFragment : Fragment(), ProductListAdapter.OnProductItemCl
 
             when (response) {
                 is NetworkResult.Success -> {
+                    customProgressDialog.hide()
                     response.data?.let { restaurantData ->
                         with(binding) {
                             tvRestaurantName.text = restaurantData.data.name
@@ -136,9 +149,11 @@ class RestaurantDetailsFragment : Fragment(), ProductListAdapter.OnProductItemCl
 
                 }
                 is NetworkResult.Error -> {
+                    customProgressDialog.hide()
                     showDialog(response.message.toString())
                 }
                 is NetworkResult.Loading -> {
+                    customProgressDialog.show()
                 }
             }
         }
@@ -147,11 +162,13 @@ class RestaurantDetailsFragment : Fragment(), ProductListAdapter.OnProductItemCl
 
     // Call Products By Restaurant api
     private fun callProductsByRestaurantApi(id: Int) {
+
         val parameter = Parameters(
             restaurantId = id,
             pageNo = 1,
             limit = 10
         )
+
         (activity as HomeActivity).homeViewModel.getProductsByRestaurant(
             getHeaderMap(
                 data.token,
@@ -169,15 +186,17 @@ class RestaurantDetailsFragment : Fragment(), ProductListAdapter.OnProductItemCl
 
             when (response) {
                 is NetworkResult.Success -> {
+                    customProgressDialog.hide()
                     response.data?.let { productListResponse ->
-                        Log.d("products", productListResponse.toString())
                         setUpProductListUI(binding, productListResponse)
                     }
                 }
                 is NetworkResult.Error -> {
+                    customProgressDialog.hide()
                     showDialog(response.message.toString())
                 }
                 is NetworkResult.Loading -> {
+                    customProgressDialog.show()
                 }
             }
         }
@@ -195,7 +214,6 @@ class RestaurantDetailsFragment : Fragment(), ProductListAdapter.OnProductItemCl
                 rvProducts.visible(true)
                 noDataFound.clNoDataFound.visible(false)
                 productList.addAll(productListResponse.data.toList())
-                productListAdapter.showShimmer = false
                 productListAdapter.notifyDataSetChanged()
             } else {
                 noDataFound.clNoDataFound.visible(true)

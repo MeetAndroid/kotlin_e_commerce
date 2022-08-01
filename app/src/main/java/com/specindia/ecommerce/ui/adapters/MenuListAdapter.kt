@@ -1,7 +1,5 @@
 package com.specindia.ecommerce.ui.adapters
 
-import android.os.Handler
-import android.os.Looper
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -12,7 +10,6 @@ import com.specindia.ecommerce.models.response.menulist.Menu
 
 class MenuListAdapter(private val arrayList: ArrayList<Menu>) :
     RecyclerView.Adapter<MenuListAdapter.MenuListViewHolder>() {
-    var showShimmer: Boolean = true
 
     inner class MenuListViewHolder(val binding: RowMenuListItemBinding) :
         RecyclerView.ViewHolder(binding.root)
@@ -27,27 +24,12 @@ class MenuListAdapter(private val arrayList: ArrayList<Menu>) :
         val menuData = arrayList[position]
         with(holder) {
             with(binding) {
-                Handler(Looper.getMainLooper()).postDelayed(
-                    {
-                        if (showShimmer) {
-                            shimmerLayout.startShimmer()
-                        } else {
-                            shimmerLayout.stopShimmer()
-                            shimmerLayout.setShimmer(null)
-                            ivMenu.background = null
-                            tvMenu.background = null
-
-                            Glide.with(itemView)
-                                .load(menuData.image)
-                                .placeholder(R.drawable.ic_launcher_foreground)
-                                .error(android.R.drawable.ic_dialog_alert)
-                                .into(ivMenu)
-                            tvMenu.text = menuData.name
-
-                        }
-                    }, 2000
-                )
-
+                Glide.with(itemView)
+                    .load(menuData.image)
+                    .placeholder(R.drawable.ic_launcher_foreground)
+                    .error(android.R.drawable.ic_dialog_alert)
+                    .into(ivMenu)
+                tvMenu.text = menuData.name
 
                 itemView.setOnClickListener {
                     onItemClickListener?.let { it(menuData) }

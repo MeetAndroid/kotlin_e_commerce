@@ -14,8 +14,6 @@ class ProductListAdapter(
     private val onProductItemClickListener: OnProductItemClickListener,
 ) :
     RecyclerView.Adapter<ProductListAdapter.ProductListViewHolder>() {
-    var showShimmer: Boolean = true
-
 
     inner class ProductListViewHolder(val binding: RowProductListItemBinding) :
         RecyclerView.ViewHolder(binding.root)
@@ -31,19 +29,13 @@ class ProductListAdapter(
 
         with(holder) {
             with(binding) {
-                if (showShimmer) {
-                    shimmerLayout.startShimmer()
-                } else {
-                    shimmerLayout.stopShimmer()
-                    shimmerLayout.setShimmer(null)
-                    tvProductName.background = null
-                    tvProductPrice.background = null
 
                     Glide.with(itemView)
                         .load(product.productImage)
                         .placeholder(R.drawable.ic_launcher_foreground)
                         .error(android.R.drawable.ic_dialog_alert)
                         .into(ivProductImage)
+
                     tvProductName.text = product.productName
                     tvProductPrice.text = product.price.toString()
                     tvQty.text = product.totalQty.toString()
@@ -69,7 +61,6 @@ class ProductListAdapter(
                     btnAddProduct.setOnClickListener {
                         onProductItemClickListener.onAddProductButtonClick(product, position)
                     }
-                }
 
                 itemView.setOnClickListener {
                     onProductItemClickListener.onItemClick(product, position)
