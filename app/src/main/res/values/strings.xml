@@ -119,6 +119,8 @@
     <string name="discount">Discount</string>
     <string name="total">Total</string>
     <string name="check_out">Checkout</string>
+    <string name="restaurant_details">Restaurant Details</string>
+    <string name="product_details">Product Details</string>
 
     <string-array name="location_array_list">
         <item>S.G Highway</item>

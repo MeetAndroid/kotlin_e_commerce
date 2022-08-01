@@ -62,13 +62,18 @@ class RestaurantDetailsFragment : Fragment(), ProductListAdapter.OnProductItemCl
         callRestaurantDetailsApi(data)
         observeRestaurantDetailsResponse()
         (activity as HomeActivity).showOrHideBottomAppBarAndFloatingActionButtonOnScroll()
+
+        binding.swipeRefreshLayout.setOnRefreshListener {
+            binding.swipeRefreshLayout.isRefreshing = false
+            callRestaurantDetailsApi(data)
+        }
     }
 
     private fun setUpHeader() {
         with(binding) {
             with(homeDetailsScreenHeader) {
                 tvHeaderTitle.visible(true)
-                tvHeaderTitle.text = "Restaurant Details"
+                tvHeaderTitle.text = getString(R.string.restaurant_details)
                 ivBack.visible(true)
                 ivFavorite.visible(true)
                 ivSearch.visible(false)
