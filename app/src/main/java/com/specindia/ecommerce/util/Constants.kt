@@ -42,6 +42,7 @@ class Constants {
         const val GET_RESTAURANT_DETAILS = "getRestaurantDetails/{id}"
         const val GET_PRODUCT_BY_RESTRAUNT = "getProductByRestraunt"
         const val GET_ALL_PRODUCT = "getAllProducts"
+        const val GET_ALL_RESTAURANT = "getRestraunts"
 
         // Order
         const val GET_ORDER_DETAILS = "getOrderDetails/{id}"

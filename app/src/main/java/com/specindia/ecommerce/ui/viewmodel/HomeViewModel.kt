@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.specindia.ecommerce.api.network.NetworkResult
 import com.specindia.ecommerce.models.response.home.DashboardListResponse
 import com.specindia.ecommerce.models.response.home.order.OrderDetailsResponse
+import com.specindia.ecommerce.models.response.home.product.AllRestaurant
 import com.specindia.ecommerce.models.response.home.product.ViewAllData
 import com.specindia.ecommerce.models.response.home.productsbyrestaurant.ProductsByRestaurantResponse
 import com.specindia.ecommerce.models.response.home.restaurantDetails.RestaurantDetailsResponse
@@ -38,6 +39,9 @@ class HomeViewModel @Inject constructor(
     private val _viewAllResponse =
         MutableLiveData<NetworkResult<ViewAllData>>()
 
+    private val _viewAllRestaurantResponse =
+        MutableLiveData<NetworkResult<AllRestaurant>>()
+
     // Live Data
     val dashboardListResponse: LiveData<NetworkResult<DashboardListResponse>>
         get() = _dashboardListResponse
@@ -56,6 +60,9 @@ class HomeViewModel @Inject constructor(
 
     val viewAllResponse: LiveData<NetworkResult<ViewAllData>>
         get() = _viewAllResponse
+
+    val viewAllRestaurantResponse: LiveData<NetworkResult<AllRestaurant>>
+        get() = _viewAllRestaurantResponse
 
     // Call dashboard list api
     fun getDashboardList(headerMap: Map<String, String>) =
@@ -114,6 +121,14 @@ class HomeViewModel @Inject constructor(
             delay(STATIC_DELAY)
             repository.getViewAll(headerMap, parameters).collect { values ->
                 _viewAllResponse.value = values
+            }
+        }
+
+    // Call View All Restaurant api
+    fun getAllRestaurant(headerMap: Map<String, String>, parameters: String) =
+        viewModelScope.launch() {
+            repository.getAllRestaurant(headerMap, parameters).collect { values ->
+                _viewAllRestaurantResponse.value = values
             }
         }
 }

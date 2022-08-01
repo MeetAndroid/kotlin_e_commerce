@@ -82,6 +82,9 @@
         <action
             android:id="@+id/action_orderDetailsFragment_to_checkOutFragment"
             app:destination="@id/checkOutFragment" />
+        <action
+            android:id="@+id/action_viewAllProductFragment_to_restaurantDetailsFragment"
+            app:destination="@id/restaurantDetailsFragment" />
     </fragment>
     <fragment
         android:id="@+id/checkOutFragment"

@@ -5,6 +5,7 @@ import com.specindia.ecommerce.api.network.BaseApiResponse
 import com.specindia.ecommerce.api.network.NetworkResult
 import com.specindia.ecommerce.models.response.home.DashboardListResponse
 import com.specindia.ecommerce.models.response.home.order.OrderDetailsResponse
+import com.specindia.ecommerce.models.response.home.product.AllRestaurant
 import com.specindia.ecommerce.models.response.home.product.ViewAllData
 import com.specindia.ecommerce.models.response.home.productsbyrestaurant.ProductsByRestaurantResponse
 import com.specindia.ecommerce.models.response.home.restaurantDetails.RestaurantDetailsResponse
@@ -99,6 +100,15 @@ class EcommerceRepository @Inject constructor(
     ): Flow<NetworkResult<ViewAllData>> {
         return flow {
             emit(safeApiCall { remoteDataSource.getViewAll(headerMap,parameters) })
+        }.flowOn(Dispatchers.IO)
+    }
+
+    suspend fun getAllRestaurant(
+        headerMap: Map<String, String>,
+        parameters: String
+    ): Flow<NetworkResult<AllRestaurant>> {
+        return flow {
+            emit(safeApiCall { remoteDataSource.getAllRestaurant(headerMap,parameters) })
         }.flowOn(Dispatchers.IO)
     }
 }
