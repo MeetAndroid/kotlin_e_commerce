@@ -27,8 +27,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:context=".ui.activity.OnBoardingActivity">
+            app:layout_constraintTop_toTopOf="parent">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/content"
@@ -42,7 +41,6 @@
                     android:layout_width="80dp"
                     android:layout_height="80dp"
                     android:adjustViewBounds="true"
-                    android:background="@color/colorShimmerEffectDark"
                     android:contentDescription="@null"
                     android:padding="5dp"
                     android:scaleType="centerCrop"
@@ -57,7 +55,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="8dp"
                     android:layout_marginTop="15dp"
-                    android:background="@color/colorShimmerEffectDark"
                     android:ellipsize="end"
                     android:fontFamily="@font/roboto_bold"
                     android:lines="1"
@@ -75,7 +72,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="8dp"
                     android:layout_marginTop="5dp"
-                    android:background="@color/colorShimmerEffectDark"
                     android:ellipsize="end"
                     android:fontFamily="@font/roboto_medium"
                     android:lines="1"

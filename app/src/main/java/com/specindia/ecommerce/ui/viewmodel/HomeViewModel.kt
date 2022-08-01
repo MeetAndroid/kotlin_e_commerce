@@ -127,6 +127,8 @@ class HomeViewModel @Inject constructor(
     // Call View All Restaurant api
     fun getAllRestaurant(headerMap: Map<String, String>, parameters: String) =
         viewModelScope.launch() {
+            _viewAllRestaurantResponse.postValue(NetworkResult.Loading())
+            delay(STATIC_DELAY)
             repository.getAllRestaurant(headerMap, parameters).collect { values ->
                 _viewAllRestaurantResponse.value = values
             }
