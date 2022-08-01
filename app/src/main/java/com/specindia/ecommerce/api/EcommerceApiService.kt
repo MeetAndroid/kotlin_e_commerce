@@ -2,6 +2,8 @@ package com.specindia.ecommerce.api
 
 import com.specindia.ecommerce.models.response.home.DashboardListResponse
 import com.specindia.ecommerce.models.response.home.order.OrderDetailsResponse
+import com.specindia.ecommerce.models.response.home.product.AllRestaurant
+import com.specindia.ecommerce.models.response.home.product.RestaurantItems
 import com.specindia.ecommerce.models.response.home.product.ViewAllData
 import com.specindia.ecommerce.models.response.home.productsbyrestaurant.ProductsByRestaurantResponse
 import com.specindia.ecommerce.models.response.home.restaurantDetails.RestaurantDetailsResponse
@@ -12,6 +14,7 @@ import com.specindia.ecommerce.models.response.social.SocialLoginResponse
 import com.specindia.ecommerce.util.Constants.Companion.CUSTOMER_END_POINT
 import com.specindia.ecommerce.util.Constants.Companion.DASH_BOARD_LIST
 import com.specindia.ecommerce.util.Constants.Companion.GET_ALL_PRODUCT
+import com.specindia.ecommerce.util.Constants.Companion.GET_ALL_RESTAURANT
 import com.specindia.ecommerce.util.Constants.Companion.GET_MENU_LIST
 import com.specindia.ecommerce.util.Constants.Companion.GET_ORDER_DETAILS
 import com.specindia.ecommerce.util.Constants.Companion.GET_PRODUCT_BY_RESTRAUNT
@@ -81,4 +84,10 @@ interface EcommerceApiService {
         @HeaderMap headers: Map<String, String>,
         @Body parameters: String
     ): Response<ViewAllData>
+
+    @POST("""$CUSTOMER_END_POINT$GET_ALL_RESTAURANT""")
+    suspend fun getAllRestaurant(
+        @HeaderMap headers: Map<String, String>,
+        @Body parameters: String
+    ): Response<AllRestaurant>
 }
