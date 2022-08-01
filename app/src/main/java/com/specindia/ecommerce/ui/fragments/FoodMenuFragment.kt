@@ -1,13 +1,11 @@
 package com.specindia.ecommerce.ui.fragments
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
-import androidx.navigation.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.gson.Gson
@@ -53,11 +51,6 @@ class FoodMenuFragment : Fragment() {
         setUpRecyclerView()
         callMenuListApi(data)
         observeResponse()
-
-        binding.btnFoodMenuDetails.setOnClickListener {
-            it.findNavController()
-                .navigate(FoodMenuFragmentDirections.actionFoodMenuFragmentToFoodMenuDetailsFragment())
-        }
 
         menuListAdapter.setOnItemClickListener {
             requireActivity().showLongToast("${it.name} clicked")

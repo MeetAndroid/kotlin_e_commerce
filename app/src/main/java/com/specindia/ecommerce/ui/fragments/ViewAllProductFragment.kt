@@ -171,7 +171,6 @@ class ViewAllProductFragment : Fragment(), ViewAllAdapter.OnViewAllClickListener
                                 )
                             }!!
                             rvViewAll.adapter = viewAllAdapter
-                            viewAllAdapter.showShimmer = false
                             viewAllAdapter.notifyDataSetChanged()
 
                         }
@@ -212,7 +211,6 @@ class ViewAllProductFragment : Fragment(), ViewAllAdapter.OnViewAllClickListener
                                 )
                             }!!
                             rvViewAll.adapter = viewAllRestaurantAdapter
-                            viewAllRestaurantAdapter.showShimmer = false
                             viewAllRestaurantAdapter.notifyDataSetChanged()
 
                             viewAllRestaurantAdapter.setOnItemClickListener {

@@ -26,7 +26,6 @@
         <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
             android:id="@+id/swipeRefreshLayout"
             android:layout_width="match_parent"
-            android:layout_marginTop="16dp"
             android:layout_height="0dp"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -48,16 +47,6 @@
                 tools:itemCount="10"
                 tools:listitem="@layout/row_menu_list_item" />
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btnFoodMenuDetails"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="48dp"
-            android:text="Go to Menu Details"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/swipeRefreshLayout" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

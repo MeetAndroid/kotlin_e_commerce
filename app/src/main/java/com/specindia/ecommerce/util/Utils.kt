@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageInfo
 import android.content.pm.PackageManager
+import android.content.res.Configuration
 import android.graphics.Color
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities.TRANSPORT_CELLULAR
@@ -20,6 +21,7 @@ import android.view.WindowInsets
 import android.view.WindowManager
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
@@ -34,6 +36,7 @@ import com.specindia.ecommerce.util.Constants.Companion.AUTHORIZATION
 import com.specindia.ecommerce.util.Constants.Companion.BEARER
 import com.specindia.ecommerce.util.Constants.Companion.CONTENT_TYPE
 import com.specindia.ecommerce.util.dialogs.CustomProgressDialog
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.launch
 import java.security.MessageDigest
 import java.security.NoSuchAlgorithmException
@@ -198,7 +201,7 @@ fun saveLoggedInUserData(
     email: String,
     firstName: String,
     lastName: String,
-    imageUrl: String
+    imageUrl: String,
 ) {
     with((activity as AuthActivity).dataStoreViewModel) {
         saveFBAccessToken(token)
@@ -245,7 +248,7 @@ fun View.setRandomBackgroundColor() {
  * Clicking on a button will dismiss the dialog.
  */
 suspend inline fun AlertDialog.Builder.alert(
-    buttonText: String = "Ok"
+    buttonText: String = "Ok",
 ) = SuspendAlertDialog.alert(buttonText) {
     this
 }
