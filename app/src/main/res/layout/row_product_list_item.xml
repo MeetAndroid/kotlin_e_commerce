@@ -6,173 +6,159 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <com.facebook.shimmer.ShimmerFrameLayout
-        android:id="@+id/shimmerLayout"
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/productCard"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        app:cardBackgroundColor="@color/colorOffWhite"
+        app:cardCornerRadius="8dp"
+        app:cardElevation="8dp"
+        app:cardUseCompatPadding="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        tools:context=".ui.activity.OnBoardingActivity">
 
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/productCard"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/content"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            app:cardBackgroundColor="@color/colorOffWhite"
-            app:cardCornerRadius="8dp"
-            app:cardElevation="8dp"
-            app:cardUseCompatPadding="true"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:context=".ui.activity.OnBoardingActivity">
+            android:paddingHorizontal="4dp"
+            android:paddingVertical="8dp">
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/content"
-                android:layout_width="match_parent"
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/ivProductImage"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:adjustViewBounds="true"
+                android:contentDescription="@null"
+                android:padding="5dp"
+                android:scaleType="centerCrop"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:shapeAppearanceOverlay="@style/RoundedImageView"
+                app:srcCompat="@color/colorGray" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tvProductName"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:paddingHorizontal="4dp"
-                android:paddingVertical="8dp">
+                android:layout_marginHorizontal="8dp"
+                android:ellipsize="end"
+                android:fontFamily="@font/roboto_bold"
+                android:lines="1"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                android:textColor="@android:color/black"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/ivProductImage"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="Mulberry Pizza by Josh" />
 
-                <com.google.android.material.imageview.ShapeableImageView
-                    android:id="@+id/ivProductImage"
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
-                    android:adjustViewBounds="true"
-                    android:background="@color/colorShimmerEffectDark"
-                    android:contentDescription="@null"
-                    android:padding="5dp"
-                    android:scaleType="centerCrop"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:shapeAppearanceOverlay="@style/RoundedImageView"
-                    app:srcCompat="@color/colorGray" />
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tvProductPrice"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="8dp"
+                android:layout_marginTop="4dp"
+                android:ellipsize="end"
+                android:fontFamily="@font/roboto_medium"
+                android:lines="1"
+                android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                android:textColor="@android:color/black"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/ivProductImage"
+                app:layout_constraintTop_toBottomOf="@id/tvProductName"
+                tools:text="250.00 Rs" />
 
-                <com.google.android.material.textview.MaterialTextView
-                    android:id="@+id/tvProductName"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="8dp"
-                    android:background="@color/colorShimmerEffectDark"
-                    android:ellipsize="end"
-                    android:fontFamily="@font/roboto_bold"
-                    android:lines="1"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                    android:textColor="@android:color/black"
-                    android:textStyle="bold"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/ivProductImage"
-                    app:layout_constraintTop_toTopOf="parent"
-                    tools:text="Mulberry Pizza by Josh" />
+            <!-- Add and Remove Buttons -->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/clAddRemoveButtons"
+                android:layout_width="0dp"
+                android:layout_height="30dp"
+                android:layout_marginHorizontal="8dp"
+                android:layout_marginVertical="4dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/ivProductImage"
+                app:layout_constraintTop_toBottomOf="@id/tvProductPrice">
 
-                <com.google.android.material.textview.MaterialTextView
-                    android:id="@+id/tvProductPrice"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="8dp"
-                    android:layout_marginTop="4dp"
-                    android:background="@color/colorShimmerEffectDark"
-                    android:ellipsize="end"
-                    android:fontFamily="@font/roboto_medium"
-                    android:lines="1"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Small"
-                    android:textColor="@android:color/black"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/ivProductImage"
-                    app:layout_constraintTop_toBottomOf="@id/tvProductName"
-                    tools:text="250.00 Rs" />
-
-                <!-- Add and Remove Buttons -->
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/clAddRemoveButtons"
-                    android:layout_width="0dp"
-                    android:layout_height="30dp"
-                    android:layout_marginHorizontal="8dp"
-                    android:layout_marginVertical="4dp"
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btnAdd"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/bg_button_login"
+                    android:fontFamily="@font/roboto_regular"
+                    android:minWidth="150dp"
+                    android:text="@string/add"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white"
+                    android:textSize="16sp"
+                    android:visibility="invisible"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/ivProductImage"
-                    app:layout_constraintTop_toBottomOf="@id/tvProductPrice">
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <!-- plus / minus / edit text -->
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/clAddOrRemoveProduct"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:visibility="gone">
 
                     <androidx.appcompat.widget.AppCompatButton
-                        android:id="@+id/btnAdd"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
+                        android:id="@+id/btnRemoveProduct"
+                        android:layout_width="50dp"
+                        android:layout_height="0dp"
                         android:background="@drawable/bg_button_login"
-                        android:fontFamily="@font/roboto_regular"
-                        android:minWidth="150dp"
-                        android:text="@string/add"
-                        android:textAllCaps="false"
+                        android:fontFamily="@font/roboto_bold"
+                        android:text="@string/minus"
                         android:textColor="@color/white"
                         android:textSize="16sp"
-                        android:visibility="invisible"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
-                    <!-- plus / minus / edit text -->
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:id="@+id/clAddOrRemoveProduct"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:visibility="gone">
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/btnAddProduct"
+                        android:layout_width="50dp"
+                        android:layout_height="0dp"
+                        android:background="@drawable/bg_button_login"
+                        android:fontFamily="@font/roboto_bold"
+                        android:text="@string/plus"
+                        android:textColor="@color/white"
+                        android:textSize="16sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/tvQty"
+                        app:layout_constraintTop_toTopOf="parent" />
 
-                        <androidx.appcompat.widget.AppCompatButton
-                            android:id="@+id/btnRemoveProduct"
-                            android:layout_width="50dp"
-                            android:layout_height="0dp"
-                            android:background="@drawable/bg_button_login"
-                            android:fontFamily="@font/roboto_bold"
-                            android:text="@string/minus"
-                            android:textColor="@color/white"
-                            android:textSize="16sp"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
-
-                        <androidx.appcompat.widget.AppCompatButton
-                            android:id="@+id/btnAddProduct"
-                            android:layout_width="50dp"
-                            android:layout_height="0dp"
-                            android:background="@drawable/bg_button_login"
-                            android:fontFamily="@font/roboto_bold"
-                            android:text="@string/plus"
-                            android:textColor="@color/white"
-                            android:textSize="16sp"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toEndOf="@id/tvQty"
-                            app:layout_constraintTop_toTopOf="parent" />
-
-                        <com.google.android.material.textview.MaterialTextView
-                            android:id="@+id/tvQty"
-                            android:layout_width="0dp"
-                            android:layout_height="0dp"
-                            android:layout_marginHorizontal="4dp"
-                            android:background="@drawable/bg_add_remove_qty"
-                            android:fontFamily="@font/roboto_bold"
-                            android:gravity="center"
-                            android:textColor="@color/black"
-                            android:textSize="16sp"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toStartOf="@id/btnAddProduct"
-                            app:layout_constraintStart_toEndOf="@id/btnRemoveProduct"
-                            app:layout_constraintTop_toTopOf="parent"
-                            tools:text="999" />
-
-                    </androidx.constraintlayout.widget.ConstraintLayout>
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/tvQty"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:layout_marginHorizontal="4dp"
+                        android:background="@drawable/bg_add_remove_qty"
+                        android:fontFamily="@font/roboto_bold"
+                        android:gravity="center"
+                        android:textColor="@color/black"
+                        android:textSize="16sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@id/btnAddProduct"
+                        app:layout_constraintStart_toEndOf="@id/btnRemoveProduct"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:text="999" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
-        </com.google.android.material.card.MaterialCardView>
+    </com.google.android.material.card.MaterialCardView>
 
-    </com.facebook.shimmer.ShimmerFrameLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
 

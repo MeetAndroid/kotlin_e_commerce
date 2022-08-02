@@ -1,12 +1,11 @@
 package com.specindia.ecommerce.ui.fragments
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
-import androidx.navigation.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.gson.Gson
@@ -20,6 +19,7 @@ import com.specindia.ecommerce.ui.activity.HomeActivity
 import com.specindia.ecommerce.ui.adapters.MenuListAdapter
 import com.specindia.ecommerce.util.getHeaderMap
 import com.specindia.ecommerce.util.showLongToast
+import com.specindia.ecommerce.util.showProgressDialog
 import com.specindia.ecommerce.util.visible
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -29,7 +29,7 @@ class FoodMenuFragment : Fragment() {
     private lateinit var binding: FragmentFoodMenuBinding
     private lateinit var data: AuthResponseData
     private lateinit var menuListAdapter: MenuListAdapter
-
+    private lateinit var customProgressDialog: AlertDialog
     private lateinit var menuList: ArrayList<Menu>
 
     override fun onCreateView(
@@ -44,18 +44,13 @@ class FoodMenuFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         setUpHeader()
         setUpHeaderItemClick()
-
+        setUpProgressDialog()
         val userData = (activity as HomeActivity).dataStoreViewModel.getLoggedInUserData()
         data = Gson().fromJson(userData, AuthResponseData::class.java)
 
         setUpRecyclerView()
         callMenuListApi(data)
         observeResponse()
-
-        binding.btnFoodMenuDetails.setOnClickListener {
-            it.findNavController()
-                .navigate(FoodMenuFragmentDirections.actionFoodMenuFragmentToFoodMenuDetailsFragment())
-        }
 
         menuListAdapter.setOnItemClickListener {
             requireActivity().showLongToast("${it.name} clicked")
@@ -100,25 +95,33 @@ class FoodMenuFragment : Fragment() {
         }
     }
 
+    private fun setUpProgressDialog() {
+        customProgressDialog = showProgressDialog {
+            cancelable = false
+            isBackGroundTransparent = true
+        }
+    }
 
     private fun callMenuListApi(data: AuthResponseData) {
         (activity as HomeActivity).homeViewModel.getMenuList(getHeaderMap(data.token, true))
     }
 
     private fun observeResponse() {
-        Log.d("ObserveResponse", "True")
         (activity as HomeActivity).homeViewModel.menuListResponse.observe(viewLifecycleOwner) { response ->
 
             when (response) {
                 is NetworkResult.Success -> {
+                    customProgressDialog.hide()
                     response.data?.let { menuListResponse ->
                         setUpMenuListUI(binding, menuListResponse)
                     }
                 }
                 is NetworkResult.Error -> {
+                    customProgressDialog.hide()
                     showDialog(response.message.toString())
                 }
                 is NetworkResult.Loading -> {
+                    customProgressDialog.show()
                 }
             }
         }
@@ -136,7 +139,6 @@ class FoodMenuFragment : Fragment() {
                 clMenuList.visible(true)
                 noDataFound.clNoDataFound.visible(false)
                 menuList.addAll(menuListResponse.data.menu.toList())
-                menuListAdapter.showShimmer = false
                 menuListAdapter.notifyDataSetChanged()
             } else {
                 noDataFound.clNoDataFound.visible(true)

@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -33,6 +34,7 @@ class HomeFragment : Fragment() {
     private var loggedInUserName: String = ""
 
     private lateinit var data: AuthResponseData
+    private lateinit var customProgressDialog: AlertDialog
 
     private lateinit var topProductAdapter: TopProductsAdapter
     private lateinit var restaurantsAdapter: PopularRestaurantsAdapter
@@ -64,6 +66,8 @@ class HomeFragment : Fragment() {
         setUpHeaderItemClick()
         (activity as HomeActivity).showOrHideBottomAppBarAndFloatingActionButtonOnScroll()
 
+
+        setUpProgressDialog()
         val userData = (activity as HomeActivity).dataStoreViewModel.getLoggedInUserData()
         data = Gson().fromJson(userData, AuthResponseData::class.java)
 
@@ -92,8 +96,6 @@ class HomeFragment : Fragment() {
 
         binding.swipeRefreshLayout.setOnRefreshListener {
             binding.swipeRefreshLayout.isRefreshing = false
-
-            startShimmerEffect(binding)
             callDashBoardListApi(data)
         }
     }
@@ -182,6 +184,14 @@ class HomeFragment : Fragment() {
         }
     }
 
+    private fun setUpProgressDialog() {
+        customProgressDialog = showProgressDialog {
+            cancelable = false
+            isBackGroundTransparent = true
+        }
+    }
+
+
     private fun callDashBoardListApi(data: AuthResponseData) {
         (activity as HomeActivity).homeViewModel.getDashboardList(getHeaderMap(data.token, true))
     }
@@ -191,43 +201,24 @@ class HomeFragment : Fragment() {
 
             when (response) {
                 is NetworkResult.Success -> {
+                    customProgressDialog.hide()
                     response.data?.let { dashboardListResponse ->
-                        stopShimmerEffect(binding)
                         setUpTopDishUI(binding, dashboardListResponse)
                         setUpPopularRestaurantUI(binding, dashboardListResponse)
                         setUpCategoryListUI(binding, dashboardListResponse)
                     }
                 }
                 is NetworkResult.Error -> {
+                    customProgressDialog.hide()
                     showDialog(response.message.toString())
                 }
                 is NetworkResult.Loading -> {
+                    customProgressDialog.show()
                 }
             }
         }
     }
 
-    private fun stopShimmerEffect(binding: FragmentHomeBinding) {
-        binding.apply {
-            shimmerViewPopularRestaurants.stopShimmer()
-            shimmerViewPopularRestaurants.visible(false)
-            shimmerViewTopProducts.stopShimmer()
-            shimmerViewTopProducts.visible(false)
-            shimmerCategoryList.stopShimmer()
-            shimmerCategoryList.visible(false)
-        }
-    }
-
-    private fun startShimmerEffect(binding: FragmentHomeBinding) {
-        binding.apply {
-            shimmerViewPopularRestaurants.startShimmer()
-            shimmerViewPopularRestaurants.visible(true)
-            shimmerViewTopProducts.startShimmer()
-            shimmerViewTopProducts.visible(true)
-            shimmerCategoryList.startShimmer()
-            shimmerCategoryList.visible(true)
-        }
-    }
 
     private fun setUpTopDishUI(
         binding: FragmentHomeBinding,
@@ -290,7 +281,7 @@ class HomeFragment : Fragment() {
             categoryList.clear()
             if (dashboardListResponse.data.categoryList.isNotEmpty()) {
                 headerCategoryList.listHeader.visible(true)
-                headerCategoryList.tvViewAll.visible(true)
+                headerCategoryList.tvViewAll.visible(false)
                 headerCategoryList.tvTitle.text =
                     getString(R.string.top_categories)
 

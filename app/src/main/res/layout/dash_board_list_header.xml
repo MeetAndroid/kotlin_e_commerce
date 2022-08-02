@@ -30,6 +30,7 @@
         android:fontFamily="@font/roboto_bold"
         android:padding="8dp"
         android:text="@string/view_all"
+        android:visibility="invisible"
         android:textAppearance="@style/TextAppearance.AppCompat.Small"
         android:textColor="@color/color_red"
         app:layout_constraintBottom_toBottomOf="@+id/tvTitle"

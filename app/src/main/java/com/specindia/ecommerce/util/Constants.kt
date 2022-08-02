@@ -11,6 +11,7 @@ class Constants {
 
         // =================== Ecommerce App Constants
 
+        const val STATIC_DELAY = 2000L
         // Splash Time Out
         const val SPLASH_SCREEN_TIME_OUT = 3000L
         const val READ_TIME_OUT = 120L

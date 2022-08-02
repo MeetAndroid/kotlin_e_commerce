@@ -48,16 +48,6 @@
                 tools:listitem="@layout/row_menu_list_item" />
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btnFoodMenuDetails"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="48dp"
-            android:text="Go to Menu Details"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/swipeRefreshLayout" />
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 

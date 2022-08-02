@@ -1,13 +1,11 @@
 package com.specindia.ecommerce.ui.fragments
 
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.os.postDelayed
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.navArgs
@@ -19,7 +17,6 @@ import com.specindia.ecommerce.api.network.NetworkResult
 import com.specindia.ecommerce.databinding.FragmentViewAllProductBinding
 import com.specindia.ecommerce.models.request.Parameters
 import com.specindia.ecommerce.models.response.AuthResponseData
-import com.specindia.ecommerce.models.response.home.product.AllRestaurant
 import com.specindia.ecommerce.models.response.home.product.RestaurantItems
 import com.specindia.ecommerce.models.response.home.product.ViewAllItems
 import com.specindia.ecommerce.ui.activity.HomeActivity
@@ -27,6 +24,7 @@ import com.specindia.ecommerce.ui.adapters.ViewAllAdapter
 import com.specindia.ecommerce.ui.adapters.ViewAllRestaurantAdapter
 import com.specindia.ecommerce.util.Constants
 import com.specindia.ecommerce.util.getHeaderMap
+import com.specindia.ecommerce.util.showProgressDialog
 import com.specindia.ecommerce.util.visible
 
 class ViewAllProductFragment : Fragment(), ViewAllAdapter.OnViewAllClickListener {
@@ -38,13 +36,14 @@ class ViewAllProductFragment : Fragment(), ViewAllAdapter.OnViewAllClickListener
 
     private lateinit var viewAllAdapter: ViewAllAdapter
     private lateinit var viewAllRestaurantAdapter: ViewAllRestaurantAdapter
+    private lateinit var customProgressDialog: AlertDialog
     private var viewAllList: ArrayList<ViewAllItems>? = null
     private var viewAllRestaurantList: ArrayList<RestaurantItems>? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View {
         binding = FragmentViewAllProductBinding.inflate(layoutInflater)
         return binding.root
@@ -70,10 +69,12 @@ class ViewAllProductFragment : Fragment(), ViewAllAdapter.OnViewAllClickListener
             }
         }
         setUpHeader()
+        setUpProgressDialog()
         setUpHeaderItemClick()
         callViewALl()
         observeViewAllProducts()
         observeViewAllRestaurant()
+        (activity as HomeActivity).showOrHideBottomAppBarAndFloatingActionButtonOnScroll()
 
         binding.swipeRefreshLayout.setOnRefreshListener {
             binding.swipeRefreshLayout.isRefreshing = false
@@ -105,6 +106,12 @@ class ViewAllProductFragment : Fragment(), ViewAllAdapter.OnViewAllClickListener
         }
     }
 
+    private fun setUpProgressDialog() {
+        customProgressDialog = showProgressDialog {
+            cancelable = false
+            isBackGroundTransparent = true
+        }
+    }
 
     // Call Products By Restaurant api
     private fun callViewALl() {
@@ -147,6 +154,7 @@ class ViewAllProductFragment : Fragment(), ViewAllAdapter.OnViewAllClickListener
 
             when (response) {
                 is NetworkResult.Success -> {
+                    customProgressDialog.hide()
                     response.data?.let { it ->
                         with(binding) {
                             rvViewAll.layoutManager = LinearLayoutManager(
@@ -163,16 +171,17 @@ class ViewAllProductFragment : Fragment(), ViewAllAdapter.OnViewAllClickListener
                                 )
                             }!!
                             rvViewAll.adapter = viewAllAdapter
-                            viewAllAdapter.showShimmer = false
                             viewAllAdapter.notifyDataSetChanged()
 
                         }
                     }
                 }
                 is NetworkResult.Error -> {
+                    customProgressDialog.hide()
                     showDialog(response.message.toString())
                 }
                 is NetworkResult.Loading -> {
+                    customProgressDialog.show()
                 }
             }
         }
@@ -186,6 +195,7 @@ class ViewAllProductFragment : Fragment(), ViewAllAdapter.OnViewAllClickListener
 
             when (response) {
                 is NetworkResult.Success -> {
+                    customProgressDialog.hide()
                     response.data?.let { it ->
                         with(binding) {
                             rvViewAll.layoutManager = LinearLayoutManager(
@@ -201,21 +211,23 @@ class ViewAllProductFragment : Fragment(), ViewAllAdapter.OnViewAllClickListener
                                 )
                             }!!
                             rvViewAll.adapter = viewAllRestaurantAdapter
-                            viewAllRestaurantAdapter.showShimmer = false
                             viewAllRestaurantAdapter.notifyDataSetChanged()
 
                             viewAllRestaurantAdapter.setOnItemClickListener {
-                                view?.findNavController()?.navigate(ViewAllProductFragmentDirections.actionViewAllProductFragmentToRestaurantDetailsFragment(
-                                    it.id!!
-                                ))
+                                view?.findNavController()
+                                    ?.navigate(ViewAllProductFragmentDirections.actionViewAllProductFragmentToRestaurantDetailsFragment(
+                                        it.id!!
+                                    ))
                             }
                         }
                     }
                 }
                 is NetworkResult.Error -> {
+                    customProgressDialog.hide()
                     showDialog(response.message.toString())
                 }
                 is NetworkResult.Loading -> {
+                    customProgressDialog.show()
                 }
             }
         }

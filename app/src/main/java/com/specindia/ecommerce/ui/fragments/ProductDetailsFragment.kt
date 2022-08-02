@@ -73,7 +73,7 @@ class ProductDetailsFragment : Fragment() {
         with(binding) {
             with(homeDetailsScreenHeader) {
                 tvHeaderTitle.visible(true)
-                tvHeaderTitle.text = "Restaurant Details"
+                tvHeaderTitle.text = getString(R.string.product_details)
                 ivBack.visible(true)
                 ivFavorite.visible(true)
                 ivSearch.visible(false)

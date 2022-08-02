@@ -9,13 +9,15 @@ import com.specindia.ecommerce.models.response.login.LoginResponse
 import com.specindia.ecommerce.models.response.registration.RegistrationResponse
 import com.specindia.ecommerce.models.response.social.SocialLoginResponse
 import com.specindia.ecommerce.repository.EcommerceRepository
+import com.specindia.ecommerce.util.Constants.Companion.STATIC_DELAY
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class AuthViewModel @Inject constructor(
-    private val repository: EcommerceRepository
+    private val repository: EcommerceRepository,
 ) : ViewModel() {
 
     // Mutable Live Data
@@ -37,6 +39,8 @@ class AuthViewModel @Inject constructor(
     // Call Registration API
     fun doRegistration(headerMap: Map<String, String>, parameters: String) =
         viewModelScope.launch() {
+            _registrationResponse.postValue(NetworkResult.Loading())
+            delay(STATIC_DELAY)
             repository.doRegistration(headerMap, parameters).collect { values ->
                 _registrationResponse.value = values
             }
@@ -44,6 +48,8 @@ class AuthViewModel @Inject constructor(
 
     // Call Login API
     fun doLogin(headerMap: Map<String, String>, parameters: String) = viewModelScope.launch() {
+        _loginResponse.postValue(NetworkResult.Loading())
+        delay(STATIC_DELAY)
         repository.doLogin(headerMap, parameters).collect { values ->
             _loginResponse.value = values
         }
@@ -52,6 +58,8 @@ class AuthViewModel @Inject constructor(
     // Call Social Login API (Facebook and GPlus)
     fun doSocialLogin(headerMap: Map<String, String>, parameters: String) =
         viewModelScope.launch() {
+            _socialResponse.postValue(NetworkResult.Loading())
+            delay(STATIC_DELAY)
             repository.doSocialLogin(headerMap, parameters).collect { values ->
                 _socialResponse.value = values
             }
