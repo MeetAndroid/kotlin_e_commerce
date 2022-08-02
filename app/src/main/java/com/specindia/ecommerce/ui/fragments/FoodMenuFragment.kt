@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.GridLayoutManager
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.gson.Gson
 import com.specindia.ecommerce.R
@@ -17,10 +16,7 @@ import com.specindia.ecommerce.models.response.menulist.Menu
 import com.specindia.ecommerce.models.response.menulist.MenuListResponse
 import com.specindia.ecommerce.ui.activity.HomeActivity
 import com.specindia.ecommerce.ui.adapters.MenuListAdapter
-import com.specindia.ecommerce.util.getHeaderMap
-import com.specindia.ecommerce.util.showLongToast
-import com.specindia.ecommerce.util.showProgressDialog
-import com.specindia.ecommerce.util.visible
+import com.specindia.ecommerce.util.*
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -68,8 +64,8 @@ class FoodMenuFragment : Fragment() {
         menuListAdapter = MenuListAdapter(menuList)
         binding.rvMenu.apply {
             adapter = menuListAdapter
-            layoutManager =
-                GridLayoutManager(requireActivity(), 2)
+            addItemDecoration(MarginDecoration(resources.getDimensionPixelSize(R.dimen.item_margin)))
+            hasFixedSize()
         }
     }
 

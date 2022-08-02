@@ -33,18 +33,13 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-            <androidx.recyclerview.widget.RecyclerView
+            <com.specindia.ecommerce.util.AutoFitRecyclerView
                 android:id="@+id/rvMenu"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:clipToPadding="false"
-                android:paddingHorizontal="16dp"
-                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:spanCount="2"
-                tools:itemCount="10"
+                android:columnWidth="@dimen/column_width"
+                android:padding="@dimen/item_margin"
                 tools:listitem="@layout/row_menu_list_item" />
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
