@@ -209,8 +209,6 @@ class ViewAllProductFragment : Fragment(), ViewAllAdapter.OnViewAllClickListener
                                     it.id!!
                                 ))
                             }
-
-
                         }
                     }
                 }
