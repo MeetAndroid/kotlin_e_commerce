@@ -75,6 +75,7 @@ class Constants {
         const val KEY_USER_PROFILE_URL = "user_profile_url"
 
         const val KEY_LOGGED_IN_USER_DATA = "logged_in_user_data"
+        const val KEY_FAV_RESTAURANTS = "key_fav_restaurants"
 
         const val SOCIAL_TYPE_FB = 1
         const val SOCIAL_TYPE_GOOGLE = 2

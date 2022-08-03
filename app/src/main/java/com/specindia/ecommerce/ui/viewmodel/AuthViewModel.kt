@@ -38,7 +38,7 @@ class AuthViewModel @Inject constructor(
 
     // Call Registration API
     fun doRegistration(headerMap: Map<String, String>, parameters: String) =
-        viewModelScope.launch() {
+        viewModelScope.launch {
             _registrationResponse.postValue(NetworkResult.Loading())
             delay(STATIC_DELAY)
             repository.doRegistration(headerMap, parameters).collect { values ->
@@ -47,7 +47,7 @@ class AuthViewModel @Inject constructor(
         }
 
     // Call Login API
-    fun doLogin(headerMap: Map<String, String>, parameters: String) = viewModelScope.launch() {
+    fun doLogin(headerMap: Map<String, String>, parameters: String) = viewModelScope.launch {
         _loginResponse.postValue(NetworkResult.Loading())
         delay(STATIC_DELAY)
         repository.doLogin(headerMap, parameters).collect { values ->
@@ -57,7 +57,7 @@ class AuthViewModel @Inject constructor(
 
     // Call Social Login API (Facebook and GPlus)
     fun doSocialLogin(headerMap: Map<String, String>, parameters: String) =
-        viewModelScope.launch() {
+        viewModelScope.launch {
             _socialResponse.postValue(NetworkResult.Loading())
             delay(STATIC_DELAY)
             repository.doSocialLogin(headerMap, parameters).collect { values ->

@@ -95,6 +95,7 @@ dependencies {
 
     // ViewModel Scope
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifeCycleVersion"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-savedstate:$lifeCycleVersion"
     // Lifecycle Scope
     implementation "androidx.lifecycle:lifecycle-runtime-ktx:$lifeCycleVersion"
     // Live Data
@@ -141,6 +142,9 @@ dependencies {
 
     // Kotlin Serialization
     implementation "org.jetbrains.kotlinx:kotlinx-serialization-json:$kotlin_serialization"
+
+    // Shimmer Effect
+    implementation "com.github.skydoves:androidveil:1.1.2"
 
     implementation 'androidx.core:core-ktx:1.8.0'
     implementation 'androidx.appcompat:appcompat:1.4.2'

@@ -6,4 +6,5 @@
 
     <color name="colorStatusBar">#000000</color>
     <color name="colorHeaderText">#716C6C</color>
+    <color name="icon_color">#736D6D</color>
 </resources>

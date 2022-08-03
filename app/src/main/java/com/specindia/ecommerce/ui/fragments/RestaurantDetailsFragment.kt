@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.navArgs
@@ -17,6 +18,7 @@ import com.google.gson.reflect.TypeToken
 import com.specindia.ecommerce.R
 import com.specindia.ecommerce.api.network.NetworkResult
 import com.specindia.ecommerce.databinding.FragmentRestaurantDetailsBinding
+import com.specindia.ecommerce.models.FavRestaurants
 import com.specindia.ecommerce.models.request.Parameters
 import com.specindia.ecommerce.models.response.AuthResponseData
 import com.specindia.ecommerce.models.response.home.productsbyrestaurant.ProductsByRestaurantData
@@ -117,15 +119,84 @@ class RestaurantDetailsFragment : Fragment(), ProductListAdapter.OnProductItemCl
         }
     }
 
+    private fun setUpFavButton(isRestaurantExist: Boolean) {
+        if (isRestaurantExist) {
+            enableFavButton()
+        } else {
+            disableFavButton()
+        }
+    }
+
+    private fun enableFavButton() {
+        binding.homeDetailsScreenHeader.ivFavorite.setColorFilter(
+            ContextCompat.getColor(
+                requireActivity(),
+                R.color.color_red), android.graphics.PorterDuff.Mode.MULTIPLY)
+
+    }
+
+    private fun disableFavButton() {
+        binding.homeDetailsScreenHeader.ivFavorite.setColorFilter(
+            ContextCompat.getColor(
+                requireActivity(),
+                R.color.icon_color), android.graphics.PorterDuff.Mode.MULTIPLY)
+
+    }
+
     private fun setUpHeaderItemClick() {
         with(binding) {
             with(homeDetailsScreenHeader) {
                 ivBack.setOnClickListener {
                     it.findNavController().popBackStack()
                 }
+
+                val prefRestaurantListStr =
+                    (activity as HomeActivity).dataStoreViewModel.getFavoriteRestaurantList()
+
+                val currentRestaurantId = restaurantId.toString()
+                val array = (activity as HomeActivity).favRestaurantArray
+
+                if (prefRestaurantListStr != null) {
+
+                    // Retrieving Json Array of type FavRestaurants from preference string
+                    val arrayType = object : TypeToken<ArrayList<FavRestaurants>>() {}.type
+                    val prefRestaurantList: ArrayList<FavRestaurants> =
+                        Gson().fromJson(prefRestaurantListStr, arrayType)
+
+                    // add all preference array to our ArrayList
+                    if (prefRestaurantList.isNotEmpty()) {
+                        array.clear()
+                        array.addAll(prefRestaurantList)
+                    }
+                }
+
+                val isRestaurantExist = array.any { it.id == currentRestaurantId }
+
+                setUpFavButton(isRestaurantExist)
+
+                ivFavorite.setOnClickListener {
+                    if (isRestaurantExist) {
+                        disableFavButton()
+                        // If Restaurant exist then remove it from an Array
+                        array.removeIf { it.id == currentRestaurantId }
+                        requireActivity().showLongToast(getString(R.string.msg_restaurant_added_in_fav_list))
+
+                    } else {
+                        enableFavButton()
+                        // If Restaurant not exist then add it to an Array
+                        array.add(FavRestaurants(restaurantId.toString(),
+                            true))
+                        requireActivity().showLongToast(getString(R.string.msg_restaurant_removed_from_fav_list))
+                    }
+
+                    // Converting ArrayList to Json String and store in preference
+                    val data = Gson().toJson(array)
+                    (activity as HomeActivity).dataStoreViewModel.saveFavoriteRestaurantList(data)
+                }
             }
         }
     }
+
 
     private fun setUpRecyclerView() {
         // Products
