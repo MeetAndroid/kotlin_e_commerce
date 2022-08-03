@@ -80,14 +80,10 @@ class Constants {
         const val SOCIAL_TYPE_FB = 1
         const val SOCIAL_TYPE_GOOGLE = 2
 
-        // API
-        const val KEY_BEARER_TOKEN = "bearer_token"
-
         const val TOP_DISHES = "Top Dishes"
         const val RESTAURANT = "Restaurant"
         const val CATEGORY = "Category"
 
-        const val KEY_COMMA_SEPARATED_RESTAURANT_ID = "key_comma_separated_restaurant_id"
     }
 
 

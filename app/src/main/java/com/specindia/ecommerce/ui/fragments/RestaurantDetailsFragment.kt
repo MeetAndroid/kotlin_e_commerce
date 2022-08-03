@@ -42,10 +42,6 @@ class RestaurantDetailsFragment : Fragment(), ProductListAdapter.OnProductItemCl
     private lateinit var productList: ArrayList<ProductsByRestaurantData>
 
     private var restaurantId: Int = 0
-    private var getOldIds: String? = null
-    var listOfStringColumn: ArrayList<String> = ArrayList()
-    private var commaSeparatedString: String = ""
-    val type: Type = object : TypeToken<List<String?>?>() {}.type
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -65,12 +61,6 @@ class RestaurantDetailsFragment : Fragment(), ProductListAdapter.OnProductItemCl
         val userData = (activity as HomeActivity).dataStoreViewModel.getLoggedInUserData()
         data = Gson().fromJson(userData, AuthResponseData::class.java)
 
-        getOldIds = (activity as HomeActivity).dataStoreViewModel.getListFromLocal()
-        if (!getOldIds.isNullOrEmpty()) {
-            listOfStringColumn = Gson().fromJson(getOldIds, type)
-            Log.e("OLD-IDS", listOfStringColumn.toString())
-        }
-
         binding.clTopPart.setRandomBackgroundColor()
         callRestaurantDetailsApi(data)
         observeRestaurantDetailsResponse()
@@ -81,29 +71,6 @@ class RestaurantDetailsFragment : Fragment(), ProductListAdapter.OnProductItemCl
             callRestaurantDetailsApi(data)
         }
 
-        binding.homeDetailsScreenHeader.ivFavorite.setOnClickListener {
-
-            if (listOfStringColumn.isNotEmpty()) {
-                val dateExists: Boolean = listOfStringColumn.contains(restaurantId.toString())
-                if (!dateExists) {
-                    listOfStringColumn.add(restaurantId.toString())
-                    val ss = Gson().toJson(listOfStringColumn)
-                    Log.e("LIST", "Not Empty : $ss")
-                    (activity as HomeActivity).dataStoreViewModel.saveListInLocal(
-                        ss
-                    )
-                }
-
-            } else {
-                listOfStringColumn.add(restaurantId.toString())
-                val ss = Gson().toJson(listOfStringColumn)
-                Log.e("LIST", "Empty : $ss")
-                (activity as HomeActivity).dataStoreViewModel.saveListInLocal(
-                    ss
-                )
-            }
-
-        }
     }
 
     private fun setUpHeader() {
