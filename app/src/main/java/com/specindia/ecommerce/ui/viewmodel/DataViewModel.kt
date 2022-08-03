@@ -1,10 +1,13 @@
 package com.specindia.ecommerce.ui.viewmodel
 
+import android.content.SharedPreferences
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import com.specindia.ecommerce.datastore.abstraction.DataStoreRepository
-import com.specindia.ecommerce.models.response.AuthResponseData
+import com.specindia.ecommerce.util.Constants
+import com.specindia.ecommerce.util.Constants.Companion.KEY_COMMA_SEPARATED_RESTAURANT_ID
 import com.specindia.ecommerce.util.Constants.Companion.KEY_FB_ACCESS_TOKEN
 import com.specindia.ecommerce.util.Constants.Companion.KEY_IS_FIRST_TIME
 import com.specindia.ecommerce.util.Constants.Companion.KEY_IS_USER_LOGGED_IN
@@ -18,7 +21,9 @@ import com.specindia.ecommerce.util.Constants.Companion.KEY_USER_PROFILE_URL
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
+import java.lang.reflect.Type
 import javax.inject.Inject
+
 
 @HiltViewModel
 class DataViewModel @Inject constructor(
@@ -126,5 +131,16 @@ class DataViewModel @Inject constructor(
     fun getLoggedInUserData(): String? = runBlocking {
         repository.getString(KEY_LOGGED_IN_USER_DATA)
     }
+
+    fun saveListInLocal(list: String) {
+        viewModelScope.launch {
+            repository.putString(KEY_COMMA_SEPARATED_RESTAURANT_ID, list)
+        }
+    }
+
+    fun getListFromLocal(): String? = runBlocking {
+        repository.getString(KEY_COMMA_SEPARATED_RESTAURANT_ID)
+    }
+
 }
 

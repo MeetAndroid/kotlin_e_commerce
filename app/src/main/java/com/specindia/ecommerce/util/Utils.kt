@@ -138,6 +138,7 @@ fun TextInputEditText.emptyEditText(editText: TextInputEditText) {
                 editText.setText("")
             }
         }
+
         override fun afterTextChanged(s: Editable?) {}
     })
 }
@@ -262,6 +263,18 @@ inline fun Fragment.showProgressDialog(func: CustomProgressDialog.() -> Unit): A
     CustomProgressDialog(requireContext()).apply {
         func()
     }.create()
+
+fun String.toIds() = trim().splitToSequence(',').filter { it.isNotEmpty() }.toList()
+
+fun String.toWords(): List<String> {
+    val words = ArrayList<String>()
+    for (w in this.trim(' ').split(",")) {
+        if (w.isNotEmpty()) {
+            words.add(w)
+        }
+    }
+    return words
+}
 
 
 

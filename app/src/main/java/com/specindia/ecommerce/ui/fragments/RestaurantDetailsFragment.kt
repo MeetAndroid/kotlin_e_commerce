@@ -1,6 +1,7 @@
 package com.specindia.ecommerce.ui.fragments
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,6 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import com.specindia.ecommerce.R
 import com.specindia.ecommerce.api.network.NetworkResult
 import com.specindia.ecommerce.databinding.FragmentRestaurantDetailsBinding
@@ -21,11 +23,10 @@ import com.specindia.ecommerce.models.response.home.productsbyrestaurant.Product
 import com.specindia.ecommerce.models.response.home.productsbyrestaurant.ProductsByRestaurantResponse
 import com.specindia.ecommerce.ui.activity.HomeActivity
 import com.specindia.ecommerce.ui.adapters.ProductListAdapter
-import com.specindia.ecommerce.util.getHeaderMap
-import com.specindia.ecommerce.util.setRandomBackgroundColor
-import com.specindia.ecommerce.util.showProgressDialog
-import com.specindia.ecommerce.util.visible
+import com.specindia.ecommerce.util.*
 import dagger.hilt.android.AndroidEntryPoint
+import java.lang.reflect.Type
+
 
 @AndroidEntryPoint
 class RestaurantDetailsFragment : Fragment(), ProductListAdapter.OnProductItemClickListener {
@@ -33,11 +34,16 @@ class RestaurantDetailsFragment : Fragment(), ProductListAdapter.OnProductItemCl
     private lateinit var binding: FragmentRestaurantDetailsBinding
     private val args: RestaurantDetailsFragmentArgs by navArgs()
     private lateinit var data: AuthResponseData
-    private var restaurantId: Int = 0
     private lateinit var customProgressDialog: AlertDialog
 
     private lateinit var productListAdapter: ProductListAdapter
     private lateinit var productList: ArrayList<ProductsByRestaurantData>
+
+    private var restaurantId: Int = 0
+    private var getOldIds: String? = null
+    var listOfStringColumn: ArrayList<String> = ArrayList()
+    private var commaSeparatedString: String = ""
+    val type: Type = object : TypeToken<List<String?>?>() {}.type
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -54,9 +60,14 @@ class RestaurantDetailsFragment : Fragment(), ProductListAdapter.OnProductItemCl
         setUpHeader()
         setUpHeaderItemClick()
         setUpProgressDialog()
-
         val userData = (activity as HomeActivity).dataStoreViewModel.getLoggedInUserData()
         data = Gson().fromJson(userData, AuthResponseData::class.java)
+
+        getOldIds = (activity as HomeActivity).dataStoreViewModel.getListFromLocal()
+        if (!getOldIds.isNullOrEmpty()) {
+            listOfStringColumn = Gson().fromJson(getOldIds, type)
+            Log.e("OLD-IDS", listOfStringColumn.toString())
+        }
 
         binding.clTopPart.setRandomBackgroundColor()
         callRestaurantDetailsApi(data)
@@ -66,6 +77,30 @@ class RestaurantDetailsFragment : Fragment(), ProductListAdapter.OnProductItemCl
         binding.swipeRefreshLayout.setOnRefreshListener {
             binding.swipeRefreshLayout.isRefreshing = false
             callRestaurantDetailsApi(data)
+        }
+
+        binding.homeDetailsScreenHeader.ivFavorite.setOnClickListener {
+
+            if (listOfStringColumn.isNotEmpty()) {
+                val dateExists: Boolean = listOfStringColumn.contains(restaurantId.toString())
+                if (!dateExists) {
+                    listOfStringColumn.add(restaurantId.toString())
+                    val ss = Gson().toJson(listOfStringColumn)
+                    Log.e("LIST", "Not Empty : $ss")
+                    (activity as HomeActivity).dataStoreViewModel.saveListInLocal(
+                        ss
+                    )
+                }
+
+            } else {
+                listOfStringColumn.add(restaurantId.toString())
+                val ss = Gson().toJson(listOfStringColumn)
+                Log.e("LIST", "Empty : $ss")
+                (activity as HomeActivity).dataStoreViewModel.saveListInLocal(
+                    ss
+                )
+            }
+
         }
     }
 
@@ -114,7 +149,6 @@ class RestaurantDetailsFragment : Fragment(), ProductListAdapter.OnProductItemCl
 
     // Call Restaurant Details API
     private fun callRestaurantDetailsApi(data: AuthResponseData) {
-
         (activity as HomeActivity).homeViewModel.getRestaurantDetails(
             getHeaderMap(
                 data.token,
@@ -122,7 +156,6 @@ class RestaurantDetailsFragment : Fragment(), ProductListAdapter.OnProductItemCl
             ),
             id = restaurantId
         )
-
     }
 
     // Observe Restaurant Details Response
@@ -151,7 +184,6 @@ class RestaurantDetailsFragment : Fragment(), ProductListAdapter.OnProductItemCl
                         callProductsByRestaurantApi(restaurantData.data.id)
                         observeProductsByRestaurantResponse()
                     }
-
                 }
                 is NetworkResult.Error -> {
                     customProgressDialog.hide()
@@ -238,9 +270,11 @@ class RestaurantDetailsFragment : Fragment(), ProductListAdapter.OnProductItemCl
 
     override fun onItemClick(data: ProductsByRestaurantData, position: Int) {
         view?.findNavController()
-            ?.navigate(RestaurantDetailsFragmentDirections.actionRestaurantDetailsFragmentToProductDetailsFragment(
-                data.id
-            ))
+            ?.navigate(
+                RestaurantDetailsFragmentDirections.actionRestaurantDetailsFragmentToProductDetailsFragment(
+                    data.id
+                )
+            )
     }
 
     override fun onAddProductButtonClick(data: ProductsByRestaurantData, position: Int) {

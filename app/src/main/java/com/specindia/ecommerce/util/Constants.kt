@@ -12,6 +12,7 @@ class Constants {
         // =================== Ecommerce App Constants
 
         const val STATIC_DELAY = 2000L
+
         // Splash Time Out
         const val SPLASH_SCREEN_TIME_OUT = 3000L
         const val READ_TIME_OUT = 120L
@@ -84,6 +85,8 @@ class Constants {
         const val TOP_DISHES = "Top Dishes"
         const val RESTAURANT = "Restaurant"
         const val CATEGORY = "Category"
+
+        const val KEY_COMMA_SEPARATED_RESTAURANT_ID = "key_comma_separated_restaurant_id"
     }
 
 
