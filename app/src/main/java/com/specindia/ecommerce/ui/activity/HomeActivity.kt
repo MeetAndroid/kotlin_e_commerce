@@ -13,6 +13,7 @@ import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.specindia.ecommerce.R
 import com.specindia.ecommerce.databinding.ActivityHomeBinding
+import com.specindia.ecommerce.models.FavRestaurants
 import com.specindia.ecommerce.ui.viewmodel.DataViewModel
 import com.specindia.ecommerce.ui.viewmodel.HomeViewModel
 import com.specindia.ecommerce.util.HideListenableBottomAppBarBehavior
@@ -26,6 +27,7 @@ class HomeActivity : AppCompatActivity() {
     private lateinit var binding: ActivityHomeBinding
     private lateinit var navController: NavController
     private lateinit var appBarConfiguration: AppBarConfiguration
+    var favRestaurantArray = ArrayList<FavRestaurants>()
 
     val dataStoreViewModel by viewModels<DataViewModel>()
     val homeViewModel by viewModels<HomeViewModel>()
@@ -66,7 +68,7 @@ class HomeActivity : AppCompatActivity() {
 
     fun performLogout() = lifecycleScope.launch {
         logoutFromFacebook()
-        dataStoreViewModel.saveUserLoggedIn(false                                                                                                                                                                                                                        )
+        dataStoreViewModel.saveUserLoggedIn(false)
         startNewActivity(AuthActivity::class.java)
     }
 

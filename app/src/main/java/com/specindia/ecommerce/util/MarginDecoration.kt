@@ -10,6 +10,6 @@ class MarginDecoration(private val margin: Int) : RecyclerView.ItemDecoration() 
         parent: RecyclerView,
         state: RecyclerView.State,
     ) {
-        outRect[margin, margin, margin] = margin
+        outRect[margin, margin, margin,] = margin
     }
 }

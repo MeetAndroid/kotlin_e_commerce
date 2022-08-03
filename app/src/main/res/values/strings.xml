@@ -121,6 +121,8 @@
     <string name="check_out">Checkout</string>
     <string name="restaurant_details">Restaurant Details</string>
     <string name="product_details">Product Details</string>
+    <string name="msg_restaurant_added_in_fav_list">Restaurant removed from favorite list</string>
+    <string name="msg_restaurant_removed_from_fav_list">Restaurant added to favorite list</string>
 
     <string-array name="location_array_list">
         <item>S.G Highway</item>

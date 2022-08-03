@@ -40,6 +40,13 @@ class ViewAllProductFragment : Fragment(), ViewAllAdapter.OnViewAllClickListener
     private var viewAllList: ArrayList<ViewAllItems>? = null
     private var viewAllRestaurantList: ArrayList<RestaurantItems>? = null
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        val userData = (activity as HomeActivity).dataStoreViewModel.getLoggedInUserData()
+        data = Gson().fromJson(userData, AuthResponseData::class.java)
+        callViewALl()
+    }
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -54,8 +61,7 @@ class ViewAllProductFragment : Fragment(), ViewAllAdapter.OnViewAllClickListener
         super.onViewCreated(view, savedInstanceState)
         viewAllList = ArrayList()
         viewAllRestaurantList = ArrayList()
-        val userData = (activity as HomeActivity).dataStoreViewModel.getLoggedInUserData()
-        data = Gson().fromJson(userData, AuthResponseData::class.java)
+
 
         when (args.tag) {
             Constants.TOP_DISHES -> {
@@ -71,7 +77,7 @@ class ViewAllProductFragment : Fragment(), ViewAllAdapter.OnViewAllClickListener
         setUpHeader()
         setUpProgressDialog()
         setUpHeaderItemClick()
-        callViewALl()
+
         observeViewAllProducts()
         observeViewAllRestaurant()
         (activity as HomeActivity).showOrHideBottomAppBarAndFloatingActionButtonOnScroll()
@@ -142,7 +148,6 @@ class ViewAllProductFragment : Fragment(), ViewAllAdapter.OnViewAllClickListener
             )
 
         }
-
 
     }
 

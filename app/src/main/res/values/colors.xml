@@ -68,5 +68,6 @@
 
     <color name="color_red">#FFC8171D</color>
     <color name="colorGray">#716C6C</color>
+    <color name="icon_color">#736D6D</color>
 
 </resources>

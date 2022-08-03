@@ -1,10 +1,8 @@
 package com.specindia.ecommerce.ui.viewmodel
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import com.specindia.ecommerce.api.network.NetworkResult
+import com.specindia.ecommerce.models.FavRestaurants
 import com.specindia.ecommerce.models.response.home.DashboardListResponse
 import com.specindia.ecommerce.models.response.home.order.OrderDetailsResponse
 import com.specindia.ecommerce.models.response.home.product.AllRestaurant
@@ -33,7 +31,7 @@ class HomeViewModel @Inject constructor(
     private val _orderDetailsResponse =
         MutableLiveData<NetworkResult<OrderDetailsResponse>>()
 
-    private val _productsByRestauranResponse =
+    private val _productsByRestaurantResponse =
         MutableLiveData<NetworkResult<ProductsByRestaurantResponse>>()
 
     private val _viewAllResponse =
@@ -53,7 +51,7 @@ class HomeViewModel @Inject constructor(
         get() = _restaurantDetailsResponse
 
     val productsByRestaurant: LiveData<NetworkResult<ProductsByRestaurantResponse>>
-        get() = _productsByRestauranResponse
+        get() = _productsByRestaurantResponse
 
     val orderDetailsResponse: LiveData<NetworkResult<OrderDetailsResponse>>
         get() = _orderDetailsResponse
@@ -86,7 +84,7 @@ class HomeViewModel @Inject constructor(
 
     // Call Restaurant Details api
     fun getRestaurantDetails(headerMap: Map<String, String>, id: Int) =
-        viewModelScope.launch() {
+        viewModelScope.launch {
             _restaurantDetailsResponse.postValue(NetworkResult.Loading())
             delay(STATIC_DELAY)
             repository.getRestaurantDetails(headerMap, id).collect { values ->
@@ -96,17 +94,17 @@ class HomeViewModel @Inject constructor(
 
     // Call Restaurant's Products api
     fun getProductsByRestaurant(headerMap: Map<String, String>, parameters: String) =
-        viewModelScope.launch() {
-            _productsByRestauranResponse.postValue(NetworkResult.Loading())
+        viewModelScope.launch {
+            _productsByRestaurantResponse.postValue(NetworkResult.Loading())
             delay(STATIC_DELAY)
             repository.getProductsByRestaurant(headerMap, parameters).collect { values ->
-                _productsByRestauranResponse.value = values
+                _productsByRestaurantResponse.value = values
             }
         }
 
     // Call Order Details api
     fun getOrderDetails(headerMap: Map<String, String>, id: Int) =
-        viewModelScope.launch() {
+        viewModelScope.launch {
             _orderDetailsResponse.postValue(NetworkResult.Loading())
             delay(STATIC_DELAY)
             repository.getOrderDetails(headerMap, id).collect { values ->
@@ -116,7 +114,7 @@ class HomeViewModel @Inject constructor(
 
     // Call View All api
     fun getViewAll(headerMap: Map<String, String>, parameters: String) =
-        viewModelScope.launch() {
+        viewModelScope.launch {
             _viewAllResponse.postValue(NetworkResult.Loading())
             delay(STATIC_DELAY)
             repository.getViewAll(headerMap, parameters).collect { values ->
@@ -126,7 +124,7 @@ class HomeViewModel @Inject constructor(
 
     // Call View All Restaurant api
     fun getAllRestaurant(headerMap: Map<String, String>, parameters: String) =
-        viewModelScope.launch() {
+        viewModelScope.launch {
             _viewAllRestaurantResponse.postValue(NetworkResult.Loading())
             delay(STATIC_DELAY)
             repository.getAllRestaurant(headerMap, parameters).collect { values ->

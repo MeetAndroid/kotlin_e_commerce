@@ -2,9 +2,8 @@ package com.specindia.ecommerce.ui.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.google.gson.Gson
 import com.specindia.ecommerce.datastore.abstraction.DataStoreRepository
-import com.specindia.ecommerce.models.response.AuthResponseData
+import com.specindia.ecommerce.util.Constants.Companion.KEY_FAV_RESTAURANTS
 import com.specindia.ecommerce.util.Constants.Companion.KEY_FB_ACCESS_TOKEN
 import com.specindia.ecommerce.util.Constants.Companion.KEY_IS_FIRST_TIME
 import com.specindia.ecommerce.util.Constants.Companion.KEY_IS_USER_LOGGED_IN
@@ -125,6 +124,16 @@ class DataViewModel @Inject constructor(
 
     fun getLoggedInUserData(): String? = runBlocking {
         repository.getString(KEY_LOGGED_IN_USER_DATA)
+    }
+
+    fun saveFavoriteRestaurantList(value: String){
+        viewModelScope.launch {
+            repository.putString(KEY_FAV_RESTAURANTS, value)
+        }
+    }
+
+    fun getFavoriteRestaurantList(): String? = runBlocking {
+        repository.getString(KEY_FAV_RESTAURANTS)
     }
 }
 
