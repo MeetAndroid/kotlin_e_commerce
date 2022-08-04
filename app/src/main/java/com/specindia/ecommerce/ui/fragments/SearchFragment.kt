@@ -104,12 +104,7 @@ class SearchFragment : Fragment(), SearchListAdapter.OnSearchItemClickListener {
             when (response) {
                 is NetworkResult.Success -> {
                     searchList = ArrayList()
-                    val data1 = response.data?.data
-                    val data2 = response.data
-                    Log.e("DATA-1", Gson().toJson(data1))
-                    Log.e("DATA-2", Gson().toJson(data2))
-                    searchList = data1
-                    Log.e("DATA-3", Gson().toJson(searchList))
+                    searchList = response.data?.data
                     searchList?.let { setupUI(it) }
                 }
                 is NetworkResult.Error -> {
