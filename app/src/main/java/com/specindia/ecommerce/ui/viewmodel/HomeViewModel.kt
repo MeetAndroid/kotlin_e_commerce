@@ -2,8 +2,8 @@ package com.specindia.ecommerce.ui.viewmodel
 
 import androidx.lifecycle.*
 import com.specindia.ecommerce.api.network.NetworkResult
-import com.specindia.ecommerce.models.FavRestaurants
 import com.specindia.ecommerce.models.response.home.DashboardListResponse
+import com.specindia.ecommerce.models.response.home.SearchResponse
 import com.specindia.ecommerce.models.response.home.order.OrderDetailsResponse
 import com.specindia.ecommerce.models.response.home.product.AllRestaurant
 import com.specindia.ecommerce.models.response.home.product.ViewAllData
@@ -18,7 +18,8 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class HomeViewModel @Inject constructor(
+class
+HomeViewModel @Inject constructor(
     private val repository: EcommerceRepository,
 ) : ViewModel() {
 
@@ -28,17 +29,16 @@ class HomeViewModel @Inject constructor(
     private val _restaurantDetailsResponse =
         MutableLiveData<NetworkResult<RestaurantDetailsResponse>>()
 
-    private val _orderDetailsResponse =
-        MutableLiveData<NetworkResult<OrderDetailsResponse>>()
+    private val _orderDetailsResponse = MutableLiveData<NetworkResult<OrderDetailsResponse>>()
 
     private val _productsByRestaurantResponse =
         MutableLiveData<NetworkResult<ProductsByRestaurantResponse>>()
 
-    private val _viewAllResponse =
-        MutableLiveData<NetworkResult<ViewAllData>>()
+    private val _viewAllResponse = MutableLiveData<NetworkResult<ViewAllData>>()
 
-    private val _viewAllRestaurantResponse =
-        MutableLiveData<NetworkResult<AllRestaurant>>()
+    private val _viewAllRestaurantResponse = MutableLiveData<NetworkResult<AllRestaurant>>()
+
+    private val _searchResponse = MutableLiveData<NetworkResult<SearchResponse>>()
 
     // Live Data
     val dashboardListResponse: LiveData<NetworkResult<DashboardListResponse>>
@@ -61,6 +61,9 @@ class HomeViewModel @Inject constructor(
 
     val viewAllRestaurantResponse: LiveData<NetworkResult<AllRestaurant>>
         get() = _viewAllRestaurantResponse
+
+    val searchResponse: LiveData<NetworkResult<SearchResponse>>
+        get() = _searchResponse
 
     // Call dashboard list api
     fun getDashboardList(headerMap: Map<String, String>) =
@@ -129,6 +132,15 @@ class HomeViewModel @Inject constructor(
             delay(STATIC_DELAY)
             repository.getAllRestaurant(headerMap, parameters).collect { values ->
                 _viewAllRestaurantResponse.value = values
+            }
+        }
+
+    // Call Search api
+    fun getSearch(headerMap: Map<String, String>, parameters: String) =
+        viewModelScope.launch {
+            _searchResponse.postValue(NetworkResult.Loading())
+            repository.getSearch(headerMap, parameters).collect { values ->
+                _searchResponse.value = values
             }
         }
 }

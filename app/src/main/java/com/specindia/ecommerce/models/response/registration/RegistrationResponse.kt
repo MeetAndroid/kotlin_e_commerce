@@ -8,7 +8,6 @@ import com.specindia.ecommerce.models.response.AuthResponseData
 data class RegistrationResponse(
     @SerializedName("data")
     val data: AuthResponseData,
-
     override var message: String,
     override var status: String,
     override var status_code: Int,

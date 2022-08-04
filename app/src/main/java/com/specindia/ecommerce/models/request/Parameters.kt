@@ -10,5 +10,6 @@ data class Parameters(
     val socialType: Int = 0,
     val restaurantId: Int = 0,
     val pageNo: Int = 0,
-    val limit: Int = 0
+    val limit: Int = 0,
+    val text: String = ""
 )

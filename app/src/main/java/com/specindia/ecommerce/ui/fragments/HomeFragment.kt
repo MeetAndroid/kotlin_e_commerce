@@ -44,7 +44,6 @@ class HomeFragment : Fragment() {
     private lateinit var restaurantList: ArrayList<PopularRestaurent>
     private lateinit var categoryList: ArrayList<Category>
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         Log.d("Home", "onCreate called")
