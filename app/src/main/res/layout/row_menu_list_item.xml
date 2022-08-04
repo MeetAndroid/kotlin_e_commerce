@@ -48,6 +48,7 @@
                 android:lines="1"
                 android:paddingHorizontal="4dp"
                 android:textAllCaps="false"
+                android:textColor="@color/color_blue_or_red"
                 android:textAppearance="@style/TextAppearance.AppCompat.Small"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

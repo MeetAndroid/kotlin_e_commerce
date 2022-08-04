@@ -65,7 +65,10 @@ class ViewAllProductFragment : Fragment(), ViewAllAdapter.OnViewAllClickListener
         setUpProgressDialog()
         setUpHeaderItemClick()
 
-        callViewALL()
+        val userData = (activity as HomeActivity).dataStoreViewModel.getLoggedInUserData()
+        data = Gson().fromJson(userData, AuthResponseData::class.java)
+
+        callViewALL(data, false)
 
         if (title == TOP_DISHES) {
             observeViewAllProducts()
@@ -78,7 +81,9 @@ class ViewAllProductFragment : Fragment(), ViewAllAdapter.OnViewAllClickListener
 
         binding.swipeRefreshLayout.setOnRefreshListener {
             binding.swipeRefreshLayout.isRefreshing = false
-            callViewALL()
+
+            callViewALL(data, true)
+
         }
 
     }
@@ -114,12 +119,10 @@ class ViewAllProductFragment : Fragment(), ViewAllAdapter.OnViewAllClickListener
     }
 
     // Call Products By Restaurant api
-    private fun callViewALL() {
-        val userData = (activity as HomeActivity).dataStoreViewModel.getLoggedInUserData()
-        data = Gson().fromJson(userData, AuthResponseData::class.java)
+    private fun callViewALL(data: AuthResponseData, isSwipeToRefresh: Boolean) {
 
         if (title == TOP_DISHES) {
-            if ((activity as HomeActivity).homeViewModel.viewAllProductsResponse.value == null) {
+            if ((activity as HomeActivity).homeViewModel.viewAllProductsResponse.value == null || isSwipeToRefresh) {
                 val parameter = Parameters(
                     pageNo = 1,
                     limit = 10
@@ -134,7 +137,7 @@ class ViewAllProductFragment : Fragment(), ViewAllAdapter.OnViewAllClickListener
             }
 
         } else {
-            if ((activity as HomeActivity).homeViewModel.viewAllRestaurantResponse.value == null) {
+            if ((activity as HomeActivity).homeViewModel.viewAllRestaurantResponse.value == null || isSwipeToRefresh) {
                 val parameter1 = Parameters(
                     pageNo = 1,
                     limit = 10

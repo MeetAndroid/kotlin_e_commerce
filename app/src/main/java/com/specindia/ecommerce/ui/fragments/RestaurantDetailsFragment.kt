@@ -1,7 +1,7 @@
 package com.specindia.ecommerce.ui.fragments
 
-import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,6 +9,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.core.util.Predicate
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.setFragmentResultListener
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -27,6 +28,8 @@ import com.specindia.ecommerce.models.response.home.productsbyrestaurant.Product
 import com.specindia.ecommerce.ui.activity.HomeActivity
 import com.specindia.ecommerce.ui.adapters.ProductListAdapter
 import com.specindia.ecommerce.util.*
+import com.specindia.ecommerce.util.Constants.Companion.IS_FROM_PRODUCT_DETAILS
+import com.specindia.ecommerce.util.Constants.Companion.REQUEST_FROM_RESTAURANT_DETAILS
 import dagger.hilt.android.AndroidEntryPoint
 
 
@@ -42,6 +45,7 @@ class RestaurantDetailsFragment : Fragment(), ProductListAdapter.OnProductItemCl
     private lateinit var productList: ArrayList<ProductsByRestaurantData>
 
     private var restaurantId: Int = 0
+    private var isComeBackFromProductDetails: Boolean = false
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -49,7 +53,20 @@ class RestaurantDetailsFragment : Fragment(), ProductListAdapter.OnProductItemCl
         savedInstanceState: Bundle?,
     ): View {
         binding = FragmentRestaurantDetailsBinding.inflate(layoutInflater)
+        setFragmentResultListener(REQUEST_FROM_RESTAURANT_DETAILS) { requestKey, bundle ->
+            if (requestKey == REQUEST_FROM_RESTAURANT_DETAILS) {
+                isComeBackFromProductDetails = bundle.getBoolean(IS_FROM_PRODUCT_DETAILS, false)
+            }
+        }
+
         return binding.root
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if (!isComeBackFromProductDetails) {
+            callRestaurantDetailsApi(data)
+        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -62,8 +79,9 @@ class RestaurantDetailsFragment : Fragment(), ProductListAdapter.OnProductItemCl
         data = Gson().fromJson(userData, AuthResponseData::class.java)
 
         binding.clTopPart.setRandomBackgroundColor()
-        callRestaurantDetailsApi(data)
+
         observeRestaurantDetailsResponse()
+
         (activity as HomeActivity).showOrHideBottomAppBarAndFloatingActionButtonOnScroll()
 
         binding.swipeRefreshLayout.setOnRefreshListener {
@@ -222,7 +240,10 @@ class RestaurantDetailsFragment : Fragment(), ProductListAdapter.OnProductItemCl
 
                         // Product List
                         setUpRecyclerView()
-                        callProductsByRestaurantApi(restaurantData.data.id)
+                        if (!isComeBackFromProductDetails) {
+                            callProductsByRestaurantApi(restaurantData.data.id)
+                        }
+
                         observeProductsByRestaurantResponse()
                     }
                 }

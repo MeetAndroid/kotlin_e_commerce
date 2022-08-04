@@ -50,6 +50,7 @@
     <color name="color_blue">#09098A</color>
 
     <color name="color_blue_or_white">@color/color_blue</color>
+    <color name="color_blue_or_red">@color/color_blue</color>
     <color name="color_on_boarding_description">@color/black</color>
     <color name="color_next_previous_text">#FFC8171D</color>
 

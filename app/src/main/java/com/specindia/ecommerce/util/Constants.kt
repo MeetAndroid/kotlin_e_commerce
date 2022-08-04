@@ -84,6 +84,9 @@ class Constants {
         const val RESTAURANT = "Restaurant"
         const val CATEGORY = "Category"
 
+        // Bundle Keys
+        const val REQUEST_FROM_RESTAURANT_DETAILS="request_from_restaurant_details"
+        const val IS_FROM_PRODUCT_DETAILS = "is_from_product_details"
     }
 
 
