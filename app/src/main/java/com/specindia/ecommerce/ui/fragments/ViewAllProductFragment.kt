@@ -22,7 +22,9 @@ import com.specindia.ecommerce.models.response.home.product.ViewAllItems
 import com.specindia.ecommerce.ui.activity.HomeActivity
 import com.specindia.ecommerce.ui.adapters.ViewAllAdapter
 import com.specindia.ecommerce.ui.adapters.ViewAllRestaurantAdapter
-import com.specindia.ecommerce.util.Constants
+import com.specindia.ecommerce.util.Constants.Companion.CATEGORY
+import com.specindia.ecommerce.util.Constants.Companion.RESTAURANT
+import com.specindia.ecommerce.util.Constants.Companion.TOP_DISHES
 import com.specindia.ecommerce.util.getHeaderMap
 import com.specindia.ecommerce.util.showProgressDialog
 import com.specindia.ecommerce.util.visible
@@ -40,13 +42,6 @@ class ViewAllProductFragment : Fragment(), ViewAllAdapter.OnViewAllClickListener
     private var viewAllList: ArrayList<ViewAllItems>? = null
     private var viewAllRestaurantList: ArrayList<RestaurantItems>? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        val userData = (activity as HomeActivity).dataStoreViewModel.getLoggedInUserData()
-        data = Gson().fromJson(userData, AuthResponseData::class.java)
-        callViewALl()
-    }
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -56,35 +51,34 @@ class ViewAllProductFragment : Fragment(), ViewAllAdapter.OnViewAllClickListener
         return binding.root
     }
 
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewAllList = ArrayList()
         viewAllRestaurantList = ArrayList()
 
-
         when (args.tag) {
-            Constants.TOP_DISHES -> {
-                title = Constants.TOP_DISHES
-            }
-            Constants.RESTAURANT -> {
-                title = Constants.RESTAURANT
-            }
-            Constants.CATEGORY -> {
-                title = Constants.CATEGORY
-            }
+            TOP_DISHES -> title = TOP_DISHES
+            RESTAURANT -> title = RESTAURANT
+            CATEGORY -> title = CATEGORY
         }
         setUpHeader()
         setUpProgressDialog()
         setUpHeaderItemClick()
 
-        observeViewAllProducts()
-        observeViewAllRestaurant()
+        callViewALL()
+
+        if (title == TOP_DISHES) {
+            observeViewAllProducts()
+        }
+        if (title == RESTAURANT) {
+            observeViewAllRestaurant()
+        }
+
         (activity as HomeActivity).showOrHideBottomAppBarAndFloatingActionButtonOnScroll()
 
         binding.swipeRefreshLayout.setOnRefreshListener {
             binding.swipeRefreshLayout.isRefreshing = false
-            callViewALl()
+            callViewALL()
         }
 
     }
@@ -120,40 +114,45 @@ class ViewAllProductFragment : Fragment(), ViewAllAdapter.OnViewAllClickListener
     }
 
     // Call Products By Restaurant api
-    private fun callViewALl() {
-        if (title == Constants.TOP_DISHES) {
-            val parameter = Parameters(
-                pageNo = 1,
-                limit = 10
-            )
-            (activity as HomeActivity).homeViewModel.getViewAll(
-                getHeaderMap(
-                    data.token,
-                    true
-                ),
-                Gson().toJson(parameter)
-            )
+    private fun callViewALL() {
+        val userData = (activity as HomeActivity).dataStoreViewModel.getLoggedInUserData()
+        data = Gson().fromJson(userData, AuthResponseData::class.java)
+
+        if (title == TOP_DISHES) {
+            if ((activity as HomeActivity).homeViewModel.viewAllProductsResponse.value == null) {
+                val parameter = Parameters(
+                    pageNo = 1,
+                    limit = 10
+                )
+                (activity as HomeActivity).homeViewModel.getAllProducts(
+                    getHeaderMap(
+                        data.token,
+                        true
+                    ),
+                    Gson().toJson(parameter)
+                )
+            }
+
         } else {
-
-            val parameter1 = Parameters(
-                pageNo = 1,
-                limit = 10
-            )
-            (activity as HomeActivity).homeViewModel.getAllRestaurant(
-                getHeaderMap(
-                    data.token,
-                    true
-                ),
-                Gson().toJson(parameter1)
-            )
-
+            if ((activity as HomeActivity).homeViewModel.viewAllRestaurantResponse.value == null) {
+                val parameter1 = Parameters(
+                    pageNo = 1,
+                    limit = 10
+                )
+                (activity as HomeActivity).homeViewModel.getAllRestaurants(
+                    getHeaderMap(
+                        data.token,
+                        true
+                    ),
+                    Gson().toJson(parameter1)
+                )
+            }
         }
-
     }
 
     // Observe Products By Restaurant Response
     private fun observeViewAllProducts() {
-        (activity as HomeActivity).homeViewModel.viewAllResponse.observe(
+        (activity as HomeActivity).homeViewModel.viewAllProductsResponse.observe(
             viewLifecycleOwner
         ) { response ->
 

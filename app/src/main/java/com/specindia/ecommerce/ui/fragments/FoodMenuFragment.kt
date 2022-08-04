@@ -45,7 +45,11 @@ class FoodMenuFragment : Fragment() {
         data = Gson().fromJson(userData, AuthResponseData::class.java)
 
         setUpRecyclerView()
-        callMenuListApi(data)
+
+        if ((activity as HomeActivity).homeViewModel.menuListResponse.value == null) {
+            callMenuListApi(data)
+        }
+
         observeResponse()
 
         menuListAdapter.setOnItemClickListener {

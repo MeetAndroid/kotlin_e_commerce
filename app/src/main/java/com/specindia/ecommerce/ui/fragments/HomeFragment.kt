@@ -1,5 +1,6 @@
 package com.specindia.ecommerce.ui.fragments
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -44,18 +45,11 @@ class HomeFragment : Fragment() {
     private lateinit var restaurantList: ArrayList<PopularRestaurent>
     private lateinit var categoryList: ArrayList<Category>
 
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        Log.d("Home", "onCreate called")
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        Log.d("Home", "onCreateView called")
         binding = FragmentHomeBinding.inflate(layoutInflater)
         return binding.root
     }
@@ -65,15 +59,17 @@ class HomeFragment : Fragment() {
         setUpHeader()
         setUpHeaderItemClick()
         (activity as HomeActivity).showOrHideBottomAppBarAndFloatingActionButtonOnScroll()
-
-
         setUpProgressDialog()
         val userData = (activity as HomeActivity).dataStoreViewModel.getLoggedInUserData()
         data = Gson().fromJson(userData, AuthResponseData::class.java)
 
         getUserDetails(data)
         setUpRecyclerView()
-        callDashBoardListApi(data)
+
+        if ((activity as HomeActivity).homeViewModel.dashboardListResponse.value == null) {
+            callDashBoardListApi(data)
+        }
+
         observeResponse()
 
         topProductAdapter.setOnItemClickListener {
@@ -98,6 +94,7 @@ class HomeFragment : Fragment() {
             binding.swipeRefreshLayout.isRefreshing = false
             callDashBoardListApi(data)
         }
+
     }
 
 
@@ -220,6 +217,7 @@ class HomeFragment : Fragment() {
     }
 
 
+    @SuppressLint("NotifyDataSetChanged")
     private fun setUpTopDishUI(
         binding: FragmentHomeBinding,
         dashboardListResponse: DashboardListResponse,
@@ -247,6 +245,7 @@ class HomeFragment : Fragment() {
         }
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     private fun setUpPopularRestaurantUI(
         binding: FragmentHomeBinding,
         dashboardListResponse: DashboardListResponse,
@@ -273,6 +272,7 @@ class HomeFragment : Fragment() {
         }
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     private fun setUpCategoryListUI(
         binding: FragmentHomeBinding,
         dashboardListResponse: DashboardListResponse,

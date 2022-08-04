@@ -80,13 +80,13 @@ interface EcommerceApiService {
     ): Response<OrderDetailsResponse>
 
     @POST("""$PRODUCT_END_POINT$GET_ALL_PRODUCT""")
-    suspend fun getViewAll(
+    suspend fun getAllProducts(
         @HeaderMap headers: Map<String, String>,
         @Body parameters: String
     ): Response<ViewAllData>
 
     @POST("""$CUSTOMER_END_POINT$GET_ALL_RESTAURANT""")
-    suspend fun getAllRestaurant(
+    suspend fun getAllRestaurants(
         @HeaderMap headers: Map<String, String>,
         @Body parameters: String
     ): Response<AllRestaurant>

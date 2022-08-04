@@ -94,16 +94,16 @@ class EcommerceRepository @Inject constructor(
         }.flowOn(Dispatchers.IO)
     }
 
-    suspend fun getViewAll(
+    suspend fun getAllProducts(
         headerMap: Map<String, String>,
         parameters: String
     ): Flow<NetworkResult<ViewAllData>> {
         return flow {
-            emit(safeApiCall { remoteDataSource.getViewAll(headerMap,parameters) })
+            emit(safeApiCall { remoteDataSource.getAllProducts(headerMap,parameters) })
         }.flowOn(Dispatchers.IO)
     }
 
-    suspend fun getAllRestaurant(
+    suspend fun getAllRestaurants(
         headerMap: Map<String, String>,
         parameters: String
     ): Flow<NetworkResult<AllRestaurant>> {

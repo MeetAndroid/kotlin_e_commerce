@@ -23,6 +23,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.ContextCompat
+import androidx.core.util.Predicate
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import com.facebook.login.LoginManager
@@ -239,6 +240,10 @@ fun View.setRandomBackgroundColor() {
     val rnd = Random()
     val color: Int = Color.argb(255, rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256))
     this.setBackgroundColor(color)
+}
+
+fun <T> removeElementByMatchingCriteria(list: MutableList<T>, predicate: Predicate<T>) {
+    list.filter { predicate.test(it) }.forEach { list.remove(it) }
 }
 
 // ============== Alert Dialogs

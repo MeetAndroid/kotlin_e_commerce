@@ -1,12 +1,13 @@
 package com.specindia.ecommerce.ui.fragments
 
+import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
+import androidx.core.util.Predicate
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.navArgs
@@ -27,7 +28,6 @@ import com.specindia.ecommerce.ui.activity.HomeActivity
 import com.specindia.ecommerce.ui.adapters.ProductListAdapter
 import com.specindia.ecommerce.util.*
 import dagger.hilt.android.AndroidEntryPoint
-import java.lang.reflect.Type
 
 
 @AndroidEntryPoint
@@ -142,10 +142,13 @@ class RestaurantDetailsFragment : Fragment(), ProductListAdapter.OnProductItemCl
                 setUpFavButton(isRestaurantExist)
 
                 ivFavorite.setOnClickListener {
-                    if (isRestaurantExist) {
+                    val isFav = array.any { it.id == currentRestaurantId }
+                    if (isFav) {
                         disableFavButton()
                         // If Restaurant exist then remove it from an Array
-                        array.removeIf { it.id == currentRestaurantId }
+                        val data =
+                            Predicate { favRestaurant: FavRestaurants -> favRestaurant.id == currentRestaurantId }
+                        removeElementByMatchingCriteria(array, data)
                         requireActivity().showLongToast(getString(R.string.msg_restaurant_added_in_fav_list))
 
                     } else {

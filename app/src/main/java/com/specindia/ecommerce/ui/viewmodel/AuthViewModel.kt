@@ -8,8 +8,8 @@ import com.specindia.ecommerce.api.network.NetworkResult
 import com.specindia.ecommerce.models.response.login.LoginResponse
 import com.specindia.ecommerce.models.response.registration.RegistrationResponse
 import com.specindia.ecommerce.models.response.social.SocialLoginResponse
-import com.specindia.ecommerce.repository.EcommerceRepository
 import com.specindia.ecommerce.util.Constants.Companion.STATIC_DELAY
+import com.specindia.ecommerce.repository.EcommerceRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
