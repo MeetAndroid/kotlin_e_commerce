@@ -5,6 +5,7 @@ plugins {
     id 'kotlin-android'
     id 'kotlin-kapt'
     id 'dagger.hilt.android.plugin'
+    id 'com.google.dagger.hilt.android'
 }
 
 android {
@@ -58,7 +59,7 @@ kapt {
 }
 
 dependencies {
-    def splashApiVersion = "1.0.0-rc01"
+    def splashApiVersion = "1.0.0"
     def retrofitVersion = "2.6.2"
     def loggingInterceptorVersion = "4.10.0"
     def roomVersion = "2.4.3"
@@ -67,7 +68,7 @@ dependencies {
     def navigationVersion = "2.5.1"
     def glideVersion = "4.13.2"
     def dataStoreVersion = "1.0.0"
-    def hiltVersion = "2.38.1"
+    def hiltVersion = "2.43.2"
     def brManagerVersion = "1.1.0"
     def indicator = "1.2.1"
     def facebook_sdk_version = "14.1.0"
