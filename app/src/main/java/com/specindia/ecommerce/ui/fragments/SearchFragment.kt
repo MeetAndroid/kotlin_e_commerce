@@ -16,6 +16,7 @@ import com.specindia.ecommerce.models.response.AuthResponseData
 import com.specindia.ecommerce.models.response.home.SearchItem
 import com.specindia.ecommerce.ui.activity.HomeActivity
 import com.specindia.ecommerce.ui.adapters.SearchListAdapter
+import com.specindia.ecommerce.util.Constants
 import com.specindia.ecommerce.util.getHeaderMap
 
 
@@ -122,6 +123,11 @@ class SearchFragment : Fragment(), SearchListAdapter.OnSearchItemClickListener {
     }
 
     override fun onSearchItemClick(data: SearchItem, position: Int) {
-        Log.e("ITEM-NAME :- ", data.productName)
+        view?.findNavController()
+            ?.navigate(
+                SearchFragmentDirections.actionSearchFragmentToProductDetailsFragment(
+                    data.id, Constants.SEARCH
+                )
+            )
     }
 }

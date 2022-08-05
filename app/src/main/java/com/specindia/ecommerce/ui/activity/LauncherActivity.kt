@@ -46,7 +46,5 @@ class LauncherActivity : AppCompatActivity() {
                 startNewActivity(onBoardingActivity)
             }, SPLASH_SCREEN_TIME_OUT)
         }
-
     }
-
 }

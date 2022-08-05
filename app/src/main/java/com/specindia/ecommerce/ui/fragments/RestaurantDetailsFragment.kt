@@ -116,7 +116,9 @@ class RestaurantDetailsFragment : Fragment(), ProductListAdapter.OnProductItemCl
         binding.homeDetailsScreenHeader.ivFavorite.setColorFilter(
             ContextCompat.getColor(
                 requireActivity(),
-                R.color.color_red), android.graphics.PorterDuff.Mode.MULTIPLY)
+                R.color.color_red
+            ), android.graphics.PorterDuff.Mode.MULTIPLY
+        )
 
     }
 
@@ -124,7 +126,9 @@ class RestaurantDetailsFragment : Fragment(), ProductListAdapter.OnProductItemCl
         binding.homeDetailsScreenHeader.ivFavorite.setColorFilter(
             ContextCompat.getColor(
                 requireActivity(),
-                R.color.icon_color), android.graphics.PorterDuff.Mode.MULTIPLY)
+                R.color.icon_color
+            ), android.graphics.PorterDuff.Mode.MULTIPLY
+        )
 
     }
 
@@ -172,8 +176,12 @@ class RestaurantDetailsFragment : Fragment(), ProductListAdapter.OnProductItemCl
                     } else {
                         enableFavButton()
                         // If Restaurant not exist then add it to an Array
-                        array.add(FavRestaurants(restaurantId.toString(),
-                            true))
+                        array.add(
+                            FavRestaurants(
+                                restaurantId.toString(),
+                                true
+                            )
+                        )
                         requireActivity().showLongToast(getString(R.string.msg_restaurant_removed_from_fav_list))
                     }
 
@@ -334,7 +342,7 @@ class RestaurantDetailsFragment : Fragment(), ProductListAdapter.OnProductItemCl
         view?.findNavController()
             ?.navigate(
                 RestaurantDetailsFragmentDirections.actionRestaurantDetailsFragmentToProductDetailsFragment(
-                    data.id
+                    data.id, Constants.RESTAURANT
                 )
             )
     }
