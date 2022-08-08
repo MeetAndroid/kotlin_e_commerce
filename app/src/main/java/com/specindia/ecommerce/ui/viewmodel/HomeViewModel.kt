@@ -1,7 +1,13 @@
 package com.specindia.ecommerce.ui.viewmodel
 
-import androidx.lifecycle.*
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.specindia.ecommerce.api.network.NetworkResult
+import com.specindia.ecommerce.models.response.cart.addUpdateToCart.AddUpdateToCartResponse
+import com.specindia.ecommerce.models.response.cart.getcart.GetCartResponse
+import com.specindia.ecommerce.models.response.cart.removeFromCart.RemoveFromCartResponse
 import com.specindia.ecommerce.models.response.home.DashboardListResponse
 import com.specindia.ecommerce.models.response.home.SearchResponse
 import com.specindia.ecommerce.models.response.home.order.OrderDetailsResponse
@@ -41,6 +47,12 @@ HomeViewModel @Inject constructor(
 
     private val _searchResponse = MutableLiveData<NetworkResult<SearchResponse>>()
 
+    private val _getCartResponse = MutableLiveData<NetworkResult<GetCartResponse>>()
+
+    private val _addUpdateToCartResponse = MutableLiveData<NetworkResult<AddUpdateToCartResponse>>()
+
+    private val _removeFromCartResponse = MutableLiveData<NetworkResult<RemoveFromCartResponse>>()
+
     // Live Data
     val dashboardListResponse: LiveData<NetworkResult<DashboardListResponse>>
         get() = _dashboardListResponse
@@ -66,6 +78,15 @@ HomeViewModel @Inject constructor(
     val searchResponse: LiveData<NetworkResult<SearchResponse>>
         get() = _searchResponse
 
+    val getCartResponse: LiveData<NetworkResult<GetCartResponse>>
+        get() = _getCartResponse
+
+    val addUpdateToCart: LiveData<NetworkResult<AddUpdateToCartResponse>>
+        get() = _addUpdateToCartResponse
+
+    val removeFromCart: LiveData<NetworkResult<RemoveFromCartResponse>>
+        get() = _removeFromCartResponse
+
     // Call dashboard list api
     fun getDashboardList(headerMap: Map<String, String>) =
         viewModelScope.launch() {
@@ -90,7 +111,7 @@ HomeViewModel @Inject constructor(
     fun getRestaurantDetails(headerMap: Map<String, String>, id: Int) =
         viewModelScope.launch {
             _restaurantDetailsResponse.postValue(NetworkResult.Loading())
-            delay(STATIC_DELAY)
+            //delay(STATIC_DELAY)
             repository.getRestaurantDetails(headerMap, id).collect { values ->
                 _restaurantDetailsResponse.value = values
             }
@@ -100,7 +121,7 @@ HomeViewModel @Inject constructor(
     fun getProductsByRestaurant(headerMap: Map<String, String>, parameters: String) =
         viewModelScope.launch {
             _productsByRestaurantResponse.postValue(NetworkResult.Loading())
-            delay(STATIC_DELAY)
+            //delay(STATIC_DELAY)
             repository.getProductsByRestaurant(headerMap, parameters).collect { values ->
                 _productsByRestaurantResponse.value = values
             }
@@ -130,7 +151,7 @@ HomeViewModel @Inject constructor(
     fun getAllRestaurants(headerMap: Map<String, String>, parameters: String) =
         viewModelScope.launch {
             _viewAllRestaurantResponse.postValue(NetworkResult.Loading())
-            delay(STATIC_DELAY)
+            //delay(STATIC_DELAY)
             repository.getAllRestaurants(headerMap, parameters).collect { values ->
                 _viewAllRestaurantResponse.value = values
             }
@@ -142,6 +163,35 @@ HomeViewModel @Inject constructor(
             _searchResponse.postValue(NetworkResult.Loading())
             repository.getSearch(headerMap, parameters).collect { values ->
                 _searchResponse.value = values
+            }
+        }
+
+    // Call Get Cart api
+    fun getCart(headerMap: Map<String, String>) =
+        viewModelScope.launch {
+            //delay(STATIC_DELAY)
+            _getCartResponse.postValue(NetworkResult.Loading())
+            repository.getCart(headerMap).collect { values ->
+                _getCartResponse.value = values
+            }
+        }
+
+    // Call Add Update To Cart api
+    fun addUpdateToCart(headerMap: Map<String, String>, parameters: String) =
+        viewModelScope.launch {
+            //delay(STATIC_DELAY)
+            _addUpdateToCartResponse.postValue(NetworkResult.Loading())
+            repository.addUpdateToCart(headerMap, parameters).collect { values ->
+                _addUpdateToCartResponse.value = values
+            }
+        }
+
+    // Call Remove From Cart api
+    fun removeFromCart(headerMap: Map<String, String>, parameters: String) =
+        viewModelScope.launch {
+            _addUpdateToCartResponse.postValue(NetworkResult.Loading())
+            repository.addUpdateToCart(headerMap, parameters).collect { values ->
+                _addUpdateToCartResponse.value = values
             }
         }
 }

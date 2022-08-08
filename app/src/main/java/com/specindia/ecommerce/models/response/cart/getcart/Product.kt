@@ -1,16 +1,13 @@
-package com.specindia.ecommerce.models.response.home.productsbyrestaurant
+package com.specindia.ecommerce.models.response.cart.getcart
 
 
-import androidx.room.Ignore
 import com.google.gson.annotations.SerializedName
 
-data class ProductsByRestaurantData(
+data class Product(
     @SerializedName("categoryId")
     val categoryId: Int,
     @SerializedName("categoryName")
     val categoryName: String,
-    @SerializedName("createdAt")
-    val createdAt: String,
     @SerializedName("description")
     val description: String,
     @SerializedName("id")
@@ -22,13 +19,5 @@ data class ProductsByRestaurantData(
     @SerializedName("productName")
     val productName: String,
     @SerializedName("RestaurantId")
-    val restaurantId: Int,
-    @SerializedName("updatedAt")
-    val updatedAt: String,
-    @Ignore
-    var totalQty: Int = 0,
-    @Ignore
-    var cartId: Int = 0,
-    @Ignore
-    var isCartExist:Boolean = false
+    val restaurantId: Int
 )

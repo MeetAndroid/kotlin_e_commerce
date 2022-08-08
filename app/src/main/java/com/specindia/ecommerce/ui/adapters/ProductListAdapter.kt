@@ -30,37 +30,38 @@ class ProductListAdapter(
         with(holder) {
             with(binding) {
 
-                    Glide.with(itemView)
-                        .load(product.productImage)
-                        .placeholder(R.drawable.ic_launcher_foreground)
-                        .error(android.R.drawable.ic_dialog_alert)
-                        .into(ivProductImage)
+                Glide.with(itemView)
+                    .load(product.productImage)
+                    .placeholder(R.drawable.ic_launcher_foreground)
+                    .error(android.R.drawable.ic_dialog_alert)
+                    .into(ivProductImage)
 
-                    tvProductName.text = product.productName
-                    tvProductPrice.text = product.price.toString()
-                    tvQty.text = product.totalQty.toString()
+                tvProductName.text = product.productName
+                tvProductPrice.text = product.price.toString()
+                tvQty.text = product.totalQty.toString()
 
-                    if (product.totalQty > 0) {
-                        btnAdd.visible(false)
-                        clAddOrRemoveProduct.visible(true)
-                    } else {
-                        btnAdd.visible(true)
-                        clAddOrRemoveProduct.visible(false)
-                    }
+                if (product.totalQty > 0) {
+                    btnAdd.visible(false)
+                    clAddOrRemoveProduct.visible(true)
+                } else {
+                    btnAdd.visible(true)
+                    clAddOrRemoveProduct.visible(false)
+                }
 
-                    btnAdd.setOnClickListener {
-                        btnAdd.visible(false)
-                        clAddOrRemoveProduct.visible(true)
-                        onProductItemClickListener.onAddButtonClick(product, position)
-                    }
+                btnAdd.setOnClickListener {
+                    btnAdd.visible(false)
+                    clAddOrRemoveProduct.visible(true)
+                    onProductItemClickListener.onAddButtonClick(product, position)
 
-                    btnRemoveProduct.setOnClickListener {
-                        onProductItemClickListener.onRemoveProductButtonClick(product, position)
-                    }
+                }
 
-                    btnAddProduct.setOnClickListener {
-                        onProductItemClickListener.onAddProductButtonClick(product, position)
-                    }
+                btnRemoveProduct.setOnClickListener {
+                    onProductItemClickListener.onRemoveProductButtonClick(product, position)
+                }
+
+                btnAddProduct.setOnClickListener {
+                    onProductItemClickListener.onAddProductButtonClick(product, position)
+                }
 
                 itemView.setOnClickListener {
                     onProductItemClickListener.onItemClick(product, position)
@@ -76,7 +77,14 @@ class ProductListAdapter(
     interface OnProductItemClickListener {
         fun onItemClick(data: ProductsByRestaurantData, position: Int)
         fun onAddButtonClick(data: ProductsByRestaurantData, position: Int)
-        fun onAddProductButtonClick(data: ProductsByRestaurantData, position: Int)
-        fun onRemoveProductButtonClick(data: ProductsByRestaurantData, position: Int)
+        fun onAddProductButtonClick(
+            data: ProductsByRestaurantData,
+            position: Int,
+        )
+
+        fun onRemoveProductButtonClick(
+            data: ProductsByRestaurantData,
+            position: Int,
+        )
     }
 }

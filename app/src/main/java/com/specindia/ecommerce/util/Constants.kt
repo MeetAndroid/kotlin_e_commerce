@@ -44,7 +44,14 @@ class Constants {
         const val GET_PRODUCT_BY_RESTRAUNT = "getProductByRestraunt"
         const val GET_ALL_PRODUCT = "getAllProducts"
         const val GET_ALL_RESTAURANT = "getRestraunts"
+
+        // Search
         const val SEARCH_FOOD = "searchFood"
+
+        // Cart
+        const val GET_CART = "getCart"
+        const val REMOVE_FROM_CART = "removeFromCart"
+        const val ADD_UPDATE_TO_CART = "addUpdateToCart"
 
         // Order
         const val GET_ORDER_DETAILS = "getOrderDetails/{id}"
@@ -86,7 +93,7 @@ class Constants {
         const val CATEGORY = "Category"
 
         // Bundle Keys
-        const val REQUEST_FROM_RESTAURANT_DETAILS="request_from_restaurant_details"
+        const val REQUEST_FROM_RESTAURANT_DETAILS = "request_from_restaurant_details"
         const val IS_FROM_PRODUCT_DETAILS = "is_from_product_details"
     }
 
