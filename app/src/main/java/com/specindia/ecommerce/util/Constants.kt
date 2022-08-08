@@ -44,7 +44,14 @@ class Constants {
         const val GET_PRODUCT_BY_RESTRAUNT = "getProductByRestraunt"
         const val GET_ALL_PRODUCT = "getAllProducts"
         const val GET_ALL_RESTAURANT = "getRestraunts"
+
+        // Search
         const val SEARCH_FOOD = "searchFood"
+
+        // Cart
+        const val GET_CART = "getCart"
+        const val REMOVE_FROM_CART = "removeFromCart"
+        const val ADD_UPDATE_TO_CART = "addUpdateToCart"
 
         // Order
         const val GET_ORDER_DETAILS = "getOrderDetails/{id}"

@@ -37,4 +37,13 @@ class EcommerceRemoteDataSource @Inject constructor(private val apiService: Ecom
 
     suspend fun getSearch(headerMap: Map<String, String>, parameters: String) =
         apiService.getSearch(headerMap, parameters)
+
+    suspend fun getCart(headerMap: Map<String, String>) =
+        apiService.getCart(headerMap)
+
+    suspend fun addUpdateToCart(headerMap: Map<String, String>, parameters: String) =
+        apiService.addUpdateToCart(headerMap,parameters)
+
+    suspend fun removeFromCart(headerMap: Map<String, String>, parameters: String) =
+        apiService.removeFromCart(headerMap,parameters)
 }

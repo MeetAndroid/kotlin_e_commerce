@@ -3,6 +3,9 @@ package com.specindia.ecommerce.repository
 import com.specindia.ecommerce.api.datasource.EcommerceRemoteDataSource
 import com.specindia.ecommerce.api.network.BaseApiResponse
 import com.specindia.ecommerce.api.network.NetworkResult
+import com.specindia.ecommerce.models.response.cart.addUpdateToCart.AddUpdateToCartResponse
+import com.specindia.ecommerce.models.response.cart.getcart.GetCartResponse
+import com.specindia.ecommerce.models.response.cart.removeFromCart.RemoveFromCartResponse
 import com.specindia.ecommerce.models.response.home.DashboardListResponse
 import com.specindia.ecommerce.models.response.home.SearchResponse
 import com.specindia.ecommerce.models.response.home.order.OrderDetailsResponse
@@ -119,6 +122,32 @@ class EcommerceRepository @Inject constructor(
     ): Flow<NetworkResult<SearchResponse>> {
         return flow {
             emit(safeApiCall { remoteDataSource.getSearch(headerMap,parameters) })
+        }.flowOn(Dispatchers.IO)
+    }
+
+    suspend fun getCart(
+        headerMap: Map<String, String>
+    ): Flow<NetworkResult<GetCartResponse>> {
+        return flow {
+            emit(safeApiCall { remoteDataSource.getCart(headerMap) })
+        }.flowOn(Dispatchers.IO)
+    }
+
+    suspend fun addUpdateToCart(
+        headerMap: Map<String, String>,
+        parameters: String
+    ): Flow<NetworkResult<AddUpdateToCartResponse>> {
+        return flow {
+            emit(safeApiCall { remoteDataSource.addUpdateToCart(headerMap,parameters) })
+        }.flowOn(Dispatchers.IO)
+    }
+
+    suspend fun removeFromCart(
+        headerMap: Map<String, String>,
+        parameters: String
+    ): Flow<NetworkResult<RemoveFromCartResponse>> {
+        return flow {
+            emit(safeApiCall { remoteDataSource.removeFromCart(headerMap,parameters) })
         }.flowOn(Dispatchers.IO)
     }
 }

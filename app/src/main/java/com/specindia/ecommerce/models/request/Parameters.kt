@@ -9,7 +9,11 @@ data class Parameters(
     val socialId: String = "",
     val socialType: Int = 0,
     val restaurantId: Int = 0,
+    val productId: String = "",
+    val id: String = "",
+    val quantity: String = "",
+    val amount: String = "",
     val pageNo: Int = 0,
     val limit: Int = 0,
-    val text: String = ""
+    val text: String = "",
 )

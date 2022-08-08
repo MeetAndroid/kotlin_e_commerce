@@ -1,5 +1,6 @@
 package com.specindia.ecommerce.ui.fragments
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -21,6 +22,9 @@ import com.specindia.ecommerce.R
 import com.specindia.ecommerce.api.network.NetworkResult
 import com.specindia.ecommerce.databinding.FragmentRestaurantDetailsBinding
 import com.specindia.ecommerce.models.FavRestaurants
+import com.specindia.ecommerce.models.ProductWithTotalQty
+import com.specindia.ecommerce.models.request.AddUpdateCartWithCartId
+import com.specindia.ecommerce.models.request.AddUpdateCartWithProductId
 import com.specindia.ecommerce.models.request.Parameters
 import com.specindia.ecommerce.models.response.AuthResponseData
 import com.specindia.ecommerce.models.response.home.productsbyrestaurant.ProductsByRestaurantData
@@ -45,6 +49,7 @@ class RestaurantDetailsFragment : Fragment(), ProductListAdapter.OnProductItemCl
 
     private var restaurantId: Int = 0
     private var isComeBackFromProductDetails: Boolean = false
+    private var productWithTotalQtyList = ArrayList<ProductWithTotalQty>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -77,6 +82,7 @@ class RestaurantDetailsFragment : Fragment(), ProductListAdapter.OnProductItemCl
         val userData = (activity as HomeActivity).dataStoreViewModel.getLoggedInUserData()
         data = Gson().fromJson(userData, AuthResponseData::class.java)
 
+        hideContent()
         binding.clTopPart.setRandomBackgroundColor()
 
         observeRestaurantDetailsResponse()
@@ -88,6 +94,22 @@ class RestaurantDetailsFragment : Fragment(), ProductListAdapter.OnProductItemCl
             callRestaurantDetailsApi(data)
         }
 
+    }
+
+    private fun hideContent() {
+        binding.apply {
+            clTopPart.visible(false)
+            clRestaurantName.visible(false)
+            tvRestaurantAddress.visible(false)
+        }
+    }
+
+    private fun showContent() {
+        binding.apply {
+            clTopPart.visible(true)
+            clRestaurantName.visible(true)
+            tvRestaurantAddress.visible(true)
+        }
     }
 
     private fun setUpHeader() {
@@ -213,7 +235,7 @@ class RestaurantDetailsFragment : Fragment(), ProductListAdapter.OnProductItemCl
         }
     }
 
-    // Call Restaurant Details API
+    // ============== Call Restaurant Details API
     private fun callRestaurantDetailsApi(data: AuthResponseData) {
         (activity as HomeActivity).homeViewModel.getRestaurantDetails(
             getHeaderMap(
@@ -224,7 +246,7 @@ class RestaurantDetailsFragment : Fragment(), ProductListAdapter.OnProductItemCl
         )
     }
 
-    // Observe Restaurant Details Response
+    // ============== Observe Restaurant Details Response
     private fun observeRestaurantDetailsResponse() {
         (activity as HomeActivity).homeViewModel.restaurantDetailsResponse.observe(
             viewLifecycleOwner
@@ -232,8 +254,10 @@ class RestaurantDetailsFragment : Fragment(), ProductListAdapter.OnProductItemCl
 
             when (response) {
                 is NetworkResult.Success -> {
+                    showContent()
                     customProgressDialog.hide()
                     response.data?.let { restaurantData ->
+                        binding.clTopPart.visible(true)
                         with(binding) {
                             tvRestaurantName.text = restaurantData.data.name
                             tvRestaurantAddress.text = restaurantData.data.address
@@ -266,7 +290,7 @@ class RestaurantDetailsFragment : Fragment(), ProductListAdapter.OnProductItemCl
     }
 
 
-    // Call Products By Restaurant api
+    // ============== Call Products By Restaurant api
     private fun callProductsByRestaurantApi(id: Int) {
 
         val parameter = Parameters(
@@ -284,7 +308,7 @@ class RestaurantDetailsFragment : Fragment(), ProductListAdapter.OnProductItemCl
         )
     }
 
-    // Observe Products By Restaurant Response
+    // ============== Observe Products By Restaurant Response
     private fun observeProductsByRestaurantResponse() {
         (activity as HomeActivity).homeViewModel.productsByRestaurant.observe(
             viewLifecycleOwner
@@ -295,7 +319,12 @@ class RestaurantDetailsFragment : Fragment(), ProductListAdapter.OnProductItemCl
                     customProgressDialog.hide()
                     response.data?.let { productListResponse ->
                         setUpProductListUI(binding, productListResponse)
+
+                        callGetCartApi()
+                        observeGetCartResponse()
                     }
+
+
                 }
                 is NetworkResult.Error -> {
                     customProgressDialog.hide()
@@ -337,6 +366,168 @@ class RestaurantDetailsFragment : Fragment(), ProductListAdapter.OnProductItemCl
             .show()
     }
 
+    // ============== GET CART DATA
+    private fun callGetCartApi() {
+        Log.e("GetCart", "Calling...")
+        customProgressDialog.show()
+        (activity as HomeActivity).homeViewModel.getCart(
+            getHeaderMap(
+                data.token,
+                true
+            )
+        )
+    }
+
+    // ============== Observe Cart Response
+    @SuppressLint("LongLogTag")
+    private fun observeGetCartResponse() {
+        (activity as HomeActivity).homeViewModel.getCartResponse.observe(
+            viewLifecycleOwner
+        ) { response ->
+
+            when (response) {
+                is NetworkResult.Success -> {
+                    customProgressDialog.hide()
+                    response.data?.let { cartList ->
+                        if (cartList.data.size > 0) {
+
+                            val productsByRestaurant =
+                                (activity as HomeActivity).homeViewModel.productsByRestaurant.value
+                            if (productsByRestaurant != null) {
+                                if (productsByRestaurant.data != null) {
+                                    val productListResponse = productsByRestaurant.data
+
+                                    productWithTotalQtyList.clear()
+                                    productWithTotalQtyList = ArrayList()
+
+
+                                    if (productListResponse.data.size > 0) {
+                                        for (i in 0 until productListResponse.data.size) {
+                                            val productList = productListResponse.data
+
+                                            for (j in 0 until cartList.data.size) {
+                                                if (cartList.data[j].productId == productList[i].id) {
+                                                    // cart has a specific product
+                                                    productWithTotalQtyList.add(
+                                                        ProductWithTotalQty(
+                                                            productId = cartList.data[j].productId.toString(),
+                                                            totalQty = cartList.data[j].quantity,
+                                                            cartId = cartList.data[j].id.toString(),
+                                                            positionInAdapter = i,
+                                                            isCartExist = true))
+                                                }
+
+                                            }
+
+                                        }
+                                    }
+
+                                    productWithTotalQtyList.trimToSize()
+                                    if (productWithTotalQtyList.size > 0) {
+                                        for (k in 0 until productWithTotalQtyList.size) {
+                                            val currentData = productWithTotalQtyList[k]
+                                            val positionInAdapter =
+                                                productWithTotalQtyList[k].positionInAdapter
+                                            productListResponse.data[positionInAdapter].totalQty =
+                                                currentData.totalQty.toInt()
+                                            productListResponse.data[positionInAdapter].cartId =
+                                                currentData.cartId.toInt()
+                                            productListResponse.data[positionInAdapter].isCartExist =
+                                                currentData.isCartExist
+                                        }
+                                        productListAdapter.notifyDataSetChanged()
+                                    }
+
+                                }
+
+                            }
+                        }
+
+                    }
+                }
+                is NetworkResult.Error -> {
+                    customProgressDialog.hide()
+                    showDialog(response.message.toString())
+                }
+                is NetworkResult.Loading -> {
+                    customProgressDialog.show()
+                }
+            }
+        }
+    }
+
+    // ================ ADD OR REMOVE PRODUCT FROM CART
+
+    private fun callAddUpdateToCartApi(
+        productOrCartId: String,
+        qty: String,
+        amount: String,
+        isCartExist: Boolean,
+    ) {
+        customProgressDialog.show()
+        if (isCartExist) {
+            val parameter = AddUpdateCartWithCartId(
+                id = productOrCartId,
+                quantity = qty,
+                amount = amount
+            )
+
+            (activity as HomeActivity).homeViewModel.addUpdateToCart(
+                getHeaderMap(
+                    data.token,
+                    true
+                ),
+                Gson().toJson(parameter)
+            )
+        } else {
+            val parameter = AddUpdateCartWithProductId(
+                productId = productOrCartId,
+                quantity = qty,
+                amount = amount
+            )
+
+            (activity as HomeActivity).homeViewModel.addUpdateToCart(
+                getHeaderMap(
+                    data.token,
+                    true
+                ),
+                Gson().toJson(parameter)
+            )
+        }
+
+    }
+
+
+    // ============== Observe Products By Restaurant Response
+    private fun observeAddUpdateCartResponse(isProductAdded: Boolean) {
+        (activity as HomeActivity).homeViewModel.addUpdateToCart.observe(
+            viewLifecycleOwner
+        ) { response ->
+
+            when (response) {
+                is NetworkResult.Success -> {
+                    customProgressDialog.hide()
+                    response.data?.let {
+                        if (isProductAdded) {
+                            requireActivity().showShortToast(getString(R.string.msg_product_added_to_cart))
+                        } else {
+                            requireActivity().showShortToast(getString(R.string.product_removed_from_cart))
+                        }
+                        callGetCartApi()
+                        observeGetCartResponse()
+                    }
+                }
+                is NetworkResult.Error -> {
+                    customProgressDialog.hide()
+                    showDialog(response.message.toString())
+                }
+                is NetworkResult.Loading -> {
+                    customProgressDialog.show()
+                }
+            }
+        }
+    }
+
     override fun onItemClick(data: ProductsByRestaurantData, position: Int) {
         view?.findNavController()
             ?.navigate(
@@ -346,19 +537,63 @@ class RestaurantDetailsFragment : Fragment(), ProductListAdapter.OnProductItemCl
             )
     }
 
-    override fun onAddProductButtonClick(data: ProductsByRestaurantData, position: Int) {
+    // + Button click
+    override fun onAddProductButtonClick(
+        data: ProductsByRestaurantData,
+        position: Int,
+    ) {
         data.totalQty = data.totalQty + 1
-        productListAdapter.notifyItemChanged(position)
+
+        callAddUpdateToCartApi(
+            productOrCartId = data.cartId.toString(),
+            qty = data.totalQty.toString(),
+            amount = data.price.toString(),
+            isCartExist = data.isCartExist
+        )
+
+        observeAddUpdateCartResponse(true)
     }
 
-    override fun onRemoveProductButtonClick(data: ProductsByRestaurantData, position: Int) {
+    // - Button Click
+    override fun onRemoveProductButtonClick(
+        data: ProductsByRestaurantData,
+        position: Int,
+    ) {
         data.totalQty = data.totalQty - 1
-        productListAdapter.notifyItemChanged(position)
+
+        callAddUpdateToCartApi(
+            productOrCartId = data.cartId.toString(),
+            qty = data.totalQty.toString(),
+            amount = data.price.toString(),
+            isCartExist = data.isCartExist
+        )
+
+        observeAddUpdateCartResponse(false)
     }
 
-    override fun onAddButtonClick(data: ProductsByRestaurantData, position: Int) {
+    // Add Button Click
+    override fun onAddButtonClick(
+        data: ProductsByRestaurantData,
+        position: Int,
+    ) {
         data.totalQty = 1
-        productListAdapter.notifyItemChanged(position)
+        if (data.isCartExist) {
+            callAddUpdateToCartApi(
+                productOrCartId = data.cartId.toString(),
+                qty = data.totalQty.toString(),
+                amount = data.price.toString(),
+                isCartExist = true
+            )
+        } else {
+            callAddUpdateToCartApi(
+                productOrCartId = data.id.toString(),
+                qty = data.totalQty.toString(),
+                amount = data.price.toString(),
+                isCartExist = false
+            )
+        }
+
+        observeAddUpdateCartResponse(true)
     }
 
 }
