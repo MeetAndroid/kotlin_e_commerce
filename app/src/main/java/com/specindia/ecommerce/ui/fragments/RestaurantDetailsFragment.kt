@@ -32,7 +32,6 @@ import com.specindia.ecommerce.util.Constants.Companion.IS_FROM_PRODUCT_DETAILS
 import com.specindia.ecommerce.util.Constants.Companion.REQUEST_FROM_RESTAURANT_DETAILS
 import dagger.hilt.android.AndroidEntryPoint
 
-
 @AndroidEntryPoint
 class RestaurantDetailsFragment : Fragment(), ProductListAdapter.OnProductItemClickListener {
 
