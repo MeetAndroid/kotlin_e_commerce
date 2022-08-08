@@ -91,6 +91,7 @@ class Constants {
         const val TOP_DISHES = "Top Dishes"
         const val RESTAURANT = "Restaurant"
         const val CATEGORY = "Category"
+        const val SEARCH = "Search"
 
         // Bundle Keys
         const val REQUEST_FROM_RESTAURANT_DETAILS = "request_from_restaurant_details"

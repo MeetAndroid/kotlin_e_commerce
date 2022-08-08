@@ -11,9 +11,9 @@ import androidx.fragment.app.setFragmentResult
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
-import com.google.gson.Gson
 import com.specindia.ecommerce.R
 import com.specindia.ecommerce.databinding.FragmentProductDetailsBinding
+import com.specindia.ecommerce.models.response.home.SearchItem
 import com.specindia.ecommerce.models.response.home.productsbyrestaurant.ProductsByRestaurantData
 import com.specindia.ecommerce.ui.activity.HomeActivity
 import com.specindia.ecommerce.util.Constants
@@ -28,6 +28,7 @@ class ProductDetailsFragment : Fragment() {
 
     private lateinit var binding: FragmentProductDetailsBinding
     private lateinit var productsByRestaurantData: ProductsByRestaurantData
+    private lateinit var searchItem: SearchItem
     private val args: ProductDetailsFragmentArgs by navArgs()
 
     override fun onCreateView(
@@ -53,20 +54,42 @@ class ProductDetailsFragment : Fragment() {
 
     private fun setUpData() {
         val productId = args.productId
-        val productList =
-            (activity as HomeActivity).homeViewModel.productsByRestaurant.value?.data?.data
-        val data = productList?.filter { it.id == productId }
-        productsByRestaurantData = data!!.first()
+        val tag = args.tag
+        if (tag == Constants.RESTAURANT) {
+            val productList =
+                (activity as HomeActivity).homeViewModel.productsByRestaurant.value?.data?.data
+            val data = productList?.filter { it.id == productId }
+            productsByRestaurantData = data!!.first()
+        } else {
+            val productList =
+                (activity as HomeActivity).homeViewModel.searchResponse.value?.data?.data
+            val data = productList?.filter { it.id == productId }
+            searchItem = data!!.first()
+        }
+
         with(binding) {
-            Glide.with(requireActivity())
-                .load(productsByRestaurantData.productImage)
-                .placeholder(R.drawable.ic_launcher_foreground)
-                .error(android.R.drawable.ic_dialog_alert)
-                .into(ivRestaurant)
-            tvTitle.text = productsByRestaurantData.productName
-            tvPrice.text =
-                getString(R.string.currency_amount, productsByRestaurantData.price.toString())
-            tvContent.text = productsByRestaurantData.description
+            if (tag == Constants.RESTAURANT) {
+                Glide.with(requireActivity())
+                    .load(productsByRestaurantData.productImage)
+                    .placeholder(R.drawable.ic_launcher_foreground)
+                    .error(android.R.drawable.ic_dialog_alert)
+                    .into(ivRestaurant)
+                tvTitle.text = productsByRestaurantData.productName
+                tvPrice.text =
+                    getString(R.string.currency_amount, productsByRestaurantData.price.toString())
+                tvContent.text = productsByRestaurantData.description
+            } else {
+                Glide.with(requireActivity())
+                    .load(searchItem.productImage)
+                    .placeholder(R.drawable.ic_launcher_foreground)
+                    .error(android.R.drawable.ic_dialog_alert)
+                    .into(ivRestaurant)
+                tvTitle.text = searchItem.productName
+                tvPrice.text =
+                    getString(R.string.currency_amount, searchItem.price.toString())
+                tvContent.text = searchItem.description
+            }
+
             tvCalories.text = "147"
             tvCarbs.text = "127g"
             tvFat.text = "2.9g"
@@ -91,8 +114,10 @@ class ProductDetailsFragment : Fragment() {
         with(binding) {
             with(homeDetailsScreenHeader) {
                 ivBack.setOnClickListener {
-                    setFragmentResult(REQUEST_FROM_RESTAURANT_DETAILS,
-                        bundleOf(IS_FROM_PRODUCT_DETAILS to true))
+                    setFragmentResult(
+                        REQUEST_FROM_RESTAURANT_DETAILS,
+                        bundleOf(IS_FROM_PRODUCT_DETAILS to true)
+                    )
                     it.findNavController().popBackStack()
                 }
             }

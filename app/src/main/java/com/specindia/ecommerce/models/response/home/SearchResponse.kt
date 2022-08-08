@@ -9,7 +9,7 @@ data class SearchResponse(
     override var message: String,
     override var status: String,
     override var status_code: Int
-):ApiResponse()
+) : ApiResponse()
 
 data class SearchItem(
     @SerializedName("id")
