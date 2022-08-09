@@ -119,6 +119,11 @@ class ProductDetailsFragment : Fragment() {
                     )
                     it.findNavController().popBackStack()
                 }
+                ivShoppingCart.setOnClickListener {
+                    view?.findNavController()
+                        ?.navigate(ProductDetailsFragmentDirections.actionProductDetailsFragmentToCartListFragment())
+
+                }
             }
         }
     }

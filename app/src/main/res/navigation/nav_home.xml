@@ -21,6 +21,9 @@
         <action
             android:id="@+id/action_homeFragment_to_viewAllProductFragment"
             app:destination="@id/viewAllProductFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_cartListFragment"
+            app:destination="@id/cartListFragment" />
     </fragment>
     <fragment
         android:id="@+id/homeDetailsFragment"
@@ -49,6 +52,9 @@
         <action
             android:id="@+id/action_restaurantDetailsFragment_to_productDetailsFragment"
             app:destination="@id/productDetailsFragment" />
+        <action
+            android:id="@+id/action_restaurantDetailsFragment_to_cartListFragment"
+            app:destination="@id/cartListFragment" />
     </fragment>
     <fragment
         android:id="@+id/productDetailsFragment"
@@ -68,6 +74,9 @@
         <action
             android:id="@+id/action_productDetailsFragment_to_orderDetailsFragment"
             app:destination="@id/orderDetailsFragment" />
+        <action
+            android:id="@+id/action_productDetailsFragment_to_cartListFragment"
+            app:destination="@id/cartListFragment" />
 
     </fragment>
     <fragment
@@ -102,4 +111,9 @@
         tools:layout="@layout/fragment_checkout">
 
     </fragment>
+    <fragment
+        android:id="@+id/cartListFragment"
+        android:name="com.specindia.ecommerce.ui.fragments.CartListFragment"
+        android:label="fragment_cart_list"
+        tools:layout="@layout/fragment_cart_list" />
 </navigation>

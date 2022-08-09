@@ -177,6 +177,11 @@ class HomeFragment : Fragment() {
                     requireActivity().showLongToast("Add to cart")
                     callDashBoardListApi(data)
                 }
+                ivShoppingCart.setOnClickListener {
+                    requireActivity().showLongToast("Cart List")
+                    view?.findNavController()
+                        ?.navigate(HomeFragmentDirections.actionHomeFragmentToCartListFragment())
+                }
             }
         }
     }

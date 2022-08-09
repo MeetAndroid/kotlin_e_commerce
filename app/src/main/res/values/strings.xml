@@ -125,6 +125,7 @@
     <string name="msg_restaurant_removed_from_fav_list">Restaurant added to favorite list</string>
     <string name="msg_product_added_to_cart">Product added to Cart successfully!</string>
     <string name="product_removed_from_cart">Product removed from Cart successfully!</string>
+    <string name="my_cart">My Cart</string>
 
     <string-array name="location_array_list">
         <item>S.G Highway</item>
