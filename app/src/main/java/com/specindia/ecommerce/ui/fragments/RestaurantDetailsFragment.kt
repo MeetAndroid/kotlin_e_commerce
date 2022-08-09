@@ -22,10 +22,10 @@ import com.specindia.ecommerce.R
 import com.specindia.ecommerce.api.network.NetworkResult
 import com.specindia.ecommerce.databinding.FragmentRestaurantDetailsBinding
 import com.specindia.ecommerce.models.FavRestaurants
-import com.specindia.ecommerce.models.ProductWithTotalQty
 import com.specindia.ecommerce.models.request.AddUpdateCartWithCartId
 import com.specindia.ecommerce.models.request.AddUpdateCartWithProductId
 import com.specindia.ecommerce.models.request.Parameters
+import com.specindia.ecommerce.models.request.RemoveFromCartParam
 import com.specindia.ecommerce.models.response.AuthResponseData
 import com.specindia.ecommerce.models.response.home.productsbyrestaurant.ProductsByRestaurantData
 import com.specindia.ecommerce.models.response.home.productsbyrestaurant.ProductsByRestaurantResponse
@@ -50,7 +50,7 @@ class RestaurantDetailsFragment : Fragment(), ProductListAdapter.OnProductItemCl
 
     private var restaurantId: Int = 0
     private var isComeBackFromProductDetails: Boolean = false
-    private var productWithTotalQtyList = ArrayList<ProductWithTotalQty>()
+    private var productRemovedFromCart: ProductsByRestaurantData? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -87,11 +87,16 @@ class RestaurantDetailsFragment : Fragment(), ProductListAdapter.OnProductItemCl
         binding.clTopPart.setRandomBackgroundColor()
 
         observeRestaurantDetailsResponse()
+        observeProductsByRestaurantResponse()
+        observeAddUpdateCartResponse()
+        observeRemoveFromCartResponse()
+        observeGetCartResponse()
 
         (activity as HomeActivity).showOrHideBottomAppBarAndFloatingActionButtonOnScroll()
 
         binding.swipeRefreshLayout.setOnRefreshListener {
             binding.swipeRefreshLayout.isRefreshing = false
+            isComeBackFromProductDetails = false
             callRestaurantDetailsApi(data)
         }
 
@@ -276,7 +281,6 @@ class RestaurantDetailsFragment : Fragment(), ProductListAdapter.OnProductItemCl
                             callProductsByRestaurantApi(restaurantData.data.id)
                         }
 
-                        observeProductsByRestaurantResponse()
                     }
                 }
                 is NetworkResult.Error -> {
@@ -322,7 +326,6 @@ class RestaurantDetailsFragment : Fragment(), ProductListAdapter.OnProductItemCl
                         setUpProductListUI(binding, productListResponse)
 
                         callGetCartApi()
-                        observeGetCartResponse()
                     }
 
 
@@ -390,60 +393,36 @@ class RestaurantDetailsFragment : Fragment(), ProductListAdapter.OnProductItemCl
                 is NetworkResult.Success -> {
                     customProgressDialog.hide()
                     response.data?.let { cartList ->
-                        if (cartList.data.size > 0) {
-
-                            val productsByRestaurant =
-                                (activity as HomeActivity).homeViewModel.productsByRestaurant.value
-                            if (productsByRestaurant != null) {
-                                if (productsByRestaurant.data != null) {
-                                    val productListResponse = productsByRestaurant.data
-
-                                    productWithTotalQtyList.clear()
-                                    productWithTotalQtyList = ArrayList()
-
-
-                                    if (productListResponse.data.size > 0) {
+                        val productsByRestaurant =
+                            (activity as HomeActivity).homeViewModel.productsByRestaurant.value
+                        if (productsByRestaurant != null) {
+                            if (productsByRestaurant.data != null) {
+                                val productListResponse = productsByRestaurant.data
+                                if (productListResponse.data.size > 0) {
+                                    if (cartList.data.size > 0) {
                                         for (i in 0 until productListResponse.data.size) {
-                                            val productList = productListResponse.data
-
+                                            val product = productListResponse.data[i]
                                             for (j in 0 until cartList.data.size) {
-                                                if (cartList.data[j].productId == productList[i].id) {
-                                                    // cart has a specific product
-                                                    productWithTotalQtyList.add(
-                                                        ProductWithTotalQty(
-                                                            productId = cartList.data[j].productId.toString(),
-                                                            totalQty = cartList.data[j].quantity,
-                                                            cartId = cartList.data[j].id.toString(),
-                                                            positionInAdapter = i,
-                                                            isCartExist = true))
+                                                if (cartList.data[j].productId == product.id) {
+                                                    product.totalQty =
+                                                        cartList.data[j].quantity.toInt()
+                                                    product.cartId = cartList.data[j].id
+                                                    product.isCartExist = true
+                                                    break
                                                 }
-
                                             }
-
+                                        }
+                                    }else{
+                                        for (i in 0 until productListResponse.data.size) {
+                                            val product = productListResponse.data[i]
+                                            product.totalQty =0
+                                            product.isCartExist = false
                                         }
                                     }
-
-                                    productWithTotalQtyList.trimToSize()
-                                    if (productWithTotalQtyList.size > 0) {
-                                        for (k in 0 until productWithTotalQtyList.size) {
-                                            val currentData = productWithTotalQtyList[k]
-                                            val positionInAdapter =
-                                                productWithTotalQtyList[k].positionInAdapter
-                                            productListResponse.data[positionInAdapter].totalQty =
-                                                currentData.totalQty.toInt()
-                                            productListResponse.data[positionInAdapter].cartId =
-                                                currentData.cartId.toInt()
-                                            productListResponse.data[positionInAdapter].isCartExist =
-                                                currentData.isCartExist
-                                        }
-                                        productListAdapter.notifyDataSetChanged()
-                                    }
-
+                                    productListAdapter.notifyDataSetChanged()
                                 }
-
                             }
                         }
-
                     }
                 }
                 is NetworkResult.Error -> {
@@ -500,7 +479,7 @@ class RestaurantDetailsFragment : Fragment(), ProductListAdapter.OnProductItemCl
 
 
     // ============== Observe Products By Restaurant Response
-    private fun observeAddUpdateCartResponse(isProductAdded: Boolean) {
+    private fun observeAddUpdateCartResponse() {
         (activity as HomeActivity).homeViewModel.addUpdateToCart.observe(
             viewLifecycleOwner
         ) { response ->
@@ -509,13 +488,7 @@ class RestaurantDetailsFragment : Fragment(), ProductListAdapter.OnProductItemCl
                 is NetworkResult.Success -> {
                     customProgressDialog.hide()
                     response.data?.let {
-                        if (isProductAdded) {
-                            requireActivity().showShortToast(getString(R.string.msg_product_added_to_cart))
-                        } else {
-                            requireActivity().showShortToast(getString(R.string.product_removed_from_cart))
-                        }
                         callGetCartApi()
-                        observeGetCartResponse()
                     }
                 }
                 is NetworkResult.Error -> {
@@ -552,7 +525,7 @@ class RestaurantDetailsFragment : Fragment(), ProductListAdapter.OnProductItemCl
             isCartExist = data.isCartExist
         )
 
-        observeAddUpdateCartResponse(true)
+
     }
 
     // - Button Click
@@ -561,15 +534,38 @@ class RestaurantDetailsFragment : Fragment(), ProductListAdapter.OnProductItemCl
         position: Int,
     ) {
         data.totalQty = data.totalQty - 1
+        if (data.totalQty == 0) {
+            // Call Remove Cart API
+            callRemoveFromCartApi(data.cartId)
+            productRemovedFromCart = data
 
-        callAddUpdateToCartApi(
-            productOrCartId = data.cartId.toString(),
-            qty = data.totalQty.toString(),
-            amount = data.price.toString(),
-            isCartExist = data.isCartExist
+        } else {
+            callAddUpdateToCartApi(
+                productOrCartId = data.cartId.toString(),
+                qty = data.totalQty.toString(),
+                amount = data.price.toString(),
+                isCartExist = data.isCartExist
+            )
+
+        }
+
+    }
+
+    private fun callRemoveFromCartApi(cartId: Int) {
+        customProgressDialog.show()
+
+        val parameter = RemoveFromCartParam(
+            cartId = cartId
         )
 
-        observeAddUpdateCartResponse(false)
+        (activity as HomeActivity).homeViewModel.removeFromCart(
+            getHeaderMap(
+                data.token,
+                true
+            ),
+            Gson().toJson(parameter)
+        )
+
     }
 
     // Add Button Click
@@ -594,7 +590,51 @@ class RestaurantDetailsFragment : Fragment(), ProductListAdapter.OnProductItemCl
             )
         }
 
-        observeAddUpdateCartResponse(true)
     }
 
+
+    private fun observeRemoveFromCartResponse() {
+        (activity as HomeActivity).homeViewModel.removeFromCart.observe(
+            viewLifecycleOwner
+        ) { response ->
+
+            when (response) {
+                is NetworkResult.Success -> {
+                    customProgressDialog.hide()
+                    response.data?.let {
+                        if (it.data == 1) {
+                            val productsByRestaurant =
+                                (activity as HomeActivity).homeViewModel.productsByRestaurant.value
+                            if (productsByRestaurant != null) {
+                                if (productsByRestaurant.data != null) {
+                                    val productListResponse = productsByRestaurant.data
+                                    if (productListResponse.data.size > 0) {
+                                        for (i in 0 until productListResponse.data.size) {
+                                            if (productRemovedFromCart != null) {
+                                                if (productListResponse.data[i].id == productRemovedFromCart?.id) {
+                                                    productListResponse.data[i].totalQty = 0
+                                                    productListResponse.data[i].isCartExist = false
+                                                    callGetCartApi()
+                                                    break
+                                                }
+                                            }
+
+                                        }
+                                    }
+                                }
+                            }
+
+                        }
+                    }
+                }
+                is NetworkResult.Error -> {
+                    customProgressDialog.hide()
+                    showDialog(response.message.toString())
+                }
+                is NetworkResult.Loading -> {
+                    customProgressDialog.show()
+                }
+            }
+        }
+    }
 }

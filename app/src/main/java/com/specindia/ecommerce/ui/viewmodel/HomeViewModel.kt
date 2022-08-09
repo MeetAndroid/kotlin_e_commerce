@@ -189,9 +189,9 @@ HomeViewModel @Inject constructor(
     // Call Remove From Cart api
     fun removeFromCart(headerMap: Map<String, String>, parameters: String) =
         viewModelScope.launch {
-            _addUpdateToCartResponse.postValue(NetworkResult.Loading())
-            repository.addUpdateToCart(headerMap, parameters).collect { values ->
-                _addUpdateToCartResponse.value = values
+            _removeFromCartResponse.postValue(NetworkResult.Loading())
+            repository.removeFromCart(headerMap, parameters).collect { values ->
+                _removeFromCartResponse.value = values
             }
         }
 }
