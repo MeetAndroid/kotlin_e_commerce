@@ -102,7 +102,7 @@ class ProductDetailsFragment : Fragment() {
                 tvHeaderTitle.visible(true)
                 tvHeaderTitle.text = getString(R.string.product_details)
                 ivBack.visible(true)
-                ivFavorite.visible(true)
+                ivFavorite.visible(false)
                 ivSearch.visible(false)
                 ivShoppingCart.visible(true)
             }
@@ -118,6 +118,11 @@ class ProductDetailsFragment : Fragment() {
                         bundleOf(IS_FROM_PRODUCT_DETAILS to true)
                     )
                     it.findNavController().popBackStack()
+                }
+                ivShoppingCart.setOnClickListener {
+                    view?.findNavController()
+                        ?.navigate(ProductDetailsFragmentDirections.actionProductDetailsFragmentToCartListFragment())
+
                 }
             }
         }

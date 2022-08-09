@@ -215,6 +215,11 @@ class RestaurantDetailsFragment : Fragment(), ProductListAdapter.OnProductItemCl
                     val data = Gson().toJson(array)
                     (activity as HomeActivity).dataStoreViewModel.saveFavoriteRestaurantList(data)
                 }
+
+                ivShoppingCart.setOnClickListener {
+                    view?.findNavController()
+                        ?.navigate(RestaurantDetailsFragmentDirections.actionRestaurantDetailsFragmentToCartListFragment())
+                }
             }
         }
     }
@@ -415,7 +420,7 @@ class RestaurantDetailsFragment : Fragment(), ProductListAdapter.OnProductItemCl
                                         for (i in 0 until productListResponse.data.size) {
                                             val product = productListResponse.data[i]
                                             product.totalQty =0
-                                            product.isCartExist = false
+                                             product.isCartExist = false
                                         }
                                     }
                                     productListAdapter.notifyDataSetChanged()
