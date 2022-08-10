@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     app:cardCornerRadius="5dp"
+    app:cardBackgroundColor="@color/colorOffWhite"
     app:cardUseCompatPadding="true">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -18,7 +19,8 @@
             android:layout_height="wrap_content"
             android:text="@string/order_id"
             android:textAppearance="@style/TextAppearance.AppCompat.Small"
-            android:textColor="@color/color_blue_or_white"
+            android:textColor="@color/color_red"
+            android:fontFamily="@font/roboto_bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -28,8 +30,9 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:text="@string/amount"
+            android:fontFamily="@font/roboto_medium"
             android:textAppearance="@style/TextAppearance.AppCompat.Small"
-            android:textColor="@color/color_blue_or_white"
+            android:textColor="@color/black"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tvOrderId" />
 
@@ -38,9 +41,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
+            android:fontFamily="@font/roboto_medium"
             android:text="@string/date"
             android:textAppearance="@style/TextAppearance.AppCompat.Small"
-            android:textColor="@color/color_blue_or_white"
+            android:textColor="@color/black"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tvOrderAmount" />
 

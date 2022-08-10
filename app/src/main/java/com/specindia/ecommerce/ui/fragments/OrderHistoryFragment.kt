@@ -16,19 +16,20 @@ import com.specindia.ecommerce.api.network.NetworkResult
 import com.specindia.ecommerce.databinding.FragmentOrderHistoryBinding
 import com.specindia.ecommerce.models.request.Parameters
 import com.specindia.ecommerce.models.response.AuthResponseData
-import com.specindia.ecommerce.ui.activity.AuthActivity
+import com.specindia.ecommerce.models.response.home.orderlist.OrderData
 import com.specindia.ecommerce.ui.activity.HomeActivity
 import com.specindia.ecommerce.ui.adapters.OrderHistoryAdapter
-import com.specindia.ecommerce.ui.adapters.ViewAllAdapter
-import com.specindia.ecommerce.util.*
+import com.specindia.ecommerce.util.getHeaderMap
+import com.specindia.ecommerce.util.showProgressDialog
+import com.specindia.ecommerce.util.visible
 
-class OrderHistoryFragment : Fragment() {
+class OrderHistoryFragment : Fragment(), OrderHistoryAdapter.OnOrderHistoryItemClickListener {
 
     private lateinit var binding: FragmentOrderHistoryBinding
     private lateinit var data: AuthResponseData
     private lateinit var customProgressDialog: AlertDialog
 
-    private var orderList: ArrayList<OrderData>? = null
+    private lateinit var orderList: ArrayList<OrderData>
     lateinit var orderHistoryAdapter: OrderHistoryAdapter
 
     override fun onCreateView(
@@ -151,5 +152,10 @@ class OrderHistoryFragment : Fragment() {
             .setPositiveButton(getString(R.string.ok)) { _, _ ->
             }
             .show()
+    }
+
+    override fun onItemClick(position: Int) {
+        binding.root.findNavController()
+            .navigate(OrderHistoryFragmentDirections.actionOrderHistoryFragmentToOrderDetailsFragment())
     }
 }

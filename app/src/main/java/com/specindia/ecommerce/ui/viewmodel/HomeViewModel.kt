@@ -11,13 +11,13 @@ import com.specindia.ecommerce.models.response.cart.removeFromCart.RemoveFromCar
 import com.specindia.ecommerce.models.response.home.DashboardListResponse
 import com.specindia.ecommerce.models.response.home.SearchResponse
 import com.specindia.ecommerce.models.response.home.order.OrderDetailsResponse
+import com.specindia.ecommerce.models.response.home.orderlist.OrderListResponse
 import com.specindia.ecommerce.models.response.home.product.AllRestaurant
 import com.specindia.ecommerce.models.response.home.product.ViewAllData
 import com.specindia.ecommerce.models.response.home.productsbyrestaurant.ProductsByRestaurantResponse
 import com.specindia.ecommerce.models.response.home.restaurantDetails.RestaurantDetailsResponse
 import com.specindia.ecommerce.models.response.menulist.MenuListResponse
 import com.specindia.ecommerce.repository.EcommerceRepository
-import com.specindia.ecommerce.ui.fragments.OrderListResponse
 import com.specindia.ecommerce.util.Constants.Companion.STATIC_DELAY
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
@@ -204,7 +204,6 @@ HomeViewModel @Inject constructor(
     // Call Get Order List api
     fun getOrderList(headerMap: Map<String, String>, parameters: String) =
         viewModelScope.launch {
-            delay(STATIC_DELAY)
             _orderListResponse.postValue(NetworkResult.Loading())
             repository.getOrderList(headerMap, parameters).collect { values ->
                 _orderListResponse.value = values
