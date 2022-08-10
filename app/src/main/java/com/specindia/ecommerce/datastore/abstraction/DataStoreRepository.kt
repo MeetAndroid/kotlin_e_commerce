@@ -1,7 +1,5 @@
 package com.specindia.ecommerce.datastore.abstraction
 
-import com.specindia.ecommerce.models.response.AuthResponseData
-
 interface DataStoreRepository {
     suspend fun putString(key: String, value: String)
     suspend fun putInt(key: String, value: Int)

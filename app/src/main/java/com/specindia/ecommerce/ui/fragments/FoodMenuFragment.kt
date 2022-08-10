@@ -68,7 +68,7 @@ class FoodMenuFragment : Fragment() {
         menuListAdapter = MenuListAdapter(menuList)
         binding.rvMenu.apply {
             adapter = menuListAdapter
-            addItemDecoration(MarginDecoration(resources.getDimensionPixelSize(R.dimen.item_margin)))
+            addItemDecoration(MarginDecoration(resources.getDimensionPixelSize(R.dimen.item_margin),true))
             hasFixedSize()
         }
     }

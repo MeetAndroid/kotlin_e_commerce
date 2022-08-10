@@ -35,7 +35,7 @@ class VeilRecyclerViewActivity : AppCompatActivity() {
         binding.veilRecyclerView.run {
             setVeilLayout(R.layout.item_profile)
             setAdapter(veilAdapter)
-            binding.veilRecyclerView.getRecyclerView().addItemDecoration(MarginDecoration(resources.getDimensionPixelSize(R.dimen.item_margin)))
+            binding.veilRecyclerView.getRecyclerView().addItemDecoration(MarginDecoration(resources.getDimensionPixelSize(R.dimen.item_margin),false))
 
 //            setLayoutManager(GridLayoutManager(this@VeilRecyclerViewActivity, 2))
 

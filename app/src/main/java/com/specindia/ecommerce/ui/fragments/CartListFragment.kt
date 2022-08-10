@@ -20,6 +20,7 @@ import com.specindia.ecommerce.models.response.cart.getcart.GetCartData
 import com.specindia.ecommerce.models.response.cart.getcart.GetCartResponse
 import com.specindia.ecommerce.ui.activity.HomeActivity
 import com.specindia.ecommerce.ui.adapters.CartListAdapter
+import com.specindia.ecommerce.util.MarginDecoration
 import com.specindia.ecommerce.util.getHeaderMap
 import com.specindia.ecommerce.util.showProgressDialog
 import com.specindia.ecommerce.util.visible
@@ -103,6 +104,8 @@ class CartListFragment : Fragment(), CartListAdapter.OnCartItemClickListener {
         binding.rvCart.apply {
             adapter = cartListAdapter
             setHasFixedSize(false)
+            addItemDecoration(MarginDecoration(resources.getDimensionPixelSize(R.dimen.item_margin_16),
+                false))
             isNestedScrollingEnabled = false
             layoutManager =
                 LinearLayoutManager(requireActivity())
@@ -123,16 +126,38 @@ class CartListFragment : Fragment(), CartListAdapter.OnCartItemClickListener {
         binding.apply {
             cartList.clear()
             noDataFound.clNoDataFound.visible(true)
-            rvCart.visible(false)
+            swipeRefreshLayout.visible(false)
             if (cartListResponse.data.isNotEmpty()) {
-                rvCart.visible(true)
+
+                calculateAndDisplayTotal(cartListResponse.data)
+
+                swipeRefreshLayout.visible(true)
                 noDataFound.clNoDataFound.visible(false)
                 cartList.addAll(cartListResponse.data.toList())
                 cartListAdapter.notifyDataSetChanged()
             } else {
                 noDataFound.clNoDataFound.visible(true)
-                rvCart.visible(false)
+                swipeRefreshLayout.visible(false)
             }
+        }
+    }
+
+    private fun calculateAndDisplayTotal(cartList: ArrayList<GetCartData>) {
+        val subTotal =
+            cartList.sumOf { (it.quantity.toInt() * it.amount.toInt()) }
+
+
+        val deliveryCost = 50
+        val discount = 4
+        val specWallet = 10
+        val total = subTotal + deliveryCost - discount - specWallet
+
+        binding.apply {
+            tvSubTotal.text = getString(R.string.rs, subTotal.toString())
+            tvDeliveryCost.text = getString(R.string.rs, deliveryCost.toString())
+            tvDiscount.text = getString(R.string.minus_rs, discount.toString())
+            tvSpecWallet.text = getString(R.string.minus_rs, specWallet.toString())
+            tvTotal.text = getString(R.string.rs, total.toString())
         }
     }
 
@@ -168,7 +193,7 @@ class CartListFragment : Fragment(), CartListAdapter.OnCartItemClickListener {
                 is NetworkResult.Success -> {
                     customProgressDialog.hide()
                     response.data?.let { cartListResponse ->
-                        setUpCartListUI(binding,cartListResponse)
+                        setUpCartListUI(binding, cartListResponse)
                     }
                 }
                 is NetworkResult.Error -> {
