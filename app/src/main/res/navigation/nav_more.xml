@@ -9,5 +9,16 @@
         android:id="@+id/moreFragment"
         android:name="com.specindia.ecommerce.ui.fragments.MoreFragment"
         android:label="More"
-        tools:layout="@layout/fragment_more" />
+        tools:layout="@layout/fragment_more">
+        <action
+            android:id="@+id/action_moreFragment_to_orderHistoryFragment"
+            app:destination="@id/orderHistoryFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/orderHistoryFragment"
+        android:name="com.specindia.ecommerce.ui.fragments.OrderHistoryFragment"
+        android:label="fragment_order_history"
+        tools:layout="@layout/fragment_order_history" />
+
+
 </navigation>

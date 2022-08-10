@@ -55,6 +55,7 @@ class Constants {
 
         // Order
         const val GET_ORDER_DETAILS = "getOrderDetails/{id}"
+        const val GET_ORDER_LIST = "getOrderList"
 
         // Data Store Constants
         const val KEY_IS_FIRST_TIME = "isFirstTime"
@@ -102,5 +103,10 @@ class Constants {
     object DataStore {
         val DATA = stringPreferencesKey("data")
         val SECURED_DATA = stringPreferencesKey("secured_data")
+    }
+
+    object DateFormat {
+        const val INPUT_FORMAT = "yyyy-MM-dd'T'hh:mm:ss.SSS'Z'"
+        const val OUTPUT_FORMAT = "dd-MM-yyyy hh:mm"
     }
 }

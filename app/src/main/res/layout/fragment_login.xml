@@ -69,7 +69,7 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/etLoginEmail"
                     android:layout_width="match_parent"
-                    android:text="shivam@gmail.com"
+                    android:text="brok@gmail.com"
                     android:layout_height="wrap_content"
                     android:background="@null"
                     android:hint="@string/hint_email"
@@ -95,7 +95,7 @@
                     android:id="@+id/etPassword"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Test@123"
+                    android:text="123456"
                     android:hint="@string/hint_password"
                     android:inputType="textPassword"
                     tools:text="Test@1234" />

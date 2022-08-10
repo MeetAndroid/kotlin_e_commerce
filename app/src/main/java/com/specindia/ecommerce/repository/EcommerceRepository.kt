@@ -17,6 +17,7 @@ import com.specindia.ecommerce.models.response.login.LoginResponse
 import com.specindia.ecommerce.models.response.menulist.MenuListResponse
 import com.specindia.ecommerce.models.response.registration.RegistrationResponse
 import com.specindia.ecommerce.models.response.social.SocialLoginResponse
+import com.specindia.ecommerce.ui.fragments.OrderListResponse
 import dagger.hilt.android.scopes.ActivityRetainedScoped
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -150,4 +151,14 @@ class EcommerceRepository @Inject constructor(
             emit(safeApiCall { remoteDataSource.removeFromCart(headerMap,parameters) })
         }.flowOn(Dispatchers.IO)
     }
+
+    suspend fun getOrderList(
+        headerMap: Map<String, String>,
+        parameters: String
+    ): Flow<NetworkResult<OrderListResponse>> {
+        return flow {
+            emit(safeApiCall { remoteDataSource.getOrderList(headerMap,parameters) })
+        }.flowOn(Dispatchers.IO)
+    }
 }
+

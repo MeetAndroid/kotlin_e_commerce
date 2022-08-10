@@ -5,7 +5,6 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageInfo
 import android.content.pm.PackageManager
-import android.content.res.Configuration
 import android.graphics.Color
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities.TRANSPORT_CELLULAR
@@ -21,7 +20,6 @@ import android.view.WindowInsets
 import android.view.WindowManager
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
-import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.ContextCompat
 import androidx.core.util.Predicate
 import androidx.fragment.app.Fragment
@@ -37,10 +35,12 @@ import com.specindia.ecommerce.util.Constants.Companion.AUTHORIZATION
 import com.specindia.ecommerce.util.Constants.Companion.BEARER
 import com.specindia.ecommerce.util.Constants.Companion.CONTENT_TYPE
 import com.specindia.ecommerce.util.dialogs.CustomProgressDialog
-import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.launch
 import java.security.MessageDigest
 import java.security.NoSuchAlgorithmException
+import java.text.DateFormat
+import java.text.ParseException
+import java.text.SimpleDateFormat
 import java.util.*
 import java.util.regex.Matcher
 import java.util.regex.Pattern
@@ -279,6 +279,21 @@ fun String.toWords(): List<String> {
         }
     }
     return words
+}
+
+fun dateFormat(date1: String, inputString: String, outPutString: String): String {
+
+    val srcDf: DateFormat = SimpleDateFormat(inputString, Locale.US)
+    val destDf: DateFormat = SimpleDateFormat(outPutString, Locale.US)
+    var outPutDate = ""
+    try {
+        val date = srcDf.parse(date1)
+        outPutDate = date?.let { destDf.format(it) }.toString()
+    } catch (e: ParseException) {
+        e.printStackTrace()
+    }
+    return outPutDate
+
 }
 
 

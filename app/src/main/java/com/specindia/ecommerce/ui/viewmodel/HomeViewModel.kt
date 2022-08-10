@@ -17,6 +17,7 @@ import com.specindia.ecommerce.models.response.home.productsbyrestaurant.Product
 import com.specindia.ecommerce.models.response.home.restaurantDetails.RestaurantDetailsResponse
 import com.specindia.ecommerce.models.response.menulist.MenuListResponse
 import com.specindia.ecommerce.repository.EcommerceRepository
+import com.specindia.ecommerce.ui.fragments.OrderListResponse
 import com.specindia.ecommerce.util.Constants.Companion.STATIC_DELAY
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
@@ -53,6 +54,8 @@ HomeViewModel @Inject constructor(
 
     private val _removeFromCartResponse = MutableLiveData<NetworkResult<RemoveFromCartResponse>>()
 
+    private val _orderListResponse = MutableLiveData<NetworkResult<OrderListResponse>>()
+
     // Live Data
     val dashboardListResponse: LiveData<NetworkResult<DashboardListResponse>>
         get() = _dashboardListResponse
@@ -86,6 +89,9 @@ HomeViewModel @Inject constructor(
 
     val removeFromCart: LiveData<NetworkResult<RemoveFromCartResponse>>
         get() = _removeFromCartResponse
+
+    val orderListResponse: LiveData<NetworkResult<OrderListResponse>>
+        get() = _orderListResponse
 
     // Call dashboard list api
     fun getDashboardList(headerMap: Map<String, String>) =
@@ -194,4 +200,15 @@ HomeViewModel @Inject constructor(
                 _removeFromCartResponse.value = values
             }
         }
+
+    // Call Get Order List api
+    fun getOrderList(headerMap: Map<String, String>, parameters: String) =
+        viewModelScope.launch {
+            delay(STATIC_DELAY)
+            _orderListResponse.postValue(NetworkResult.Loading())
+            repository.getOrderList(headerMap, parameters).collect { values ->
+                _orderListResponse.value = values
+            }
+        }
 }
+

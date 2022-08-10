@@ -5,9 +5,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.findNavController
 import com.facebook.login.LoginManager
 import com.specindia.ecommerce.databinding.FragmentMoreBinding
 import com.specindia.ecommerce.ui.activity.HomeActivity
+import com.specindia.ecommerce.util.Constants
 import com.specindia.ecommerce.util.logout
 import com.specindia.ecommerce.util.visible
 import dagger.hilt.android.AndroidEntryPoint
@@ -29,6 +31,13 @@ class MoreFragment : Fragment() {
         setUpButtonClick()
         setUpHeader()
         (activity as HomeActivity).showOrHideBottomAppBarAndFloatingActionButtonOnScroll()
+
+
+        binding.clMyOrder.setOnClickListener {
+            view.findNavController().navigate(
+                MoreFragmentDirections.actionMoreFragmentToOrderHistoryFragment()
+            )
+        }
     }
 
     private fun setUpHeader() {

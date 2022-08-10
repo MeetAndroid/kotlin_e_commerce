@@ -14,6 +14,7 @@ import com.specindia.ecommerce.models.response.login.LoginResponse
 import com.specindia.ecommerce.models.response.menulist.MenuListResponse
 import com.specindia.ecommerce.models.response.registration.RegistrationResponse
 import com.specindia.ecommerce.models.response.social.SocialLoginResponse
+import com.specindia.ecommerce.ui.fragments.OrderListResponse
 import com.specindia.ecommerce.util.Constants.Companion.ADD_UPDATE_TO_CART
 import com.specindia.ecommerce.util.Constants.Companion.CART_END_POINT
 import com.specindia.ecommerce.util.Constants.Companion.CUSTOMER_END_POINT
@@ -23,6 +24,7 @@ import com.specindia.ecommerce.util.Constants.Companion.GET_ALL_RESTAURANT
 import com.specindia.ecommerce.util.Constants.Companion.GET_CART
 import com.specindia.ecommerce.util.Constants.Companion.GET_MENU_LIST
 import com.specindia.ecommerce.util.Constants.Companion.GET_ORDER_DETAILS
+import com.specindia.ecommerce.util.Constants.Companion.GET_ORDER_LIST
 import com.specindia.ecommerce.util.Constants.Companion.GET_PRODUCT_BY_RESTRAUNT
 import com.specindia.ecommerce.util.Constants.Companion.GET_RESTAURANT_DETAILS
 import com.specindia.ecommerce.util.Constants.Companion.LOGIN
@@ -121,4 +123,10 @@ interface EcommerceApiService {
         @HeaderMap headers: Map<String, String>,
         @Body parameters: String
     ): Response<RemoveFromCartResponse>
+
+    @POST("""$ORDER_END_POINT$GET_ORDER_LIST""")
+    suspend fun getOrderList(
+        @HeaderMap headers: Map<String, String>,
+        @Body parameters: String
+    ): Response<OrderListResponse>
 }

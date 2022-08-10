@@ -92,6 +92,7 @@
     <string name="fat">Fat</string>
     <string name="currency_amount">Rs %1$s</string>
     <string name="order_details">Order Details</string>
+    <string name="order_history">Order History</string>
     <string name="order_placed">Order Placed</string>
     <string name="order_placed_msg">Your order is placed successfully</string>
     <string name="estimated_time_for_order">Estimated time of delivery 12 hours</string>
@@ -126,6 +127,9 @@
     <string name="msg_product_added_to_cart">Product added to Cart successfully!</string>
     <string name="product_removed_from_cart">Product removed from Cart successfully!</string>
     <string name="my_cart">My Cart</string>
+    <string name="order_id">Order Id :- %1$s</string>
+    <string name="amount">Amount :- %1$s</string>
+    <string name="date">Date :- %1$s</string>
 
     <string-array name="location_array_list">
         <item>S.G Highway</item>
