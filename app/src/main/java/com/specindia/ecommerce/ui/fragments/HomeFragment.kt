@@ -174,10 +174,6 @@ class HomeFragment : Fragment() {
         with(binding) {
             with(homeMenuScreenHeader) {
                 ivShoppingCart.setOnClickListener {
-                    requireActivity().showLongToast("Add to cart")
-                    callDashBoardListApi(data)
-                }
-                ivShoppingCart.setOnClickListener {
                     requireActivity().showLongToast("Cart List")
                     view?.findNavController()
                         ?.navigate(HomeFragmentDirections.actionHomeFragmentToCartListFragment())

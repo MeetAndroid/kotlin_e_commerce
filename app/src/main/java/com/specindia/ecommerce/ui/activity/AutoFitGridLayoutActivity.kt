@@ -25,7 +25,7 @@ class AutoFitGridLayoutActivity : AppCompatActivity() {
         Log.d("arrayList", arrayList.size.toString())
         binding.apply {
 
-            autoFitRecyclerView.addItemDecoration(MarginDecoration(resources.getDimensionPixelSize(R.dimen.item_margin)))
+            autoFitRecyclerView.addItemDecoration(MarginDecoration(resources.getDimensionPixelSize(R.dimen.item_margin),true))
             autoFitRecyclerView.hasFixedSize()
             autoFitRecyclerView.adapter = NumberedAdapter(arrayList)
         }

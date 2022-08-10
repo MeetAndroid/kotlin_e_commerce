@@ -12,8 +12,6 @@ import com.specindia.ecommerce.R
 import com.specindia.ecommerce.databinding.ActivityOnboardingBinding
 import com.specindia.ecommerce.ui.adapters.OnBoardingViewPagerAdapter
 import com.specindia.ecommerce.ui.viewmodel.DataViewModel
-import com.specindia.ecommerce.util.hideActionBar
-import com.specindia.ecommerce.util.showFullScreen
 import com.specindia.ecommerce.util.startNewActivity
 import com.specindia.ecommerce.util.visible
 import com.zhpan.indicator.enums.IndicatorStyle
