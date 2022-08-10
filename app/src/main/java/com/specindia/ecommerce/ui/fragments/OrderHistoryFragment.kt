@@ -50,6 +50,15 @@ class OrderHistoryFragment : Fragment() {
         setUpProgressDialog()
         callOrderListApi()
         setObserver()
+        swipeToRefresh()
+    }
+
+    private fun swipeToRefresh() {
+        binding.srOrderHistory.setOnRefreshListener {
+            orderList?.clear()
+            binding.srOrderHistory.isRefreshing = false
+            callOrderListApi()
+        }
     }
 
     private fun setUpHeader() {
@@ -57,7 +66,7 @@ class OrderHistoryFragment : Fragment() {
             with(orderHistoryScreenHeader) {
                 tvHeaderTitle.visible(true)
                 tvHeaderTitle.text = getString(com.specindia.ecommerce.R.string.order_history)
-                ivBack.visible(false)
+                ivBack.visible(true)
                 ivFavorite.visible(false)
                 ivShoppingCart.visible(false)
                 ivSearch.visible(false)
@@ -113,6 +122,14 @@ class OrderHistoryFragment : Fragment() {
                             orderList = it.data?.toList() as ArrayList<OrderData>?
                             orderHistoryAdapter = OrderHistoryAdapter(orderList!!)
                             rvOrderHistory.adapter = orderHistoryAdapter
+
+                            if (orderList?.isNotEmpty() == true) {
+                                srOrderHistory.visible(true)
+                                noDataFound.clNoDataFound.visible(false)
+                            } else {
+                                srOrderHistory.visible(false)
+                                noDataFound.clNoDataFound.visible(true)
+                            }
                         }
                     }
                 }
