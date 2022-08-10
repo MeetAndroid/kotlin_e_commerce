@@ -1,14 +1,14 @@
-package com.specindia.ecommerce.ui.fragments
+package com.specindia.ecommerce.models.response.home.orderlist
 
 import com.google.gson.annotations.SerializedName
 import com.specindia.ecommerce.api.network.ApiResponse
 
 data class OrderListResponse(
     @SerializedName("data")
-    val data: List<OrderData?>? = null,
+    val data: ArrayList<OrderData> = ArrayList(),
     override var message: String,
     override var status: String,
-    override var status_code: Int
+    override var status_code: Int,
 ) : ApiResponse()
 
 data class OrderData(
@@ -56,5 +56,5 @@ data class OrderData(
     val deliveryDate: Any? = null,
 
     @SerializedName("updatedAt")
-    val updatedAt: String? = null
+    val updatedAt: String? = null,
 )

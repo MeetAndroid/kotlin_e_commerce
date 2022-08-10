@@ -45,10 +45,6 @@ class ProductDetailsFragment : Fragment() {
         setUpHeaderItemClick()
         binding.clTopPart.setRandomBackgroundColor()
         setUpData()
-        binding.clTopPart.setOnClickListener {
-            view.findNavController()
-                .navigate(ProductDetailsFragmentDirections.actionProductDetailsFragmentToOrderDetailsFragment())
-        }
     }
 
     private fun setUpData() {

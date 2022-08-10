@@ -9,6 +9,7 @@ import com.specindia.ecommerce.models.response.cart.removeFromCart.RemoveFromCar
 import com.specindia.ecommerce.models.response.home.DashboardListResponse
 import com.specindia.ecommerce.models.response.home.SearchResponse
 import com.specindia.ecommerce.models.response.home.order.OrderDetailsResponse
+import com.specindia.ecommerce.models.response.home.orderlist.OrderListResponse
 import com.specindia.ecommerce.models.response.home.product.AllRestaurant
 import com.specindia.ecommerce.models.response.home.product.ViewAllData
 import com.specindia.ecommerce.models.response.home.productsbyrestaurant.ProductsByRestaurantResponse
@@ -17,7 +18,6 @@ import com.specindia.ecommerce.models.response.login.LoginResponse
 import com.specindia.ecommerce.models.response.menulist.MenuListResponse
 import com.specindia.ecommerce.models.response.registration.RegistrationResponse
 import com.specindia.ecommerce.models.response.social.SocialLoginResponse
-import com.specindia.ecommerce.ui.fragments.OrderListResponse
 import dagger.hilt.android.scopes.ActivityRetainedScoped
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow

@@ -1,14 +1,12 @@
 package com.specindia.ecommerce.ui.fragments
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.gson.Gson
 import com.specindia.ecommerce.R
@@ -16,19 +14,20 @@ import com.specindia.ecommerce.api.network.NetworkResult
 import com.specindia.ecommerce.databinding.FragmentOrderHistoryBinding
 import com.specindia.ecommerce.models.request.Parameters
 import com.specindia.ecommerce.models.response.AuthResponseData
-import com.specindia.ecommerce.ui.activity.AuthActivity
+import com.specindia.ecommerce.models.response.home.orderlist.OrderData
 import com.specindia.ecommerce.ui.activity.HomeActivity
 import com.specindia.ecommerce.ui.adapters.OrderHistoryAdapter
-import com.specindia.ecommerce.ui.adapters.ViewAllAdapter
-import com.specindia.ecommerce.util.*
+import com.specindia.ecommerce.util.getHeaderMap
+import com.specindia.ecommerce.util.showProgressDialog
+import com.specindia.ecommerce.util.visible
 
-class OrderHistoryFragment : Fragment() {
+class OrderHistoryFragment : Fragment(), OrderHistoryAdapter.OnOrderHistoryItemClickListener {
 
     private lateinit var binding: FragmentOrderHistoryBinding
     private lateinit var data: AuthResponseData
     private lateinit var customProgressDialog: AlertDialog
 
-    private var orderList: ArrayList<OrderData>? = null
+    private lateinit var orderList: ArrayList<OrderData>
     lateinit var orderHistoryAdapter: OrderHistoryAdapter
 
     override fun onCreateView(
@@ -57,7 +56,7 @@ class OrderHistoryFragment : Fragment() {
             with(orderHistoryScreenHeader) {
                 tvHeaderTitle.visible(true)
                 tvHeaderTitle.text = getString(com.specindia.ecommerce.R.string.order_history)
-                ivBack.visible(false)
+                ivBack.visible(true)
                 ivFavorite.visible(false)
                 ivShoppingCart.visible(false)
                 ivSearch.visible(false)
@@ -110,9 +109,13 @@ class OrderHistoryFragment : Fragment() {
                     customProgressDialog.hide()
                     response.data?.let { it ->
                         with(binding) {
-                            orderList = it.data?.toList() as ArrayList<OrderData>?
-                            orderHistoryAdapter = OrderHistoryAdapter(orderList!!)
-                            rvOrderHistory.adapter = orderHistoryAdapter
+                            orderList = it.data
+                            if (orderList.size > 0) {
+                                orderHistoryAdapter =
+                                    OrderHistoryAdapter(orderList, this@OrderHistoryFragment)
+                                rvOrderHistory.adapter = orderHistoryAdapter
+                            }
+
                         }
                     }
                 }
@@ -134,5 +137,10 @@ class OrderHistoryFragment : Fragment() {
             .setPositiveButton(getString(R.string.ok)) { _, _ ->
             }
             .show()
+    }
+
+    override fun onItemClick(position: Int) {
+        binding.root.findNavController()
+            .navigate(OrderHistoryFragmentDirections.actionOrderHistoryFragmentToOrderDetailsFragment())
     }
 }

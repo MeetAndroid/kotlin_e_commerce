@@ -17,8 +17,31 @@
     <fragment
         android:id="@+id/orderHistoryFragment"
         android:name="com.specindia.ecommerce.ui.fragments.OrderHistoryFragment"
-        android:label="fragment_order_history"
-        tools:layout="@layout/fragment_order_history" />
+        android:label="Order History"
+        tools:layout="@layout/fragment_order_history">
+        <action
+            android:id="@+id/action_orderHistoryFragment_to_orderDetailsFragment"
+            app:destination="@id/orderDetailsFragment" />
+    </fragment>
 
+    <fragment
+        android:id="@+id/orderDetailsFragment"
+        android:name="com.specindia.ecommerce.ui.fragments.OrderDetailsFragment"
+        android:label="Order Details"
+        tools:layout="@layout/fragment_order_details">
+
+        <action
+            android:id="@+id/action_orderDetailsFragment_to_checkOutFragment"
+            app:destination="@id/checkOutFragment" />
+    </fragment>
+
+
+    <fragment
+        android:id="@+id/checkOutFragment"
+        android:name="com.specindia.ecommerce.ui.fragments.CheckOutFragment"
+        android:label="CheckOut"
+        tools:layout="@layout/fragment_checkout">
+
+    </fragment>
 
 </navigation>
