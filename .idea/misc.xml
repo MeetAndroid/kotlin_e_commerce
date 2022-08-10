@@ -135,7 +135,7 @@
         <entry key="..\:/GitProjects/EcommerceApp/app/src/main/res/layout/fragment_more.xml" value="0.18" />
         <entry key="..\:/GitProjects/EcommerceApp/app/src/main/res/layout/fragment_offers.xml" value="0.27291666666666664" />
         <entry key="..\:/GitProjects/EcommerceApp/app/src/main/res/layout/fragment_otp.xml" value="0.27291666666666664" />
-        <entry key="..\:/GitProjects/EcommerceApp/app/src/main/res/layout/fragment_product_details.xml" value="0.14" />
+        <entry key="..\:/GitProjects/EcommerceApp/app/src/main/res/layout/fragment_product_details.xml" value="0.2" />
         <entry key="..\:/GitProjects/EcommerceApp/app/src/main/res/layout/fragment_registration.xml" value="0.1" />
         <entry key="..\:/GitProjects/EcommerceApp/app/src/main/res/layout/fragment_reset_password.xml" value="0.27291666666666664" />
         <entry key="..\:/GitProjects/EcommerceApp/app/src/main/res/layout/fragment_restaurant_details.xml" value="0.2" />
@@ -146,7 +146,7 @@
         <entry key="..\:/GitProjects/EcommerceApp/app/src/main/res/layout/layout_progress_bar.xml" value="0.27291666666666664" />
         <entry key="..\:/GitProjects/EcommerceApp/app/src/main/res/layout/row_breaking_news.xml" value="0.27291666666666664" />
         <entry key="..\:/GitProjects/EcommerceApp/app/src/main/res/layout/row_file_top_dishes.xml" value="0.27291666666666664" />
-        <entry key="..\:/GitProjects/EcommerceApp/app/src/main/res/layout/row_header.xml" value="0.27291666666666664" />
+        <entry key="..\:/GitProjects/EcommerceApp/app/src/main/res/layout/row_header.xml" value="0.16" />
         <entry key="..\:/GitProjects/EcommerceApp/app/src/main/res/layout/row_popular_restaurants.xml" value="0.27291666666666664" />
         <entry key="..\:/GitProjects/EcommerceApp/app/src/main/res/layout/row_product_list_item.xml" value="0.15859375" />
         <entry key="..\:/GitProjects/EcommerceApp/app/src/main/res/layout/row_search_list_item.xml" value="0.2046875" />
