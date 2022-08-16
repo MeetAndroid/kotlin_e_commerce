@@ -155,12 +155,12 @@ class OrderHistoryFragment : Fragment(), OrderHistoryAdapter.OnOrderHistoryItemC
             .show()
     }
 
-    override fun onItemClick(position: Int) {
-        Log.e("TAG", position.toString())
+    override fun onItemClick(orderId: Int) {
+        Log.e("TAG", orderId.toString())
         binding.root.findNavController()
             .navigate(
                 OrderHistoryFragmentDirections.actionOrderHistoryFragmentToOrderDetailsFragment(
-                    position
+                    orderId
                 )
             )
     }
