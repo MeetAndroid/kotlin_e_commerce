@@ -1,12 +1,14 @@
 package com.specindia.ecommerce.ui.fragments
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.gson.Gson
 import com.specindia.ecommerce.R
@@ -49,6 +51,15 @@ class OrderHistoryFragment : Fragment(), OrderHistoryAdapter.OnOrderHistoryItemC
         setUpProgressDialog()
         callOrderListApi()
         setObserver()
+        swipeToRefresh()
+    }
+
+    private fun swipeToRefresh() {
+        binding.srOrderHistory.setOnRefreshListener {
+            orderList?.clear()
+            binding.srOrderHistory.isRefreshing = false
+            callOrderListApi()
+        }
     }
 
     private fun setUpHeader() {
@@ -109,13 +120,17 @@ class OrderHistoryFragment : Fragment(), OrderHistoryAdapter.OnOrderHistoryItemC
                     customProgressDialog.hide()
                     response.data?.let { it ->
                         with(binding) {
-                            orderList = it.data
-                            if (orderList.size > 0) {
-                                orderHistoryAdapter =
-                                    OrderHistoryAdapter(orderList, this@OrderHistoryFragment)
-                                rvOrderHistory.adapter = orderHistoryAdapter
-                            }
+                            orderList = ((it.data.toList() as ArrayList<OrderData>?)!!)
+                            orderHistoryAdapter = OrderHistoryAdapter(orderList,this@OrderHistoryFragment)
+                            rvOrderHistory.adapter = orderHistoryAdapter
 
+                            if (orderList?.isNotEmpty() == true) {
+                                srOrderHistory.visible(true)
+                                noDataFound.clNoDataFound.visible(false)
+                            } else {
+                                srOrderHistory.visible(false)
+                                noDataFound.clNoDataFound.visible(true)
+                            }
                         }
                     }
                 }
