@@ -121,7 +121,8 @@ class OrderHistoryFragment : Fragment(), OrderHistoryAdapter.OnOrderHistoryItemC
                     response.data?.let { it ->
                         with(binding) {
                             orderList = ((it.data.toList() as ArrayList<OrderData>?)!!)
-                            orderHistoryAdapter = OrderHistoryAdapter(orderList,this@OrderHistoryFragment)
+                            orderHistoryAdapter =
+                                OrderHistoryAdapter(orderList, this@OrderHistoryFragment)
                             rvOrderHistory.adapter = orderHistoryAdapter
 
                             if (orderList?.isNotEmpty() == true) {
@@ -155,7 +156,12 @@ class OrderHistoryFragment : Fragment(), OrderHistoryAdapter.OnOrderHistoryItemC
     }
 
     override fun onItemClick(position: Int) {
+        Log.e("TAG", position.toString())
         binding.root.findNavController()
-            .navigate(OrderHistoryFragmentDirections.actionOrderHistoryFragmentToOrderDetailsFragment())
+            .navigate(
+                OrderHistoryFragmentDirections.actionOrderHistoryFragmentToOrderDetailsFragment(
+                    position
+                )
+            )
     }
 }

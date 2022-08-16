@@ -30,9 +30,16 @@
         android:label="Order Details"
         tools:layout="@layout/fragment_order_details">
 
+        <argument
+            android:name="order_id"
+            android:defaultValue="0"
+            app:argType="integer" />
+
         <action
             android:id="@+id/action_orderDetailsFragment_to_checkOutFragment"
             app:destination="@id/checkOutFragment" />
+
+
     </fragment>
 
 

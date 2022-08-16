@@ -1,28 +1,35 @@
 package com.specindia.ecommerce.ui.fragments
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
-import com.bumptech.glide.Glide
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.gson.Gson
 import com.specindia.ecommerce.R
 import com.specindia.ecommerce.api.network.NetworkResult
 import com.specindia.ecommerce.databinding.FragmentOrderDetailsBinding
 import com.specindia.ecommerce.models.response.AuthResponseData
-import com.specindia.ecommerce.models.response.home.order.OrderDetailsData
 import com.specindia.ecommerce.ui.activity.HomeActivity
 import com.specindia.ecommerce.util.getHeaderMap
 import com.specindia.ecommerce.util.visible
 import dagger.hilt.android.AndroidEntryPoint
+import androidx.navigation.fragment.navArgs
+import com.specindia.ecommerce.models.response.home.order.CartsItem
+import com.specindia.ecommerce.models.response.home.order.Data
+import com.specindia.ecommerce.models.response.home.order.OrderDetailsResponse
+import com.specindia.ecommerce.ui.adapters.OrderListAdapter
 
 @AndroidEntryPoint
 class OrderDetailsFragment : Fragment() {
     private lateinit var binding: FragmentOrderDetailsBinding
     private lateinit var data: AuthResponseData
+    private val args: OrderDetailsFragmentArgs by navArgs()
+    private var orderList = ArrayList<CartsItem>()
+    lateinit var orderListAdapter: OrderListAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -49,25 +56,22 @@ class OrderDetailsFragment : Fragment() {
                 .navigate(OrderDetailsFragmentDirections.actionOrderDetailsFragmentToCheckOutFragment())
         }
 
-       // (activity as HomeActivity).showOrHideBottomAppBarAndFloatingActionButtonOnScroll()
+        // (activity as HomeActivity).showOrHideBottomAppBarAndFloatingActionButtonOnScroll()
+        Log.e("TAG", args.orderId.toString())
     }
 
-    private fun setUpData(data: OrderDetailsData) {
+    private fun setUpData(data: Data) {
         binding.apply {
-            Glide.with(binding.ivProductImage)
-                .load("https://picsum.photos/200")
-                .placeholder(R.drawable.ic_launcher_foreground)
-                .error(android.R.drawable.ic_dialog_alert)
-                .into(binding.ivProductImage)
 
-            tvProductName.text = "Mulberry Pizza by Josh"
-            tvProductPrice.text = "250.00 Rs"
-            tvOrderCount.text = "2"
-
+            orderList = ArrayList()
+            orderList = data.carts
+            orderListAdapter = OrderListAdapter(orderList)
+            rvOrderList.adapter = orderListAdapter
             tvDiscount.text = "4"
             tvDeliveryCost.text = data.extraCharges
             tvSubTotal.text = data.subtotal
             tvTotal.text = data.total
+            Log.e("ORDER-LIST", Gson().toJson(orderList))
 
         }
 
@@ -105,7 +109,7 @@ class OrderDetailsFragment : Fragment() {
                 data.token,
                 true
             ),
-            id = 1
+            id = args.orderId
         )
     }
 
@@ -118,7 +122,7 @@ class OrderDetailsFragment : Fragment() {
             when (response) {
                 is NetworkResult.Success -> {
                     response.data?.let { orderData ->
-                        setUpData(orderData.data)
+                        orderData.data?.let { setUpData(it) }
                     }
                 }
                 is NetworkResult.Error -> {

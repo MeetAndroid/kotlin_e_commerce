@@ -40,7 +40,7 @@ class OrderHistoryAdapter(
                     })
 
                 itemView.setOnClickListener {
-                    onItemOrderHistoryItemClick.onItemClick(position)
+                    product.id?.let { it1 -> onItemOrderHistoryItemClick.onItemClick(it1) }
                 }
             }
         }
