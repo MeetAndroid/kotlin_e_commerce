@@ -36,7 +36,7 @@ class OrderHistoryAdapter(
                     product.createdAt?.let {
                         dateFormat(it,
                             Constants.DateFormat.INPUT_FORMAT,
-                            Constants.DateFormat.INPUT_FORMAT)
+                            Constants.DateFormat.OUTPUT_FORMAT)
                     })
 
                 itemView.setOnClickListener {
