@@ -308,6 +308,7 @@
                                 android:layout_marginTop="2dp"
                                 android:fontFamily="@font/roboto_bold"
                                 android:lineSpacingExtra="2dp"
+                                android:minLines="2"
                                 android:text="@string/your_order_is_placed_successfully"
                                 android:textAppearance="@style/TextAppearance.AppCompat.Small"
                                 android:textColor="@color/colorGray"

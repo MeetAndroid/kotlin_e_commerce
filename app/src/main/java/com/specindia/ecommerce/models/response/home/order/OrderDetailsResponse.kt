@@ -4,114 +4,114 @@ import com.google.gson.annotations.SerializedName
 
 data class OrderDetailsResponse(
 
-    @field:SerializedName("status_code")
+    @SerializedName("status_code")
     val statusCode: Int? = null,
 
-    @field:SerializedName("data")
+    @SerializedName("data")
     val data: Data? = null,
 
-    @field:SerializedName("message")
+    @SerializedName("message")
     val message: String? = null,
 
-    @field:SerializedName("status")
+    @SerializedName("status")
     val status: String? = null
 )
 
 data class CartsItem(
 
-    @field:SerializedName("amount")
+    @SerializedName("amount")
     val amount: String? = null,
 
-    @field:SerializedName("product")
+    @SerializedName("product")
     val product: Product? = null,
 
-    @field:SerializedName("quantity")
+    @SerializedName("quantity")
     val quantity: String? = null,
 
-    @field:SerializedName("productId")
+    @SerializedName("productId")
     val productId: Int? = null,
 
-    @field:SerializedName("orderId")
+    @SerializedName("orderId")
     val orderId: Int? = null,
 
-    @field:SerializedName("id")
+    @SerializedName("id")
     val id: Int? = null
 )
 
 data class Data(
 
-    @field:SerializedName("transcationType")
+    @SerializedName("transcationType")
     val transcationType: Any? = null,
 
-    @field:SerializedName("orderStatus")
+    @SerializedName("orderStatus")
     val orderStatus: Any? = null,
 
-    @field:SerializedName("deliveryuserId")
+    @SerializedName("deliveryuserId")
     val deliveryuserId: Any? = null,
 
-    @field:SerializedName("couponId")
+    @SerializedName("couponId")
     val couponId: Any? = null,
 
-    @field:SerializedName("restaurantId")
+    @SerializedName("restaurantId")
     val restaurantId: Int? = null,
 
-    @field:SerializedName("extraCharges")
+    @SerializedName("extraCharges")
     val extraCharges: String? = null,
 
-    @field:SerializedName("userId")
+    @SerializedName("userId")
     val userId: Int? = null,
 
-    @field:SerializedName("transactionId")
+    @SerializedName("transactionId")
     val transactionId: Any? = null,
 
-    @field:SerializedName("addressId")
+    @SerializedName("addressId")
     val addressId: Int? = null,
 
-    @field:SerializedName("createdAt")
+    @SerializedName("createdAt")
     val createdAt: String? = null,
 
-    @field:SerializedName("total")
+    @SerializedName("total")
     val total: String? = null,
 
-    @field:SerializedName("carts")
+    @SerializedName("carts")
     val carts: ArrayList<CartsItem> = ArrayList(),
 
-    @field:SerializedName("subtotal")
+    @SerializedName("subtotal")
     val subtotal: String? = null,
 
-    @field:SerializedName("id")
+    @SerializedName("id")
     val id: Int? = null,
 
-    @field:SerializedName("deliveryDate")
+    @SerializedName("deliveryDate")
     val deliveryDate: Any? = null,
 
-    @field:SerializedName("updatedAt")
+    @SerializedName("updatedAt")
     val updatedAt: String? = null
 )
 
 data class Product(
 
-    @field:SerializedName("productImage")
+    @SerializedName("productImage")
     val productImage: String? = null,
 
-    @field:SerializedName("price")
+    @SerializedName("price")
     val price: Int? = null,
 
-    @field:SerializedName("RestaurantId")
+    @SerializedName("RestaurantId")
     val restaurantId: Int? = null,
 
-    @field:SerializedName("description")
+    @SerializedName("description")
     val description: String? = null,
 
-    @field:SerializedName("id")
+    @SerializedName("id")
     val id: Int? = null,
 
-    @field:SerializedName("categoryName")
+    @SerializedName("categoryName")
     val categoryName: String? = null,
 
-    @field:SerializedName("productName")
+    @SerializedName("productName")
     val productName: String? = null,
 
-    @field:SerializedName("categoryId")
+    @SerializedName("categoryId")
     val categoryId: Int? = null
 )

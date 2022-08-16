@@ -25,22 +25,22 @@ class OrderHistoryAdapter(
     }
 
     override fun onBindViewHolder(holder: OrderListViewHolder, position: Int) {
-        val product = arrayList[position]
+        val order = arrayList[position]
 
         with(holder) {
             with(binding) {
                 tvOrderId.text =
-                    itemView.resources.getString(R.string.order_id, product.id.toString())
-                tvOrderAmount.text = itemView.resources.getString(R.string.amount, product.total)
+                    itemView.resources.getString(R.string.order_id, order.id.toString())
+                tvOrderAmount.text = itemView.resources.getString(R.string.amount, order.total)
                 tvOrderDate.text = itemView.resources.getString(R.string.date,
-                    product.createdAt?.let {
+                    order.createdAt?.let {
                         dateFormat(it,
                             Constants.DateFormat.INPUT_FORMAT,
                             Constants.DateFormat.OUTPUT_FORMAT)
                     })
 
                 itemView.setOnClickListener {
-                    product.id?.let { it1 -> onItemOrderHistoryItemClick.onItemClick(it1) }
+                    order.id?.let { it1 -> onItemOrderHistoryItemClick.onItemClick(it1) }
                 }
             }
         }
@@ -51,6 +51,6 @@ class OrderHistoryAdapter(
     }
 
     interface OnOrderHistoryItemClickListener {
-        fun onItemClick(position: Int)
+        fun onItemClick(orderId: Int)
     }
 }
