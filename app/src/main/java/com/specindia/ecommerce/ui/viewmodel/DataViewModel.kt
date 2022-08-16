@@ -3,6 +3,7 @@ package com.specindia.ecommerce.ui.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.specindia.ecommerce.datastore.abstraction.DataStoreRepository
+import com.specindia.ecommerce.util.Constants.Companion.KEY_EXISTING_RESTAURANT_ID_OF_CART
 import com.specindia.ecommerce.util.Constants.Companion.KEY_FAV_RESTAURANTS
 import com.specindia.ecommerce.util.Constants.Companion.KEY_FB_ACCESS_TOKEN
 import com.specindia.ecommerce.util.Constants.Companion.KEY_IS_FIRST_TIME
@@ -21,7 +22,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class DataViewModel @Inject constructor(
-    private val repository: DataStoreRepository
+    private val repository: DataStoreRepository,
 ) : ViewModel() {
 
     fun saveIsFirstTime(value: Boolean) {
@@ -126,7 +127,7 @@ class DataViewModel @Inject constructor(
         repository.getString(KEY_LOGGED_IN_USER_DATA)
     }
 
-    fun saveFavoriteRestaurantList(value: String){
+    fun saveFavoriteRestaurantList(value: String) {
         viewModelScope.launch {
             repository.putString(KEY_FAV_RESTAURANTS, value)
         }
@@ -134,6 +135,16 @@ class DataViewModel @Inject constructor(
 
     fun getFavoriteRestaurantList(): String? = runBlocking {
         repository.getString(KEY_FAV_RESTAURANTS)
+    }
+
+    fun saveExistingRestaurantIdOfCart(value: Int) {
+        viewModelScope.launch {
+            repository.putInt(KEY_EXISTING_RESTAURANT_ID_OF_CART, value)
+        }
+    }
+
+    fun getExistingRestaurantIdFromCart(): Int? = runBlocking {
+        repository.getInt(KEY_EXISTING_RESTAURANT_ID_OF_CART)
     }
 }
 

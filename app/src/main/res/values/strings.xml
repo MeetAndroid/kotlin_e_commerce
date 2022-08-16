@@ -145,6 +145,7 @@
 
     <string name="rs">Rs. %1$s</string>
     <string name="minus_rs">-Rs. %1$s</string>
+    <string name="msg_product_of_another_restaurant_is_already_exist">Product of another Restaurant is already exist in the cart.</string>
 
 
 </resources>

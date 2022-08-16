@@ -71,6 +71,8 @@ class HomeFragment : Fragment() {
         }
 
         observeResponse()
+        callGetCartApi()
+        observeGetCartResponse()
 
         topProductAdapter.setOnItemClickListener {
             requireActivity().showLongToast("${it.productName} clicked")
@@ -307,6 +309,51 @@ class HomeFragment : Fragment() {
             .setPositiveButton(getString(R.string.ok)) { _, _ ->
             }
             .show()
+    }
+
+    // ============== GET CART DATA
+    private fun callGetCartApi() {
+        Log.e("GetCart", "Calling...")
+        customProgressDialog.show()
+        (activity as HomeActivity).homeViewModel.getCart(
+            getHeaderMap(
+                data.token,
+                true
+            )
+        )
+    }
+
+    // ============== Observe Cart Response
+    @SuppressLint("LongLogTag")
+    private fun observeGetCartResponse() {
+        (activity as HomeActivity).homeViewModel.getCartResponse.observe(
+            viewLifecycleOwner
+        ) { response ->
+
+            when (response) {
+                is NetworkResult.Success -> {
+                    customProgressDialog.hide()
+                    response.data?.let { cartListResponse ->
+                        if (cartListResponse.data.isNotEmpty()) {
+                            val restaurantIdInCart =
+                                cartListResponse.data.first().product.restaurantId
+                            (activity as HomeActivity).dataStoreViewModel.saveExistingRestaurantIdOfCart(
+                                restaurantIdInCart)
+                        } else {
+                            (activity as HomeActivity).dataStoreViewModel.saveExistingRestaurantIdOfCart(
+                                0)
+                        }
+                    }
+                }
+                is NetworkResult.Error -> {
+                    customProgressDialog.hide()
+                    showDialog(response.message.toString())
+                }
+                is NetworkResult.Loading -> {
+                    customProgressDialog.show()
+                }
+            }
+        }
     }
 }
 
