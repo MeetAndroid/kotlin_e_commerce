@@ -10,6 +10,7 @@ import androidx.fragment.app.setFragmentResult
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
+import com.google.android.material.badge.ExperimentalBadgeUtils
 import com.specindia.ecommerce.R
 import com.specindia.ecommerce.databinding.FragmentProductDetailsBinding
 import com.specindia.ecommerce.models.response.home.SearchItem
@@ -19,6 +20,7 @@ import com.specindia.ecommerce.util.Constants
 import com.specindia.ecommerce.util.Constants.Companion.IS_FROM_PRODUCT_DETAILS
 import com.specindia.ecommerce.util.Constants.Companion.REQUEST_FROM_RESTAURANT_DETAILS
 import com.specindia.ecommerce.util.setRandomBackgroundColor
+import com.specindia.ecommerce.util.updateCartCountOnUI
 import com.specindia.ecommerce.util.visible
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -39,6 +41,7 @@ class ProductDetailsFragment : Fragment() {
         return binding.root
     }
 
+    @ExperimentalBadgeUtils
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setUpHeader()
@@ -92,6 +95,7 @@ class ProductDetailsFragment : Fragment() {
         }
     }
 
+    @ExperimentalBadgeUtils
     private fun setUpHeader() {
         with(binding) {
             with(homeDetailsScreenHeader) {
@@ -100,7 +104,8 @@ class ProductDetailsFragment : Fragment() {
                 ivBack.visible(true)
                 ivFavorite.visible(false)
                 ivSearch.visible(false)
-                ivShoppingCart.visible(true)
+                frShoppingCart.visible(true)
+                updateCartCountOnUI((activity as HomeActivity), frShoppingCart)
             }
         }
     }
@@ -115,7 +120,7 @@ class ProductDetailsFragment : Fragment() {
                     )
                     it.findNavController().popBackStack()
                 }
-                ivShoppingCart.setOnClickListener {
+                frShoppingCart.setOnClickListener {
                     view?.findNavController()
                         ?.navigate(ProductDetailsFragmentDirections.actionProductDetailsFragmentToCartListFragment())
 

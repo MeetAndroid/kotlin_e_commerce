@@ -1,5 +1,6 @@
 package com.specindia.ecommerce.util
 
+import android.R.color.transparent
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
@@ -10,6 +11,8 @@ import android.net.ConnectivityManager
 import android.net.NetworkCapabilities.TRANSPORT_CELLULAR
 import android.net.NetworkCapabilities.TRANSPORT_WIFI
 import android.os.Build
+import android.os.Handler
+import android.os.Looper
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Base64
@@ -18,6 +21,7 @@ import android.util.Patterns
 import android.view.View
 import android.view.WindowInsets
 import android.view.WindowManager
+import android.widget.FrameLayout
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
@@ -25,6 +29,9 @@ import androidx.core.util.Predicate
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import com.facebook.login.LoginManager
+import com.google.android.material.badge.BadgeDrawable
+import com.google.android.material.badge.BadgeUtils.attachBadgeDrawable
+import com.google.android.material.badge.ExperimentalBadgeUtils
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputEditText
 import com.specindia.ecommerce.R
@@ -297,8 +304,14 @@ fun dateFormat(date1: String, inputString: String, outPutString: String): String
 
 }
 
-fun saveExistingRestaurantIdOfCart(response: GetCartResponse, activity: HomeActivity) {
+@ExperimentalBadgeUtils
+fun handleCartBadgeCount(
+    response: GetCartResponse,
+    activity: HomeActivity,
+    frameLayout: FrameLayout,
+) {
     if (response.data.isNotEmpty()) {
+        // Save Latest Cart Counter Value to DataStore
         val restaurantIdInCart =
             response.data.first().product.restaurantId
         activity.dataStoreViewModel.saveExistingRestaurantIdOfCart(
@@ -311,6 +324,50 @@ fun saveExistingRestaurantIdOfCart(response: GetCartResponse, activity: HomeActi
             0)
         activity.dataStoreViewModel.saveCartItemCount(
             0)
+
+    }
+    updateCartCountOnUI(activity, frameLayout)
+}
+
+// Updating Cart Count by getting latest Cart Counter from DataStore
+@ExperimentalBadgeUtils
+fun updateCartCountOnUI(activity: HomeActivity, frameLayout: FrameLayout) {
+    Handler(Looper.getMainLooper()).postDelayed({
+        val cartItemCount =
+            activity.dataStoreViewModel.getCartItemCount()
+        cartItemCount?.let {
+            setCartBadgeCount(activity,
+                it,
+                frameLayout)
+        }
+    }, 500)
+}
+
+@ExperimentalBadgeUtils
+fun setCartBadgeCount(activity: Activity, counter: Int, frameLayout: FrameLayout) {
+    val badgeDrawable = BadgeDrawable.create(activity).apply {
+        number = counter
+        verticalOffset = 4
+        horizontalOffset = 4
+        maxCharacterCount = 999
+        badgeGravity = BadgeDrawable.TOP_END
+
+        if (counter != 0) {
+            badgeTextColor = ContextCompat.getColor(activity, R.color.white)
+            backgroundColor = ContextCompat.getColor(activity, R.color.color_red)
+        } else {
+            number = 0
+            badgeTextColor = ContextCompat.getColor(activity, transparent)
+            backgroundColor = ContextCompat.getColor(activity, transparent)
+        }
+
+    }
+    frameLayout.foreground = badgeDrawable
+    frameLayout.addOnLayoutChangeListener { view, _, _, _, _, _, _, _, _ ->
+        attachBadgeDrawable(badgeDrawable,
+            view,
+            frameLayout)
+
     }
 }
 

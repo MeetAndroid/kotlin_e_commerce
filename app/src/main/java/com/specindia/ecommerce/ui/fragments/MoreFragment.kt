@@ -47,7 +47,7 @@ class MoreFragment : Fragment() {
                 tvHeaderTitle.text = getString(com.specindia.ecommerce.R.string.more)
                 ivBack.visible(false)
                 ivFavorite.visible(false)
-                ivShoppingCart.visible(true)
+                frShoppingCart.visible(true)
                 ivSearch.visible(false)
             }
         }

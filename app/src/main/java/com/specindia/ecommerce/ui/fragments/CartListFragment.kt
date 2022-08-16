@@ -10,6 +10,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.badge.ExperimentalBadgeUtils
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.gson.Gson
 import com.specindia.ecommerce.R
@@ -45,7 +46,7 @@ class CartListFragment : Fragment(), CartListAdapter.OnCartItemClickListener {
         return binding.root
     }
 
-
+    @ExperimentalBadgeUtils
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setUpHeader()
@@ -78,7 +79,7 @@ class CartListFragment : Fragment(), CartListAdapter.OnCartItemClickListener {
                 ivBack.visible(true)
                 ivFavorite.visible(false)
                 ivSearch.visible(false)
-                ivShoppingCart.visible(false)
+                frShoppingCart.visible(false)
             }
         }
     }
@@ -116,6 +117,7 @@ class CartListFragment : Fragment(), CartListAdapter.OnCartItemClickListener {
         }
     }
 
+    @ExperimentalBadgeUtils
     private fun setUpCartListUI(
         binding: FragmentCartListBinding,
         cartListResponse: GetCartResponse,
@@ -125,7 +127,8 @@ class CartListFragment : Fragment(), CartListAdapter.OnCartItemClickListener {
             noDataFound.clNoDataFound.visible(true)
             swipeRefreshLayout.visible(false)
 
-            saveExistingRestaurantIdOfCart(cartListResponse, (activity as HomeActivity))
+            handleCartBadgeCount(cartListResponse, (activity as HomeActivity),
+                binding.homeDetailsScreenHeader.frShoppingCart)
             if (cartListResponse.data.isNotEmpty()) {
 
                 calculateAndDisplayTotal(cartListResponse.data)
@@ -182,6 +185,7 @@ class CartListFragment : Fragment(), CartListAdapter.OnCartItemClickListener {
     }
 
     // ============== Observe Cart Response
+    @ExperimentalBadgeUtils
     @SuppressLint("LongLogTag")
     private fun observeGetCartResponse() {
         (activity as HomeActivity).homeViewModel.getCartResponse.observe(

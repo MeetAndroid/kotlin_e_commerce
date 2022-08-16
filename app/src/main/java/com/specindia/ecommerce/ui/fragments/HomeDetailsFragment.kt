@@ -36,7 +36,7 @@ class HomeDetailsFragment : Fragment() {
                 tvHeaderTitle.text = "Home Details"
                 ivBack.visible(true)
                 ivFavorite.visible(false)
-                ivShoppingCart.visible(false)
+                frShoppingCart.visible(false)
             }
         }
     }

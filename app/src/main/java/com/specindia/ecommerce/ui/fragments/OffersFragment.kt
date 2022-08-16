@@ -34,7 +34,7 @@ class OffersFragment : Fragment() {
                 tvHeaderTitle.text = getString(com.specindia.ecommerce.R.string.offers)
                 ivBack.visible(false)
                 ivFavorite.visible(false)
-                ivShoppingCart.visible(false)
+                frShoppingCart.visible(false)
                 ivSearch.visible(false)
             }
         }

@@ -85,7 +85,7 @@ class OrderDetailsFragment : Fragment() {
                 tvHeaderTitle.text = getString(R.string.order_details)
                 ivBack.visible(true)
                 ivFavorite.visible(false)
-                ivShoppingCart.visible(false)
+                frShoppingCart.visible(false)
                 ivSearch.visible(false)
             }
         }
