@@ -396,6 +396,8 @@ class RestaurantDetailsFragment : Fragment(), ProductListAdapter.OnProductItemCl
                 is NetworkResult.Success -> {
                     customProgressDialog.hide()
                     response.data?.let { cartList ->
+                        saveExistingRestaurantIdOfCart(cartList, (activity as HomeActivity))
+
                         val productsByRestaurant =
                             (activity as HomeActivity).homeViewModel.productsByRestaurant.value
                         if (productsByRestaurant != null) {

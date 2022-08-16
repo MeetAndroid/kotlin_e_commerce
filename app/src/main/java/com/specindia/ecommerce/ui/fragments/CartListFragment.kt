@@ -20,10 +20,7 @@ import com.specindia.ecommerce.models.response.cart.getcart.GetCartData
 import com.specindia.ecommerce.models.response.cart.getcart.GetCartResponse
 import com.specindia.ecommerce.ui.activity.HomeActivity
 import com.specindia.ecommerce.ui.adapters.CartListAdapter
-import com.specindia.ecommerce.util.MarginDecoration
-import com.specindia.ecommerce.util.getHeaderMap
-import com.specindia.ecommerce.util.showProgressDialog
-import com.specindia.ecommerce.util.visible
+import com.specindia.ecommerce.util.*
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -127,6 +124,8 @@ class CartListFragment : Fragment(), CartListAdapter.OnCartItemClickListener {
             cartList.clear()
             noDataFound.clNoDataFound.visible(true)
             swipeRefreshLayout.visible(false)
+
+            saveExistingRestaurantIdOfCart(cartListResponse, (activity as HomeActivity))
             if (cartListResponse.data.isNotEmpty()) {
 
                 calculateAndDisplayTotal(cartListResponse.data)

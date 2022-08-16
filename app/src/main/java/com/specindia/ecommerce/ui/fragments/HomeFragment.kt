@@ -334,23 +334,13 @@ class HomeFragment : Fragment() {
                 is NetworkResult.Success -> {
                     customProgressDialog.hide()
                     response.data?.let { cartListResponse ->
-                        if (cartListResponse.data.isNotEmpty()) {
-                            val restaurantIdInCart =
-                                cartListResponse.data.first().product.restaurantId
-                            (activity as HomeActivity).dataStoreViewModel.saveExistingRestaurantIdOfCart(
-                                restaurantIdInCart)
-                        } else {
-                            (activity as HomeActivity).dataStoreViewModel.saveExistingRestaurantIdOfCart(
-                                0)
-                        }
+                        saveExistingRestaurantIdOfCart(cartListResponse, (activity as HomeActivity))
                     }
                 }
                 is NetworkResult.Error -> {
-                    customProgressDialog.hide()
                     showDialog(response.message.toString())
                 }
                 is NetworkResult.Loading -> {
-                    customProgressDialog.show()
                 }
             }
         }
