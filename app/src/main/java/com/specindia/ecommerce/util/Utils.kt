@@ -303,8 +303,13 @@ fun saveExistingRestaurantIdOfCart(response: GetCartResponse, activity: HomeActi
             response.data.first().product.restaurantId
         activity.dataStoreViewModel.saveExistingRestaurantIdOfCart(
             restaurantIdInCart)
+
+        activity.dataStoreViewModel.saveCartItemCount(
+            response.data.size)
     } else {
         activity.dataStoreViewModel.saveExistingRestaurantIdOfCart(
+            0)
+        activity.dataStoreViewModel.saveCartItemCount(
             0)
     }
 }

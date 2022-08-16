@@ -61,6 +61,7 @@ class Constants {
         const val KEY_IS_FIRST_TIME = "isFirstTime"
         const val KEY_IS_USER_LOGGED_IN = "isUserLoggedIn"
         const val KEY_EXISTING_RESTAURANT_ID_OF_CART = "existingRestaurantIdOfCart"
+        const val KEY_CART_ITEM_COUNT = "cartItemCount"
 
         // FB Fields
         const val KEY_FIELDS = "fields"

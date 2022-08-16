@@ -61,7 +61,7 @@ class CartListFragment : Fragment(), CartListAdapter.OnCartItemClickListener {
         callGetCartApi()
         observeGetCartResponse()
 
-        (activity as HomeActivity).showOrHideBottomAppBarAndFloatingActionButtonOnScroll()
+        //(activity as HomeActivity).showOrHideBottomAppBarAndFloatingActionButtonOnScroll()
 
         binding.swipeRefreshLayout.setOnRefreshListener {
             binding.swipeRefreshLayout.isRefreshing = false

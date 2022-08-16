@@ -3,6 +3,7 @@ package com.specindia.ecommerce.ui.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.specindia.ecommerce.datastore.abstraction.DataStoreRepository
+import com.specindia.ecommerce.util.Constants.Companion.KEY_CART_ITEM_COUNT
 import com.specindia.ecommerce.util.Constants.Companion.KEY_EXISTING_RESTAURANT_ID_OF_CART
 import com.specindia.ecommerce.util.Constants.Companion.KEY_FAV_RESTAURANTS
 import com.specindia.ecommerce.util.Constants.Companion.KEY_FB_ACCESS_TOKEN
@@ -145,6 +146,17 @@ class DataViewModel @Inject constructor(
 
     fun getExistingRestaurantIdFromCart(): Int? = runBlocking {
         repository.getInt(KEY_EXISTING_RESTAURANT_ID_OF_CART)
+    }
+
+    fun saveCartItemCount(value: Int) {
+        viewModelScope.launch {
+            repository.putInt(KEY_CART_ITEM_COUNT, value)
+        }
+    }
+
+
+    fun getCartItemCount(): Int? = runBlocking {
+        repository.getInt(KEY_CART_ITEM_COUNT)
     }
 }
 

@@ -58,7 +58,7 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         setUpHeader()
         setUpHeaderItemClick()
-        (activity as HomeActivity).showOrHideBottomAppBarAndFloatingActionButtonOnScroll()
+        //(activity as HomeActivity).showOrHideBottomAppBarAndFloatingActionButtonOnScroll()
         setUpProgressDialog()
         val userData = (activity as HomeActivity).dataStoreViewModel.getLoggedInUserData()
         data = Gson().fromJson(userData, AuthResponseData::class.java)
