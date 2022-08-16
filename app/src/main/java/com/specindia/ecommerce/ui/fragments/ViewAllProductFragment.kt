@@ -96,7 +96,7 @@ class ViewAllProductFragment : Fragment(), ViewAllAdapter.OnViewAllClickListener
                 ivBack.visible(true)
                 ivFavorite.visible(false)
                 ivSearch.visible(false)
-                ivShoppingCart.visible(false)
+                frShoppingCart.visible(false)
             }
         }
     }

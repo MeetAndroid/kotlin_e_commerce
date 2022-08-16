@@ -53,7 +53,7 @@ class CheckOutFragment : Fragment() {
                 tvHeaderTitle.text = getString(R.string.check_out)
                 ivBack.visible(true)
                 ivFavorite.visible(false)
-                ivShoppingCart.visible(false)
+                frShoppingCart.visible(false)
                 ivSearch.visible(false)
             }
         }

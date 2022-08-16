@@ -69,7 +69,7 @@ class OrderHistoryFragment : Fragment(), OrderHistoryAdapter.OnOrderHistoryItemC
                 tvHeaderTitle.text = getString(com.specindia.ecommerce.R.string.order_history)
                 ivBack.visible(true)
                 ivFavorite.visible(false)
-                ivShoppingCart.visible(false)
+                frShoppingCart.visible(false)
                 ivSearch.visible(false)
             }
         }

@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.LinearSnapHelper
+import com.google.android.material.badge.ExperimentalBadgeUtils
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.gson.Gson
 import com.specindia.ecommerce.R
@@ -54,6 +55,7 @@ class HomeFragment : Fragment() {
         return binding.root
     }
 
+    @ExperimentalBadgeUtils
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setUpHeader()
@@ -161,13 +163,14 @@ class HomeFragment : Fragment() {
                 tvHeaderTitle.visible(true)
                 ivBack.visible(false)
                 ivFavorite.visible(false)
-                ivShoppingCart.visible(true)
+                frShoppingCart.visible(true)
                 ivSearch.visible(true)
 
                 ivSearch.setOnClickListener {
                     view?.findNavController()
                         ?.navigate(HomeFragmentDirections.actionHomeFragmentToSearchFragment())
                 }
+
             }
         }
     }
@@ -175,7 +178,7 @@ class HomeFragment : Fragment() {
     private fun setUpHeaderItemClick() {
         with(binding) {
             with(homeMenuScreenHeader) {
-                ivShoppingCart.setOnClickListener {
+                frShoppingCart.setOnClickListener {
                     requireActivity().showLongToast("Cart List")
                     view?.findNavController()
                         ?.navigate(HomeFragmentDirections.actionHomeFragmentToCartListFragment())
@@ -324,7 +327,7 @@ class HomeFragment : Fragment() {
     }
 
     // ============== Observe Cart Response
-    @SuppressLint("LongLogTag")
+    @ExperimentalBadgeUtils
     private fun observeGetCartResponse() {
         (activity as HomeActivity).homeViewModel.getCartResponse.observe(
             viewLifecycleOwner
@@ -334,7 +337,10 @@ class HomeFragment : Fragment() {
                 is NetworkResult.Success -> {
                     customProgressDialog.hide()
                     response.data?.let { cartListResponse ->
-                        saveExistingRestaurantIdOfCart(cartListResponse, (activity as HomeActivity))
+                        handleCartBadgeCount(
+                            cartListResponse,
+                            (activity as HomeActivity),
+                            binding.homeMenuScreenHeader.frShoppingCart)
                     }
                 }
                 is NetworkResult.Error -> {

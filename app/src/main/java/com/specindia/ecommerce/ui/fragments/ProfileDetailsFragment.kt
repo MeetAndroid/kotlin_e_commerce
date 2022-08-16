@@ -35,7 +35,7 @@ class ProfileDetailsFragment : Fragment() {
                 tvHeaderTitle.text = getString(com.specindia.ecommerce.R.string.profile_details)
                 ivBack.visible(true)
                 ivFavorite.visible(false)
-                ivShoppingCart.visible(false)
+                frShoppingCart.visible(false)
                 ivSearch.visible(false)
             }
         }

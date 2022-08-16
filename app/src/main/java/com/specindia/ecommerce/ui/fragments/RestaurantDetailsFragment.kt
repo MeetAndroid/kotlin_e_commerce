@@ -15,6 +15,7 @@ import androidx.navigation.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
+import com.google.android.material.badge.ExperimentalBadgeUtils
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
@@ -73,6 +74,7 @@ class RestaurantDetailsFragment : Fragment(), ProductListAdapter.OnProductItemCl
         }
     }
 
+    @ExperimentalBadgeUtils
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         restaurantId = args.restaurantId
@@ -124,7 +126,7 @@ class RestaurantDetailsFragment : Fragment(), ProductListAdapter.OnProductItemCl
                 ivBack.visible(true)
                 ivFavorite.visible(true)
                 ivSearch.visible(false)
-                ivShoppingCart.visible(true)
+                frShoppingCart.visible(true)
             }
         }
     }
@@ -215,7 +217,7 @@ class RestaurantDetailsFragment : Fragment(), ProductListAdapter.OnProductItemCl
                     (activity as HomeActivity).dataStoreViewModel.saveFavoriteRestaurantList(data)
                 }
 
-                ivShoppingCart.setOnClickListener {
+                frShoppingCart.setOnClickListener {
                     view?.findNavController()
                         ?.navigate(RestaurantDetailsFragmentDirections.actionRestaurantDetailsFragmentToCartListFragment())
                 }
@@ -386,6 +388,7 @@ class RestaurantDetailsFragment : Fragment(), ProductListAdapter.OnProductItemCl
     }
 
     // ============== Observe Cart Response
+    @ExperimentalBadgeUtils
     @SuppressLint("LongLogTag")
     private fun observeGetCartResponse() {
         (activity as HomeActivity).homeViewModel.getCartResponse.observe(
@@ -396,7 +399,8 @@ class RestaurantDetailsFragment : Fragment(), ProductListAdapter.OnProductItemCl
                 is NetworkResult.Success -> {
                     customProgressDialog.hide()
                     response.data?.let { cartList ->
-                        saveExistingRestaurantIdOfCart(cartList, (activity as HomeActivity))
+                        handleCartBadgeCount(cartList, (activity as HomeActivity),
+                            binding.homeDetailsScreenHeader.frShoppingCart)
 
                         val productsByRestaurant =
                             (activity as HomeActivity).homeViewModel.productsByRestaurant.value

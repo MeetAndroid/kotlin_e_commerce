@@ -68,7 +68,8 @@ class FoodMenuFragment : Fragment() {
         menuListAdapter = MenuListAdapter(menuList)
         binding.rvMenu.apply {
             adapter = menuListAdapter
-            addItemDecoration(MarginDecoration(resources.getDimensionPixelSize(R.dimen.item_margin),true))
+            addItemDecoration(MarginDecoration(resources.getDimensionPixelSize(R.dimen.item_margin),
+                true))
             hasFixedSize()
         }
     }
@@ -79,8 +80,9 @@ class FoodMenuFragment : Fragment() {
                 tvHeaderTitle.visible(true)
                 tvHeaderTitle.text = getString(R.string.menu)
                 ivBack.visible(false)
+                ivSearch.visible(false)
                 ivFavorite.visible(false)
-                ivShoppingCart.visible(true)
+                frShoppingCart.visible(false)
             }
         }
     }
@@ -88,9 +90,7 @@ class FoodMenuFragment : Fragment() {
     private fun setUpHeaderItemClick() {
         with(binding) {
             with(foodMenuScreenHeader) {
-                ivShoppingCart.setOnClickListener {
-                    requireActivity().showLongToast("Add to cart")
-                }
+                // TODO : Set click of header item
             }
         }
     }

@@ -40,7 +40,7 @@ class FoodMenuDetailsFragment : Fragment() {
                 ivFavorite.setOnClickListener {
                     requireActivity().showLongToast("Add to Favorite")
                 }
-                ivShoppingCart.setOnClickListener {
+                frShoppingCart.setOnClickListener {
                     requireActivity().showLongToast("Add to Cart")
                 }
             }
@@ -53,7 +53,7 @@ class FoodMenuDetailsFragment : Fragment() {
                 tvHeaderTitle.visible(false)
                 ivBack.visible(true)
                 ivFavorite.visible(true)
-                ivShoppingCart.visible(true)
+                frShoppingCart.visible(true)
             }
         }
     }

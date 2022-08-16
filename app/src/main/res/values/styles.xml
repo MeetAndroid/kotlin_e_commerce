@@ -7,6 +7,7 @@
     <style name="MenuCardViewStyle" parent="@style/Widget.MaterialComponents.CardView">
         <item name="shapeAppearanceOverlay">@style/MenuCard</item>
     </style>
+
     <style name="ShapeAppearanceOverlay_card_custom_corners" parent="">
         <item name="cornerFamily">rounded</item>
         <item name="cornerSizeTopRight">0dp</item>
@@ -40,10 +41,15 @@
     </style>
 
 
-
     <style name="RoundedCornerImageView">
         <item name="cornerSize">7dp</item>
     </style>
 
-
+    <style name="myBadgeStyle" parent="Widget.MaterialComponents.Badge">
+        <item name="backgroundColor">@color/red</item>
+        <item name="badgeTextColor">@color/white</item>
+        <item name="horizontalOffset">6dp</item>
+        <item name="maxCharacterCount">2</item>
+        <item name="verticalOffset">8dp</item>
+    </style>
 </resources>
