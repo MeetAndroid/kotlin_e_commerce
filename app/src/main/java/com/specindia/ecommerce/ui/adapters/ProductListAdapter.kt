@@ -7,11 +7,14 @@ import com.bumptech.glide.Glide
 import com.specindia.ecommerce.R
 import com.specindia.ecommerce.databinding.RowProductListItemBinding
 import com.specindia.ecommerce.models.response.home.productsbyrestaurant.ProductsByRestaurantData
+import com.specindia.ecommerce.ui.activity.HomeActivity
+import com.specindia.ecommerce.util.showShortToast
 import com.specindia.ecommerce.util.visible
 
 class ProductListAdapter(
     private val arrayList: ArrayList<ProductsByRestaurantData>,
     private val onProductItemClickListener: OnProductItemClickListener,
+    private val activity: HomeActivity,
 ) :
     RecyclerView.Adapter<ProductListAdapter.ProductListViewHolder>() {
 
@@ -49,9 +52,18 @@ class ProductListAdapter(
                 }
 
                 btnAdd.setOnClickListener {
-                    btnAdd.visible(false)
-                    clAddOrRemoveProduct.visible(true)
-                    onProductItemClickListener.onAddButtonClick(product, position)
+                    val existingRestaurantIdInCart =
+                        activity.dataStoreViewModel.getExistingRestaurantIdFromCart()!!
+
+                    if (existingRestaurantIdInCart != 0 && existingRestaurantIdInCart != product.restaurantId) {
+                        activity.showShortToast(activity.getString(R.string.msg_product_of_another_restaurant_is_already_exist))
+                        btnAdd.visible(true)
+                        clAddOrRemoveProduct.visible(false)
+                    } else {
+                        btnAdd.visible(false)
+                        clAddOrRemoveProduct.visible(true)
+                        onProductItemClickListener.onAddButtonClick(product, position)
+                    }
 
                 }
 

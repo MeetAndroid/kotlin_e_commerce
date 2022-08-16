@@ -58,7 +58,7 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         setUpHeader()
         setUpHeaderItemClick()
-        (activity as HomeActivity).showOrHideBottomAppBarAndFloatingActionButtonOnScroll()
+        //(activity as HomeActivity).showOrHideBottomAppBarAndFloatingActionButtonOnScroll()
         setUpProgressDialog()
         val userData = (activity as HomeActivity).dataStoreViewModel.getLoggedInUserData()
         data = Gson().fromJson(userData, AuthResponseData::class.java)
@@ -71,6 +71,8 @@ class HomeFragment : Fragment() {
         }
 
         observeResponse()
+        callGetCartApi()
+        observeGetCartResponse()
 
         topProductAdapter.setOnItemClickListener {
             requireActivity().showLongToast("${it.productName} clicked")
@@ -307,6 +309,41 @@ class HomeFragment : Fragment() {
             .setPositiveButton(getString(R.string.ok)) { _, _ ->
             }
             .show()
+    }
+
+    // ============== GET CART DATA
+    private fun callGetCartApi() {
+        Log.e("GetCart", "Calling...")
+        customProgressDialog.show()
+        (activity as HomeActivity).homeViewModel.getCart(
+            getHeaderMap(
+                data.token,
+                true
+            )
+        )
+    }
+
+    // ============== Observe Cart Response
+    @SuppressLint("LongLogTag")
+    private fun observeGetCartResponse() {
+        (activity as HomeActivity).homeViewModel.getCartResponse.observe(
+            viewLifecycleOwner
+        ) { response ->
+
+            when (response) {
+                is NetworkResult.Success -> {
+                    customProgressDialog.hide()
+                    response.data?.let { cartListResponse ->
+                        saveExistingRestaurantIdOfCart(cartListResponse, (activity as HomeActivity))
+                    }
+                }
+                is NetworkResult.Error -> {
+                    showDialog(response.message.toString())
+                }
+                is NetworkResult.Loading -> {
+                }
+            }
+        }
     }
 }
 

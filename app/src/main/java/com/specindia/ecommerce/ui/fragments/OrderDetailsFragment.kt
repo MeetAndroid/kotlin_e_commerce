@@ -49,7 +49,7 @@ class OrderDetailsFragment : Fragment() {
                 .navigate(OrderDetailsFragmentDirections.actionOrderDetailsFragmentToCheckOutFragment())
         }
 
-        (activity as HomeActivity).showOrHideBottomAppBarAndFloatingActionButtonOnScroll()
+       // (activity as HomeActivity).showOrHideBottomAppBarAndFloatingActionButtonOnScroll()
     }
 
     private fun setUpData(data: OrderDetailsData) {

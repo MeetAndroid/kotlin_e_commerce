@@ -81,7 +81,6 @@ class RestaurantDetailsFragment : Fragment(), ProductListAdapter.OnProductItemCl
         setUpProgressDialog()
         val userData = (activity as HomeActivity).dataStoreViewModel.getLoggedInUserData()
         data = Gson().fromJson(userData, AuthResponseData::class.java)
-
         hideContent()
         binding.clTopPart.setRandomBackgroundColor()
 
@@ -91,7 +90,7 @@ class RestaurantDetailsFragment : Fragment(), ProductListAdapter.OnProductItemCl
         observeRemoveFromCartResponse()
         observeGetCartResponse()
 
-        (activity as HomeActivity).showOrHideBottomAppBarAndFloatingActionButtonOnScroll()
+        //(activity as HomeActivity).showOrHideBottomAppBarAndFloatingActionButtonOnScroll()
 
         binding.swipeRefreshLayout.setOnRefreshListener {
             binding.swipeRefreshLayout.isRefreshing = false
@@ -228,7 +227,7 @@ class RestaurantDetailsFragment : Fragment(), ProductListAdapter.OnProductItemCl
     private fun setUpRecyclerView() {
         // Products
         productList = ArrayList()
-        productListAdapter = ProductListAdapter(productList, this)
+        productListAdapter = ProductListAdapter(productList, this, (activity as HomeActivity))
         binding.rvProducts.apply {
             adapter = productListAdapter
             setHasFixedSize(false)
@@ -397,6 +396,8 @@ class RestaurantDetailsFragment : Fragment(), ProductListAdapter.OnProductItemCl
                 is NetworkResult.Success -> {
                     customProgressDialog.hide()
                     response.data?.let { cartList ->
+                        saveExistingRestaurantIdOfCart(cartList, (activity as HomeActivity))
+
                         val productsByRestaurant =
                             (activity as HomeActivity).homeViewModel.productsByRestaurant.value
                         if (productsByRestaurant != null) {
@@ -416,11 +417,11 @@ class RestaurantDetailsFragment : Fragment(), ProductListAdapter.OnProductItemCl
                                                 }
                                             }
                                         }
-                                    }else{
+                                    } else {
                                         for (i in 0 until productListResponse.data.size) {
                                             val product = productListResponse.data[i]
-                                            product.totalQty =0
-                                             product.isCartExist = false
+                                            product.totalQty = 0
+                                            product.isCartExist = false
                                         }
                                     }
                                     productListAdapter.notifyDataSetChanged()
@@ -521,15 +522,12 @@ class RestaurantDetailsFragment : Fragment(), ProductListAdapter.OnProductItemCl
         position: Int,
     ) {
         data.totalQty = data.totalQty + 1
-
         callAddUpdateToCartApi(
             productOrCartId = data.cartId.toString(),
             qty = data.totalQty.toString(),
             amount = data.price.toString(),
             isCartExist = data.isCartExist
         )
-
-
     }
 
     // - Button Click

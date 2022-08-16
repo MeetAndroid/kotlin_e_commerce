@@ -28,6 +28,7 @@ import com.facebook.login.LoginManager
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputEditText
 import com.specindia.ecommerce.R
+import com.specindia.ecommerce.models.response.cart.getcart.GetCartResponse
 import com.specindia.ecommerce.ui.activity.AuthActivity
 import com.specindia.ecommerce.ui.activity.HomeActivity
 import com.specindia.ecommerce.util.Constants.Companion.APPLICATION_JSON
@@ -294,6 +295,23 @@ fun dateFormat(date1: String, inputString: String, outPutString: String): String
     }
     return outPutDate
 
+}
+
+fun saveExistingRestaurantIdOfCart(response: GetCartResponse, activity: HomeActivity) {
+    if (response.data.isNotEmpty()) {
+        val restaurantIdInCart =
+            response.data.first().product.restaurantId
+        activity.dataStoreViewModel.saveExistingRestaurantIdOfCart(
+            restaurantIdInCart)
+
+        activity.dataStoreViewModel.saveCartItemCount(
+            response.data.size)
+    } else {
+        activity.dataStoreViewModel.saveExistingRestaurantIdOfCart(
+            0)
+        activity.dataStoreViewModel.saveCartItemCount(
+            0)
+    }
 }
 
 

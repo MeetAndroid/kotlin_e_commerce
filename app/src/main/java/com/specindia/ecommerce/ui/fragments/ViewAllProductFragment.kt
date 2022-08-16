@@ -77,7 +77,7 @@ class ViewAllProductFragment : Fragment(), ViewAllAdapter.OnViewAllClickListener
             observeViewAllRestaurant()
         }
 
-        (activity as HomeActivity).showOrHideBottomAppBarAndFloatingActionButtonOnScroll()
+        //(activity as HomeActivity).showOrHideBottomAppBarAndFloatingActionButtonOnScroll()
 
         binding.swipeRefreshLayout.setOnRefreshListener {
             binding.swipeRefreshLayout.isRefreshing = false

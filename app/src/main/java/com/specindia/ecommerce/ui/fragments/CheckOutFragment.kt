@@ -30,7 +30,7 @@ class CheckOutFragment : Fragment() {
         setUpHeader()
         setUpHeaderItemClick()
         setUpData()
-        (activity as HomeActivity).showOrHideBottomAppBarAndFloatingActionButtonOnScroll()
+       // (activity as HomeActivity).showOrHideBottomAppBarAndFloatingActionButtonOnScroll()
     }
 
     private fun setUpData() {

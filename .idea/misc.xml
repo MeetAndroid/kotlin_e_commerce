@@ -19,6 +19,8 @@
         <entry key="..\:/EcommerceApp/app/src/main/res/drawable/ic_back.xml" value="0.195" />
         <entry key="..\:/EcommerceApp/app/src/main/res/drawable/ic_baseline_close_24.xml" value="0.1055" />
         <entry key="..\:/EcommerceApp/app/src/main/res/drawable/ic_close.xml" value="0.1055" />
+        <entry key="..\:/EcommerceApp/app/src/main/res/drawable/ic_discount.xml" value="0.1305" />
+        <entry key="..\:/EcommerceApp/app/src/main/res/drawable/ic_discount_percent.xml" value="0.1305" />
         <entry key="..\:/EcommerceApp/app/src/main/res/drawable/ic_favorite.xml" value="0.195" />
         <entry key="..\:/EcommerceApp/app/src/main/res/drawable/ic_fb.xml" value="0.2115" />
         <entry key="..\:/EcommerceApp/app/src/main/res/drawable/ic_find_food_you_love.xml" value="0.1015" />
@@ -61,7 +63,7 @@
         <entry key="..\:/EcommerceApp/app/src/main/res/layout/fragment_auth.xml" value="0.1675213675213675" />
         <entry key="..\:/EcommerceApp/app/src/main/res/layout/fragment_blank.xml" value="0.20416666666666666" />
         <entry key="..\:/EcommerceApp/app/src/main/res/layout/fragment_breaking_news.xml" value="0.17192982456140352" />
-        <entry key="..\:/EcommerceApp/app/src/main/res/layout/fragment_cart_list.xml" value="0.16842105263157894" />
+        <entry key="..\:/EcommerceApp/app/src/main/res/layout/fragment_cart_list.xml" value="0.21" />
         <entry key="..\:/EcommerceApp/app/src/main/res/layout/fragment_checkout.xml" value="0.2" />
         <entry key="..\:/EcommerceApp/app/src/main/res/layout/fragment_food_menu.xml" value="0.20491374803972817" />
         <entry key="..\:/EcommerceApp/app/src/main/res/layout/fragment_food_menu_details.xml" value="0.17192982456140352" />
@@ -73,7 +75,7 @@
         <entry key="..\:/EcommerceApp/app/src/main/res/layout/fragment_order_details.xml" value="0.22" />
         <entry key="..\:/EcommerceApp/app/src/main/res/layout/fragment_order_history.xml" value="0.16842105263157894" />
         <entry key="..\:/EcommerceApp/app/src/main/res/layout/fragment_otp.xml" value="0.16842105263157894" />
-        <entry key="..\:/EcommerceApp/app/src/main/res/layout/fragment_product_details.xml" value="0.25" />
+        <entry key="..\:/EcommerceApp/app/src/main/res/layout/fragment_product_details.xml" value="0.2" />
         <entry key="..\:/EcommerceApp/app/src/main/res/layout/fragment_profile.xml" value="0.1" />
         <entry key="..\:/EcommerceApp/app/src/main/res/layout/fragment_profile_details.xml" value="0.1675213675213675" />
         <entry key="..\:/EcommerceApp/app/src/main/res/layout/fragment_registration.xml" value="0.17192982456140352" />
@@ -82,10 +84,11 @@
         <entry key="..\:/EcommerceApp/app/src/main/res/layout/fragment_view_all_product.xml" value="0.15043859649122807" />
         <entry key="..\:/EcommerceApp/app/src/main/res/layout/fragment_welcome.xml" value="0.1675213675213675" />
         <entry key="..\:/EcommerceApp/app/src/main/res/layout/item_profile.xml" value="0.17192982456140352" />
+        <entry key="..\:/EcommerceApp/app/src/main/res/layout/layout_apply_for_coupon.xml" value="0.25" />
         <entry key="..\:/EcommerceApp/app/src/main/res/layout/layout_progress_bar.xml" value="0.17192982456140352" />
         <entry key="..\:/EcommerceApp/app/src/main/res/layout/row_auto_fit_item.xml" value="0.16842105263157894" />
         <entry key="..\:/EcommerceApp/app/src/main/res/layout/row_breaking_news.xml" value="0.17192982456140352" />
-        <entry key="..\:/EcommerceApp/app/src/main/res/layout/row_cart_list_item.xml" value="0.10482456140350878" />
+        <entry key="..\:/EcommerceApp/app/src/main/res/layout/row_cart_list_item.xml" value="0.16" />
         <entry key="..\:/EcommerceApp/app/src/main/res/layout/row_category_list_item.xml" value="0.2" />
         <entry key="..\:/EcommerceApp/app/src/main/res/layout/row_category_list_item_shimmer.xml" value="1.0" />
         <entry key="..\:/EcommerceApp/app/src/main/res/layout/row_file_order_history.xml" value="0.16842105263157894" />
@@ -133,6 +136,7 @@
         <entry key="..\:/GitProjects/EcommerceApp/app/src/main/res/layout/fragment_home_details.xml" value="0.27291666666666664" />
         <entry key="..\:/GitProjects/EcommerceApp/app/src/main/res/layout/fragment_login.xml" value="0.17708333333333334" />
         <entry key="..\:/GitProjects/EcommerceApp/app/src/main/res/layout/fragment_more.xml" value="0.18" />
+        <entry key="..\:/GitProjects/EcommerceApp/app/src/main/res/layout/fragment_offers.xml" value="0.27291666666666664" />
         <entry key="..\:/GitProjects/EcommerceApp/app/src/main/res/layout/fragment_offers.xml" value="0.2" />
         <entry key="..\:/GitProjects/EcommerceApp/app/src/main/res/layout/fragment_order_details.xml" value="0.2046875" />
         <entry key="..\:/GitProjects/EcommerceApp/app/src/main/res/layout/fragment_order_history.xml" value="0.16" />
@@ -144,7 +148,7 @@
         <entry key="..\:/GitProjects/EcommerceApp/app/src/main/res/layout/fragment_search.xml" value="0.18" />
         <entry key="..\:/GitProjects/EcommerceApp/app/src/main/res/layout/fragment_view_all_product.xml" value="0.18" />
         <entry key="..\:/GitProjects/EcommerceApp/app/src/main/res/layout/fragment_welcome.xml" value="0.1" />
-        <entry key="..\:/GitProjects/EcommerceApp/app/src/main/res/layout/layout_no_data_found.xml" value="0.2" />
+        <entry key="..\:/GitProjects/EcommerceApp/app/src/main/res/layout/layout_no_data_found.xml" value="0.27291666666666664" />
         <entry key="..\:/GitProjects/EcommerceApp/app/src/main/res/layout/layout_progress_bar.xml" value="0.27291666666666664" />
         <entry key="..\:/GitProjects/EcommerceApp/app/src/main/res/layout/row_breaking_news.xml" value="0.27291666666666664" />
         <entry key="..\:/GitProjects/EcommerceApp/app/src/main/res/layout/row_file_top_dishes.xml" value="0.27291666666666664" />

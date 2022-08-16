@@ -30,7 +30,7 @@ class MoreFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         setUpButtonClick()
         setUpHeader()
-        (activity as HomeActivity).showOrHideBottomAppBarAndFloatingActionButtonOnScroll()
+        //(activity as HomeActivity).showOrHideBottomAppBarAndFloatingActionButtonOnScroll()
 
 
         binding.clMyOrder.setOnClickListener {
