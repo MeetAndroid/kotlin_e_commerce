@@ -6,6 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
+import androidx.navigation.findNavController
+import com.google.android.material.badge.ExperimentalBadgeUtils
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.gson.Gson
 import com.specindia.ecommerce.R
@@ -36,6 +38,7 @@ class FoodMenuFragment : Fragment() {
         return binding.root
     }
 
+    @ExperimentalBadgeUtils
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setUpHeader()
@@ -74,6 +77,7 @@ class FoodMenuFragment : Fragment() {
         }
     }
 
+    @ExperimentalBadgeUtils
     private fun setUpHeader() {
         with(binding) {
             with(foodMenuScreenHeader) {
@@ -82,7 +86,8 @@ class FoodMenuFragment : Fragment() {
                 ivBack.visible(false)
                 ivSearch.visible(false)
                 ivFavorite.visible(false)
-                frShoppingCart.visible(false)
+                frShoppingCart.visible(true)
+                updateCartCountOnUI((activity as HomeActivity), frShoppingCart)
             }
         }
     }
@@ -90,7 +95,10 @@ class FoodMenuFragment : Fragment() {
     private fun setUpHeaderItemClick() {
         with(binding) {
             with(foodMenuScreenHeader) {
-                // TODO : Set click of header item
+                frShoppingCart.setOnClickListener {
+                    view?.findNavController()
+                        ?.navigate(FoodMenuFragmentDirections.actionFoodMenuFragmentToCartListFragment())
+                }
             }
         }
     }

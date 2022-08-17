@@ -557,6 +557,10 @@ class RestaurantDetailsFragment : Fragment(), ProductListAdapter.OnProductItemCl
 
     }
 
+    override fun onRemoveAllCartAction(cartId: Int) {
+        callRemoveFromCartApi(cartId)
+    }
+
     private fun callRemoveFromCartApi(cartId: Int) {
         customProgressDialog.show()
 

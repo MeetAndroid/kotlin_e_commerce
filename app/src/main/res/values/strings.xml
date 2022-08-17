@@ -149,5 +149,6 @@
 
     <string name="api_key">AIzaSyC25GipNA1okdTLOEN0Me5_aTPcZ-ZMjDA</string>
     <string name="client_id">341955479174-5j23ntsrrui93e9vboaqdvoqg9g8sr3s.apps.googleusercontent.com</string>
+    <string name="msg_confirm_change_cart_item">Item(s) of another Restaurant is already exist in the Cart. Do you really want to add this item to your Cart? This will remove all your existing item(s) from the Cart.</string>
 
 </resources>

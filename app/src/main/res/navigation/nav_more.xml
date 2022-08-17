@@ -13,6 +13,9 @@
         <action
             android:id="@+id/action_moreFragment_to_orderHistoryFragment"
             app:destination="@id/orderHistoryFragment" />
+        <action
+            android:id="@+id/action_moreFragment_to_cartListFragment"
+            app:destination="@id/cartListFragment" />
     </fragment>
     <fragment
         android:id="@+id/orderHistoryFragment"
@@ -50,5 +53,11 @@
         tools:layout="@layout/fragment_checkout">
 
     </fragment>
+
+    <fragment
+        android:id="@+id/cartListFragment"
+        android:name="com.specindia.ecommerce.ui.fragments.CartListFragment"
+        android:label="Cart List Fragment"
+        tools:layout="@layout/fragment_cart_list" />
 
 </navigation>
