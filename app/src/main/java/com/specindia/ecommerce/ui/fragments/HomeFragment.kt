@@ -179,7 +179,6 @@ class HomeFragment : Fragment() {
         with(binding) {
             with(homeMenuScreenHeader) {
                 frShoppingCart.setOnClickListener {
-                    requireActivity().showLongToast("Cart List")
                     view?.findNavController()
                         ?.navigate(HomeFragmentDirections.actionHomeFragmentToCartListFragment())
                 }

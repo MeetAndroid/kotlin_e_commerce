@@ -10,6 +10,7 @@ import com.specindia.ecommerce.models.response.cart.getcart.GetCartResponse
 import com.specindia.ecommerce.models.response.cart.removeFromCart.RemoveFromCartResponse
 import com.specindia.ecommerce.models.response.home.DashboardListResponse
 import com.specindia.ecommerce.models.response.home.SearchResponse
+import com.specindia.ecommerce.models.response.home.createOrder.CreateOrderResponse
 import com.specindia.ecommerce.models.response.home.order.OrderDetailsResponse
 import com.specindia.ecommerce.models.response.home.orderlist.OrderListResponse
 import com.specindia.ecommerce.models.response.home.product.AllRestaurant
@@ -56,6 +57,8 @@ HomeViewModel @Inject constructor(
 
     private val _orderListResponse = MutableLiveData<NetworkResult<OrderListResponse>>()
 
+    private val _createOrderResponse = MutableLiveData<NetworkResult<CreateOrderResponse>>()
+
     // Live Data
     val dashboardListResponse: LiveData<NetworkResult<DashboardListResponse>>
         get() = _dashboardListResponse
@@ -92,6 +95,9 @@ HomeViewModel @Inject constructor(
 
     val orderListResponse: LiveData<NetworkResult<OrderListResponse>>
         get() = _orderListResponse
+
+    val createOrderResponse: LiveData<NetworkResult<CreateOrderResponse>>
+        get() = _createOrderResponse
 
     // Call dashboard list api
     fun getDashboardList(headerMap: Map<String, String>) =
@@ -207,6 +213,15 @@ HomeViewModel @Inject constructor(
             _orderListResponse.postValue(NetworkResult.Loading())
             repository.getOrderList(headerMap, parameters).collect { values ->
                 _orderListResponse.value = values
+            }
+        }
+
+    // Call Create Order api
+    fun createOrder(headerMap: Map<String, String>, parameters: String) =
+        viewModelScope.launch {
+            _createOrderResponse.postValue(NetworkResult.Loading())
+            repository.createOrder(headerMap, parameters).collect { values ->
+                _createOrderResponse.value = values
             }
         }
 }

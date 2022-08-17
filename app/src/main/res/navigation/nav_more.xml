@@ -37,27 +37,44 @@
             android:name="order_id"
             android:defaultValue="0"
             app:argType="integer" />
-
-        <action
-            android:id="@+id/action_orderDetailsFragment_to_checkOutFragment"
-            app:destination="@id/checkOutFragment" />
-
-
     </fragment>
 
 
     <fragment
         android:id="@+id/checkOutFragment"
         android:name="com.specindia.ecommerce.ui.fragments.CheckOutFragment"
-        android:label="CheckOut"
+        android:label="Check Out"
         tools:layout="@layout/fragment_checkout">
+        <argument
+            android:name="total"
+            android:defaultValue="0"
+            app:argType="integer"/>
 
+        <argument
+            android:name="sub_total"
+            android:defaultValue="0"
+            app:argType="integer" />
+
+        <argument
+            android:name="extra_charges"
+            android:defaultValue="0"
+            app:argType="integer"/>
+
+        <argument
+            android:name="restaurant_id"
+            android:defaultValue="0"
+            app:argType="integer"/>
     </fragment>
 
     <fragment
         android:id="@+id/cartListFragment"
         android:name="com.specindia.ecommerce.ui.fragments.CartListFragment"
         android:label="Cart List Fragment"
-        tools:layout="@layout/fragment_cart_list" />
+        tools:layout="@layout/fragment_cart_list">
+        <action
+            android:id="@+id/action_cartListFragment_to_checkOutFragment"
+            app:destination="@id/checkOutFragment" />
+
+    </fragment>
 
 </navigation>

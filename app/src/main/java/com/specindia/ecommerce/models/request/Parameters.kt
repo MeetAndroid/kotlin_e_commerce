@@ -16,4 +16,8 @@ data class Parameters(
     val pageNo: Int = 0,
     val limit: Int = 0,
     val text: String = "",
-)
+    val addressId: String = "",
+    val extraCharges: String = "",
+    val subtotal: String = "",
+    val total: String = "",
+    )

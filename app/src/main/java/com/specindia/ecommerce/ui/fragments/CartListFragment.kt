@@ -34,6 +34,12 @@ class CartListFragment : Fragment(), CartListAdapter.OnCartItemClickListener {
     private lateinit var cartListAdapter: CartListAdapter
     private lateinit var cartList: ArrayList<GetCartData>
 
+    private var total: Int = 0
+    private var subTotal: Int = 0
+    private var deliveryCost: Int = 0
+    private var discount: Int = 0
+    private var specWallet: Int = 0
+
     private var restaurantId: Int = 0
 //    private var productRemovedFromCart: ProductsByRestaurantData? = null
 
@@ -49,8 +55,10 @@ class CartListFragment : Fragment(), CartListAdapter.OnCartItemClickListener {
     @ExperimentalBadgeUtils
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         setUpHeader()
         setUpHeaderItemClick()
+        setUpButtonClick()
         setUpRecyclerView()
         setUpProgressDialog()
         val userData = (activity as HomeActivity).dataStoreViewModel.getLoggedInUserData()
@@ -90,6 +98,19 @@ class CartListFragment : Fragment(), CartListAdapter.OnCartItemClickListener {
                 ivBack.setOnClickListener {
                     it.findNavController().popBackStack()
                 }
+            }
+        }
+    }
+
+    private fun setUpButtonClick() {
+        with(binding) {
+            btnCheckOut.setOnClickListener {
+                it.findNavController()
+                    .navigate(CartListFragmentDirections.actionCartListFragmentToCheckOutFragment(
+                        total = total,
+                        subTotal = subTotal,
+                        extraCharges = deliveryCost,
+                        restaurantId = restaurantId))
             }
         }
     }
@@ -145,14 +166,14 @@ class CartListFragment : Fragment(), CartListAdapter.OnCartItemClickListener {
     }
 
     private fun calculateAndDisplayTotal(cartList: ArrayList<GetCartData>) {
-        val subTotal =
+        subTotal =
             cartList.sumOf { (it.quantity.toInt() * it.amount.toInt()) }
 
-
-        val deliveryCost = 50
-        val discount = 4
-        val specWallet = 10
-        val total = subTotal + deliveryCost - discount - specWallet
+        deliveryCost = 50
+        discount = 4
+        specWallet = 10
+        total = subTotal + deliveryCost - discount - specWallet
+        restaurantId = cartList[0].product.restaurantId
 
         binding.apply {
             tvSubTotal.text = getString(R.string.rs, subTotal.toString())

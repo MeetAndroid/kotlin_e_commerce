@@ -146,5 +146,7 @@
     <string name="rs">Rs. %1$s</string>
     <string name="minus_rs">-Rs. %1$s</string>
     <string name="msg_confirm_change_cart_item">Item(s) of another Restaurant is already exist in the Cart. Do you really want to add this item to your Cart? This will remove all your existing item(s) from the Cart.</string>
+    <string name="send_order">Send Order</string>
+    <string name="msg_order_created">Order Created Successfully</string>
 
 </resources>
