@@ -147,5 +147,7 @@
     <string name="minus_rs">-Rs. %1$s</string>
     <string name="msg_product_of_another_restaurant_is_already_exist">Product of another Restaurant is already exist in the cart.</string>
 
+    <string name="api_key">AIzaSyC25GipNA1okdTLOEN0Me5_aTPcZ-ZMjDA</string>
+    <string name="client_id">341955479174-5j23ntsrrui93e9vboaqdvoqg9g8sr3s.apps.googleusercontent.com</string>
 
 </resources>

@@ -1,5 +1,8 @@
 package com.specindia.ecommerce.ui.fragments
 
+import android.R.attr
+import android.content.ContentValues.TAG
+import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.text.Spannable
@@ -21,7 +24,15 @@ import androidx.navigation.findNavController
 import com.facebook.*
 import com.facebook.login.LoginManager
 import com.facebook.login.LoginResult
+import com.google.android.gms.auth.api.identity.BeginSignInRequest
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount
+import com.google.android.gms.auth.api.signin.GoogleSignInClient
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.android.gms.common.api.ApiException
+import com.google.android.gms.tasks.Task
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.firebase.auth.FirebaseAuth
 import com.google.gson.Gson
 import com.specindia.ecommerce.R
 import com.specindia.ecommerce.api.network.NetworkResult
@@ -45,6 +56,11 @@ class WelcomeFragment : Fragment() {
     private lateinit var binding: FragmentWelcomeBinding
     private lateinit var fbLoginViewModel: FaceBookLoginViewModel
     private lateinit var customProgressDialog: AlertDialog
+
+    var googleSignInClient: GoogleSignInClient? = null
+    var mFirebaseAuth: FirebaseAuth? = null
+
+    var signInRequest: BeginSignInRequest? = null
 
     private var fbToken: String = ""
     private var fbUserId: String = ""
@@ -94,6 +110,12 @@ class WelcomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         setUpButtonClick(view)
         setUpProgressDialog()
+
+        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+            .requestEmail()
+            .build()
+
+        googleSignInClient = GoogleSignIn.getClient(requireActivity(), gso);
     }
 
     private fun setUpProgressDialog() {
@@ -116,7 +138,7 @@ class WelcomeFragment : Fragment() {
             }
 
             btnGooglePlus.setOnClickListener {
-
+                signIn()
             }
         }
     }
@@ -284,5 +306,36 @@ class WelcomeFragment : Fragment() {
         bundle.putString(Constants.KEY_FIELDS, Constants.VALUE_FIELDS)
         request.parameters = bundle
         request.executeAsync()
+    }
+
+    private fun handleSignInResult(completedTask: Task<GoogleSignInAccount>) {
+        try {
+            val account = completedTask.getResult(ApiException::class.java)
+
+            // Signed in successfully, show authenticated UI.
+            Log.e("GMAIL-DATA",Gson().toJson(account))
+        } catch (e: ApiException) {
+            // The ApiException status code indicates the detailed failure reason.
+            // Please refer to the GoogleSignInStatusCodes class reference for more information.
+            Log.w(TAG, "signInResult:failed code=" + e.statusCode)
+//            updateUI(null)
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        // Result returned from launching the Intent from GoogleSignInClient.getSignInIntent(...);
+        if (requestCode == 101) {
+            // The Task returned from this call is always completed, no need to attach
+            // a listener.
+            val task = GoogleSignIn.getSignedInAccountFromIntent(data)
+            handleSignInResult(task)
+        }
+    }
+
+    private fun signIn() {
+        val signInIntent: Intent = googleSignInClient?.signInIntent!!
+        startActivityForResult(signInIntent, 101)
     }
 }
