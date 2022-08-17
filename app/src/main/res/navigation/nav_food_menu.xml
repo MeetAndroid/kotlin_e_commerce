@@ -11,12 +11,13 @@
         android:label="Menu"
         tools:layout="@layout/fragment_food_menu" >
         <action
-            android:id="@+id/action_foodMenuFragment_to_foodMenuDetailsFragment"
-            app:destination="@id/foodMenuDetailsFragment" />
+            android:id="@+id/action_foodMenuFragment_to_cartListFragment"
+            app:destination="@id/cartListFragment" />
     </fragment>
     <fragment
-        android:id="@+id/foodMenuDetailsFragment"
-        tools:layout="@layout/fragment_order_details"
-        android:name="com.specindia.ecommerce.ui.fragments.FoodMenuDetailsFragment"
-        android:label="Food Menu Details" />
+        android:id="@+id/cartListFragment"
+        android:name="com.specindia.ecommerce.ui.fragments.CartListFragment"
+        android:label="fragment_cart_list"
+        tools:layout="@layout/fragment_cart_list" />
+
 </navigation>

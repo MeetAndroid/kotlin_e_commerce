@@ -29,3 +29,6 @@
 
 ## 9. Hilt : For dependency Injection
 [Hilt](https://developer.android.com/training/dependency-injection/hilt-android#kts)
+
+## 10. BadgeDrawable : BadgeDrawable contains all the layout and draw logic for a badge.
+[BadgeDrawable](https://developer.android.com/reference/com/google/android/material/badge/BadgeDrawable)
