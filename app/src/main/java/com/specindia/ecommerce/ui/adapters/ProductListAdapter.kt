@@ -2,13 +2,15 @@ package com.specindia.ecommerce.ui.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.appcompat.widget.AppCompatButton
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.specindia.ecommerce.R
 import com.specindia.ecommerce.databinding.RowProductListItemBinding
 import com.specindia.ecommerce.models.response.home.productsbyrestaurant.ProductsByRestaurantData
 import com.specindia.ecommerce.ui.activity.HomeActivity
-import com.specindia.ecommerce.util.showShortToast
 import com.specindia.ecommerce.util.visible
 
 class ProductListAdapter(
@@ -56,9 +58,12 @@ class ProductListAdapter(
                         activity.dataStoreViewModel.getExistingRestaurantIdFromCart()!!
 
                     if (existingRestaurantIdInCart != 0 && existingRestaurantIdInCart != product.restaurantId) {
-                        activity.showShortToast(activity.getString(R.string.msg_product_of_another_restaurant_is_already_exist))
                         btnAdd.visible(true)
                         clAddOrRemoveProduct.visible(false)
+                        clearItemsFromCartAndAddTheNewOne(product,
+                            position,
+                            btnAdd,
+                            clAddOrRemoveProduct)
                     } else {
                         btnAdd.visible(false)
                         clAddOrRemoveProduct.visible(true)
@@ -98,5 +103,56 @@ class ProductListAdapter(
             data: ProductsByRestaurantData,
             position: Int,
         )
+
+        fun onRemoveAllCartAction(cartId: Int)
+    }
+
+    /*
+    1. First we remove all cart items by calling removeFromCart API for each existing cart
+    2. Then Add current Item to cart
+    3. This will clear all items of Previous Restaurant from cart and add the new one for current Restaurant
+    * */
+
+    private fun clearItemsFromCartAndAddTheNewOne(
+        product: ProductsByRestaurantData,
+        position: Int,
+        btnAdd: AppCompatButton,
+        clAddOrRemoveProduct: ConstraintLayout,
+    ) {
+        MaterialAlertDialogBuilder(activity)
+            .setTitle(activity.getString(R.string.app_name))
+            .setMessage(activity.getString(R.string.msg_confirm_change_cart_item))
+            .setPositiveButton(activity.getString(R.string.ok)) { _, _ ->
+
+                // Get Existing Cart Ids list and call removeFromCartAPI to remove all existing carts
+                if (activity.homeViewModel.getCartResponse.value != null) {
+                    val cartResponse = activity.homeViewModel.getCartResponse.value
+                    if (cartResponse != null) {
+                        if (cartResponse.data != null) {
+                            val cartListResponse = cartResponse.data.data
+                            if (cartListResponse.size > 0) {
+                                for (i in 0 until cartListResponse.size) {
+                                    onProductItemClickListener.onRemoveAllCartAction(
+                                        cartListResponse[i].id)
+                                }
+
+                                // When all cart removed we save current RestaurantId as 0 in Data Store
+                                activity.dataStoreViewModel.saveExistingRestaurantIdOfCart(0)
+
+                                // Now We are adding New Product of New Restaurant and Update the UI
+                                btnAdd.visible(false)
+                                clAddOrRemoveProduct.visible(true)
+                                onProductItemClickListener.onAddButtonClick(product, position)
+                            }
+                        }
+
+                    }
+                }
+
+            }
+            .setNegativeButton(activity.getString(R.string.cancel)) { _, _ ->
+                // TODO : Code to execute
+            }
+            .show()
     }
 }
