@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.fragments.AddNewLocationFragment">
+    tools:context=".ui.fragments.SetLocationFragment">
 
     <include
         android:id="@+id/addNewLocationScreenHeader"
@@ -31,21 +31,21 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_marginBottom="30dp"
-            app:layout_constraintBottom_toTopOf="@id/btnAddNewAddress"
+            app:layout_constraintBottom_toTopOf="@id/btnNext"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="80dp"
+            android:layout_height="wrap_content"
             android:background="#80000000"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
             <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/address"
+                android:id="@+id/tvAddress"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="16dp"
@@ -61,13 +61,13 @@
 
 
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btnAddNewAddress"
+            android:id="@+id/btnNext"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="30dp"
             android:background="@drawable/bg_button_login"
             android:fontFamily="@font/roboto_regular"
-            android:text="@string/add_new_location"
+            android:text="@string/next"
             android:textAllCaps="false"
             android:textColor="@color/white"
             android:textSize="16sp"

@@ -7,44 +7,47 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.badge.ExperimentalBadgeUtils
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.gson.Gson
 import com.specindia.ecommerce.R
-import com.specindia.ecommerce.databinding.FragmentShippingAddressBinding
+import com.specindia.ecommerce.databinding.FragmentAddAddressBinding
 import com.specindia.ecommerce.models.response.AuthResponseData
-import com.specindia.ecommerce.models.response.shippingaddress.ShippingAddressData
 import com.specindia.ecommerce.ui.activity.HomeActivity
-import com.specindia.ecommerce.ui.adapters.ShippingAddressAdapter
+import com.specindia.ecommerce.ui.adapters.AddAddressAdapter
 import com.specindia.ecommerce.util.MarginDecoration
 import com.specindia.ecommerce.util.showProgressDialog
-import com.specindia.ecommerce.util.showShortToast
 import com.specindia.ecommerce.util.visible
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class ShippingAddressFragment : Fragment(), ShippingAddressAdapter.OnShippingAddressClickListener {
+class AddAddressFragment : Fragment() {
 
-    private lateinit var binding: FragmentShippingAddressBinding
+    private lateinit var binding: FragmentAddAddressBinding
     private lateinit var data: AuthResponseData
     private lateinit var customProgressDialog: AlertDialog
 
-    private lateinit var shippingAddressAdapter: ShippingAddressAdapter
-    private lateinit var shippingAddressList: ArrayList<ShippingAddressData>
+    private lateinit var addAddressAdapter: AddAddressAdapter
+
+    private var fullAddress: String = ""
+
+    private val args: AddAddressFragmentArgs by navArgs()
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        binding = FragmentShippingAddressBinding.inflate(layoutInflater)
+        binding = FragmentAddAddressBinding.inflate(layoutInflater)
         return binding.root
     }
 
     @ExperimentalBadgeUtils
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        fullAddress = args.fullAddress
 
         setUpHeader()
         setUpHeaderItemClick()
@@ -80,7 +83,7 @@ class ShippingAddressFragment : Fragment(), ShippingAddressAdapter.OnShippingAdd
 
     private fun setUpButtonClick() {
         with(binding) {
-            btnAddNewAddress.setOnClickListener {
+            btnSave.setOnClickListener {
                 it.findNavController()
                     .navigate(ShippingAddressFragmentDirections.actionShippingAddressFragmentToSetLocationFragment())
             }
@@ -90,17 +93,10 @@ class ShippingAddressFragment : Fragment(), ShippingAddressAdapter.OnShippingAdd
 
     private fun setUpRecyclerView() {
         // Carts
-        shippingAddressList = ArrayList()
-        val address1 = ShippingAddressData("Home",
-            "Sun Divine 5, Janta Nagar Kakoldiya Rd, Opposite Vrajdham 1 Apartments, Janta Nagar, Ghatlodiya, Chanakyapuri, Ahmedabad, Gujarat 380061")
-        val address2 = ShippingAddressData("Work",
-            "Spec India, Parth Complex, SPEC House, Swastik Society, Navrangpura, Ahmedabad, Gujarat 380009")
-        shippingAddressList.add(address1)
-        shippingAddressList.add(address2)
-
-        shippingAddressAdapter = ShippingAddressAdapter(shippingAddressList, this)
+        val addressLines: ArrayList<String> = fullAddress.split(",") as ArrayList<String>
+        addAddressAdapter = AddAddressAdapter(addressLines)
         binding.rvShippingAddress.apply {
-            adapter = shippingAddressAdapter
+            adapter = addAddressAdapter
             setHasFixedSize(false)
             addItemDecoration(MarginDecoration(resources.getDimensionPixelSize(R.dimen.item_margin_16),
                 false))
@@ -117,7 +113,6 @@ class ShippingAddressFragment : Fragment(), ShippingAddressAdapter.OnShippingAdd
         }
     }
 
-
     private fun showDialog(message: String) {
         MaterialAlertDialogBuilder(requireActivity())
             .setTitle(getString(R.string.app_name))
@@ -127,8 +122,4 @@ class ShippingAddressFragment : Fragment(), ShippingAddressAdapter.OnShippingAdd
             .show()
     }
 
-
-    override fun onItemClick(data: ShippingAddressData, position: Int) {
-        (activity as HomeActivity).showShortToast("You click ${data.type}")
-    }
 }

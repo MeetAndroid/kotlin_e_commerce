@@ -97,12 +97,12 @@
         android:id="@+id/checkOutFragment"
         android:name="com.specindia.ecommerce.ui.fragments.CheckOutFragment"
         android:label="Check Out"
-        tools:layout="@layout/fragment_checkout" >
+        tools:layout="@layout/fragment_checkout">
 
         <argument
             android:name="total"
             android:defaultValue="0"
-            app:argType="integer"/>
+            app:argType="integer" />
 
         <argument
             android:name="sub_total"
@@ -112,12 +112,12 @@
         <argument
             android:name="extra_charges"
             android:defaultValue="0"
-            app:argType="integer"/>
+            app:argType="integer" />
 
         <argument
             android:name="restaurant_id"
             android:defaultValue="0"
-            app:argType="integer"/>
+            app:argType="integer" />
         <action
             android:id="@+id/action_checkOutFragment_to_shippingAddressFragment"
             app:destination="@id/shippingAddressFragment" />
@@ -126,14 +126,29 @@
         android:id="@+id/shippingAddressFragment"
         android:name="com.specindia.ecommerce.ui.fragments.ShippingAddressFragment"
         android:label="Shipping Address"
-        tools:layout="@layout/fragment_shipping_address" >
+        tools:layout="@layout/fragment_shipping_address">
         <action
-            android:id="@+id/action_shippingAddressFragment_to_addNewLocationFragment"
-            app:destination="@id/addNewLocationFragment" />
+            android:id="@+id/action_shippingAddressFragment_to_setLocationFragment"
+            app:destination="@id/setLocationFragment" />
     </fragment>
     <fragment
-        android:id="@+id/addNewLocationFragment"
-        android:name="com.specindia.ecommerce.ui.fragments.AddNewLocationFragment"
+        android:id="@+id/setLocationFragment"
+        android:name="com.specindia.ecommerce.ui.fragments.SetLocationFragment"
         android:label="Add New Location"
-        tools:layout="@layout/fragment_add_new_location" />
+        tools:layout="@layout/fragment_set_location">
+        <action
+            android:id="@+id/action_setLocationFragment_to_addAddressFragment"
+            app:destination="@id/addAddressFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/addAddressFragment"
+        android:name="com.specindia.ecommerce.ui.fragments.AddAddressFragment"
+        android:label="Add Address"
+        tools:layout="@layout/fragment_add_address">
+
+        <argument
+            android:name="full_address"
+            app:argType="string"
+            android:defaultValue="" />
+    </fragment>
 </navigation>

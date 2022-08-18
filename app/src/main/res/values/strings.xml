@@ -152,5 +152,12 @@
     <string name="msg_order_created">Order Created Successfully</string>
     <string name="add_new_address">Add New Address</string>
     <string name="shipping_address">Shipping Address</string>
-    <string name="add_new_location">Add New Location</string>
+    <string name="select_location">Select Location</string>
+    <string name="save">Save</string>
+
+    <string-array name="address_type">
+        <item>Home</item>
+        <item>Work</item>
+        <item>Other</item>
+    </string-array>
 </resources>

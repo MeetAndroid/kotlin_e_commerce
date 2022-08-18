@@ -59,6 +59,7 @@ kapt {
 }
 
 dependencies {
+    implementation 'com.google.firebase:firebase-firestore-ktx:24.2.2'
     def splashApiVersion = "1.0.0"
     def retrofitVersion = "2.6.2"
     def loggingInterceptorVersion = "4.10.0"

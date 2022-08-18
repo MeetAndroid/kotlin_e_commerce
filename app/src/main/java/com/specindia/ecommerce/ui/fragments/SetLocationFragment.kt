@@ -1,5 +1,8 @@
 package com.specindia.ecommerce.ui.fragments
 
+import android.location.Address
+import android.location.Geocoder
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -18,26 +21,29 @@ import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.material.badge.ExperimentalBadgeUtils
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.firebase.firestore.GeoPoint
 import com.google.gson.Gson
-import com.specindia.ecommerce.databinding.FragmentAddNewLocationBinding
+import com.specindia.ecommerce.databinding.FragmentSetLocationBinding
 import com.specindia.ecommerce.models.response.AuthResponseData
 import com.specindia.ecommerce.ui.activity.HomeActivity
 import com.specindia.ecommerce.util.showProgressDialog
 import com.specindia.ecommerce.util.visible
 import dagger.hilt.android.AndroidEntryPoint
+import java.io.IOException
+import java.util.*
 
 
 @AndroidEntryPoint
-class AddNewLocationFragment : Fragment(), OnMapReadyCallback {
+class SetLocationFragment : Fragment(), OnMapReadyCallback {
 
-    private lateinit var binding: FragmentAddNewLocationBinding
+    private lateinit var binding: FragmentSetLocationBinding
     private lateinit var data: AuthResponseData
     private lateinit var customProgressDialog: AlertDialog
 
     // Google Map
     private var mMap: MapView? = null
-    private val latitude = 23.0225
-    private val longitude = 72.5714
+    private val latitude = 23.036957296395084
+    private val longitude = 72.56168172566267
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
@@ -49,7 +55,7 @@ class AddNewLocationFragment : Fragment(), OnMapReadyCallback {
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        binding = FragmentAddNewLocationBinding.inflate(layoutInflater)
+        binding = FragmentSetLocationBinding.inflate(layoutInflater)
 
         // Google Map
         mMap = binding.mapView
@@ -75,7 +81,7 @@ class AddNewLocationFragment : Fragment(), OnMapReadyCallback {
         with(binding) {
             with(addNewLocationScreenHeader) {
                 tvHeaderTitle.visible(true)
-                tvHeaderTitle.text = getString(com.specindia.ecommerce.R.string.add_new_location)
+                tvHeaderTitle.text = getString(com.specindia.ecommerce.R.string.select_location)
                 ivBack.visible(true)
                 ivFavorite.visible(false)
                 ivSearch.visible(false)
@@ -96,8 +102,11 @@ class AddNewLocationFragment : Fragment(), OnMapReadyCallback {
 
     private fun setUpButtonClick() {
         with(binding) {
-            btnAddNewAddress.setOnClickListener {
-
+            btnNext.setOnClickListener {
+                val fullAddress = binding.tvAddress.text.toString().trim()
+                it.findNavController()
+                    .navigate(SetLocationFragmentDirections.actionSetLocationFragmentToAddAddressFragment(
+                        fullAddress = fullAddress))
             }
         }
     }
@@ -125,13 +134,13 @@ class AddNewLocationFragment : Fragment(), OnMapReadyCallback {
 
         val marker: Marker? = googleMap.addMarker(MarkerOptions()
             .position(latLng)
-            .title("Ahmedabad")
             .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED)))
         // Enable GPS marker in Map
         //googleMap.isMyLocationEnabled = true
+        googleMap.mapType = GoogleMap.MAP_TYPE_NORMAL;
         googleMap.moveCamera(CameraUpdateFactory.newLatLng(latLng))
         googleMap.uiSettings.isZoomControlsEnabled = true
-        googleMap.animateCamera(CameraUpdateFactory.zoomTo(15f), 1000, null)
+        googleMap.animateCamera(CameraUpdateFactory.zoomTo(17f), 1000, null)
 
         googleMap.setOnCameraMoveListener {
             val midLatLng = googleMap.cameraPosition.target
@@ -139,9 +148,36 @@ class AddNewLocationFragment : Fragment(), OnMapReadyCallback {
                 marker.position = midLatLng
                 val nowLocation = marker.position
                 Log.d("nowLocation", nowLocation.toString())
-                binding.address.text = nowLocation.toString()
+                binding.tvAddress.text =
+                    getFullAddress(GeoPoint(nowLocation.latitude, nowLocation.longitude))
             }
         }
+    }
+
+    private fun getFullAddress(location: GeoPoint): String? {
+        var addressList: ArrayList<Address> = ArrayList()
+        var fullAddress = ""
+        val geocoder = Geocoder((activity as HomeActivity), Locale.getDefault())
+        try {
+
+            if (Build.VERSION.SDK_INT >= 33) {
+                geocoder.getFromLocation(location.latitude,
+                    location.longitude,
+                    1
+                ) { addresses -> addressList = addresses as ArrayList<Address> }
+            } else {
+                addressList = geocoder.getFromLocation(location.latitude,
+                    location.longitude,
+                    1
+                ) as ArrayList<Address>
+            }
+
+            // Here 1 represent max location result to returned, by documents it recommended 1 to 5
+        } catch (e: IOException) {
+            e.printStackTrace()
+        }
+        fullAddress = addressList[0].getAddressLine(0)
+        return fullAddress
     }
 
     override fun onResume() {
