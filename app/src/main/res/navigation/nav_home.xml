@@ -118,5 +118,22 @@
             android:name="restaurant_id"
             android:defaultValue="0"
             app:argType="integer"/>
+        <action
+            android:id="@+id/action_checkOutFragment_to_shippingAddressFragment"
+            app:destination="@id/shippingAddressFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/shippingAddressFragment"
+        android:name="com.specindia.ecommerce.ui.fragments.ShippingAddressFragment"
+        android:label="Shipping Address"
+        tools:layout="@layout/fragment_shipping_address" >
+        <action
+            android:id="@+id/action_shippingAddressFragment_to_addNewLocationFragment"
+            app:destination="@id/addNewLocationFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/addNewLocationFragment"
+        android:name="com.specindia.ecommerce.ui.fragments.AddNewLocationFragment"
+        android:label="Add New Location"
+        tools:layout="@layout/fragment_add_new_location" />
 </navigation>

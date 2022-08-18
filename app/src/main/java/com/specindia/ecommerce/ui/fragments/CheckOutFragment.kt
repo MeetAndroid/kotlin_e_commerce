@@ -104,6 +104,10 @@ class CheckOutFragment : Fragment() {
             callCreateOrderApi()
             observeCreateOrderResponse(it)
         }
+        binding.tvChange.setOnClickListener {
+            it.findNavController()
+                .navigate(CheckOutFragmentDirections.actionCheckOutFragmentToShippingAddressFragment())
+        }
     }
 
     private fun setUpProgressDialog() {
