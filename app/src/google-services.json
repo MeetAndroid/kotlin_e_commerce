@@ -45,6 +45,14 @@
             "package_name": "com.spec.spec_ecommerce",
             "certificate_hash": "3bc2fffe0a025963f2b483dd40c3d7e6fa6db2f6"
           }
+        },
+        {
+          "client_id": "341955479174-qosep3qacdour1ip75uicchlute10tdk.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.spec.spec_ecommerce",
+            "certificate_hash": "d1d6ad09569fd95aabcea7b750761a445ae06f38"
+          }
         }
       ],
       "api_key": [

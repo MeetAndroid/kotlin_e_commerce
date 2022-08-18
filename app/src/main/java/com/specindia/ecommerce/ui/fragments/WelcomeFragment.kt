@@ -1,6 +1,6 @@
 package com.specindia.ecommerce.ui.fragments
 
-import android.R.attr
+import android.app.Activity
 import android.content.ContentValues.TAG
 import android.content.Intent
 import android.graphics.Color
@@ -15,6 +15,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
@@ -43,6 +45,7 @@ import com.specindia.ecommerce.ui.activity.HomeActivity
 import com.specindia.ecommerce.ui.viewmodel.FaceBookLoginViewModel
 import com.specindia.ecommerce.util.*
 import com.specindia.ecommerce.util.Constants.Companion.SOCIAL_TYPE_FB
+import com.specindia.ecommerce.util.Constants.Companion.SOCIAL_TYPE_GOOGLE
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.suspendCancellableCoroutine
@@ -58,9 +61,6 @@ class WelcomeFragment : Fragment() {
     private lateinit var customProgressDialog: AlertDialog
 
     var googleSignInClient: GoogleSignInClient? = null
-    var mFirebaseAuth: FirebaseAuth? = null
-
-    var signInRequest: BeginSignInRequest? = null
 
     private var fbToken: String = ""
     private var fbUserId: String = ""
@@ -68,7 +68,7 @@ class WelcomeFragment : Fragment() {
     private var fbUserLastName: String = ""
     private var fbUserEmail: String = ""
     private var fbUserProfileUrl: String = ""
-
+    private var resultLauncher: ActivityResultLauncher<Intent>? = null
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
@@ -115,7 +115,17 @@ class WelcomeFragment : Fragment() {
             .requestEmail()
             .build()
 
-        googleSignInClient = GoogleSignIn.getClient(requireActivity(), gso);
+        googleSignInClient = GoogleSignIn.getClient(requireActivity(), gso)
+
+        resultLauncher =
+            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+                if (result.resultCode == Activity.RESULT_OK) {
+                    // There are no request codes
+                    val data: Intent? = result.data
+                    val task = GoogleSignIn.getSignedInAccountFromIntent(data)
+                    handleSignInResult(task)
+                }
+            }
     }
 
     private fun setUpProgressDialog() {
@@ -310,10 +320,16 @@ class WelcomeFragment : Fragment() {
 
     private fun handleSignInResult(completedTask: Task<GoogleSignInAccount>) {
         try {
+//            customProgressDialog.show()
             val account = completedTask.getResult(ApiException::class.java)
 
-            // Signed in successfully, show authenticated UI.
-            Log.e("GMAIL-DATA",Gson().toJson(account))
+            fbUserFirstName = account.givenName.toString()
+            fbUserLastName = account.familyName.toString()
+            fbToken = account.id.toString()
+            fbUserProfileUrl = account.photoUrl.toString()
+            fbUserEmail = account.email.toString()
+            fbUserId = account.id.toString()
+            callSocialLoginGoogleApi()
         } catch (e: ApiException) {
             // The ApiException status code indicates the detailed failure reason.
             // Please refer to the GoogleSignInStatusCodes class reference for more information.
@@ -322,20 +338,24 @@ class WelcomeFragment : Fragment() {
         }
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-
-        // Result returned from launching the Intent from GoogleSignInClient.getSignInIntent(...);
-        if (requestCode == 101) {
-            // The Task returned from this call is always completed, no need to attach
-            // a listener.
-            val task = GoogleSignIn.getSignedInAccountFromIntent(data)
-            handleSignInResult(task)
-        }
-    }
-
     private fun signIn() {
         val signInIntent: Intent = googleSignInClient?.signInIntent!!
-        startActivityForResult(signInIntent, 101)
+        resultLauncher?.launch(signInIntent)
+    }
+
+    private fun callSocialLoginGoogleApi() {
+        customProgressDialog.show()
+        val parameter = Parameters(
+            firstName = fbUserFirstName,
+            lastName = fbUserFirstName,
+            socialId = fbToken,
+            socialType = SOCIAL_TYPE_GOOGLE
+
+        )
+        (activity as AuthActivity).authViewModel.doSocialLogin(
+            getHeaderMap("", false),
+            Gson().toJson(parameter)
+        )
+
     }
 }
