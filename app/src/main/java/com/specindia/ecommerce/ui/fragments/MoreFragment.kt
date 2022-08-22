@@ -9,6 +9,7 @@ import androidx.navigation.findNavController
 import com.google.android.material.badge.ExperimentalBadgeUtils
 import com.specindia.ecommerce.databinding.FragmentMoreBinding
 import com.specindia.ecommerce.ui.activity.HomeActivity
+import com.specindia.ecommerce.util.Constants
 import com.specindia.ecommerce.util.logout
 import com.specindia.ecommerce.util.updateCartCountOnUI
 import com.specindia.ecommerce.util.visible

@@ -10,7 +10,6 @@ plugins {
 }
 
 android {
-    compileSdk 32
 
     defaultConfig {
         applicationId "com.spec.spec_ecommerce"
@@ -60,6 +59,7 @@ kapt {
 }
 
 dependencies {
+    implementation 'com.google.firebase:firebase-firestore-ktx:24.2.2'
     def splashApiVersion = "1.0.0"
     def retrofitVersion = "2.6.2"
     def loggingInterceptorVersion = "4.10.0"
@@ -77,9 +77,9 @@ dependencies {
     def lottie_version = "5.2.0"
     def shimmer_effect_version = "0.5.0"
     def kotlin_serialization = "1.4.0-RC"
-    def badge_image_view_version = "2.0.0"
     def gmail_version = "20.2.0"
     def firebase_version = "21.0.7"
+    def google_map_version = "18.1.0"
 
     // Splash API to support Android 12 and higher devices
     implementation "androidx.core:core-splashscreen:$splashApiVersion"
@@ -155,8 +155,12 @@ dependencies {
     implementation "com.google.android.gms:play-services-auth:$gmail_version"
     implementation "com.google.firebase:firebase-auth:$firebase_version"
 
+    //Google Map
+    implementation "com.google.android.gms:play-services-maps:$google_map_version"
+
     implementation 'androidx.core:core-ktx:1.8.0'
     implementation 'androidx.appcompat:appcompat:1.5.0'
+    implementation 'com.google.android.material:material:1.6.1'
     implementation 'com.google.android.material:material:1.6.1'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     testImplementation 'junit:junit:4.13.2'

@@ -9,9 +9,7 @@
         android:name="com.specindia.ecommerce.ui.fragments.HomeFragment"
         android:label="Home"
         tools:layout="@layout/fragment_home">
-        <action
-            android:id="@+id/action_homeFragment_to_homeDetailsFragment"
-            app:destination="@id/homeDetailsFragment" />
+
         <action
             android:id="@+id/action_homeFragment_to_searchFragment"
             app:destination="@id/searchFragment" />
@@ -25,11 +23,6 @@
             android:id="@+id/action_homeFragment_to_cartListFragment"
             app:destination="@id/cartListFragment" />
     </fragment>
-    <fragment
-        android:id="@+id/homeDetailsFragment"
-        android:name="com.specindia.ecommerce.ui.fragments.HomeDetailsFragment"
-        android:label="Home Details"
-        tools:layout="@layout/fragment_home_details" />
 
     <fragment
         android:id="@+id/searchFragment"
@@ -94,6 +87,68 @@
     <fragment
         android:id="@+id/cartListFragment"
         android:name="com.specindia.ecommerce.ui.fragments.CartListFragment"
-        android:label="fragment_cart_list"
-        tools:layout="@layout/fragment_cart_list" />
+        android:label="Cart List"
+        tools:layout="@layout/fragment_cart_list">
+        <action
+            android:id="@+id/action_cartListFragment_to_checkOutFragment"
+            app:destination="@id/checkOutFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/checkOutFragment"
+        android:name="com.specindia.ecommerce.ui.fragments.CheckOutFragment"
+        android:label="Check Out"
+        tools:layout="@layout/fragment_checkout">
+
+        <argument
+            android:name="total"
+            android:defaultValue="0"
+            app:argType="integer" />
+
+        <argument
+            android:name="sub_total"
+            android:defaultValue="0"
+            app:argType="integer" />
+
+        <argument
+            android:name="extra_charges"
+            android:defaultValue="0"
+            app:argType="integer" />
+
+        <argument
+            android:name="restaurant_id"
+            android:defaultValue="0"
+            app:argType="integer" />
+        <action
+            android:id="@+id/action_checkOutFragment_to_shippingAddressFragment"
+            app:destination="@id/shippingAddressFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/shippingAddressFragment"
+        android:name="com.specindia.ecommerce.ui.fragments.ShippingAddressFragment"
+        android:label="Shipping Address"
+        tools:layout="@layout/fragment_shipping_address">
+        <action
+            android:id="@+id/action_shippingAddressFragment_to_setLocationFragment"
+            app:destination="@id/setLocationFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/setLocationFragment"
+        android:name="com.specindia.ecommerce.ui.fragments.SetLocationFragment"
+        android:label="Add New Location"
+        tools:layout="@layout/fragment_set_location">
+        <action
+            android:id="@+id/action_setLocationFragment_to_addAddressFragment"
+            app:destination="@id/addAddressFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/addAddressFragment"
+        android:name="com.specindia.ecommerce.ui.fragments.AddAddressFragment"
+        android:label="Add Address"
+        tools:layout="@layout/fragment_add_address">
+
+        <argument
+            android:name="full_address"
+            app:argType="string"
+            android:defaultValue="" />
+    </fragment>
 </navigation>

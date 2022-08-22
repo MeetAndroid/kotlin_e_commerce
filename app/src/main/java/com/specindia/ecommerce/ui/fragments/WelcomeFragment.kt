@@ -110,6 +110,7 @@ class WelcomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         setUpButtonClick(view)
         setUpProgressDialog()
+        observeFBResponse()
 
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestEmail()
@@ -144,7 +145,6 @@ class WelcomeFragment : Fragment() {
 
             btnFacebook.setOnClickListener {
                 doFBLogin()
-                observeFBResponse()
             }
 
             btnGooglePlus.setOnClickListener {

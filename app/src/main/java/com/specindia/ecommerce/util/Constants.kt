@@ -54,6 +54,7 @@ class Constants {
         const val ADD_UPDATE_TO_CART = "addUpdateToCart"
 
         // Order
+        const val CREATE_ORDER = "createOrder"
         const val GET_ORDER_DETAILS = "getOrderDetails/{id}"
         const val GET_ORDER_LIST = "getOrderList"
 
@@ -110,5 +111,13 @@ class Constants {
     object DateFormat {
         const val INPUT_FORMAT = "yyyy-MM-dd'T'hh:mm:ss.SSS'Z'"
         const val OUTPUT_FORMAT = "dd-MM-yyyy hh:mm"
+    }
+
+    enum class ScreenNameToNavigateCartList {
+        HOME_SCREEN,
+        RESTAURANT_DETAILS_SCREEN,
+        PRODUCT_DETAILS_SCREEN,
+        FOOD_MENU_SCREEN,
+        MORE_SCREEN
     }
 }

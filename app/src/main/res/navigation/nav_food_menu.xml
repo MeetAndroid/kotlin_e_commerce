@@ -9,7 +9,7 @@
         android:id="@+id/foodMenuFragment"
         android:name="com.specindia.ecommerce.ui.fragments.FoodMenuFragment"
         android:label="Menu"
-        tools:layout="@layout/fragment_food_menu" >
+        tools:layout="@layout/fragment_food_menu">
         <action
             android:id="@+id/action_foodMenuFragment_to_cartListFragment"
             app:destination="@id/cartListFragment" />
@@ -17,7 +17,37 @@
     <fragment
         android:id="@+id/cartListFragment"
         android:name="com.specindia.ecommerce.ui.fragments.CartListFragment"
-        android:label="fragment_cart_list"
-        tools:layout="@layout/fragment_cart_list" />
+        android:label="Cart List"
+        tools:layout="@layout/fragment_cart_list">
+        <action
+            android:id="@+id/action_cartListFragment_to_checkOutFragment"
+            app:destination="@id/checkOutFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/checkOutFragment"
+        android:name="com.specindia.ecommerce.ui.fragments.CheckOutFragment"
+        android:label="Check Out"
+        tools:layout="@layout/fragment_checkout">
+        <argument
+            android:name="total"
+            android:defaultValue="0"
+            app:argType="integer"/>
+
+        <argument
+            android:name="sub_total"
+            android:defaultValue="0"
+            app:argType="integer" />
+
+        <argument
+            android:name="extra_charges"
+            android:defaultValue="0"
+            app:argType="integer"/>
+
+        <argument
+            android:name="restaurant_id"
+            android:defaultValue="0"
+            app:argType="integer" />
+
+    </fragment>
 
 </navigation>

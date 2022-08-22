@@ -51,11 +51,6 @@ class OrderDetailsFragment : Fragment() {
         callOrderDetailsApi(data)
         observeOrderDetailsResponse()
 
-        binding.clOrders.setOnClickListener {
-            view.findNavController()
-                .navigate(OrderDetailsFragmentDirections.actionOrderDetailsFragmentToCheckOutFragment())
-        }
-
         // (activity as HomeActivity).showOrHideBottomAppBarAndFloatingActionButtonOnScroll()
         Log.e("TAG", args.orderId.toString())
     }
