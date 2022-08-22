@@ -68,6 +68,8 @@ class HomeActivity : AppCompatActivity() {
     fun performLogout() = lifecycleScope.launch {
         logoutFromFacebook()
         dataStoreViewModel.saveUserLoggedIn(false)
+        dataStoreViewModel.clearPreferences()
+        dataStoreViewModel.saveIsFirstTime(true)
         startNewActivity(AuthActivity::class.java)
     }
 

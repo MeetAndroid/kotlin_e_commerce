@@ -157,5 +157,9 @@ class DataViewModel @Inject constructor(
     fun getCartItemCount(): Int? = runBlocking {
         repository.getInt(KEY_CART_ITEM_COUNT)
     }
+
+    suspend fun clearPreferences() {
+        repository.clearPreferences()
+    }
 }
 

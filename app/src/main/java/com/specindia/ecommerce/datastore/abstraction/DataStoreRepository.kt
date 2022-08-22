@@ -7,6 +7,7 @@ interface DataStoreRepository {
     suspend fun putDouble(key: String, value: Double)
     suspend fun putLong(key: String, value: Long)
     suspend fun putBoolean(key: String, value: Boolean)
+    suspend fun clearPreferences()
 
     suspend fun getString(key: String): String?
     suspend fun getInt(key: String): Int?
