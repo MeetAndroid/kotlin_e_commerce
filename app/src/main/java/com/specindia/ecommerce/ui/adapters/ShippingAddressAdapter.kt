@@ -4,10 +4,10 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.specindia.ecommerce.databinding.RowShippingAddressBinding
-import com.specindia.ecommerce.models.response.shippingaddress.ShippingAddressData
+import com.specindia.ecommerce.models.response.home.getaddress.GetAddressListData
 
 class ShippingAddressAdapter(
-    private val arrayList: ArrayList<ShippingAddressData>,
+    private val arrayList: ArrayList<GetAddressListData>,
     private val onShippingAddressClickListener: OnShippingAddressClickListener,
 ) :
     RecyclerView.Adapter<ShippingAddressAdapter.ShippingAddressViewHolder>() {
@@ -27,8 +27,9 @@ class ShippingAddressAdapter(
         with(holder) {
             with(binding) {
 
-                tvAddressType.text = shippingAddress.type
-                tvAddress.text = shippingAddress.address
+                tvAddressType.text = shippingAddress.addressType
+                tvAddress.text = shippingAddress.firstLine.plus(shippingAddress.secondLine)
+                    .plus(shippingAddress.thirdLine)
 
                 itemView.setOnClickListener {
                     onShippingAddressClickListener.onItemClick(shippingAddress, position)
@@ -42,6 +43,6 @@ class ShippingAddressAdapter(
     }
 
     interface OnShippingAddressClickListener {
-        fun onItemClick(data: ShippingAddressData, position: Int)
+        fun onItemClick(data: GetAddressListData, position: Int)
     }
 }

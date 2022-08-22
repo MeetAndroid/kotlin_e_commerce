@@ -20,4 +20,10 @@ data class Parameters(
     val extraCharges: String = "",
     val subtotal: String = "",
     val total: String = "",
-    )
+    val addressType: String = "",
+    val firstLine: String = "",
+    val secondLine: String = "",
+    val thirdLine: String = "",
+    val lat: String = "",
+    val lang: String = "",
+)

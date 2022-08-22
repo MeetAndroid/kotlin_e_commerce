@@ -58,6 +58,11 @@ class Constants {
         const val GET_ORDER_DETAILS = "getOrderDetails/{id}"
         const val GET_ORDER_LIST = "getOrderList"
 
+        // Address
+        const val ADD_OR_UPDATE_ADDRESS = "addOrUpdateAddress"
+        const val GET_ADDRESS = "getAddress"
+
+
         // Data Store Constants
         const val KEY_IS_FIRST_TIME = "isFirstTime"
         const val KEY_IS_USER_LOGGED_IN = "isUserLoggedIn"

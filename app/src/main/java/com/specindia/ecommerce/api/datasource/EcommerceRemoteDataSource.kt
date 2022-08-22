@@ -52,5 +52,12 @@ class EcommerceRemoteDataSource @Inject constructor(private val apiService: Ecom
 
     suspend fun createOrder(headerMap: Map<String, String>, parameters: String) =
         apiService.createOrder(headerMap,parameters)
+
+    suspend fun addOrUpdateAddress(headerMap: Map<String, String>, parameters: String) =
+        apiService.addOrUpdateAddress(headerMap,parameters)
+
+    suspend fun getAddressList(headerMap: Map<String, String>) =
+        apiService.getAddressList(headerMap)
+
 }
 
