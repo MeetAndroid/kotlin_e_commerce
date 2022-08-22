@@ -334,7 +334,6 @@ class WelcomeFragment : Fragment() {
             // The ApiException status code indicates the detailed failure reason.
             // Please refer to the GoogleSignInStatusCodes class reference for more information.
             Log.w(TAG, "signInResult:failed code=" + e.statusCode)
-//            updateUI(null)
         }
     }
 
