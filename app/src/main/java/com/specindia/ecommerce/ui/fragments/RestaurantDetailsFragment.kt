@@ -557,7 +557,7 @@ class RestaurantDetailsFragment : Fragment(), ProductListAdapter.OnProductItemCl
 
     }
 
-    override fun onRemoveAllCartAction(cartId: Int) {
+    override fun onRemoveAllCartData(cartId: Int) {
         callRemoveFromCartApi(cartId)
     }
 

@@ -1,5 +1,7 @@
 package com.specindia.ecommerce.ui.adapters
 
+import android.os.Handler
+import android.os.Looper
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.appcompat.widget.AppCompatButton
@@ -104,11 +106,11 @@ class ProductListAdapter(
             position: Int,
         )
 
-        fun onRemoveAllCartAction(cartId: Int)
+        fun onRemoveAllCartData(cartId: Int)
     }
 
     /*
-    1. First we remove all cart items by calling removeFromCart API for each existing cart
+    1. Remove All Cart by sending cartId as 0
     2. Then Add current Item to cart
     3. This will clear all items of Previous Restaurant from cart and add the new one for current Restaurant
     * */
@@ -124,30 +126,17 @@ class ProductListAdapter(
             .setMessage(activity.getString(R.string.msg_confirm_change_cart_item))
             .setPositiveButton(activity.getString(R.string.ok)) { _, _ ->
 
-                // Get Existing Cart Ids list and call removeFromCartAPI to remove all existing carts
-                if (activity.homeViewModel.getCartResponse.value != null) {
-                    val cartResponse = activity.homeViewModel.getCartResponse.value
-                    if (cartResponse != null) {
-                        if (cartResponse.data != null) {
-                            val cartListResponse = cartResponse.data.data
-                            if (cartListResponse.size > 0) {
-                                for (i in 0 until cartListResponse.size) {
-                                    onProductItemClickListener.onRemoveAllCartAction(
-                                        cartListResponse[i].id)
-                                }
+                // This will remove all Previous Cart Items
+                onProductItemClickListener.onRemoveAllCartData(cartId = 0)
+                // This will save current Restaurant Id as 0. As we remove all items from Cart
+                activity.dataStoreViewModel.saveExistingRestaurantIdOfCart(0)
 
-                                // When all cart removed we save current RestaurantId as 0 in Data Store
-                                activity.dataStoreViewModel.saveExistingRestaurantIdOfCart(0)
-
-                                // Now We are adding New Product of New Restaurant and Update the UI
-                                btnAdd.visible(false)
-                                clAddOrRemoveProduct.visible(true)
-                                onProductItemClickListener.onAddButtonClick(product, position)
-                            }
-                        }
-
-                    }
-                }
+                // Now We are adding New Product of New Restaurant and Update the UI
+                Handler(Looper.getMainLooper()).postDelayed({
+                    btnAdd.visible(false)
+                    clAddOrRemoveProduct.visible(true)
+                    onProductItemClickListener.onAddButtonClick(product, position)
+                },500)
 
             }
             .setNegativeButton(activity.getString(R.string.cancel)) { _, _ ->
