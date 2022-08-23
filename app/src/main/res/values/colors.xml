@@ -70,5 +70,6 @@
     <color name="color_red">#FFC8171D</color>
     <color name="colorGray">#716C6C</color>
     <color name="icon_color">#736D6D</color>
-
+    <color name="black_with_alpha">#80000000</color>
+    <color name="red_with_alpha">#80FF0000</color>
 </resources>

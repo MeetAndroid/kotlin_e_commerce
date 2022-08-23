@@ -13,6 +13,7 @@ import com.specindia.ecommerce.models.response.home.createOrder.CreateOrderRespo
 import com.specindia.ecommerce.models.response.home.getaddress.GetAddressListResponse
 import com.specindia.ecommerce.models.response.home.order.OrderDetailsResponse
 import com.specindia.ecommerce.models.response.home.orderlist.OrderListResponse
+import com.specindia.ecommerce.models.response.home.primaryAddress.PrimaryAddressResponse
 import com.specindia.ecommerce.models.response.home.product.AllRestaurant
 import com.specindia.ecommerce.models.response.home.product.ViewAllData
 import com.specindia.ecommerce.models.response.home.productsbyrestaurant.ProductsByRestaurantResponse
@@ -187,6 +188,15 @@ class EcommerceRepository @Inject constructor(
     ): Flow<NetworkResult<GetAddressListResponse>> {
         return flow {
             emit(safeApiCall { remoteDataSource.getAddressList(headerMap) })
+        }.flowOn(Dispatchers.IO)
+    }
+
+    suspend fun setPrimaryAddress(
+        headerMap: Map<String, String>,
+        id: Int
+    ): Flow<NetworkResult<PrimaryAddressResponse>> {
+        return flow {
+            emit(safeApiCall { remoteDataSource.setPrimaryAddress(headerMap,id) })
         }.flowOn(Dispatchers.IO)
     }
 }

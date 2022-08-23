@@ -61,6 +61,7 @@ class Constants {
         // Address
         const val ADD_OR_UPDATE_ADDRESS = "addOrUpdateAddress"
         const val GET_ADDRESS = "getAddress"
+        const val SET_PRIMARY_ADDRESS = "setPrimaryAddress"
 
 
         // Data Store Constants
@@ -105,6 +106,10 @@ class Constants {
         // Bundle Keys
         const val REQUEST_FROM_RESTAURANT_DETAILS = "request_from_restaurant_details"
         const val IS_FROM_PRODUCT_DETAILS = "is_from_product_details"
+
+        const val LOCATION_REQUEST = 1000
+        const val GPS_REQUEST = 1001
+        const val LOCATION_PERMISSION_REQUEST_CODE = 2000
     }
 
 

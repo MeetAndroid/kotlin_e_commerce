@@ -13,7 +13,7 @@ android {
 
     defaultConfig {
         applicationId "com.spec.spec_ecommerce"
-        minSdk 22
+        minSdk 24
         targetSdk 32
         compileSdkVersion 33
         versionCode 1
@@ -59,6 +59,7 @@ kapt {
 }
 
 dependencies {
+
     implementation 'com.google.firebase:firebase-firestore-ktx:24.2.2'
     def splashApiVersion = "1.0.0"
     def retrofitVersion = "2.6.2"
@@ -80,6 +81,7 @@ dependencies {
     def gmail_version = "20.2.0"
     def firebase_version = "21.0.7"
     def google_map_version = "18.1.0"
+    def fused_location_version = "20.0.0"
 
     // Splash API to support Android 12 and higher devices
     implementation "androidx.core:core-splashscreen:$splashApiVersion"
@@ -157,6 +159,9 @@ dependencies {
 
     //Google Map
     implementation "com.google.android.gms:play-services-maps:$google_map_version"
+
+    // FusedLocation
+    implementation "com.google.android.gms:play-services-location:$fused_location_version"
 
     implementation 'androidx.core:core-ktx:1.8.0'
     implementation 'androidx.appcompat:appcompat:1.5.0'

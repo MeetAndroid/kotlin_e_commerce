@@ -1,6 +1,8 @@
 package com.specindia.ecommerce.ui.fragments
 
+import android.Manifest
 import android.content.Context
+import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.location.Address
@@ -11,7 +13,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.app.AlertDialog
+import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
@@ -27,7 +29,7 @@ import com.google.gson.Gson
 import com.specindia.ecommerce.databinding.FragmentSetLocationBinding
 import com.specindia.ecommerce.models.response.AuthResponseData
 import com.specindia.ecommerce.ui.activity.HomeActivity
-import com.specindia.ecommerce.util.showProgressDialog
+import com.specindia.ecommerce.util.CustomInfoWindowForGoogleMap
 import com.specindia.ecommerce.util.visible
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
@@ -42,13 +44,15 @@ class SetLocationFragment : Fragment(), OnMapReadyCallback {
 
     private lateinit var binding: FragmentSetLocationBinding
     private lateinit var data: AuthResponseData
-    private lateinit var customProgressDialog: AlertDialog
 
     // Google Map
     private var mMap: MapView? = null
-    private var latitude = 21.8380
-    private var longitude = 73.7191
+    private var latitude = 37.34199218751879
+    private var longitude = -121.99989950773337
+    private var fullAddress = ""
 
+
+    //    private var locationCallback: LocationCallback? = null
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         mMap?.onSaveInstanceState(outState)
@@ -65,6 +69,7 @@ class SetLocationFragment : Fragment(), OnMapReadyCallback {
         mMap = binding.mapView
         mMap?.onCreate(savedInstanceState)
         mMap?.getMapAsync(this)
+
         return binding.root
     }
 
@@ -75,7 +80,6 @@ class SetLocationFragment : Fragment(), OnMapReadyCallback {
         setUpHeader()
         setUpHeaderItemClick()
         setUpButtonClick()
-        setUpProgressDialog()
         val userData = (activity as HomeActivity).dataStoreViewModel.getLoggedInUserData()
         data = Gson().fromJson(userData, AuthResponseData::class.java)
     }
@@ -107,20 +111,12 @@ class SetLocationFragment : Fragment(), OnMapReadyCallback {
     private fun setUpButtonClick() {
         with(binding) {
             btnNext.setOnClickListener {
-                val fullAddress = binding.tvAddress.text.toString().trim()
                 it.findNavController()
                     .navigate(SetLocationFragmentDirections.actionSetLocationFragmentToAddAddressFragment(
                         fullAddress = fullAddress,
                         latitude = latitude.toString(),
                         longitude = longitude.toString()))
             }
-        }
-    }
-
-    private fun setUpProgressDialog() {
-        customProgressDialog = showProgressDialog {
-            cancelable = false
-            isBackGroundTransparent = true
         }
     }
 
@@ -169,12 +165,28 @@ class SetLocationFragment : Fragment(), OnMapReadyCallback {
             .position(latLng)
 //            .icon(getBitmapFromVector(requireActivity(), R.drawable.ic_location)))
             .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED)))
+        googleMap.setInfoWindowAdapter(CustomInfoWindowForGoogleMap((activity as HomeActivity)))
         // Enable GPS marker in Map
-        //googleMap.isMyLocationEnabled = true
+        if (ActivityCompat.checkSelfPermission((activity as HomeActivity),
+                Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+                (activity as HomeActivity),
+                Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED
+        ) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return
+        }
+        googleMap.isMyLocationEnabled = true
         googleMap.mapType = GoogleMap.MAP_TYPE_NORMAL;
         googleMap.moveCamera(CameraUpdateFactory.newLatLng(latLng))
         googleMap.uiSettings.isZoomControlsEnabled = true
-        googleMap.animateCamera(CameraUpdateFactory.zoomTo(17f), 1000, null)
+        googleMap.uiSettings.isMyLocationButtonEnabled = true
+        googleMap.animateCamera(CameraUpdateFactory.zoomTo(14f), 1000, null)
 
         googleMap.setOnCameraMoveListener {
             val midLatLng = googleMap.cameraPosition.target
@@ -185,20 +197,24 @@ class SetLocationFragment : Fragment(), OnMapReadyCallback {
 
                 latitude = nowLocation.latitude
                 longitude = nowLocation.longitude
-
-                try {
-                    getAndSetAddressOnTextView(GeoPoint(latitude, longitude))
-                } catch (e: Exception) {
-                    e.printStackTrace()
-                }
-
             }
         }
+
+        googleMap.setOnCameraIdleListener {
+            try {
+                if (latitude != 0.0 && longitude != 0.0) {
+                    getAndSetAddressOnTextView(GeoPoint(latitude, longitude), marker)
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
+
     }
 
-    private fun getAndSetAddressOnTextView(location: GeoPoint) {
+    private fun getAndSetAddressOnTextView(location: GeoPoint, marker: Marker?) {
         var addressList: ArrayList<Address> = ArrayList()
-        var fullAddress = ""
+        fullAddress = ""
         val geocoder = Geocoder((activity as HomeActivity), Locale.getDefault())
         CoroutineScope(Dispatchers.IO).launch {
             // Here 1 represent max location result to returned, by documents it recommended 1 to 5
@@ -215,9 +231,13 @@ class SetLocationFragment : Fragment(), OnMapReadyCallback {
             }
 
             withContext(Dispatchers.Main) {
-                fullAddress = addressList[0].getAddressLine(0)
-                binding.tvAddress.text = fullAddress
-                Log.d("fullAddress", fullAddress)
+                if (addressList.size > 0) {
+                    fullAddress = addressList[0].getAddressLine(0)
+                    //binding.tvAddress.text = fullAddress
+                    Log.d("fullAddress", fullAddress)
+                    marker?.title = fullAddress
+                    marker?.showInfoWindow()
+                }
             }
         }
 
@@ -236,6 +256,25 @@ class SetLocationFragment : Fragment(), OnMapReadyCallback {
     override fun onStart() {
         super.onStart()
         mMap?.onStart()
+
+//        when {
+//            PermissionUtils.checkAccessFineLocationGranted(requireActivity()) -> {
+//                when {
+//                    PermissionUtils.isLocationEnabled(requireActivity()) -> {
+//                        setUpLocationListener()
+//                    }
+//                    else -> {
+//                        PermissionUtils.showGPSNotEnabledDialog(requireActivity())
+//                    }
+//                }
+//            }
+//            else -> {
+//                PermissionUtils.askAccessFineLocationPermission(
+//                    (activity as HomeActivity),
+//                    LOCATION_PERMISSION_REQUEST_CODE
+//                )
+//            }
+//        }
     }
 
     override fun onStop() {
@@ -253,4 +292,55 @@ class SetLocationFragment : Fragment(), OnMapReadyCallback {
         mMap?.onLowMemory()
     }
 
+
+//    @SuppressLint("MissingPermission")
+//    private fun setUpLocationListener() {
+//        val fusedLocationProviderClient =
+//            LocationServices.getFusedLocationProviderClient((activity as HomeActivity))
+//        // for getting the current location update after every 2 seconds with high accuracy
+//
+//        fusedLocationProviderClient.requestLocationUpdates(
+//            locationRequest,
+//            object : LocationCallback() {
+//                override fun onLocationResult(locationResult: LocationResult) {
+//                    super.onLocationResult(locationResult)
+//                    for (location in locationResult.locations) {
+//                        Log.d("MY LOCATION", location.latitude.toString())
+//                        Log.d("MY LOCATION", location.longitude.toString())
+//                    }
+//                    // Things don't end here
+//                    // You may also update the location on your web app
+//                }
+//            },
+//            Looper.myLooper()
+//        )
+//    }
+//
+//
+//    override fun onRequestPermissionsResult(
+//        requestCode: Int,
+//        // A random request code to listen on later
+//        permissions: Array<out String>,
+//        grantResults: IntArray,
+//    ) {
+//        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+//        when (requestCode) {
+//            // Location Permission
+//            LOCATION_PERMISSION_REQUEST_CODE -> {
+//                if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+//                    when {
+//                        PermissionUtils.isLocationEnabled(requireActivity()) -> {
+//                            setUpLocationListener()
+//                            // Setting things up
+//                        }
+//                        else -> {
+//                            PermissionUtils.showGPSNotEnabledDialog(requireActivity())
+//                        }
+//                    }
+//                } else {
+//                    requireActivity().showShortToast("Permission not granted")
+//                }
+//            }
+//        }
+//    }
 }

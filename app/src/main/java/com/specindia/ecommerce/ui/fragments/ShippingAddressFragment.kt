@@ -90,11 +90,11 @@ class ShippingAddressFragment : Fragment(), ShippingAddressAdapter.OnShippingAdd
         }
     }
 
-
     private fun setUpRecyclerView() {
         // Addresses
         shippingAddressList = ArrayList()
-        shippingAddressAdapter = ShippingAddressAdapter(shippingAddressList, this)
+        shippingAddressAdapter =
+            ShippingAddressAdapter(shippingAddressList, this, (activity as HomeActivity))
         binding.rvShippingAddress.apply {
             adapter = shippingAddressAdapter
             setHasFixedSize(false)
@@ -181,7 +181,46 @@ class ShippingAddressFragment : Fragment(), ShippingAddressAdapter.OnShippingAdd
         }
     }
 
+
+    // Call Set Primary Address Api
+    private fun callSetPrimaryAddressApi(id: Int) {
+        (activity as HomeActivity).homeViewModel.setPrimaryAddress(
+            getHeaderMap(
+                data.token,
+                true
+            ),
+            id = id
+        )
+    }
+
+    // Observe Primary Address Response
+    private fun observePrimaryAddressResponse() {
+        (activity as HomeActivity).homeViewModel.setPrimaryAddressResponse.observe(
+            viewLifecycleOwner
+        ) { response ->
+
+            when (response) {
+                is NetworkResult.Success -> {
+                    response.data?.let { addressResponse ->
+                        if (addressResponse.data.size > 0) {
+                            if (addressResponse.data[0] == 1) {
+                                callGetAddressApi()
+                            }
+                        }
+                    }
+                }
+                is NetworkResult.Error -> {
+                    showDialog(response.message.toString())
+                }
+                is NetworkResult.Loading -> {
+                }
+            }
+        }
+    }
+
     override fun onItemClick(data: GetAddressListData, position: Int) {
         (activity as HomeActivity).showShortToast("You click ${data.addressType}")
+        callSetPrimaryAddressApi(data.id)
+        observePrimaryAddressResponse()
     }
 }

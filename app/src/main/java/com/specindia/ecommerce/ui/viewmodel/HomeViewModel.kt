@@ -15,6 +15,7 @@ import com.specindia.ecommerce.models.response.home.createOrder.CreateOrderRespo
 import com.specindia.ecommerce.models.response.home.getaddress.GetAddressListResponse
 import com.specindia.ecommerce.models.response.home.order.OrderDetailsResponse
 import com.specindia.ecommerce.models.response.home.orderlist.OrderListResponse
+import com.specindia.ecommerce.models.response.home.primaryAddress.PrimaryAddressResponse
 import com.specindia.ecommerce.models.response.home.product.AllRestaurant
 import com.specindia.ecommerce.models.response.home.product.ViewAllData
 import com.specindia.ecommerce.models.response.home.productsbyrestaurant.ProductsByRestaurantResponse
@@ -66,6 +67,8 @@ HomeViewModel @Inject constructor(
     private val _addOrUpdateAddressResponse =
         MutableLiveData<NetworkResult<AddOrUpdateAddressResponse>>()
 
+    private val _primaryAddressResponse = MutableLiveData<NetworkResult<PrimaryAddressResponse>>()
+
     // Live Data
     val dashboardListResponse: LiveData<NetworkResult<DashboardListResponse>>
         get() = _dashboardListResponse
@@ -112,6 +115,8 @@ HomeViewModel @Inject constructor(
     val getAddressListResponse: LiveData<NetworkResult<GetAddressListResponse>>
         get() = _getAddressList
 
+    val setPrimaryAddressResponse: LiveData<NetworkResult<PrimaryAddressResponse>>
+        get() = _primaryAddressResponse
 
 
     // Call dashboard list api
@@ -256,6 +261,15 @@ HomeViewModel @Inject constructor(
             _getAddressList.postValue(NetworkResult.Loading())
             repository.getAddressList(headerMap).collect { values ->
                 _getAddressList.value = values
+            }
+        }
+
+    // Call Primary Address api
+    fun setPrimaryAddress(headerMap: Map<String, String>, id: Int) =
+        viewModelScope.launch {
+            _primaryAddressResponse.postValue(NetworkResult.Loading())
+            repository.setPrimaryAddress(headerMap, id).collect { values ->
+                _primaryAddressResponse.value = values
             }
         }
 }
