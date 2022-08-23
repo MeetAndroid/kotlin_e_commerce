@@ -10,7 +10,9 @@ import com.specindia.ecommerce.models.response.cart.getcart.GetCartResponse
 import com.specindia.ecommerce.models.response.cart.removeFromCart.RemoveFromCartResponse
 import com.specindia.ecommerce.models.response.home.DashboardListResponse
 import com.specindia.ecommerce.models.response.home.SearchResponse
+import com.specindia.ecommerce.models.response.home.address.AddOrUpdateAddressResponse
 import com.specindia.ecommerce.models.response.home.createOrder.CreateOrderResponse
+import com.specindia.ecommerce.models.response.home.getaddress.GetAddressListResponse
 import com.specindia.ecommerce.models.response.home.order.OrderDetailsResponse
 import com.specindia.ecommerce.models.response.home.orderlist.OrderListResponse
 import com.specindia.ecommerce.models.response.home.product.AllRestaurant
@@ -59,6 +61,11 @@ HomeViewModel @Inject constructor(
 
     private val _createOrderResponse = MutableLiveData<NetworkResult<CreateOrderResponse>>()
 
+    private val _getAddressList = MutableLiveData<NetworkResult<GetAddressListResponse>>()
+
+    private val _addOrUpdateAddressResponse =
+        MutableLiveData<NetworkResult<AddOrUpdateAddressResponse>>()
+
     // Live Data
     val dashboardListResponse: LiveData<NetworkResult<DashboardListResponse>>
         get() = _dashboardListResponse
@@ -98,6 +105,14 @@ HomeViewModel @Inject constructor(
 
     val createOrderResponse: LiveData<NetworkResult<CreateOrderResponse>>
         get() = _createOrderResponse
+
+    val addOrUpdateAddressResponse: LiveData<NetworkResult<AddOrUpdateAddressResponse>>
+        get() = _addOrUpdateAddressResponse
+
+    val getAddressListResponse: LiveData<NetworkResult<GetAddressListResponse>>
+        get() = _getAddressList
+
+
 
     // Call dashboard list api
     fun getDashboardList(headerMap: Map<String, String>) =
@@ -222,6 +237,25 @@ HomeViewModel @Inject constructor(
             _createOrderResponse.postValue(NetworkResult.Loading())
             repository.createOrder(headerMap, parameters).collect { values ->
                 _createOrderResponse.value = values
+            }
+        }
+
+    // Call Add Or Update Address Api
+    fun addOrUpdateAddress(headerMap: Map<String, String>, parameters: String) =
+        viewModelScope.launch {
+            _addOrUpdateAddressResponse.postValue(NetworkResult.Loading())
+            repository.addOrUpdateAddress(headerMap, parameters).collect { values ->
+                _addOrUpdateAddressResponse.value = values
+            }
+        }
+
+    // Call Get Address List Api
+    fun getAddressList(headerMap: Map<String, String>) =
+        viewModelScope.launch {
+            //delay(STATIC_DELAY)
+            _getAddressList.postValue(NetworkResult.Loading())
+            repository.getAddressList(headerMap).collect { values ->
+                _getAddressList.value = values
             }
         }
 }

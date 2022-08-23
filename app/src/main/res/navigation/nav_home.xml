@@ -150,5 +150,15 @@
             android:name="full_address"
             app:argType="string"
             android:defaultValue="" />
+
+        <argument
+            android:name="latitude"
+            app:argType="string"
+            android:defaultValue="0.0" />
+
+        <argument
+            android:name="longitude"
+            app:argType="string"
+            android:defaultValue="0.0" />
     </fragment>
 </navigation>

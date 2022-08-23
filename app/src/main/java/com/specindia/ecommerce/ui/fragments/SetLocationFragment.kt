@@ -1,5 +1,8 @@
 package com.specindia.ecommerce.ui.fragments
 
+import android.content.Context
+import android.graphics.Bitmap
+import android.graphics.Canvas
 import android.location.Address
 import android.location.Geocoder
 import android.os.Build
@@ -9,16 +12,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.MapView
 import com.google.android.gms.maps.OnMapReadyCallback
-import com.google.android.gms.maps.model.BitmapDescriptorFactory
-import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.Marker
-import com.google.android.gms.maps.model.MarkerOptions
+import com.google.android.gms.maps.model.*
 import com.google.android.material.badge.ExperimentalBadgeUtils
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.firebase.firestore.GeoPoint
@@ -29,7 +30,10 @@ import com.specindia.ecommerce.ui.activity.HomeActivity
 import com.specindia.ecommerce.util.showProgressDialog
 import com.specindia.ecommerce.util.visible
 import dagger.hilt.android.AndroidEntryPoint
-import java.io.IOException
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.util.*
 
 
@@ -42,8 +46,8 @@ class SetLocationFragment : Fragment(), OnMapReadyCallback {
 
     // Google Map
     private var mMap: MapView? = null
-    private val latitude = 23.036957296395084
-    private val longitude = 72.56168172566267
+    private var latitude = 21.8380
+    private var longitude = 73.7191
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
@@ -106,7 +110,9 @@ class SetLocationFragment : Fragment(), OnMapReadyCallback {
                 val fullAddress = binding.tvAddress.text.toString().trim()
                 it.findNavController()
                     .navigate(SetLocationFragmentDirections.actionSetLocationFragmentToAddAddressFragment(
-                        fullAddress = fullAddress))
+                        fullAddress = fullAddress,
+                        latitude = latitude.toString(),
+                        longitude = longitude.toString()))
             }
         }
     }
@@ -127,6 +133,33 @@ class SetLocationFragment : Fragment(), OnMapReadyCallback {
             .show()
     }
 
+    private fun getBitmapFromVector(context: Context, vectorResId: Int): BitmapDescriptor? {
+        // below line is use to generate a drawable.
+        val vectorDrawable = ContextCompat.getDrawable(context, vectorResId)
+
+        // below line is use to set bounds to our vector drawable.
+        vectorDrawable!!.setBounds(0,
+            0,
+            vectorDrawable.intrinsicWidth,
+            vectorDrawable.intrinsicHeight)
+
+        // below line is use to create a bitmap for our
+        // drawable which we have added.
+        val bitmap = Bitmap.createBitmap(vectorDrawable.intrinsicWidth,
+            vectorDrawable.intrinsicHeight,
+            Bitmap.Config.ARGB_8888)
+
+        // below line is use to add bitmap in our canvas.
+        val canvas = Canvas(bitmap)
+
+        // below line is use to draw our
+        // vector drawable in canvas.
+        vectorDrawable.draw(canvas)
+
+        // after generating our bitmap we are returning our bitmap.
+        return BitmapDescriptorFactory.fromBitmap(bitmap)
+    }
+
     // ================== GOOGLE MAP
     override fun onMapReady(googleMap: GoogleMap) {
         val latLng = LatLng(latitude,
@@ -134,6 +167,7 @@ class SetLocationFragment : Fragment(), OnMapReadyCallback {
 
         val marker: Marker? = googleMap.addMarker(MarkerOptions()
             .position(latLng)
+//            .icon(getBitmapFromVector(requireActivity(), R.drawable.ic_location)))
             .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED)))
         // Enable GPS marker in Map
         //googleMap.isMyLocationEnabled = true
@@ -148,18 +182,26 @@ class SetLocationFragment : Fragment(), OnMapReadyCallback {
                 marker.position = midLatLng
                 val nowLocation = marker.position
                 Log.d("nowLocation", nowLocation.toString())
-                binding.tvAddress.text =
-                    getFullAddress(GeoPoint(nowLocation.latitude, nowLocation.longitude))
+
+                latitude = nowLocation.latitude
+                longitude = nowLocation.longitude
+
+                try {
+                    getAndSetAddressOnTextView(GeoPoint(latitude, longitude))
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
+
             }
         }
     }
 
-    private fun getFullAddress(location: GeoPoint): String? {
+    private fun getAndSetAddressOnTextView(location: GeoPoint) {
         var addressList: ArrayList<Address> = ArrayList()
         var fullAddress = ""
         val geocoder = Geocoder((activity as HomeActivity), Locale.getDefault())
-        try {
-
+        CoroutineScope(Dispatchers.IO).launch {
+            // Here 1 represent max location result to returned, by documents it recommended 1 to 5
             if (Build.VERSION.SDK_INT >= 33) {
                 geocoder.getFromLocation(location.latitude,
                     location.longitude,
@@ -172,12 +214,13 @@ class SetLocationFragment : Fragment(), OnMapReadyCallback {
                 ) as ArrayList<Address>
             }
 
-            // Here 1 represent max location result to returned, by documents it recommended 1 to 5
-        } catch (e: IOException) {
-            e.printStackTrace()
+            withContext(Dispatchers.Main) {
+                fullAddress = addressList[0].getAddressLine(0)
+                binding.tvAddress.text = fullAddress
+                Log.d("fullAddress", fullAddress)
+            }
         }
-        fullAddress = addressList[0].getAddressLine(0)
-        return fullAddress
+
     }
 
     override fun onResume() {

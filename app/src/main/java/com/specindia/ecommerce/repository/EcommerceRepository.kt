@@ -8,7 +8,9 @@ import com.specindia.ecommerce.models.response.cart.getcart.GetCartResponse
 import com.specindia.ecommerce.models.response.cart.removeFromCart.RemoveFromCartResponse
 import com.specindia.ecommerce.models.response.home.DashboardListResponse
 import com.specindia.ecommerce.models.response.home.SearchResponse
+import com.specindia.ecommerce.models.response.home.address.AddOrUpdateAddressResponse
 import com.specindia.ecommerce.models.response.home.createOrder.CreateOrderResponse
+import com.specindia.ecommerce.models.response.home.getaddress.GetAddressListResponse
 import com.specindia.ecommerce.models.response.home.order.OrderDetailsResponse
 import com.specindia.ecommerce.models.response.home.orderlist.OrderListResponse
 import com.specindia.ecommerce.models.response.home.product.AllRestaurant
@@ -171,5 +173,21 @@ class EcommerceRepository @Inject constructor(
         }.flowOn(Dispatchers.IO)
     }
 
+    suspend fun addOrUpdateAddress(
+        headerMap: Map<String, String>,
+        parameters: String
+    ): Flow<NetworkResult<AddOrUpdateAddressResponse>> {
+        return flow {
+            emit(safeApiCall { remoteDataSource.addOrUpdateAddress(headerMap,parameters) })
+        }.flowOn(Dispatchers.IO)
+    }
+
+    suspend fun getAddressList(
+        headerMap: Map<String, String>
+    ): Flow<NetworkResult<GetAddressListResponse>> {
+        return flow {
+            emit(safeApiCall { remoteDataSource.getAddressList(headerMap) })
+        }.flowOn(Dispatchers.IO)
+    }
 }
 

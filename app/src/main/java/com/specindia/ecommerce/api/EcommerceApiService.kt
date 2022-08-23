@@ -5,7 +5,9 @@ import com.specindia.ecommerce.models.response.cart.getcart.GetCartResponse
 import com.specindia.ecommerce.models.response.cart.removeFromCart.RemoveFromCartResponse
 import com.specindia.ecommerce.models.response.home.DashboardListResponse
 import com.specindia.ecommerce.models.response.home.SearchResponse
+import com.specindia.ecommerce.models.response.home.address.AddOrUpdateAddressResponse
 import com.specindia.ecommerce.models.response.home.createOrder.CreateOrderResponse
+import com.specindia.ecommerce.models.response.home.getaddress.GetAddressListResponse
 import com.specindia.ecommerce.models.response.home.order.OrderDetailsResponse
 import com.specindia.ecommerce.models.response.home.orderlist.OrderListResponse
 import com.specindia.ecommerce.models.response.home.product.AllRestaurant
@@ -16,11 +18,14 @@ import com.specindia.ecommerce.models.response.login.LoginResponse
 import com.specindia.ecommerce.models.response.menulist.MenuListResponse
 import com.specindia.ecommerce.models.response.registration.RegistrationResponse
 import com.specindia.ecommerce.models.response.social.SocialLoginResponse
+import com.specindia.ecommerce.util.Constants.Companion.ADDRESS_END_POINT
+import com.specindia.ecommerce.util.Constants.Companion.ADD_OR_UPDATE_ADDRESS
 import com.specindia.ecommerce.util.Constants.Companion.ADD_UPDATE_TO_CART
 import com.specindia.ecommerce.util.Constants.Companion.CART_END_POINT
 import com.specindia.ecommerce.util.Constants.Companion.CREATE_ORDER
 import com.specindia.ecommerce.util.Constants.Companion.CUSTOMER_END_POINT
 import com.specindia.ecommerce.util.Constants.Companion.DASH_BOARD_LIST
+import com.specindia.ecommerce.util.Constants.Companion.GET_ADDRESS
 import com.specindia.ecommerce.util.Constants.Companion.GET_ALL_PRODUCT
 import com.specindia.ecommerce.util.Constants.Companion.GET_ALL_RESTAURANT
 import com.specindia.ecommerce.util.Constants.Companion.GET_CART
@@ -137,4 +142,17 @@ interface EcommerceApiService {
         @HeaderMap headers: Map<String, String>,
         @Body parameters: String,
     ): Response<CreateOrderResponse>
+
+    // Pass id in parameter that will update the address
+    @POST("""$ADDRESS_END_POINT$ADD_OR_UPDATE_ADDRESS""")
+    suspend fun addOrUpdateAddress(
+        @HeaderMap headers: Map<String, String>,
+        @Body parameters: String,
+    ): Response<AddOrUpdateAddressResponse>
+
+    // Pass id in parameter that will update the address
+    @GET("""$ADDRESS_END_POINT$GET_ADDRESS""")
+    suspend fun getAddressList(
+        @HeaderMap headers: Map<String, String>
+    ): Response<GetAddressListResponse>
 }

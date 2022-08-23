@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
+import androidx.core.view.get
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.navArgs
@@ -13,11 +14,14 @@ import com.google.android.material.badge.ExperimentalBadgeUtils
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.gson.Gson
 import com.specindia.ecommerce.R
+import com.specindia.ecommerce.api.network.NetworkResult
 import com.specindia.ecommerce.databinding.FragmentAddAddressBinding
+import com.specindia.ecommerce.models.request.Parameters
 import com.specindia.ecommerce.models.response.AuthResponseData
 import com.specindia.ecommerce.ui.activity.HomeActivity
 import com.specindia.ecommerce.ui.adapters.AddAddressAdapter
 import com.specindia.ecommerce.util.MarginDecoration
+import com.specindia.ecommerce.util.getHeaderMap
 import com.specindia.ecommerce.util.showProgressDialog
 import com.specindia.ecommerce.util.visible
 import dagger.hilt.android.AndroidEntryPoint
@@ -28,10 +32,16 @@ class AddAddressFragment : Fragment() {
     private lateinit var binding: FragmentAddAddressBinding
     private lateinit var data: AuthResponseData
     private lateinit var customProgressDialog: AlertDialog
-
+    private var addressLines = ArrayList<String>()
     private lateinit var addAddressAdapter: AddAddressAdapter
-
     private var fullAddress: String = ""
+
+    private var addressType = "1"
+    private var firstLine = ""
+    private var secondLine = ""
+    private var thirdLine = ""
+    private var latitude: String = "0.0"
+    private var longitude: String = "0.0"
 
     private val args: AddAddressFragmentArgs by navArgs()
 
@@ -48,6 +58,8 @@ class AddAddressFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         fullAddress = args.fullAddress
+        latitude = args.latitude
+        longitude = args.longitude
 
         setUpHeader()
         setUpHeaderItemClick()
@@ -62,7 +74,7 @@ class AddAddressFragment : Fragment() {
         with(binding) {
             with(shippingAddressScreenHeader) {
                 tvHeaderTitle.visible(true)
-                tvHeaderTitle.text = getString(R.string.shipping_address)
+                tvHeaderTitle.text = getString(R.string.add_address)
                 ivBack.visible(true)
                 ivFavorite.visible(false)
                 ivSearch.visible(false)
@@ -84,8 +96,8 @@ class AddAddressFragment : Fragment() {
     private fun setUpButtonClick() {
         with(binding) {
             btnSave.setOnClickListener {
-                it.findNavController()
-                    .navigate(ShippingAddressFragmentDirections.actionShippingAddressFragmentToSetLocationFragment())
+                callAddOrUpdateAddressApi()
+                observeAddOrUpdateAddressResponse(it)
             }
         }
     }
@@ -93,7 +105,7 @@ class AddAddressFragment : Fragment() {
 
     private fun setUpRecyclerView() {
         // Carts
-        val addressLines: ArrayList<String> = fullAddress.split(",") as ArrayList<String>
+        addressLines = fullAddress.split(",") as ArrayList<String>
         addAddressAdapter = AddAddressAdapter(addressLines)
         binding.rvShippingAddress.apply {
             adapter = addAddressAdapter
@@ -113,13 +125,65 @@ class AddAddressFragment : Fragment() {
         }
     }
 
-    private fun showDialog(message: String) {
+
+    // ============== GET CART DATA
+    private fun callAddOrUpdateAddressApi() {
+
+        addressType = binding.spAddressType.selectedItem.toString()
+        firstLine = addressLines[0]
+        secondLine = addressLines[1]
+        thirdLine = addressLines[2]
+
+        customProgressDialog.show()
+        val parameter = Parameters(
+            addressType = addressType,
+            firstLine = firstLine,
+            secondLine = secondLine,
+            thirdLine = thirdLine,
+            lat = latitude,
+            lang = longitude
+        )
+
+        (activity as HomeActivity).homeViewModel.addOrUpdateAddress(
+            getHeaderMap(
+                data.token,
+                true
+            ),
+            Gson().toJson(parameter)
+        )
+    }
+
+    private fun observeAddOrUpdateAddressResponse(view: View) {
+        (activity as HomeActivity).homeViewModel.addOrUpdateAddressResponse.observe(
+            viewLifecycleOwner) { response ->
+
+            when (response) {
+                is NetworkResult.Success -> {
+                    customProgressDialog.hide()
+                    response.data?.let {
+                        showDialog("Address Added Successfully!", true, view)
+                    }
+                }
+                is NetworkResult.Error -> {
+                    customProgressDialog.hide()
+                    showDialog(response.message.toString(), false, view)
+                }
+                is NetworkResult.Loading -> {
+                    customProgressDialog.show()
+                }
+            }
+        }
+    }
+
+    private fun showDialog(message: String, isGoBack: Boolean, view: View) {
         MaterialAlertDialogBuilder(requireActivity())
             .setTitle(getString(R.string.app_name))
             .setMessage(message)
             .setPositiveButton(getString(R.string.ok)) { _, _ ->
+                if (isGoBack) {
+                    view.findNavController().popBackStack()
+                }
             }
             .show()
     }
-
 }
