@@ -119,13 +119,13 @@ class FoodMenuFragment : Fragment() {
 
             when (response) {
                 is NetworkResult.Success -> {
-                    customProgressDialog.hide()
+                    customProgressDialog.dismiss()
                     response.data?.let { menuListResponse ->
                         setUpMenuListUI(binding, menuListResponse)
                     }
                 }
                 is NetworkResult.Error -> {
-                    customProgressDialog.hide()
+                    customProgressDialog.dismiss()
                     showDialog(response.message.toString())
                 }
                 is NetworkResult.Loading -> {

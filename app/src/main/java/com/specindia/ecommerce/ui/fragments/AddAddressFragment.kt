@@ -159,13 +159,13 @@ class AddAddressFragment : Fragment() {
 
             when (response) {
                 is NetworkResult.Success -> {
-                    customProgressDialog.hide()
+                    customProgressDialog.dismiss()
                     response.data?.let {
                         showDialog("Address Added Successfully!", true, view)
                     }
                 }
                 is NetworkResult.Error -> {
-                    customProgressDialog.hide()
+                    customProgressDialog.dismiss()
                     showDialog(response.message.toString(), false, view)
                 }
                 is NetworkResult.Loading -> {

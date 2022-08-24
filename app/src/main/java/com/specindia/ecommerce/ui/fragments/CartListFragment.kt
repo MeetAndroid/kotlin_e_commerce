@@ -215,13 +215,13 @@ class CartListFragment : Fragment(), CartListAdapter.OnCartItemClickListener {
 
             when (response) {
                 is NetworkResult.Success -> {
-                    customProgressDialog.hide()
+                    customProgressDialog.dismiss()
                     response.data?.let { cartListResponse ->
                         setUpCartListUI(binding, cartListResponse)
                     }
                 }
                 is NetworkResult.Error -> {
-                    customProgressDialog.hide()
+                    customProgressDialog.dismiss()
                     showDialog(response.message.toString())
                 }
                 is NetworkResult.Loading -> {
@@ -281,13 +281,13 @@ class CartListFragment : Fragment(), CartListAdapter.OnCartItemClickListener {
 //
 //            when (response) {
 //                is NetworkResult.Success -> {
-//                    customProgressDialog.hide()
+//                    customProgressDialog.dismiss()
 //                    response.data?.let {
 //                        callGetCartApi()
 //                    }
 //                }
 //                is NetworkResult.Error -> {
-//                    customProgressDialog.hide()
+//                    customProgressDialog.dismiss()
 //                    showDialog(response.message.toString())
 //                }
 //                is NetworkResult.Loading -> {
@@ -395,7 +395,7 @@ class CartListFragment : Fragment(), CartListAdapter.OnCartItemClickListener {
 //
 //            when (response) {
 //                is NetworkResult.Success -> {
-//                    customProgressDialog.hide()
+//                    customProgressDialog.dismiss()
 //                    response.data?.let {
 //                        if (it.data == 1) {
 //                            val productsByRestaurant =
@@ -421,7 +421,7 @@ class CartListFragment : Fragment(), CartListAdapter.OnCartItemClickListener {
 //                    }
 //                }
 //                is NetworkResult.Error -> {
-//                    customProgressDialog.hide()
+//                    customProgressDialog.dismiss()
 //                    showDialog(response.message.toString())
 //                }
 //                is NetworkResult.Loading -> {

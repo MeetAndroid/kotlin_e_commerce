@@ -165,13 +165,13 @@ class ShippingAddressFragment : Fragment(), ShippingAddressAdapter.OnShippingAdd
 
             when (response) {
                 is NetworkResult.Success -> {
-                    customProgressDialog.hide()
+                    customProgressDialog.dismiss()
                     response.data?.let { addressList ->
                         setUpAddressListUI(binding, addressList)
                     }
                 }
                 is NetworkResult.Error -> {
-                    customProgressDialog.hide()
+                    customProgressDialog.dismiss()
                     showDialog(response.message.toString())
                 }
                 is NetworkResult.Loading -> {

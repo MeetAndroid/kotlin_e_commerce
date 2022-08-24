@@ -144,13 +144,13 @@ class CheckOutFragment : Fragment() {
 
             when (response) {
                 is NetworkResult.Success -> {
-                    customProgressDialog.hide()
+                    customProgressDialog.dismiss()
                     response.data?.let {
                         showDialog(getString(R.string.msg_order_created), true, view)
                     }
                 }
                 is NetworkResult.Error -> {
-                    customProgressDialog.hide()
+                    customProgressDialog.dismiss()
                     showDialog(response.message.toString(), false, view)
                 }
                 is NetworkResult.Loading -> {

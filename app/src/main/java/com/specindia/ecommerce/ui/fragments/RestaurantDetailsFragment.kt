@@ -266,7 +266,7 @@ class RestaurantDetailsFragment : Fragment(), ProductListAdapter.OnProductItemCl
             when (response) {
                 is NetworkResult.Success -> {
                     showContent()
-                    customProgressDialog.hide()
+                    customProgressDialog.dismiss()
                     response.data?.let { restaurantData ->
                         binding.clTopPart.visible(true)
                         with(binding) {
@@ -289,7 +289,7 @@ class RestaurantDetailsFragment : Fragment(), ProductListAdapter.OnProductItemCl
                     }
                 }
                 is NetworkResult.Error -> {
-                    customProgressDialog.hide()
+                    customProgressDialog.dismiss()
                     showDialog(response.message.toString())
                 }
                 is NetworkResult.Loading -> {
@@ -326,7 +326,7 @@ class RestaurantDetailsFragment : Fragment(), ProductListAdapter.OnProductItemCl
 
             when (response) {
                 is NetworkResult.Success -> {
-                    customProgressDialog.hide()
+                    customProgressDialog.dismiss()
                     response.data?.let { productListResponse ->
                         setUpProductListUI(binding, productListResponse)
 
@@ -336,7 +336,7 @@ class RestaurantDetailsFragment : Fragment(), ProductListAdapter.OnProductItemCl
 
                 }
                 is NetworkResult.Error -> {
-                    customProgressDialog.hide()
+                    customProgressDialog.dismiss()
                     showDialog(response.message.toString())
                 }
                 is NetworkResult.Loading -> {
@@ -397,7 +397,7 @@ class RestaurantDetailsFragment : Fragment(), ProductListAdapter.OnProductItemCl
 
             when (response) {
                 is NetworkResult.Success -> {
-                    customProgressDialog.hide()
+                    customProgressDialog.dismiss()
                     response.data?.let { cartList ->
                         handleCartBadgeCount(cartList, (activity as HomeActivity),
                             binding.homeDetailsScreenHeader.frShoppingCart)
@@ -435,7 +435,7 @@ class RestaurantDetailsFragment : Fragment(), ProductListAdapter.OnProductItemCl
                     }
                 }
                 is NetworkResult.Error -> {
-                    customProgressDialog.hide()
+                    customProgressDialog.dismiss()
                     showDialog(response.message.toString())
                 }
                 is NetworkResult.Loading -> {
@@ -495,13 +495,13 @@ class RestaurantDetailsFragment : Fragment(), ProductListAdapter.OnProductItemCl
 
             when (response) {
                 is NetworkResult.Success -> {
-                    customProgressDialog.hide()
+                    customProgressDialog.dismiss()
                     response.data?.let {
                         callGetCartApi()
                     }
                 }
                 is NetworkResult.Error -> {
-                    customProgressDialog.hide()
+                    customProgressDialog.dismiss()
                     showDialog(response.message.toString())
                 }
                 is NetworkResult.Loading -> {
@@ -610,7 +610,7 @@ class RestaurantDetailsFragment : Fragment(), ProductListAdapter.OnProductItemCl
 
             when (response) {
                 is NetworkResult.Success -> {
-                    customProgressDialog.hide()
+                    customProgressDialog.dismiss()
                     response.data?.let {
                         if (it.data == 1) {
                             val productsByRestaurant =
@@ -638,7 +638,7 @@ class RestaurantDetailsFragment : Fragment(), ProductListAdapter.OnProductItemCl
                     }
                 }
                 is NetworkResult.Error -> {
-                    customProgressDialog.hide()
+                    customProgressDialog.dismiss()
                     showDialog(response.message.toString())
                 }
                 is NetworkResult.Loading -> {

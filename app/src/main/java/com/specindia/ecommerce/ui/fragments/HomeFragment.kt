@@ -203,7 +203,7 @@ class HomeFragment : Fragment() {
 
             when (response) {
                 is NetworkResult.Success -> {
-                    customProgressDialog.hide()
+                    customProgressDialog.dismiss()
                     response.data?.let { dashboardListResponse ->
                         setUpTopDishUI(binding, dashboardListResponse)
                         setUpPopularRestaurantUI(binding, dashboardListResponse)
@@ -211,7 +211,7 @@ class HomeFragment : Fragment() {
                     }
                 }
                 is NetworkResult.Error -> {
-                    customProgressDialog.hide()
+                    customProgressDialog.dismiss()
                     showDialog(response.message.toString())
                 }
                 is NetworkResult.Loading -> {
@@ -334,7 +334,7 @@ class HomeFragment : Fragment() {
 
             when (response) {
                 is NetworkResult.Success -> {
-                    customProgressDialog.hide()
+                    customProgressDialog.dismiss()
                     response.data?.let { cartListResponse ->
                         handleCartBadgeCount(
                             cartListResponse,

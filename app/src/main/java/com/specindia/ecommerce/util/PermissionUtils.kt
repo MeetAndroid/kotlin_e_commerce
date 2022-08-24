@@ -4,13 +4,16 @@ import android.Manifest
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.location.Location
 import android.location.LocationManager
 import android.provider.Settings
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import com.google.android.gms.location.LocationCallback
 import com.google.android.gms.location.LocationRequest
+import com.google.android.gms.location.LocationResult
 import com.google.android.gms.location.Priority
 import com.specindia.ecommerce.R
 
@@ -47,16 +50,16 @@ object PermissionUtils {
                 || gfgLocationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)
     }
 
-    fun showGPSNotEnabledDialog(context: Context) {
-        AlertDialog.Builder(context)
-            .setTitle(context.getString(R.string.app_name))
-            .setMessage("GPS required for getting Location")
-            .setCancelable(false)
-            .setPositiveButton(context.getString(R.string.ok)) { _, _ ->
-                context.startActivity(Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS))
-            }
-            .show()
-    }
+//    fun showGPSNotEnabledDialog(context: Context) {
+//        AlertDialog.Builder(context)
+//            .setTitle(context.getString(R.string.app_name))
+//            .setMessage("GPS required for getting Location")
+//            .setCancelable(false)
+//            .setPositiveButton(context.getString(R.string.ok)) { _, _ ->
+//                context.startActivity(Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS))
+//            }
+//            .show()
+//    }
 
 
 }

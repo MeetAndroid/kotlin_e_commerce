@@ -161,7 +161,7 @@ class ViewAllProductFragment : Fragment(), ViewAllAdapter.OnViewAllClickListener
 
             when (response) {
                 is NetworkResult.Success -> {
-                    customProgressDialog.hide()
+                    customProgressDialog.dismiss()
                     response.data?.let { it ->
                         with(binding) {
                             rvViewAll.layoutManager = LinearLayoutManager(
@@ -184,7 +184,7 @@ class ViewAllProductFragment : Fragment(), ViewAllAdapter.OnViewAllClickListener
                     }
                 }
                 is NetworkResult.Error -> {
-                    customProgressDialog.hide()
+                    customProgressDialog.dismiss()
                     showDialog(response.message.toString())
                 }
                 is NetworkResult.Loading -> {
@@ -202,7 +202,7 @@ class ViewAllProductFragment : Fragment(), ViewAllAdapter.OnViewAllClickListener
 
             when (response) {
                 is NetworkResult.Success -> {
-                    customProgressDialog.hide()
+                    customProgressDialog.dismiss()
                     response.data?.let { it ->
                         with(binding) {
                             rvViewAll.layoutManager = LinearLayoutManager(
@@ -230,7 +230,7 @@ class ViewAllProductFragment : Fragment(), ViewAllAdapter.OnViewAllClickListener
                     }
                 }
                 is NetworkResult.Error -> {
-                    customProgressDialog.hide()
+                    customProgressDialog.dismiss()
                     showDialog(response.message.toString())
                 }
                 is NetworkResult.Loading -> {

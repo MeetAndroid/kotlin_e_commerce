@@ -88,7 +88,7 @@ class LoginFragment : Fragment() {
 
             when (response) {
                 is NetworkResult.Success -> {
-                    customProgressDialog.hide()
+                    customProgressDialog.dismiss()
 
                     //Save User response as a Json In Data Store
                     val data = Gson().toJson(response.data?.data)
@@ -99,7 +99,7 @@ class LoginFragment : Fragment() {
                     (activity as AuthActivity).dataStoreViewModel.saveUserLoggedIn(true)
                 }
                 is NetworkResult.Error -> {
-                    customProgressDialog.hide()
+                    customProgressDialog.dismiss()
                     showDialog(response.message.toString())
                 }
                 is NetworkResult.Loading -> {

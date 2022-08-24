@@ -117,7 +117,7 @@ class OrderHistoryFragment : Fragment(), OrderHistoryAdapter.OnOrderHistoryItemC
 
             when (response) {
                 is NetworkResult.Success -> {
-                    customProgressDialog.hide()
+                    customProgressDialog.dismiss()
                     response.data?.let { it ->
                         with(binding) {
                             orderList = ((it.data.toList() as ArrayList<OrderData>?)!!)
@@ -136,7 +136,7 @@ class OrderHistoryFragment : Fragment(), OrderHistoryAdapter.OnOrderHistoryItemC
                     }
                 }
                 is NetworkResult.Error -> {
-                    customProgressDialog.hide()
+                    customProgressDialog.dismiss()
                     showDialog(response.message.toString())
                 }
                 is NetworkResult.Loading -> {

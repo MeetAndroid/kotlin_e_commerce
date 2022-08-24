@@ -77,11 +77,11 @@ class RegistrationFragment : Fragment() {
         (activity as AuthActivity).authViewModel.registrationResponse.observe(viewLifecycleOwner) { response ->
             when (response) {
                 is NetworkResult.Success -> {
-                    customProgressDialog.hide()
+                    customProgressDialog.dismiss()
                     showDialog(response.data?.message.toString(), true)
                 }
                 is NetworkResult.Error -> {
-                    customProgressDialog.hide()
+                    customProgressDialog.dismiss()
                     showDialog(response.message.toString(), false)
                 }
                 is NetworkResult.Loading -> {

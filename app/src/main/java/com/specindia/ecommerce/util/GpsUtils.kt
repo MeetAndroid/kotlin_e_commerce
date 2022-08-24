@@ -61,9 +61,10 @@ class GpsUtils(private val context: Context) {
     }
 
     init {
-        locationRequest.priority = LocationRequest.PRIORITY_HIGH_ACCURACY
-        locationRequest.interval = (10 * 1000).toLong()
-        locationRequest.fastestInterval = (2 * 1000).toLong()
+        locationRequest.priority = Priority.PRIORITY_HIGH_ACCURACY
+        locationRequest.interval = 5000
+        locationRequest.fastestInterval = 5000
+        locationRequest.maxWaitTime = 100;
         val builder = LocationSettingsRequest.Builder()
             .addLocationRequest(locationRequest)
         mLocationSettingsRequest = builder.build()
