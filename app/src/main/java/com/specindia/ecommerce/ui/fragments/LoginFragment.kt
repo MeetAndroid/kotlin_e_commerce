@@ -45,6 +45,8 @@ class LoginFragment : Fragment() {
         setSpannableText()
         startEditTextSpace()
         setUpProgressDialog()
+
+        observeResponse()
     }
 
     private fun setUpProgressDialog() {
@@ -60,7 +62,7 @@ class LoginFragment : Fragment() {
                 if (isEmpty()) {
                     customProgressDialog.show()
                     callLoginApi(binding)
-                    observeResponse()
+
                 }
             }
 

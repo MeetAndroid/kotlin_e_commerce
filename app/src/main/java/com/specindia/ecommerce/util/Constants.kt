@@ -110,6 +110,7 @@ class Constants {
         const val LOCATION_REQUEST = 1000
         const val GPS_REQUEST = 1001
         const val LOCATION_PERMISSION_REQUEST_CODE = 2000
+        const val REQUEST_CHECK_SETTINGS = 3000
     }
 
 

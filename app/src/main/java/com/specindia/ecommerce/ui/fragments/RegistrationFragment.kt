@@ -43,11 +43,13 @@ class RegistrationFragment : Fragment() {
         startEditTextSpace()
         setUpProgressDialog()
 
+        observeResponse()
+
         binding.btnRegister.setOnClickListener {
             if (isEmpty()) {
                 customProgressDialog.show()
                 callRegistrationApi(binding)
-                observeResponse()
+
             }
         }
     }

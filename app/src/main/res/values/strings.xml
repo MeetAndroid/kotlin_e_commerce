@@ -155,6 +155,7 @@
     <string name="select_location">Select Location</string>
     <string name="add_address">Add Address</string>
     <string name="save">Save</string>
+    <string name="no_address_found_add_new_address">No Address Found. Please click to add New one</string>
 
     <string-array name="address_type">
         <item>Home</item>

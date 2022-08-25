@@ -86,6 +86,10 @@ class ShippingAddressFragment : Fragment(), ShippingAddressAdapter.OnShippingAdd
                 it.findNavController()
                     .navigate(ShippingAddressFragmentDirections.actionShippingAddressFragmentToSetLocationFragment())
             }
+            noDataFound.tvNoData.setOnClickListener {
+                it.findNavController()
+                    .navigate(ShippingAddressFragmentDirections.actionShippingAddressFragmentToSetLocationFragment())
+            }
 
         }
     }
@@ -141,6 +145,7 @@ class ShippingAddressFragment : Fragment(), ShippingAddressAdapter.OnShippingAdd
             } else {
                 noDataFound.clNoDataFound.visible(true)
                 nestedScrollview.visible(false)
+                noDataFound.tvNoData.text = getString(R.string.no_address_found_add_new_address)
             }
         }
     }
@@ -205,6 +210,8 @@ class ShippingAddressFragment : Fragment(), ShippingAddressAdapter.OnShippingAdd
                         if (addressResponse.data.size > 0) {
                             if (addressResponse.data[0] == 1) {
                                 callGetAddressApi()
+                            } else {
+                                // TODO: Handle else part
                             }
                         }
                     }
