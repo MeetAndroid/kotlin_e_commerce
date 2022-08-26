@@ -311,18 +311,23 @@ fun handleCartBadgeCount(
 ) {
     if (response.data.isNotEmpty()) {
         // Save Latest Cart Counter Value to DataStore
-        val restaurantIdInCart =
-            response.data.first().product.restaurantId
-        activity.dataStoreViewModel.saveExistingRestaurantIdOfCart(
-            restaurantIdInCart)
+            val restaurantIdInCart =
+                response.data.first().product.restaurantId
+            activity.dataStoreViewModel.saveExistingRestaurantIdOfCart(
+                restaurantIdInCart
+            )
 
-        activity.dataStoreViewModel.saveCartItemCount(
-            response.data.size)
+            activity.dataStoreViewModel.saveCartItemCount(
+                response.data.size
+            )
+
     } else {
         activity.dataStoreViewModel.saveExistingRestaurantIdOfCart(
-            0)
+            0
+        )
         activity.dataStoreViewModel.saveCartItemCount(
-            0)
+            0
+        )
 
     }
     updateCartCountOnUI(activity, frameLayout)
@@ -335,9 +340,11 @@ fun updateCartCountOnUI(activity: HomeActivity, frameLayout: FrameLayout) {
         val cartItemCount =
             activity.dataStoreViewModel.getCartItemCount()
         cartItemCount?.let {
-            setCartBadgeCount(activity,
+            setCartBadgeCount(
+                activity,
                 it,
-                frameLayout)
+                frameLayout
+            )
         }
     }, 500)
 }
@@ -363,9 +370,11 @@ fun setCartBadgeCount(activity: Activity, counter: Int, frameLayout: FrameLayout
     }
     frameLayout.foreground = badgeDrawable
     frameLayout.addOnLayoutChangeListener { view, _, _, _, _, _, _, _, _ ->
-        attachBadgeDrawable(badgeDrawable,
+        attachBadgeDrawable(
+            badgeDrawable,
             view,
-            frameLayout)
+            frameLayout
+        )
     }
 }
 

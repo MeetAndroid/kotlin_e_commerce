@@ -153,7 +153,7 @@ dependencies {
 
     //gmail login
     implementation "com.google.android.gms:play-services-auth:$gmail_version"
-    implementation "com.google.firebase:firebase-auth:$firebase_version"
+//    implementation "com.google.firebase:firebase-auth:$firebase_version"
 
     //Google Map
     implementation "com.google.android.gms:play-services-maps:$google_map_version"

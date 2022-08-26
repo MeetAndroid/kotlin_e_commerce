@@ -17,7 +17,7 @@ data class GetCartData(
     @SerializedName("productId")
     val productId: Int,
     @SerializedName("quantity")
-    val quantity: String,
+    var quantity: String,
     @SerializedName("updatedAt")
     val updatedAt: String,
     @SerializedName("userId")

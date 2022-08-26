@@ -120,7 +120,7 @@ class OrderHistoryFragment : Fragment(), OrderHistoryAdapter.OnOrderHistoryItemC
                     customProgressDialog.hide()
                     response.data?.let { it ->
                         with(binding) {
-                            orderList = ((it.data.toList() as ArrayList<OrderData>?)!!)
+                            orderList = ((it.data as ArrayList<OrderData>?)!!)
                             orderHistoryAdapter =
                                 OrderHistoryAdapter(orderList, this@OrderHistoryFragment)
                             rvOrderHistory.adapter = orderHistoryAdapter

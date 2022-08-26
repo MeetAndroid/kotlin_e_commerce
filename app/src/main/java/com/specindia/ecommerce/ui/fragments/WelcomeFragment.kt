@@ -26,7 +26,6 @@ import androidx.navigation.findNavController
 import com.facebook.*
 import com.facebook.login.LoginManager
 import com.facebook.login.LoginResult
-import com.google.android.gms.auth.api.identity.BeginSignInRequest
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
@@ -34,7 +33,6 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.tasks.Task
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.google.firebase.auth.FirebaseAuth
 import com.google.gson.Gson
 import com.specindia.ecommerce.R
 import com.specindia.ecommerce.api.network.NetworkResult
@@ -51,7 +49,6 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.suspendCancellableCoroutine
 import org.json.JSONException
 import kotlin.coroutines.resumeWithException
-
 
 @AndroidEntryPoint
 class WelcomeFragment : Fragment() {
@@ -322,7 +319,7 @@ class WelcomeFragment : Fragment() {
         try {
 //            customProgressDialog.show()
             val account = completedTask.getResult(ApiException::class.java)
-
+            Log.w(TAG, "signInResult:success code=" +Gson().toJson(account))
             fbUserFirstName = account.givenName.toString()
             fbUserLastName = account.familyName.toString()
             fbToken = account.id.toString()
@@ -355,6 +352,5 @@ class WelcomeFragment : Fragment() {
             getHeaderMap("", false),
             Gson().toJson(parameter)
         )
-
     }
 }
