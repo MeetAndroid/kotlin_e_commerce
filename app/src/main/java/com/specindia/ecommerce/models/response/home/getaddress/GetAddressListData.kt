@@ -9,7 +9,7 @@ data class GetAddressListData(
     @SerializedName("createdAt")
     val createdAt: String,
     @SerializedName("firstLine")
-    val firstLine: String,
+    val firstLine: String = "",
     @SerializedName("id")
     val id: Int,
     @SerializedName("lang")
@@ -19,11 +19,11 @@ data class GetAddressListData(
     @SerializedName("primary")
     val primary: Boolean,
     @SerializedName("secondLine")
-    val secondLine: String,
+    val secondLine: String="",
     @SerializedName("thirdLine")
-    val thirdLine: String,
+    val thirdLine: String="",
     @SerializedName("updatedAt")
     val updatedAt: String,
     @SerializedName("userId")
-    val userId: Int
+    val userId: Int,
 )

@@ -123,6 +123,7 @@ class ProductListAdapter(
     ) {
         MaterialAlertDialogBuilder(activity)
             .setTitle(activity.getString(R.string.app_name))
+            .setCancelable(false)
             .setMessage(activity.getString(R.string.msg_confirm_change_cart_item))
             .setPositiveButton(activity.getString(R.string.ok)) { _, _ ->
 

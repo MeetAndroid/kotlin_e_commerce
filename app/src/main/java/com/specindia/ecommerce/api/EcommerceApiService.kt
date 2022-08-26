@@ -10,7 +10,7 @@ import com.specindia.ecommerce.models.response.home.createOrder.CreateOrderRespo
 import com.specindia.ecommerce.models.response.home.getaddress.GetAddressListResponse
 import com.specindia.ecommerce.models.response.home.order.OrderDetailsResponse
 import com.specindia.ecommerce.models.response.home.orderlist.OrderListResponse
-import com.specindia.ecommerce.models.response.home.primaryAddress.PrimaryAddressResponse
+import com.specindia.ecommerce.models.response.home.common.CommonResponse
 import com.specindia.ecommerce.models.response.home.product.AllRestaurant
 import com.specindia.ecommerce.models.response.home.product.ViewAllData
 import com.specindia.ecommerce.models.response.home.productsbyrestaurant.ProductsByRestaurantResponse
@@ -38,6 +38,7 @@ import com.specindia.ecommerce.util.Constants.Companion.GET_RESTAURANT_DETAILS
 import com.specindia.ecommerce.util.Constants.Companion.LOGIN
 import com.specindia.ecommerce.util.Constants.Companion.ORDER_END_POINT
 import com.specindia.ecommerce.util.Constants.Companion.PRODUCT_END_POINT
+import com.specindia.ecommerce.util.Constants.Companion.REMOVE_ADDRESS
 import com.specindia.ecommerce.util.Constants.Companion.REMOVE_FROM_CART
 import com.specindia.ecommerce.util.Constants.Companion.SEARCH_FOOD
 import com.specindia.ecommerce.util.Constants.Companion.SET_PRIMARY_ADDRESS
@@ -162,7 +163,13 @@ interface EcommerceApiService {
     @POST("""$ADDRESS_END_POINT$SET_PRIMARY_ADDRESS""")
     suspend fun setPrimaryAddress(
         @HeaderMap headers: Map<String, String>,
-        @Path("id") id: Int,
-    ): Response<PrimaryAddressResponse>
+        @Body parameters: String,
+    ): Response<CommonResponse>
+
+    @POST("""$ADDRESS_END_POINT$REMOVE_ADDRESS""")
+    suspend fun removeAddress(
+        @HeaderMap headers: Map<String, String>,
+        @Body parameters: String,
+    ): Response<CommonResponse>
 
 }

@@ -2,9 +2,7 @@ package com.specindia.ecommerce.ui.fragments
 
 import android.Manifest
 import android.annotation.SuppressLint
-import android.app.Activity
 import android.content.Context
-import android.content.Intent
 import android.content.IntentSender.SendIntentException
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
@@ -20,7 +18,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.annotation.Nullable
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -51,6 +48,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.io.IOException
 import java.util.*
 
 
@@ -273,6 +271,8 @@ open class SetLocationFragment : Fragment(), OnMapReadyCallback {
                                     getAndSetAddressOnTextView(GeoPoint(latitude, longitude),
                                         marker)
                                 }
+                            } catch (e: IOException) {
+                                e.printStackTrace()
                             } catch (e: Exception) {
                                 e.printStackTrace()
                             }

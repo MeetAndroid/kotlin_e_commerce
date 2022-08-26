@@ -10,6 +10,7 @@ import com.specindia.ecommerce.util.Constants.Companion.KEY_FB_ACCESS_TOKEN
 import com.specindia.ecommerce.util.Constants.Companion.KEY_IS_FIRST_TIME
 import com.specindia.ecommerce.util.Constants.Companion.KEY_IS_USER_LOGGED_IN
 import com.specindia.ecommerce.util.Constants.Companion.KEY_LOGGED_IN_USER_DATA
+import com.specindia.ecommerce.util.Constants.Companion.KEY_PRIMARY_ADDRESS_INFO
 import com.specindia.ecommerce.util.Constants.Companion.KEY_USER_EMAIL
 import com.specindia.ecommerce.util.Constants.Companion.KEY_USER_FIRST_NAME
 import com.specindia.ecommerce.util.Constants.Companion.KEY_USER_FULL_NAME
@@ -156,6 +157,17 @@ class DataViewModel @Inject constructor(
 
     fun getCartItemCount(): Int? = runBlocking {
         repository.getInt(KEY_CART_ITEM_COUNT)
+    }
+
+
+    fun savePrimaryAddressInfo(value: String) {
+        viewModelScope.launch {
+            repository.putString(KEY_PRIMARY_ADDRESS_INFO, value)
+        }
+    }
+
+    fun getPrimaryAddressInfo(): String? = runBlocking {
+        repository.getString(KEY_PRIMARY_ADDRESS_INFO)
     }
 }
 

@@ -156,10 +156,17 @@
     <string name="add_address">Add Address</string>
     <string name="save">Save</string>
     <string name="no_address_found_add_new_address">No Address Found. Please click to add New one</string>
+    <string name="primary_address_changed">Your primary address changed successfully!</string>
+    <string name="undo">Undo</string>
 
     <string-array name="address_type">
         <item>Home</item>
         <item>Work</item>
         <item>Other</item>
     </string-array>
+
+    <string name="msg_confirm_delete_address">Are you sure you want to delete the Address?</string>
+    <string name="add_primary_address">Please add primary address</string>
+    <string name="msg_can_not_delete_primary_address">You can\'t remove primary address</string>
+
 </resources>

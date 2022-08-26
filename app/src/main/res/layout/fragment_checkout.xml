@@ -80,6 +80,7 @@
                             android:maxLines="3"
                             android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                             android:textColor="@color/black"
+                            android:text="@string/add_primary_address"
                             tools:text="NH 8C, Sarkhej - Gandhinagar Hwy, opp. Gurudwara, Bodakdev, Ahmedabad, Gujarat 380054" />
 
                         <com.google.android.material.textview.MaterialTextView

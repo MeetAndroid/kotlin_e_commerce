@@ -10,11 +10,14 @@ import androidx.navigation.findNavController
 import androidx.navigation.fragment.navArgs
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import com.specindia.ecommerce.R
 import com.specindia.ecommerce.api.network.NetworkResult
 import com.specindia.ecommerce.databinding.FragmentCheckoutBinding
+import com.specindia.ecommerce.models.FavRestaurants
 import com.specindia.ecommerce.models.request.Parameters
 import com.specindia.ecommerce.models.response.AuthResponseData
+import com.specindia.ecommerce.models.response.home.getaddress.GetAddressListData
 import com.specindia.ecommerce.ui.activity.HomeActivity
 import com.specindia.ecommerce.util.getHeaderMap
 import com.specindia.ecommerce.util.showProgressDialog
@@ -62,10 +65,23 @@ class CheckOutFragment : Fragment() {
     }
 
     private fun setUpData() {
+        val primaryAddressInfo =
+            (activity as HomeActivity).dataStoreViewModel.getPrimaryAddressInfo()
+        // val address = Gson().fromJson(primaryAddressInfo, GetAddressListData::class.java)
+        val addressType = object : TypeToken<GetAddressListData>() {}.type
+        val address = Gson().fromJson<GetAddressListData>(primaryAddressInfo, addressType)
+
+        var fullAddress = ""
+        if (address == null) {
+            binding.tvChange.text = getString(R.string.add)
+        } else {
+            fullAddress = address.firstLine.plus(address.secondLine).plus(address.thirdLine)
+            binding.tvChange.text = getString(R.string.change)
+            binding.tvAddress.text = fullAddress
+        }
+
+
         binding.apply {
-            tvAddress.text =
-                "NH 8C, Sarkhej - Gandhinagar Hwy, opp. Gurudwara, Bodakdev, Ahmedabad, Gujarat 380054"
-            ctvPayPal.text = "testUser@paypal.com"
             tvSubTotal.text = getString(R.string.rs, subTotal.toString())
             tvDeliveryCost.text = getString(R.string.rs, deliveryCost.toString())
             tvDiscount.text = "- Rs. 4"

@@ -15,7 +15,7 @@ import com.specindia.ecommerce.models.response.home.createOrder.CreateOrderRespo
 import com.specindia.ecommerce.models.response.home.getaddress.GetAddressListResponse
 import com.specindia.ecommerce.models.response.home.order.OrderDetailsResponse
 import com.specindia.ecommerce.models.response.home.orderlist.OrderListResponse
-import com.specindia.ecommerce.models.response.home.primaryAddress.PrimaryAddressResponse
+import com.specindia.ecommerce.models.response.home.common.CommonResponse
 import com.specindia.ecommerce.models.response.home.product.AllRestaurant
 import com.specindia.ecommerce.models.response.home.product.ViewAllData
 import com.specindia.ecommerce.models.response.home.productsbyrestaurant.ProductsByRestaurantResponse
@@ -67,7 +67,9 @@ HomeViewModel @Inject constructor(
     private val _addOrUpdateAddressResponse =
         MutableLiveData<NetworkResult<AddOrUpdateAddressResponse>>()
 
-    private val _primaryAddressResponse = MutableLiveData<NetworkResult<PrimaryAddressResponse>>()
+    private val _primaryAddressResponse = MutableLiveData<NetworkResult<CommonResponse>>()
+
+    private val _removeAddressResponse = MutableLiveData<NetworkResult<CommonResponse>>()
 
     // Live Data
     val dashboardListResponse: LiveData<NetworkResult<DashboardListResponse>>
@@ -115,8 +117,11 @@ HomeViewModel @Inject constructor(
     val getAddressListResponse: LiveData<NetworkResult<GetAddressListResponse>>
         get() = _getAddressList
 
-    val setPrimaryAddressResponse: LiveData<NetworkResult<PrimaryAddressResponse>>
+    val setPrimaryAddressResponse: LiveData<NetworkResult<CommonResponse>>
         get() = _primaryAddressResponse
+
+    val removeAddressResponse: LiveData<NetworkResult<CommonResponse>>
+        get() = _removeAddressResponse
 
 
     // Call dashboard list api
@@ -265,11 +270,20 @@ HomeViewModel @Inject constructor(
         }
 
     // Call Primary Address api
-    fun setPrimaryAddress(headerMap: Map<String, String>, id: Int) =
+    fun setPrimaryAddress(headerMap: Map<String, String>, parameters: String) =
         viewModelScope.launch {
             _primaryAddressResponse.postValue(NetworkResult.Loading())
-            repository.setPrimaryAddress(headerMap, id).collect { values ->
+            repository.setPrimaryAddress(headerMap, parameters).collect { values ->
                 _primaryAddressResponse.value = values
+            }
+        }
+
+    // Call Remove Address api
+    fun removeAddress(headerMap: Map<String, String>, parameters: String) =
+        viewModelScope.launch {
+            _removeAddressResponse.postValue(NetworkResult.Loading())
+            repository.removeAddress(headerMap, parameters).collect { values ->
+                _removeAddressResponse.value = values
             }
         }
 }

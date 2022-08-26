@@ -59,8 +59,12 @@ class EcommerceRemoteDataSource @Inject constructor(private val apiService: Ecom
     suspend fun getAddressList(headerMap: Map<String, String>) =
         apiService.getAddressList(headerMap)
 
-    suspend fun setPrimaryAddress(headerMap: Map<String, String>, id: Int) =
-        apiService.setPrimaryAddress(headerMap,id)
+    suspend fun setPrimaryAddress(headerMap: Map<String, String>, parameters: String) =
+        apiService.setPrimaryAddress(headerMap,parameters)
+
+
+    suspend fun removeAddress(headerMap: Map<String, String>, parameters: String) =
+        apiService.removeAddress(headerMap,parameters)
 
 }
 

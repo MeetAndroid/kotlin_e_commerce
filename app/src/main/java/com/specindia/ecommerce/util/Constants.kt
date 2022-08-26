@@ -62,13 +62,14 @@ class Constants {
         const val ADD_OR_UPDATE_ADDRESS = "addOrUpdateAddress"
         const val GET_ADDRESS = "getAddress"
         const val SET_PRIMARY_ADDRESS = "setPrimaryAddress"
-
+        const val REMOVE_ADDRESS = "removeAddress"
 
         // Data Store Constants
         const val KEY_IS_FIRST_TIME = "isFirstTime"
         const val KEY_IS_USER_LOGGED_IN = "isUserLoggedIn"
         const val KEY_EXISTING_RESTAURANT_ID_OF_CART = "existingRestaurantIdOfCart"
         const val KEY_CART_ITEM_COUNT = "cartItemCount"
+        const val KEY_PRIMARY_ADDRESS_INFO = "primaryAddressInfo"
 
         // FB Fields
         const val KEY_FIELDS = "fields"
