@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.gson.Gson
 import com.specindia.ecommerce.R
@@ -120,12 +119,13 @@ class OrderHistoryFragment : Fragment(), OrderHistoryAdapter.OnOrderHistoryItemC
                     customProgressDialog.dismiss()
                     response.data?.let { it ->
                         with(binding) {
-                            orderList = ((it.data.toList() as ArrayList<OrderData>?)!!)
+                            orderList.clear()
+                            orderList.addAll(it.data)
                             orderHistoryAdapter =
                                 OrderHistoryAdapter(orderList, this@OrderHistoryFragment)
                             rvOrderHistory.adapter = orderHistoryAdapter
 
-                            if (orderList?.isNotEmpty() == true) {
+                            if (orderList.isNotEmpty()) {
                                 srOrderHistory.visible(true)
                                 noDataFound.clNoDataFound.visible(false)
                             } else {
