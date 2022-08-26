@@ -296,7 +296,7 @@ class CartListFragment : Fragment(), CartListAdapter.OnCartItemClickListener {
     }
 
 
-    // ============== Observe Products By Restaurant Response
+    // ============== Observe Products Response
     private fun observeAddUpdateCartResponse() {
         (activity as HomeActivity).homeViewModel.addUpdateToCart.observe(
             viewLifecycleOwner
@@ -304,13 +304,13 @@ class CartListFragment : Fragment(), CartListAdapter.OnCartItemClickListener {
 
             when (response) {
                 is NetworkResult.Success -> {
-                    customProgressDialog.hide()
+                    customProgressDialog.dismiss()
                     response.data?.let {
                         callGetCartApi()
                     }
                 }
                 is NetworkResult.Error -> {
-                    customProgressDialog.hide()
+                    customProgressDialog.dismiss()
                     showDialog(response.message.toString())
                 }
                 is NetworkResult.Loading -> {
@@ -328,13 +328,13 @@ class CartListFragment : Fragment(), CartListAdapter.OnCartItemClickListener {
 
             when (response) {
                 is NetworkResult.Success -> {
-                    customProgressDialog.hide()
+                    customProgressDialog.dismiss()
                     response.data?.let {
                         callGetCartApi()
                     }
                 }
                 is NetworkResult.Error -> {
-                    customProgressDialog.hide()
+                    customProgressDialog.dismiss()
                     showDialog(response.message.toString())
                 }
                 is NetworkResult.Loading -> {

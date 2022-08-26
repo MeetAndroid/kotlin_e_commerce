@@ -7,9 +7,10 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import com.google.android.material.badge.ExperimentalBadgeUtils
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.specindia.ecommerce.R
 import com.specindia.ecommerce.databinding.FragmentMoreBinding
 import com.specindia.ecommerce.ui.activity.HomeActivity
-import com.specindia.ecommerce.util.Constants
 import com.specindia.ecommerce.util.logout
 import com.specindia.ecommerce.util.updateCartCountOnUI
 import com.specindia.ecommerce.util.visible
@@ -71,7 +72,21 @@ class MoreFragment : Fragment() {
 
     private fun setUpButtonClick() {
         binding.clLogout.setOnClickListener {
-            logout()
+            showLogoutDialog(activity as HomeActivity)
         }
+    }
+
+    private fun showLogoutDialog(activity: HomeActivity) {
+        MaterialAlertDialogBuilder(activity)
+            .setTitle(activity.getString(R.string.app_name))
+            .setCancelable(false)
+            .setMessage(activity.getString(R.string.msg_confirm_logout))
+            .setPositiveButton(activity.getString(R.string.ok)) { _, _ ->
+                logout()
+            }
+            .setNegativeButton(activity.getString(R.string.cancel)) { _, _ ->
+
+            }
+            .show()
     }
 }

@@ -14,13 +14,13 @@ import com.google.gson.reflect.TypeToken
 import com.specindia.ecommerce.R
 import com.specindia.ecommerce.api.network.NetworkResult
 import com.specindia.ecommerce.databinding.FragmentCheckoutBinding
-import com.specindia.ecommerce.models.FavRestaurants
 import com.specindia.ecommerce.models.request.Parameters
 import com.specindia.ecommerce.models.response.AuthResponseData
 import com.specindia.ecommerce.models.response.home.getaddress.GetAddressListData
 import com.specindia.ecommerce.ui.activity.HomeActivity
 import com.specindia.ecommerce.util.getHeaderMap
 import com.specindia.ecommerce.util.showProgressDialog
+import com.specindia.ecommerce.util.showShortToast
 import com.specindia.ecommerce.util.visible
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -35,6 +35,7 @@ class CheckOutFragment : Fragment() {
     private var subTotal: Int = 0
     private var deliveryCost: Int = 0
     private var restaurantId: Int = 0
+    private var addressId: Int = 0
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -67,7 +68,7 @@ class CheckOutFragment : Fragment() {
     private fun setUpData() {
         val primaryAddressInfo =
             (activity as HomeActivity).dataStoreViewModel.getPrimaryAddressInfo()
-        // val address = Gson().fromJson(primaryAddressInfo, GetAddressListData::class.java)
+
         val addressType = object : TypeToken<GetAddressListData>() {}.type
         val address = Gson().fromJson<GetAddressListData>(primaryAddressInfo, addressType)
 
@@ -78,6 +79,7 @@ class CheckOutFragment : Fragment() {
             fullAddress = address.firstLine.plus(address.secondLine).plus(address.thirdLine)
             binding.tvChange.text = getString(R.string.change)
             binding.tvAddress.text = fullAddress
+            addressId = address.id
         }
 
 
@@ -117,8 +119,14 @@ class CheckOutFragment : Fragment() {
 
     private fun setUpButtonClick() {
         binding.btnSendOrder.setOnClickListener {
-            callCreateOrderApi()
-            observeCreateOrderResponse(it)
+
+            if (addressId != 0) {
+                callCreateOrderApi()
+                observeCreateOrderResponse(it)
+            } else {
+                (activity as HomeActivity).showShortToast(getString(R.string.add_primary_address))
+            }
+
         }
         binding.tvChange.setOnClickListener {
             it.findNavController()
@@ -137,7 +145,7 @@ class CheckOutFragment : Fragment() {
     private fun callCreateOrderApi() {
         customProgressDialog.show()
         val parameter = Parameters(
-            addressId = "1",
+            addressId = addressId.toString(),
             extraCharges = deliveryCost.toString(),
             restaurantId = restaurantId,
             subtotal = subTotal.toString(),
