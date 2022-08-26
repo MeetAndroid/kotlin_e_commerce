@@ -47,7 +47,52 @@
             android:name="restaurant_id"
             android:defaultValue="0"
             app:argType="integer" />
-
+        <action
+            android:id="@+id/action_checkOutFragment_to_shippingAddressFragment"
+            app:destination="@id/shippingAddressFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/shippingAddressFragment"
+        android:name="com.specindia.ecommerce.ui.fragments.ShippingAddressFragment"
+        android:label="Shipping Address"
+        tools:layout="@layout/fragment_shipping_address">
+        <action
+            android:id="@+id/action_shippingAddressFragment_to_setLocationFragment"
+            app:destination="@id/setLocationFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/setLocationFragment"
+        android:name="com.specindia.ecommerce.ui.fragments.SetLocationFragment"
+        android:label="Add New Location"
+        tools:layout="@layout/fragment_set_location">
+        <action
+            android:id="@+id/action_setLocationFragment_to_addAddressFragment"
+            app:destination="@id/addAddressFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/addAddressFragment"
+        android:name="com.specindia.ecommerce.ui.fragments.AddAddressFragment"
+        android:label="Add Address"
+        tools:layout="@layout/fragment_add_address">
 
+        <argument
+            android:name="full_address"
+            app:argType="string"
+            android:defaultValue="" />
+
+        <argument
+            android:name="latitude"
+            app:argType="string"
+            android:defaultValue="0.0" />
+
+        <argument
+            android:name="longitude"
+            app:argType="string"
+            android:defaultValue="0.0" />
+        <action
+            android:id="@+id/action_addAddressFragment_to_shippingAddressFragment"
+            app:destination="@id/shippingAddressFragment"
+            app:popUpTo="@id/shippingAddressFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
 </navigation>

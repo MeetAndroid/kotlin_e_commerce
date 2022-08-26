@@ -1,11 +1,11 @@
 package com.specindia.ecommerce.ui.fragments
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
-import androidx.core.view.get
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.navArgs
@@ -50,6 +50,7 @@ class AddAddressFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
+
         binding = FragmentAddAddressBinding.inflate(layoutInflater)
         return binding.root
     }
@@ -57,6 +58,10 @@ class AddAddressFragment : Fragment() {
     @ExperimentalBadgeUtils
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        Log.d("AddAddress", "onViewCreated")
+        val userData = (activity as HomeActivity).dataStoreViewModel.getLoggedInUserData()
+        data = Gson().fromJson(userData, AuthResponseData::class.java)
+
         fullAddress = args.fullAddress
         latitude = args.latitude
         longitude = args.longitude
@@ -66,8 +71,7 @@ class AddAddressFragment : Fragment() {
         setUpButtonClick()
         setUpRecyclerView()
         setUpProgressDialog()
-        val userData = (activity as HomeActivity).dataStoreViewModel.getLoggedInUserData()
-        data = Gson().fromJson(userData, AuthResponseData::class.java)
+
     }
 
     private fun setUpHeader() {
@@ -161,7 +165,15 @@ class AddAddressFragment : Fragment() {
                 is NetworkResult.Success -> {
                     customProgressDialog.dismiss()
                     response.data?.let {
-                        showDialog("Address Added Successfully!", true, view)
+
+                        if (response.data.status == "success") {
+                            showDialog(getString(R.string.msg_address_added_successesfully),
+                                true,
+                                view)
+                        } else {
+                            showDialog(response.data.message, false, view)
+                        }
+
                     }
                 }
                 is NetworkResult.Error -> {
@@ -181,7 +193,8 @@ class AddAddressFragment : Fragment() {
             .setMessage(message)
             .setPositiveButton(getString(R.string.ok)) { _, _ ->
                 if (isGoBack) {
-                    view.findNavController().popBackStack()
+                    view.findNavController()
+                        .navigate(AddAddressFragmentDirections.actionAddAddressFragmentToShippingAddressFragment())
                 }
             }
             .show()

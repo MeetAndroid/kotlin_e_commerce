@@ -160,5 +160,10 @@
             android:name="longitude"
             app:argType="string"
             android:defaultValue="0.0" />
+        <action
+            android:id="@+id/action_addAddressFragment_to_shippingAddressFragment"
+            app:destination="@id/shippingAddressFragment"
+            app:popUpTo="@id/shippingAddressFragment"
+            app:popUpToInclusive="true" />
     </fragment>
 </navigation>
