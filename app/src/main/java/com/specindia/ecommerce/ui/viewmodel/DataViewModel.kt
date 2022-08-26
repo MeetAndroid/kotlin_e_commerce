@@ -159,6 +159,10 @@ class DataViewModel @Inject constructor(
         repository.getInt(KEY_CART_ITEM_COUNT)
     }
 
+    suspend fun clearPreferences() {
+        repository.clearPreferences()
+    }
+
 
     fun savePrimaryAddressInfo(value: String) {
         viewModelScope.launch {

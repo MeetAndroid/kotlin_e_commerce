@@ -115,7 +115,7 @@ class LoginFragment : Fragment() {
             .setTitle(getString(R.string.app_name))
             .setMessage(message)
             .setPositiveButton(getString(R.string.ok)) { _, _ ->
-                clearFields(binding)
+//                clearFields(binding)
             }
             .show()
     }

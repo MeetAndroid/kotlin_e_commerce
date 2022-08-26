@@ -53,7 +53,6 @@ import java.util.*
 import java.util.regex.Matcher
 import java.util.regex.Pattern
 
-
 fun <A : Activity> Activity.startNewActivity(activity: Class<A>) {
     Intent(this, activity).also {
         it.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
@@ -367,7 +366,6 @@ fun setCartBadgeCount(activity: Activity, counter: Int, frameLayout: FrameLayout
         attachBadgeDrawable(badgeDrawable,
             view,
             frameLayout)
-
     }
 }
 

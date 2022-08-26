@@ -173,7 +173,7 @@ class WelcomeFragment : Fragment() {
                         fbUserLastName,
                         fbUserProfileUrl
                     )
-                    requireActivity().showShortToast("FB Login Successfully ...")
+                    requireActivity().showShortToast("Login Successfully ...")
                     goToHomeActivity()
 
                 }
