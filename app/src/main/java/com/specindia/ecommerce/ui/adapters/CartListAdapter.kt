@@ -61,15 +61,7 @@ class CartListAdapter(
 
     interface OnCartItemClickListener {
         fun onItemClick(data: GetCartData, position: Int)
-        fun onAddButtonClick(data: GetCartData, position: Int)
-        fun onAddProductButtonClick(
-            data: GetCartData,
-            position: Int,
-        )
-
-        fun onRemoveProductButtonClick(
-            data: GetCartData,
-            position: Int,
-        )
+        fun onAddProductButtonClick(data: GetCartData, position: Int)
+        fun onRemoveProductButtonClick(data: GetCartData, position: Int)
     }
 }
