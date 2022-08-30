@@ -37,6 +37,7 @@ import com.google.android.gms.maps.model.*
 import com.google.android.material.badge.ExperimentalBadgeUtils
 import com.google.firebase.firestore.GeoPoint
 import com.google.gson.Gson
+import com.specindia.ecommerce.R
 import com.specindia.ecommerce.databinding.FragmentSetLocationBinding
 import com.specindia.ecommerce.models.response.AuthResponseData
 import com.specindia.ecommerce.ui.activity.HomeActivity
@@ -178,9 +179,6 @@ open class SetLocationFragment : Fragment(), OnMapReadyCallback {
             if (gpsStatus) {
                 Log.d("TAG", "Observer")
                 showDataOnMap()
-                binding.ivLocation.setImageResource(com.specindia.ecommerce.R.drawable.ic_location_enable)
-            } else {
-                binding.ivLocation.setImageResource(com.specindia.ecommerce.R.drawable.ic_location_disable)
             }
         }
     }
@@ -293,7 +291,7 @@ open class SetLocationFragment : Fragment(), OnMapReadyCallback {
                     }
                 }
             } else {
-                requireActivity().showShortToast("No current location found")
+                requireActivity().showShortToast(getString(R.string.msg_no_current_location_found))
                 Log.d("TAG", "No current location found")
             }
 
@@ -342,6 +340,12 @@ open class SetLocationFragment : Fragment(), OnMapReadyCallback {
         Log.d("TAG", "onResume")
         (activity as HomeActivity).isGpsON = isLocationEnabled(requireActivity())
         isPermissionON = checkPermissions()
+
+        if (isPermissionON) {
+            binding.ivLocation.setImageResource(com.specindia.ecommerce.R.drawable.ic_location_enable)
+        } else {
+            binding.ivLocation.setImageResource(com.specindia.ecommerce.R.drawable.ic_location_disable)
+        }
         Log.d("TAG", "GPS status ${(activity as HomeActivity).isGpsON}")
         Log.d("TAG", "Permission status $isPermissionON")
 
@@ -420,7 +424,7 @@ open class SetLocationFragment : Fragment(), OnMapReadyCallback {
     private fun showLocationPermissionDialogOnDenied(context: Context) {
         AlertDialog.Builder(context)
             .setTitle(context.getString(com.specindia.ecommerce.R.string.app_name))
-            .setMessage("Enable location permission to set the Shipping Address")
+            .setMessage(getString(R.string.msg_enable_location_permission_to_set_the_shipping_address))
             .setCancelable(false)
             .setPositiveButton(context.getString(com.specindia.ecommerce.R.string.ok)) { _, _ ->
                 val intent = Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS)
