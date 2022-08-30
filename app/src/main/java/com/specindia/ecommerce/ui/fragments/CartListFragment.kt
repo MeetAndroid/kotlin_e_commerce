@@ -65,7 +65,6 @@ class CartListFragment : Fragment(), CartListAdapter.OnCartItemClickListener {
         val userData = (activity as HomeActivity).dataStoreViewModel.getLoggedInUserData()
         user = Gson().fromJson(userData, AuthResponseData::class.java)
 
-
         callGetCartApi()
         observeGetCartResponse()
         observeAddUpdateCartResponse()
@@ -294,7 +293,6 @@ class CartListFragment : Fragment(), CartListAdapter.OnCartItemClickListener {
         }
 
     }
-
 
     // ============== Observe Products Response
     private fun observeAddUpdateCartResponse() {

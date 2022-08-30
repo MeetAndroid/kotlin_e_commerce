@@ -84,7 +84,6 @@ class OrderHistoryFragment : Fragment(), OrderHistoryAdapter.OnOrderHistoryItemC
         }
     }
 
-
     // ============== Call Order List api
     private fun callOrderListApi() {
         customProgressDialog.show()
@@ -100,7 +99,6 @@ class OrderHistoryFragment : Fragment(), OrderHistoryAdapter.OnOrderHistoryItemC
             ),
             Gson().toJson(parameter)
         )
-
     }
 
     private fun setUpProgressDialog() {
