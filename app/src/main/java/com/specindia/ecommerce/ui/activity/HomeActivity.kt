@@ -1,24 +1,34 @@
 package com.specindia.ecommerce.ui.activity
 
+import android.content.Intent
+import android.content.IntentSender
 import android.os.Bundle
+import android.util.Log
+import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.annotation.Nullable
 import androidx.appcompat.app.AppCompatActivity
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
+import androidx.navigation.fragment.FragmentNavigator
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupWithNavController
+import com.google.android.gms.common.api.ApiException
+import com.google.android.gms.common.api.ResolvableApiException
+import com.google.android.gms.location.LocationServices
+import com.google.android.gms.location.LocationSettingsRequest
+import com.google.android.gms.location.LocationSettingsStatusCodes
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.specindia.ecommerce.R
 import com.specindia.ecommerce.databinding.ActivityHomeBinding
 import com.specindia.ecommerce.models.FavRestaurants
+import com.specindia.ecommerce.ui.fragments.SetLocationFragment
 import com.specindia.ecommerce.ui.viewmodel.DataViewModel
 import com.specindia.ecommerce.ui.viewmodel.HomeViewModel
-import com.specindia.ecommerce.util.HideListenableBottomAppBarBehavior
-import com.specindia.ecommerce.util.logoutFromFacebook
-import com.specindia.ecommerce.util.startNewActivity
+import com.specindia.ecommerce.util.*
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -31,6 +41,7 @@ class HomeActivity : AppCompatActivity() {
 
     val dataStoreViewModel by viewModels<DataViewModel>()
     val homeViewModel by viewModels<HomeViewModel>()
+    var isGpsON: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -85,4 +96,89 @@ class HomeActivity : AppCompatActivity() {
             }
         }
     }
+
+    // ================= location related code
+
+    fun enableGPS() {
+
+        val builder: LocationSettingsRequest.Builder = LocationSettingsRequest.Builder()
+            .addLocationRequest(PermissionUtils.locationRequest)
+        builder.setAlwaysShow(true)
+
+        val result = LocationServices.getSettingsClient(
+            this
+        )
+            .checkLocationSettings(builder.build())
+
+        result.addOnCompleteListener { task ->
+            try {
+                val response = task.getResult(ApiException::class.java)
+                Log.d("TAG", "addOnCompleteListener: $response")
+                isGpsON = true
+                Toast.makeText(
+                    this,
+                    "GPS is already turned on",
+                    Toast.LENGTH_SHORT
+                )
+                    .show()
+            } catch (e: ApiException) {
+                when (e.statusCode) {
+                    LocationSettingsStatusCodes.RESOLUTION_REQUIRED -> try {
+                        Log.d("TAG", "RESOLUTION_REQUIRED")
+
+                        val resolvableApiException = e as ResolvableApiException
+                        resolvableApiException.startResolutionForResult(
+                            this,
+                            Constants.REQUEST_CHECK_SETTINGS
+                        )
+                    } catch (ex: IntentSender.SendIntentException) {
+                        ex.printStackTrace()
+                    }
+                    LocationSettingsStatusCodes.SETTINGS_CHANGE_UNAVAILABLE -> {
+                        Log.d("TAG", "SETTINGS_CHANGE_UNAVAILABLE: No location")
+                        Toast.makeText(
+                            this,
+                            "Device does not have location",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                }
+            }
+        }
+
+    }
+
+    // onActivityResult deprecated. Solution is registerForActivityResult
+    override fun onActivityResult(requestCode: Int, resultCode: Int, @Nullable data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == Constants.REQUEST_CHECK_SETTINGS) {
+
+            when (resultCode) {
+
+                RESULT_OK -> {
+                    Log.d("TAG", "RESULT_OK: GPS ON")
+                    this.showShortToast("RESULT_OK GPS is turned on")
+                    isGpsON = true
+
+                    if ((this.navController.currentDestination as FragmentNavigator.Destination).className == SetLocationFragment::class.java.canonicalName
+                    ) {
+                        Log.d("TAG", "CheckStatus In Home Activity OK")
+                        homeViewModel.setGpsStatus(true)
+                    }
+                }
+                RESULT_CANCELED -> {
+                    this.showShortToast("RESULT_CANCELED: GPS OFF")
+                    Log.d("TAG", "RESULT_CANCELED: GPS OFF")
+                    isGpsON = false
+
+                    if ((this.navController.currentDestination as FragmentNavigator.Destination).className == SetLocationFragment::class.java.canonicalName
+                    ) {
+                        Log.d("TAG", "CheckStatus In Home Activity OK")
+                        homeViewModel.setGpsStatus(false)
+                    }
+                }
+            }
+        }
+    }
+
 }

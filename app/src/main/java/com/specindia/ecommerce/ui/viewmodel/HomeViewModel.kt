@@ -1,5 +1,6 @@
 package com.specindia.ecommerce.ui.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -11,11 +12,11 @@ import com.specindia.ecommerce.models.response.cart.removeFromCart.RemoveFromCar
 import com.specindia.ecommerce.models.response.home.DashboardListResponse
 import com.specindia.ecommerce.models.response.home.SearchResponse
 import com.specindia.ecommerce.models.response.home.address.AddOrUpdateAddressResponse
+import com.specindia.ecommerce.models.response.home.common.CommonResponse
 import com.specindia.ecommerce.models.response.home.createOrder.CreateOrderResponse
 import com.specindia.ecommerce.models.response.home.getaddress.GetAddressListResponse
 import com.specindia.ecommerce.models.response.home.order.OrderDetailsResponse
 import com.specindia.ecommerce.models.response.home.orderlist.OrderListResponse
-import com.specindia.ecommerce.models.response.home.common.CommonResponse
 import com.specindia.ecommerce.models.response.home.product.AllRestaurant
 import com.specindia.ecommerce.models.response.home.product.ViewAllData
 import com.specindia.ecommerce.models.response.home.productsbyrestaurant.ProductsByRestaurantResponse
@@ -33,6 +34,10 @@ class
 HomeViewModel @Inject constructor(
     private val repository: EcommerceRepository,
 ) : ViewModel() {
+
+    private val _gpsStatus = MutableLiveData<Boolean>()
+    val gpsStatus: LiveData<Boolean>
+        get() = _gpsStatus
 
     // Mutable Live Data
     private val _dashboardListResponse = MutableLiveData<NetworkResult<DashboardListResponse>>()
@@ -286,5 +291,13 @@ HomeViewModel @Inject constructor(
                 _removeAddressResponse.value = values
             }
         }
+
+    fun setGpsStatus(status: Boolean) {
+        Log.d("TAG","in VM")
+        viewModelScope.launch {
+            _gpsStatus.value = status
+        }
+
+    }
 }
 

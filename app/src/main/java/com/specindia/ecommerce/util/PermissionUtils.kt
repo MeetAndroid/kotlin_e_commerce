@@ -2,21 +2,13 @@ package com.specindia.ecommerce.util
 
 import android.Manifest
 import android.content.Context
-import android.content.Intent
 import android.content.pm.PackageManager
-import android.location.Location
 import android.location.LocationManager
-import android.provider.Settings
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import com.google.android.gms.location.LocationCallback
 import com.google.android.gms.location.LocationRequest
-import com.google.android.gms.location.LocationResult
 import com.google.android.gms.location.Priority
-import com.specindia.ecommerce.R
-import java.util.concurrent.TimeUnit
 
 object PermissionUtils {
     fun askAccessFineLocationPermission(activity: AppCompatActivity, requestId: Int) {
@@ -38,10 +30,15 @@ object PermissionUtils {
     // getting location every 5 secs, for something very accurate
 
     val locationRequest = LocationRequest.create().apply {
-        interval = TimeUnit.SECONDS.toMillis(60)
-        fastestInterval = (TimeUnit.SECONDS.toMillis(30))
+//        interval = TimeUnit.SECONDS.toSeconds(10)
+//        fastestInterval = (TimeUnit.SECONDS.toSeconds(5))
+//        priority = Priority.PRIORITY_HIGH_ACCURACY
+//        maxWaitTime = TimeUnit.MINUTES.toMillis(2)
+
+        interval = 10000
+        fastestInterval = 5000
         priority = Priority.PRIORITY_HIGH_ACCURACY
-        maxWaitTime =  TimeUnit.MINUTES.toMillis(2)
+
     }
 
     fun isLocationEnabled(context: Context): Boolean {
