@@ -114,13 +114,17 @@ class HomeActivity : AppCompatActivity() {
             try {
                 val response = task.getResult(ApiException::class.java)
                 Log.d("TAG", "addOnCompleteListener: $response")
-                isGpsON = true
-                Toast.makeText(
-                    this,
-                    "GPS is already turned on",
-                    Toast.LENGTH_SHORT
-                )
-                    .show()
+                if (response.locationSettingsStates?.isLocationPresent == true) {
+                    isGpsON = true
+                    homeViewModel.setGpsStatus(true)
+                    Toast.makeText(
+                        this,
+                        "GPS is already turned on",
+                        Toast.LENGTH_SHORT
+                    )
+                        .show()
+                }
+
             } catch (e: ApiException) {
                 when (e.statusCode) {
                     LocationSettingsStatusCodes.RESOLUTION_REQUIRED -> try {
@@ -157,7 +161,6 @@ class HomeActivity : AppCompatActivity() {
 
                 RESULT_OK -> {
                     Log.d("TAG", "RESULT_OK: GPS ON")
-                    this.showShortToast("RESULT_OK GPS is turned on")
                     isGpsON = true
 
                     if ((this.navController.currentDestination as FragmentNavigator.Destination).className == SetLocationFragment::class.java.canonicalName
@@ -167,7 +170,6 @@ class HomeActivity : AppCompatActivity() {
                     }
                 }
                 RESULT_CANCELED -> {
-                    this.showShortToast("RESULT_CANCELED: GPS OFF")
                     Log.d("TAG", "RESULT_CANCELED: GPS OFF")
                     isGpsON = false
 

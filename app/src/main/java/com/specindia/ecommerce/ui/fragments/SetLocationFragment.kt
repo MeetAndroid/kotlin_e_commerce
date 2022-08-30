@@ -34,7 +34,6 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.MapView
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.model.*
-import com.google.android.gms.tasks.OnSuccessListener
 import com.google.android.material.badge.ExperimentalBadgeUtils
 import com.google.firebase.firestore.GeoPoint
 import com.google.gson.Gson
@@ -102,7 +101,7 @@ open class SetLocationFragment : Fragment(), OnMapReadyCallback {
             if (!(activity as HomeActivity).isGpsON) {
                 (activity as HomeActivity).enableGPS()
             } else {
-                requireActivity().showShortToast("All set")
+                showDataOnMap()
                 binding.ivLocation.setImageResource(com.specindia.ecommerce.R.drawable.ic_location_enable)
             }
         } else {
@@ -179,6 +178,9 @@ open class SetLocationFragment : Fragment(), OnMapReadyCallback {
             if (gpsStatus) {
                 Log.d("TAG", "Observer")
                 showDataOnMap()
+                binding.ivLocation.setImageResource(com.specindia.ecommerce.R.drawable.ic_location_enable)
+            } else {
+                binding.ivLocation.setImageResource(com.specindia.ecommerce.R.drawable.ic_location_disable)
             }
         }
     }
@@ -233,8 +235,6 @@ open class SetLocationFragment : Fragment(), OnMapReadyCallback {
 
     @SuppressLint("MissingPermission")
     private fun requestNewLocationData() {
-        mFusedLocationClient =
-            LocationServices.getFusedLocationProviderClient(requireActivity())
         mFusedLocationClient.requestLocationUpdates(
             locationRequest, mLocationCallback,
             Looper.getMainLooper()
@@ -245,52 +245,58 @@ open class SetLocationFragment : Fragment(), OnMapReadyCallback {
     fun showDataOnMap() {
 
         mFusedLocationClient.lastLocation.addOnCompleteListener(requireActivity()) { task ->
-            val location: Location? = task.result
-            if (location == null) {
-                Log.d("TAG", "Location Null")
-                requestNewLocationData()
-            } else {
-                Log.d("TAG", "Location Not Null")
-                currentLocation = LatLng(location.latitude, location.longitude)
-                Log.d("TAG", "update time ${System.currentTimeMillis()}")
-                Log.d("currentLocation", "currentLocation$currentLocation")
-                googleMap.clear()
-                if (isPermissionON) {
-                    //googleMap.isMyLocationEnabled = true
-                }
-                if (location.latitude != 0.0 && location.longitude != 0.0) {
-                    val marker: Marker? =
-                        googleMap.addMarker(MarkerOptions().position(currentLocation)
-                            .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED)))
-                    googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLocation,
-                        16F))
-
-                    googleMap.setOnCameraMoveListener {
-                        val midLatLng = googleMap.cameraPosition.target
-                        if (marker != null) {
-                            marker.position = midLatLng
-                            val nowLocation = marker.position
-                            Log.d("TAG", "now Location$nowLocation")
-
-                            latitude = nowLocation.latitude
-                            longitude = nowLocation.longitude
-                        }
+            if (task.isSuccessful) {
+                val location: Location? = task.result
+                if (location == null) {
+                    Log.d("TAG", "Location Null")
+                    requestNewLocationData()
+                } else {
+                    Log.d("TAG", "Location Not Null")
+                    currentLocation = LatLng(location.latitude, location.longitude)
+                    Log.d("TAG", "update time ${System.currentTimeMillis()}")
+                    Log.d("currentLocation", "currentLocation$currentLocation")
+                    googleMap.clear()
+                    if (isPermissionON) {
+                        //googleMap.isMyLocationEnabled = true
                     }
+                    if (location.latitude != 0.0 && location.longitude != 0.0) {
+                        val marker: Marker? =
+                            googleMap.addMarker(MarkerOptions().position(currentLocation)
+                                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED)))
+                        googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLocation,
+                            16F))
 
-                    googleMap.setOnCameraIdleListener {
-                        try {
-                            if (latitude != 0.0 && longitude != 0.0) {
-                                getAndSetAddressOnTextView(GeoPoint(latitude, longitude),
-                                    marker)
+                        googleMap.setOnCameraMoveListener {
+                            val midLatLng = googleMap.cameraPosition.target
+                            if (marker != null) {
+                                marker.position = midLatLng
+                                val nowLocation = marker.position
+                                Log.d("TAG", "now Location$nowLocation")
+
+                                latitude = nowLocation.latitude
+                                longitude = nowLocation.longitude
                             }
-                        } catch (e: IOException) {
-                            e.printStackTrace()
-                        } catch (e: Exception) {
-                            e.printStackTrace()
+                        }
+
+                        googleMap.setOnCameraIdleListener {
+                            try {
+                                if (latitude != 0.0 && longitude != 0.0) {
+                                    getAndSetAddressOnTextView(GeoPoint(latitude, longitude),
+                                        marker)
+                                }
+                            } catch (e: IOException) {
+                                e.printStackTrace()
+                            } catch (e: Exception) {
+                                e.printStackTrace()
+                            }
                         }
                     }
                 }
+            } else {
+                requireActivity().showShortToast("No current location found")
+                Log.d("TAG", "No current location found")
             }
+
         }
     }
 
@@ -309,7 +315,6 @@ open class SetLocationFragment : Fragment(), OnMapReadyCallback {
                 binding.ivLocation.setImageResource(com.specindia.ecommerce.R.drawable.ic_location_disable)
                 (activity as HomeActivity).enableGPS()
             } else {
-                requireActivity().showShortToast("All set")
                 showDataOnMap()
                 binding.ivLocation.setImageResource(com.specindia.ecommerce.R.drawable.ic_location_enable)
             }
@@ -323,7 +328,6 @@ open class SetLocationFragment : Fragment(), OnMapReadyCallback {
                     binding.ivLocation.setImageResource(com.specindia.ecommerce.R.drawable.ic_location_disable)
                     (activity as HomeActivity).enableGPS()
                 } else {
-                    requireActivity().showShortToast("All set")
                     showDataOnMap()
                 }
             } else {
@@ -410,8 +414,6 @@ open class SetLocationFragment : Fragment(), OnMapReadyCallback {
     var resultLauncher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == Activity.RESULT_OK) {
-                // There are no request codes
-                requireActivity().showShortToast("All set")
             }
         }
 
