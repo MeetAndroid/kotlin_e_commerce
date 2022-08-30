@@ -41,32 +41,6 @@
 
 
     <fragment
-        android:id="@+id/checkOutFragment"
-        android:name="com.specindia.ecommerce.ui.fragments.CheckOutFragment"
-        android:label="Check Out"
-        tools:layout="@layout/fragment_checkout">
-        <argument
-            android:name="total"
-            android:defaultValue="0"
-            app:argType="integer"/>
-
-        <argument
-            android:name="sub_total"
-            android:defaultValue="0"
-            app:argType="integer" />
-
-        <argument
-            android:name="extra_charges"
-            android:defaultValue="0"
-            app:argType="integer"/>
-
-        <argument
-            android:name="restaurant_id"
-            android:defaultValue="0"
-            app:argType="integer"/>
-    </fragment>
-
-    <fragment
         android:id="@+id/cartListFragment"
         android:name="com.specindia.ecommerce.ui.fragments.CartListFragment"
         android:label="Cart List Fragment"
@@ -77,4 +51,77 @@
 
     </fragment>
 
+    <fragment
+        android:id="@+id/checkOutFragment"
+        android:name="com.specindia.ecommerce.ui.fragments.CheckOutFragment"
+        android:label="Check Out"
+        tools:layout="@layout/fragment_checkout">
+        <argument
+            android:name="total"
+            android:defaultValue="0"
+            app:argType="integer" />
+
+        <argument
+            android:name="sub_total"
+            android:defaultValue="0"
+            app:argType="integer" />
+
+        <argument
+            android:name="extra_charges"
+            android:defaultValue="0"
+            app:argType="integer" />
+
+        <argument
+            android:name="restaurant_id"
+            android:defaultValue="0"
+            app:argType="integer" />
+        <action
+            android:id="@+id/action_checkOutFragment_to_shippingAddressFragment"
+            app:destination="@id/shippingAddressFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/shippingAddressFragment"
+        android:name="com.specindia.ecommerce.ui.fragments.ShippingAddressFragment"
+        android:label="Shipping Address"
+        tools:layout="@layout/fragment_shipping_address">
+        <action
+            android:id="@+id/action_shippingAddressFragment_to_setLocationFragment"
+            app:destination="@id/setLocationFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/setLocationFragment"
+        android:name="com.specindia.ecommerce.ui.fragments.SetLocationFragment"
+        android:label="Add New Location"
+        tools:layout="@layout/fragment_set_location">
+        <action
+            android:id="@+id/action_setLocationFragment_to_addAddressFragment"
+            app:destination="@id/addAddressFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/addAddressFragment"
+        android:name="com.specindia.ecommerce.ui.fragments.AddAddressFragment"
+        android:label="Add Address"
+        tools:layout="@layout/fragment_add_address">
+
+        <argument
+            android:name="full_address"
+            android:defaultValue=""
+            app:argType="string" />
+
+        <argument
+            android:name="latitude"
+            android:defaultValue="0.0"
+            app:argType="string" />
+
+        <argument
+            android:name="longitude"
+            android:defaultValue="0.0"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_addAddressFragment_to_shippingAddressFragment"
+            app:destination="@id/shippingAddressFragment"
+            app:popUpTo="@id/shippingAddressFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
 </navigation>

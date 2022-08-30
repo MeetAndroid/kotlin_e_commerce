@@ -2,8 +2,9 @@ package com.specindia.ecommerce.ui.fragments
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.Context
-import android.content.IntentSender.SendIntentException
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.Canvas
@@ -13,31 +14,33 @@ import android.location.Location
 import android.os.Build
 import android.os.Bundle
 import android.os.Looper
+import android.provider.Settings
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
-import com.google.android.gms.common.api.ApiException
-import com.google.android.gms.common.api.ResolvableApiException
-import com.google.android.gms.location.*
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationCallback
+import com.google.android.gms.location.LocationResult
+import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.MapView
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.model.*
-import com.google.android.gms.tasks.Task
 import com.google.android.material.badge.ExperimentalBadgeUtils
 import com.google.firebase.firestore.GeoPoint
 import com.google.gson.Gson
+import com.specindia.ecommerce.R
 import com.specindia.ecommerce.databinding.FragmentSetLocationBinding
 import com.specindia.ecommerce.models.response.AuthResponseData
 import com.specindia.ecommerce.ui.activity.HomeActivity
-import com.specindia.ecommerce.util.Constants.Companion.REQUEST_CHECK_SETTINGS
 import com.specindia.ecommerce.util.CustomInfoWindowForGoogleMap
 import com.specindia.ecommerce.util.PermissionUtils.isLocationEnabled
 import com.specindia.ecommerce.util.PermissionUtils.locationRequest
@@ -60,44 +63,52 @@ open class SetLocationFragment : Fragment(), OnMapReadyCallback {
 
     private lateinit var binding: FragmentSetLocationBinding
     private lateinit var data: AuthResponseData
-    lateinit var mFusedLocationClient: FusedLocationProviderClient
+    private lateinit var mFusedLocationClient: FusedLocationProviderClient
 
     // Google Map
     private var mapView: MapView? = null
     private lateinit var googleMap: GoogleMap
 
-    private var latitude = 37.34199218751879
-    private var longitude = -121.99989950773337
-    var currentLocation: LatLng = LatLng(20.5, 78.9)
+    private var latitude = 0.0
+    private var longitude = 0.0
+    var currentLocation: LatLng = LatLng(0.0, 0.0)
     private var fullAddress = ""
+
+    private var isPermissionON: Boolean = false
 
 
     private val locationPermissionRequest = registerForActivityResult(
         ActivityResultContracts.RequestMultiplePermissions()) { permissions ->
-        val isPermissionGranted: Boolean
         when {
             permissions.getOrDefault(Manifest.permission.ACCESS_FINE_LOCATION, false) -> {
                 // Precise location access granted.
                 Log.d("TAG", "Precise location access granted.")
-                isPermissionGranted = true
+                isPermissionON = true
 
             }
             permissions.getOrDefault(Manifest.permission.ACCESS_COARSE_LOCATION, false) -> {
                 // Only approximate location access granted.
                 Log.d("TAG", "Only approximate location access granted.")
-                isPermissionGranted = true
+                isPermissionON = true
             }
             else -> {
                 // No location access granted.
                 Log.d("TAG", "No location access granted.")
-                isPermissionGranted = false
+                isPermissionON = false
             }
         }
-        if (isPermissionGranted) {
-            getLastLocation()
+
+        if (isPermissionON) {
+            if (!(activity as HomeActivity).isGpsON) {
+                (activity as HomeActivity).enableGPS()
+            } else {
+                showDataOnMap()
+                binding.ivLocation.setImageResource(com.specindia.ecommerce.R.drawable.ic_location_enable)
+            }
         } else {
-            requireActivity().showShortToast("Permission Denied")
+            showLocationPermissionDialogOnDenied((activity as HomeActivity))
         }
+
     }
 
     /**
@@ -113,9 +124,9 @@ open class SetLocationFragment : Fragment(), OnMapReadyCallback {
 
     // Check if location permissions are granted to the application
     private fun checkPermissions(): Boolean {
-        if (ActivityCompat.checkSelfPermission((activity as HomeActivity),
+        if (ActivityCompat.checkSelfPermission(requireActivity(),
                 Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED &&
-            ActivityCompat.checkSelfPermission((activity as HomeActivity),
+            ActivityCompat.checkSelfPermission(requireActivity(),
                 Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
         ) {
             return true
@@ -148,7 +159,7 @@ open class SetLocationFragment : Fragment(), OnMapReadyCallback {
         mapView?.getMapAsync(this)
         // Initializing fused location client
         mFusedLocationClient =
-            LocationServices.getFusedLocationProviderClient((activity as HomeActivity))
+            LocationServices.getFusedLocationProviderClient(requireActivity())
 
         return binding.root
     }
@@ -162,6 +173,14 @@ open class SetLocationFragment : Fragment(), OnMapReadyCallback {
         setUpButtonClick()
         val userData = (activity as HomeActivity).dataStoreViewModel.getLoggedInUserData()
         data = Gson().fromJson(userData, AuthResponseData::class.java)
+
+        (activity as HomeActivity).homeViewModel.gpsStatus.observe(viewLifecycleOwner
+        ) { gpsStatus ->
+            if (gpsStatus) {
+                Log.d("TAG", "Observer")
+                showDataOnMap()
+            }
+        }
     }
 
     private fun setUpHeader() {
@@ -203,18 +222,17 @@ open class SetLocationFragment : Fragment(), OnMapReadyCallback {
     private val mLocationCallback = object : LocationCallback() {
         override fun onLocationResult(locationResult: LocationResult) {
             super.onLocationResult(locationResult)
+
             val mLastLocation: Location? = locationResult.lastLocation
             currentLocation = LatLng(mLastLocation!!.latitude, mLastLocation.longitude)
-            Log.d("currentLocation ", currentLocation.toString())
-            getLastLocation()
+            Log.d("TAG ", "Current Location$currentLocation")
+            showDataOnMap()
         }
     }
 
 
     @SuppressLint("MissingPermission")
     private fun requestNewLocationData() {
-        mFusedLocationClient =
-            LocationServices.getFusedLocationProviderClient((activity as HomeActivity))
         mFusedLocationClient.requestLocationUpdates(
             locationRequest, mLocationCallback,
             Looper.getMainLooper()
@@ -222,43 +240,36 @@ open class SetLocationFragment : Fragment(), OnMapReadyCallback {
     }
 
     @SuppressLint("MissingPermission")
-    fun getLastLocation() {
-        Log.d("IN", "== 1 ")
-        if (checkPermissions()) {
-            if (isLocationEnabled((activity as HomeActivity))) {
-                Log.d("IN", "== 2 ")
-                mFusedLocationClient.lastLocation.addOnCompleteListener((activity as HomeActivity)) { task ->
-                    val location: Location? = task.result
-                    if (location == null) {
-                        requestNewLocationData()
-                    } else {
-                        currentLocation = LatLng(location.latitude, location.longitude)
-                        googleMap.clear()
-                        googleMap.isMyLocationEnabled = true
-                        googleMap.uiSettings.isZoomControlsEnabled = true
-                        googleMap.uiSettings.isMyLocationButtonEnabled = true
-                        googleMap.mapType = GoogleMap.MAP_TYPE_NORMAL
-                        googleMap.setInfoWindowAdapter(CustomInfoWindowForGoogleMap((activity as HomeActivity)))
+    fun showDataOnMap() {
+
+        mFusedLocationClient.lastLocation.addOnCompleteListener(requireActivity()) { task ->
+            if (task.isSuccessful) {
+                val location: Location? = task.result
+                if (location == null) {
+                    Log.d("TAG", "Location Null")
+                    requestNewLocationData()
+                } else {
+                    Log.d("TAG", "Location Not Null")
+                    currentLocation = LatLng(location.latitude, location.longitude)
+                    Log.d("TAG", "update time ${System.currentTimeMillis()}")
+                    Log.d("currentLocation", "currentLocation$currentLocation")
+                    googleMap.clear()
+                    if (isPermissionON) {
+                        //googleMap.isMyLocationEnabled = true
+                    }
+                    if (location.latitude != 0.0 && location.longitude != 0.0) {
                         val marker: Marker? =
                             googleMap.addMarker(MarkerOptions().position(currentLocation)
                                 .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED)))
                         googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLocation,
                             16F))
 
-                        googleMap.setOnMyLocationButtonClickListener {
-                            requireActivity().showShortToast("Current Location clicked")
-                            googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(
-                                currentLocation,
-                                16F))
-                            true
-                        }
-
                         googleMap.setOnCameraMoveListener {
                             val midLatLng = googleMap.cameraPosition.target
                             if (marker != null) {
                                 marker.position = midLatLng
                                 val nowLocation = marker.position
-                                Log.d("nowLocation", nowLocation.toString())
+                                Log.d("TAG", "now Location$nowLocation")
 
                                 latitude = nowLocation.latitude
                                 longitude = nowLocation.longitude
@@ -277,30 +288,67 @@ open class SetLocationFragment : Fragment(), OnMapReadyCallback {
                                 e.printStackTrace()
                             }
                         }
-
                     }
                 }
             } else {
-                enableGPS()
+                requireActivity().showShortToast(getString(R.string.msg_no_current_location_found))
+                Log.d("TAG", "No current location found")
             }
 
-        } else {
-            Log.d("IN", "== 3 ")
-            requestLocationPermission()
         }
-
     }
 
     @SuppressLint("MissingPermission")
     override fun onMapReady(mMap: GoogleMap) {
         Log.d("TAG", "onMapReady")
         googleMap = mMap
-        getLastLocation()
+
+        googleMap.uiSettings.isZoomControlsEnabled = false
+        googleMap.mapType = GoogleMap.MAP_TYPE_NORMAL
+        googleMap.setInfoWindowAdapter(CustomInfoWindowForGoogleMap(requireActivity()))
+
+
+        if (isPermissionON) {
+            if (!(activity as HomeActivity).isGpsON) {
+                binding.ivLocation.setImageResource(com.specindia.ecommerce.R.drawable.ic_location_disable)
+                (activity as HomeActivity).enableGPS()
+            } else {
+                showDataOnMap()
+                binding.ivLocation.setImageResource(com.specindia.ecommerce.R.drawable.ic_location_enable)
+            }
+        } else {
+            requestLocationPermission()
+        }
+
+        binding.ivLocation.setOnClickListener {
+            if (isPermissionON) {
+                if (!(activity as HomeActivity).isGpsON) {
+                    binding.ivLocation.setImageResource(com.specindia.ecommerce.R.drawable.ic_location_disable)
+                    (activity as HomeActivity).enableGPS()
+                } else {
+                    showDataOnMap()
+                }
+            } else {
+                requestLocationPermission()
+            }
+        }
     }
 
     override fun onResume() {
         super.onResume()
         mapView?.onResume()
+        Log.d("TAG", "onResume")
+        (activity as HomeActivity).isGpsON = isLocationEnabled(requireActivity())
+        isPermissionON = checkPermissions()
+
+        if (isPermissionON) {
+            binding.ivLocation.setImageResource(com.specindia.ecommerce.R.drawable.ic_location_enable)
+        } else {
+            binding.ivLocation.setImageResource(com.specindia.ecommerce.R.drawable.ic_location_disable)
+        }
+        Log.d("TAG", "GPS status ${(activity as HomeActivity).isGpsON}")
+        Log.d("TAG", "Permission status $isPermissionON")
+
     }
 
     override fun onPause() {
@@ -325,6 +373,7 @@ open class SetLocationFragment : Fragment(), OnMapReadyCallback {
         super.onDestroy()
         mapView?.onDestroy()
         Log.d("TAG", "onDestroy")
+        mFusedLocationClient.removeLocationUpdates(mLocationCallback)
     }
 
     override fun onLowMemory() {
@@ -337,7 +386,7 @@ open class SetLocationFragment : Fragment(), OnMapReadyCallback {
     private fun getAndSetAddressOnTextView(location: GeoPoint, marker: Marker?) {
         var addressList: ArrayList<Address> = ArrayList()
         fullAddress = ""
-        val geocoder = Geocoder((activity as HomeActivity), Locale.getDefault())
+        val geocoder = Geocoder(requireActivity(), Locale.getDefault())
         CoroutineScope(Dispatchers.IO).launch {
             // Here 1 represent max location result to returned, by documents it recommended 1 to 5
             if (Build.VERSION.SDK_INT >= 33) {
@@ -357,7 +406,7 @@ open class SetLocationFragment : Fragment(), OnMapReadyCallback {
                 if (addressList.size > 0) {
                     fullAddress = addressList[0].getAddressLine(0)
                     //binding.tvAddress.text = fullAddress
-                    Log.d("fullAddress", fullAddress)
+                    Log.d("TAG", "Full Address$fullAddress")
                     marker?.title = fullAddress
                     marker?.showInfoWindow()
                 }
@@ -366,99 +415,22 @@ open class SetLocationFragment : Fragment(), OnMapReadyCallback {
 
     }
 
-//    private fun showGPSNotEnabledDialog(context: Context) {
-//        AlertDialog.Builder(context)
-//            .setTitle(context.getString(R.string.app_name))
-//            .setMessage("GPS required for getting Location")
-//            .setCancelable(false)
-//            .setPositiveButton(context.getString(R.string.ok)) { _, _ ->
-////                if (!isLocationEnabled()) {
-////                    enableGPS()
-////                } else {
-////                    getLastLocation()
-////                }
-//                enableGPS()
-//                getLastLocation()
-//
-//            }
-//            .show()
-//    }
-
-    private fun enableGPS() {
-
-        val locationSettingsRequestBuilder = LocationSettingsRequest.Builder()
-        locationSettingsRequestBuilder.addLocationRequest(locationRequest)
-        locationSettingsRequestBuilder.setAlwaysShow(true)
-        val result = LocationServices.getSettingsClient((activity as HomeActivity))
-            .checkLocationSettings(locationSettingsRequestBuilder.build())
-        result.addOnCompleteListener { task: Task<LocationSettingsResponse?> ->
-            try {
-                val response =
-                    task.getResult(ApiException::class.java)
-                Log.d("SUCCESS", response.toString())
-                /**
-                 * All location settings are satisfied. The client can initialize location requests here.
-                 */
-            } catch (exception: ApiException) {
-                when (exception.statusCode) {
-                    LocationSettingsStatusCodes.RESOLUTION_REQUIRED ->                       // Location settings are not satisfied. But could be fixed by showing the user a dialog.
-                        try {
-                            // Cast to a resolvable exception.
-                            val resolvable =
-                                exception as ResolvableApiException
-                            // Show the dialog by calling startResolutionForResult(),
-                            // and check the result in onActivityResult().
-                            resolvable.startResolutionForResult((activity as HomeActivity),
-                                REQUEST_CHECK_SETTINGS)
-                        } catch (e: SendIntentException) {
-                            // Ignore the error.
-                        } catch (e: ClassCastException) {
-                            // Ignore, should be an impossible error.
-                        }
-                    LocationSettingsStatusCodes.SETTINGS_CHANGE_UNAVAILABLE -> {}
-                }
+    var resultLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == Activity.RESULT_OK) {
             }
         }
-//        val settingClient = LocationServices.getSettingsClient((activity as HomeActivity))
-//        val task: Task<LocationSettingsResponse> =
-//            settingClient.checkLocationSettings(locationSettingsRequestBuilder.build())
-//        task.addOnSuccessListener((activity as HomeActivity)) { locationSettingResponse ->
-//            val state = locationSettingResponse.locationSettingsStates
-//            Log.d("TAG", """
-//                GPS : ${state?.isGpsPresent}
-//                Usable : ${state?.isGpsUsable}
-//                Network : ${state?.isNetworkLocationPresent}
-//                Usable : ${state?.isNetworkLocationUsable}
-//                Location : ${state?.isLocationPresent}
-//                Usable : ${state?.isNetworkLocationUsable}
-//            """.trimIndent())
-//            Log.d("TAG", "enable GPS Success")
-//            (activity as HomeActivity).showShortToast("TAG${state?.isGpsPresent}")
-//        }
 
-
-//        task.addOnFailureListener((activity as HomeActivity)) { exception ->
-//            Log.d("TAG", "enable GPS Failure")
-//            when ((exception as ApiException).statusCode) {
-//                LocationSettingsStatusCodes.RESOLUTION_REQUIRED -> try {
-//                    // Show the dialog by calling startResolutionForResult(), and check the
-//                    // result in onActivityResult().
-//                    val rae = exception as ResolvableApiException
-//                    rae.startResolutionForResult((activity as HomeActivity),
-//                        Constants.GPS_REQUEST)
-//                } catch (sie: IntentSender.SendIntentException) {
-//                    Log.i(ContentValues.TAG,
-//                        "PendingIntent unable to execute request.")
-//                }
-//                LocationSettingsStatusCodes.SETTINGS_CHANGE_UNAVAILABLE -> {
-//                    val errorMessage = "Location settings are inadequate, and cannot be " +
-//                            "fixed here. Fix in Settings."
-//                    Log.e(ContentValues.TAG, errorMessage)
-//
-//                    requireActivity().showShortToast(errorMessage)
-//                }
-//            }
-//        }
+    private fun showLocationPermissionDialogOnDenied(context: Context) {
+        AlertDialog.Builder(context)
+            .setTitle(context.getString(com.specindia.ecommerce.R.string.app_name))
+            .setMessage(getString(R.string.msg_enable_location_permission_to_set_the_shipping_address))
+            .setCancelable(false)
+            .setPositiveButton(context.getString(com.specindia.ecommerce.R.string.ok)) { _, _ ->
+                val intent = Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS)
+                resultLauncher.launch(intent)
+            }
+            .show()
     }
 
     // Use this method if we have to use our own drawable for marker
@@ -488,35 +460,5 @@ open class SetLocationFragment : Fragment(), OnMapReadyCallback {
         // after generating our bitmap we are returning our bitmap.
         return BitmapDescriptorFactory.fromBitmap(bitmap)
     }
-
-//    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-//        super.onActivityResult(requestCode, resultCode, data)
-//        if (resultCode == AppCompatActivity.RESULT_OK) {
-//            if (requestCode == Constants.GPS_REQUEST) {
-//                Log.d("RESULT_OK", "GPS ON")
-//            }
-//        }
-//    }
-
-//    override fun onActivityResult(
-//        requestCode: Int,
-//        resultCode: Int,
-//        @Nullable data: Intent?,
-//    ) {
-//        super.onActivityResult(requestCode, resultCode, data)
-//        when (requestCode) {
-//            REQUEST_CHECK_SETTINGS -> when (resultCode) {
-//                Activity.RESULT_OK ->
-//                    // All required changes were successfully made
-//                    getLastLocation()
-//                Activity.RESULT_CANCELED ->
-//                    // The user was asked to change settings, but chose not to
-//                    requireActivity().showShortToast("GPS denied")
-//                else -> {
-//
-//                }
-//            }
-//        }
-//    }
 
 }

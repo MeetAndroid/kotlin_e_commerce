@@ -5,9 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.specindia.ecommerce.R
-import com.specindia.ecommerce.databinding.RowCartListItemBinding
 import com.specindia.ecommerce.databinding.RowOrderDetailsBinding
-import com.specindia.ecommerce.models.response.cart.getcart.GetCartData
 import com.specindia.ecommerce.models.response.home.order.CartsItem
 
 class OrderListAdapter(

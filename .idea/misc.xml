@@ -23,6 +23,7 @@
         <entry key="..\:/EcommerceApp/app/src/main/res/drawable/ic_fb.xml" value="0.2115" />
         <entry key="..\:/EcommerceApp/app/src/main/res/drawable/ic_find_food_you_love.xml" value="0.1015" />
         <entry key="..\:/EcommerceApp/app/src/main/res/drawable/ic_gplus.xml" value="0.1445" />
+        <entry key="..\:/EcommerceApp/app/src/main/res/drawable/ic_location_disable.xml" value="0.1" />
         <entry key="..\:/EcommerceApp/app/src/main/res/drawable/ic_menu_food.xml" value="0.1525" />
         <entry key="..\:/EcommerceApp/app/src/main/res/drawable/ic_menu_food_new.xml" value="0.164" />
         <entry key="..\:/EcommerceApp/app/src/main/res/drawable/ic_menu_home.xml" value="0.1525" />
@@ -32,6 +33,7 @@
         <entry key="..\:/EcommerceApp/app/src/main/res/drawable/ic_menu_offers_new.xml" value="0.164" />
         <entry key="..\:/EcommerceApp/app/src/main/res/drawable/ic_menu_profile.xml" value="0.1525" />
         <entry key="..\:/EcommerceApp/app/src/main/res/drawable/ic_menu_profile_new.xml" value="0.164" />
+        <entry key="..\:/EcommerceApp/app/src/main/res/drawable/ic_my_location.xml" value="0.1" />
         <entry key="..\:/EcommerceApp/app/src/main/res/drawable/ic_order_delivered.xml" value="0.1545" />
         <entry key="..\:/EcommerceApp/app/src/main/res/drawable/ic_order_in_kitchen.xml" value="0.1545" />
         <entry key="..\:/EcommerceApp/app/src/main/res/drawable/ic_paypal.xml" value="0.132" />
@@ -83,7 +85,7 @@
         <entry key="..\:/EcommerceApp/app/src/main/res/layout/fragment_registration.xml" value="0.17192982456140352" />
         <entry key="..\:/EcommerceApp/app/src/main/res/layout/fragment_restaurant_details.xml" value="0.16842105263157894" />
         <entry key="..\:/EcommerceApp/app/src/main/res/layout/fragment_search.xml" value="0.18" />
-        <entry key="..\:/EcommerceApp/app/src/main/res/layout/fragment_set_location.xml" value="0.17192982456140352" />
+        <entry key="..\:/EcommerceApp/app/src/main/res/layout/fragment_set_location.xml" value="0.14" />
         <entry key="..\:/EcommerceApp/app/src/main/res/layout/fragment_shipping_address.xml" value="0.21" />
         <entry key="..\:/EcommerceApp/app/src/main/res/layout/fragment_view_all_product.xml" value="0.15043859649122807" />
         <entry key="..\:/EcommerceApp/app/src/main/res/layout/fragment_welcome.xml" value="0.1675213675213675" />
