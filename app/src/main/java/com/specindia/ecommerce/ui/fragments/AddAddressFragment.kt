@@ -106,7 +106,6 @@ class AddAddressFragment : Fragment() {
         }
     }
 
-
     private fun setUpRecyclerView() {
         // Carts
         addressLines = fullAddress.split(",") as ArrayList<String>
@@ -128,7 +127,6 @@ class AddAddressFragment : Fragment() {
             isBackGroundTransparent = true
         }
     }
-
 
     // ============== GET CART DATA
     private fun callAddOrUpdateAddressApi() {
