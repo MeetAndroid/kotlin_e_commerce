@@ -30,14 +30,9 @@ object PermissionUtils {
     // getting location every 5 secs, for something very accurate
 
     val locationRequest = LocationRequest.create().apply {
-//        interval = TimeUnit.SECONDS.toSeconds(10)
-//        fastestInterval = (TimeUnit.SECONDS.toSeconds(5))
-//        priority = Priority.PRIORITY_HIGH_ACCURACY
-//        maxWaitTime = TimeUnit.MINUTES.toMillis(2)
-
         interval = 10000
         fastestInterval = 5000
-        priority = Priority.PRIORITY_HIGH_ACCURACY
+        priority = Priority.PRIORITY_BALANCED_POWER_ACCURACY
 
     }
 

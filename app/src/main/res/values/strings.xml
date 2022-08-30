@@ -171,6 +171,8 @@
     <string name="msg_confirm_logout">Are you sure you want to logout?</string>
     <string name="msg_address_added_successesfully">Address Added Successfully!</string>
     <string name="msg_enable_location_permission_to_set_the_shipping_address">Enable location permission to set the Shipping Address</string>
+    <string name="msg_enable_gps_permission_to_set_the_shipping_address">Enable GPS to set current location as a Shipping Address</string>
+
     <string name="msg_no_current_location_found">No current location found</string>
 
 </resources>

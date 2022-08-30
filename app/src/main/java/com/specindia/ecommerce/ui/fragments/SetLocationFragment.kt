@@ -44,6 +44,7 @@ import com.specindia.ecommerce.ui.activity.HomeActivity
 import com.specindia.ecommerce.util.CustomInfoWindowForGoogleMap
 import com.specindia.ecommerce.util.PermissionUtils.isLocationEnabled
 import com.specindia.ecommerce.util.PermissionUtils.locationRequest
+import com.specindia.ecommerce.util.enable
 import com.specindia.ecommerce.util.showShortToast
 import com.specindia.ecommerce.util.visible
 import dagger.hilt.android.AndroidEntryPoint
@@ -103,7 +104,6 @@ open class SetLocationFragment : Fragment(), OnMapReadyCallback {
                 (activity as HomeActivity).enableGPS()
             } else {
                 showDataOnMap()
-                binding.ivLocation.setImageResource(com.specindia.ecommerce.R.drawable.ic_location_enable)
             }
         } else {
             showLocationPermissionDialogOnDenied((activity as HomeActivity))
@@ -179,20 +179,20 @@ open class SetLocationFragment : Fragment(), OnMapReadyCallback {
             if (gpsStatus) {
                 Log.d("TAG", "Observer")
                 showDataOnMap()
+            } else {
+                showGpsPermissionDialogOnDenied(requireActivity())
             }
         }
     }
 
-    private fun setUpHeader() {
-        with(binding) {
-            with(addNewLocationScreenHeader) {
-                tvHeaderTitle.visible(true)
-                tvHeaderTitle.text = getString(com.specindia.ecommerce.R.string.select_location)
-                ivBack.visible(true)
-                ivFavorite.visible(false)
-                ivSearch.visible(false)
-                frShoppingCart.visible(false)
-            }
+    private fun setUpHeader() = with(binding) {
+        with(addNewLocationScreenHeader) {
+            tvHeaderTitle.visible(true)
+            tvHeaderTitle.text = getString(R.string.select_location)
+            ivBack.visible(true)
+            ivFavorite.visible(false)
+            ivSearch.visible(false)
+            frShoppingCart.visible(false)
         }
     }
 
@@ -255,7 +255,7 @@ open class SetLocationFragment : Fragment(), OnMapReadyCallback {
                     Log.d("currentLocation", "currentLocation$currentLocation")
                     googleMap.clear()
                     if (isPermissionON) {
-                        //googleMap.isMyLocationEnabled = true
+                        googleMap.isMyLocationEnabled = true
                     }
                     if (location.latitude != 0.0 && location.longitude != 0.0) {
                         val marker: Marker? =
@@ -303,34 +303,22 @@ open class SetLocationFragment : Fragment(), OnMapReadyCallback {
         Log.d("TAG", "onMapReady")
         googleMap = mMap
 
-        googleMap.uiSettings.isZoomControlsEnabled = false
+        googleMap.uiSettings.isMyLocationButtonEnabled = true
+        googleMap.uiSettings.isZoomControlsEnabled = true
+        googleMap.uiSettings.isCompassEnabled = true
         googleMap.mapType = GoogleMap.MAP_TYPE_NORMAL
+
         googleMap.setInfoWindowAdapter(CustomInfoWindowForGoogleMap(requireActivity()))
 
 
         if (isPermissionON) {
             if (!(activity as HomeActivity).isGpsON) {
-                binding.ivLocation.setImageResource(com.specindia.ecommerce.R.drawable.ic_location_disable)
                 (activity as HomeActivity).enableGPS()
             } else {
                 showDataOnMap()
-                binding.ivLocation.setImageResource(com.specindia.ecommerce.R.drawable.ic_location_enable)
             }
         } else {
             requestLocationPermission()
-        }
-
-        binding.ivLocation.setOnClickListener {
-            if (isPermissionON) {
-                if (!(activity as HomeActivity).isGpsON) {
-                    binding.ivLocation.setImageResource(com.specindia.ecommerce.R.drawable.ic_location_disable)
-                    (activity as HomeActivity).enableGPS()
-                } else {
-                    showDataOnMap()
-                }
-            } else {
-                requestLocationPermission()
-            }
         }
     }
 
@@ -341,10 +329,10 @@ open class SetLocationFragment : Fragment(), OnMapReadyCallback {
         (activity as HomeActivity).isGpsON = isLocationEnabled(requireActivity())
         isPermissionON = checkPermissions()
 
-        if (isPermissionON) {
-            binding.ivLocation.setImageResource(com.specindia.ecommerce.R.drawable.ic_location_enable)
+        if ((activity as HomeActivity).isGpsON && isPermissionON) {
+            binding.btnNext.enable(true)
         } else {
-            binding.ivLocation.setImageResource(com.specindia.ecommerce.R.drawable.ic_location_disable)
+            binding.btnNext.enable(false)
         }
         Log.d("TAG", "GPS status ${(activity as HomeActivity).isGpsON}")
         Log.d("TAG", "Permission status $isPermissionON")
@@ -393,7 +381,7 @@ open class SetLocationFragment : Fragment(), OnMapReadyCallback {
                 geocoder.getFromLocation(location.latitude,
                     location.longitude,
                     1
-                ) { addresses -> addressList = addresses as ArrayList<Address> }
+                )
             } else {
 
                 addressList = geocoder.getFromLocation(location.latitude,
@@ -418,17 +406,30 @@ open class SetLocationFragment : Fragment(), OnMapReadyCallback {
     var resultLauncher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == Activity.RESULT_OK) {
+                Log.d("TAG", "Callback from denied dialog")
             }
+            Log.d("TAG", "resultLauncher")
         }
 
     private fun showLocationPermissionDialogOnDenied(context: Context) {
         AlertDialog.Builder(context)
-            .setTitle(context.getString(com.specindia.ecommerce.R.string.app_name))
+            .setTitle(context.getString(R.string.app_name))
             .setMessage(getString(R.string.msg_enable_location_permission_to_set_the_shipping_address))
             .setCancelable(false)
-            .setPositiveButton(context.getString(com.specindia.ecommerce.R.string.ok)) { _, _ ->
+            .setPositiveButton(context.getString(R.string.ok)) { _, _ ->
                 val intent = Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS)
                 resultLauncher.launch(intent)
+            }
+            .show()
+    }
+
+    private fun showGpsPermissionDialogOnDenied(context: Context) {
+        AlertDialog.Builder(context)
+            .setTitle(context.getString(R.string.app_name))
+            .setMessage(getString(R.string.msg_enable_gps_permission_to_set_the_shipping_address))
+            .setCancelable(false)
+            .setPositiveButton(context.getString(R.string.ok)) { _, _ ->
+                (activity as HomeActivity).enableGPS()
             }
             .show()
     }
