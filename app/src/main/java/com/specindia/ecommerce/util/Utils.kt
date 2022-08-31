@@ -27,7 +27,9 @@ import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.core.util.Predicate
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.NavHostFragment
 import com.facebook.login.LoginManager
 import com.google.android.material.badge.BadgeDrawable
 import com.google.android.material.badge.BadgeUtils.attachBadgeDrawable
@@ -52,6 +54,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 import java.util.regex.Matcher
 import java.util.regex.Pattern
+
 
 fun <A : Activity> Activity.startNewActivity(activity: Class<A>) {
     Intent(this, activity).also {
@@ -311,15 +314,15 @@ fun handleCartBadgeCount(
 ) {
     if (response.data.isNotEmpty()) {
         // Save Latest Cart Counter Value to DataStore
-            val restaurantIdInCart =
-                response.data.first().product.restaurantId
-            activity.dataStoreViewModel.saveExistingRestaurantIdOfCart(
-                restaurantIdInCart
-            )
+        val restaurantIdInCart =
+            response.data.first().product.restaurantId
+        activity.dataStoreViewModel.saveExistingRestaurantIdOfCart(
+            restaurantIdInCart
+        )
 
-            activity.dataStoreViewModel.saveCartItemCount(
-                response.data.size
-            )
+        activity.dataStoreViewModel.saveCartItemCount(
+            response.data.size
+        )
 
     } else {
         activity.dataStoreViewModel.saveExistingRestaurantIdOfCart(
@@ -376,6 +379,14 @@ fun setCartBadgeCount(activity: Activity, counter: Int, frameLayout: FrameLayout
             frameLayout
         )
     }
+}
+
+// This will return the instance of the current fragment of particular activity
+fun getCurrentFragmentInstance(activity: HomeActivity): Fragment? {
+    val navHostFragment =
+        activity.supportFragmentManager.primaryNavigationFragment as NavHostFragment?
+    val fragmentManager: FragmentManager = navHostFragment!!.childFragmentManager
+    return fragmentManager.primaryNavigationFragment
 }
 
 

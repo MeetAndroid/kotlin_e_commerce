@@ -9,8 +9,11 @@ import androidx.activity.viewModels
 import androidx.annotation.Nullable
 import androidx.appcompat.app.AppCompatActivity
 import androidx.coordinatorlayout.widget.CoordinatorLayout
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
+import androidx.navigation.NavOptions
 import androidx.navigation.fragment.FragmentNavigator
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
@@ -25,12 +28,14 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.specindia.ecommerce.R
 import com.specindia.ecommerce.databinding.ActivityHomeBinding
 import com.specindia.ecommerce.models.FavRestaurants
+import com.specindia.ecommerce.ui.fragments.HomeFragment
 import com.specindia.ecommerce.ui.fragments.SetLocationFragment
 import com.specindia.ecommerce.ui.viewmodel.DataViewModel
 import com.specindia.ecommerce.ui.viewmodel.HomeViewModel
 import com.specindia.ecommerce.util.*
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+
 
 @AndroidEntryPoint
 class HomeActivity : AppCompatActivity() {
@@ -66,7 +71,28 @@ class HomeActivity : AppCompatActivity() {
 
     private fun setUpFabClick() {
         binding.fabAdd.setOnClickListener {
-            binding.bottomNavigationView.menu.performIdentifierAction(R.id.nav_home, 0)
+            val isHomeTabSelected =
+                binding.bottomNavigationView.menu.findItem(R.id.nav_home).isChecked
+
+            if (isHomeTabSelected) {
+                if (getCurrentFragmentInstance(this) is HomeFragment) {
+                    showShortToast(getString(R.string.msg_already_in_home_screen))
+                } else {
+
+                    /**
+                     * If user is in Home Tab but not in Home Fragment, and click Fab button
+                     * then remove all fragment and go to HomeFragment
+                     */
+
+                    val navOption: NavOptions =
+                        NavOptions.Builder().setPopUpTo(R.id.nav_home, true).build()
+                    this.navController.navigate(R.id.homeFragment, null, navOption)
+                }
+            } else {
+                // If user is not in Home tab and click Fab button then we load the Home Tab
+                binding.bottomNavigationView.menu.performIdentifierAction(R.id.nav_home, 0)
+            }
+
         }
     }
 

@@ -174,5 +174,6 @@
     <string name="msg_enable_gps_permission_to_set_the_shipping_address">Enable GPS to set current location as a Shipping Address</string>
 
     <string name="msg_no_current_location_found">No current location found</string>
+    <string name="msg_already_in_home_screen">You are already in Home Screen</string>
 
 </resources>
