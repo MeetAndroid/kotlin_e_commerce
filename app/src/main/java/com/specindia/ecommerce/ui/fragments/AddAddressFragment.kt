@@ -107,18 +107,27 @@ class AddAddressFragment : Fragment() {
     }
 
     private fun setUpRecyclerView() {
-        // Carts
-        addressLines = fullAddress.split(",") as ArrayList<String>
-        addAddressAdapter = AddAddressAdapter(addressLines)
-        binding.rvShippingAddress.apply {
-            adapter = addAddressAdapter
-            setHasFixedSize(false)
-            addItemDecoration(MarginDecoration(resources.getDimensionPixelSize(R.dimen.item_margin_16),
-                false))
-            isNestedScrollingEnabled = false
-            layoutManager =
-                LinearLayoutManager(requireActivity())
+
+        if (fullAddress.isNotEmpty() && fullAddress.contains(",")) {
+            binding.noDataFound.clNoDataFound.visible(false)
+            binding.nestedScrollview.visible(true)
+
+            addressLines = fullAddress.split(",") as ArrayList<String>
+            addAddressAdapter = AddAddressAdapter(addressLines, requireContext())
+            binding.rvShippingAddress.apply {
+                adapter = addAddressAdapter
+                setHasFixedSize(false)
+                addItemDecoration(MarginDecoration(resources.getDimensionPixelSize(R.dimen.item_margin_16),
+                    false))
+                isNestedScrollingEnabled = false
+                layoutManager =
+                    LinearLayoutManager(requireActivity())
+            }
+        } else {
+            binding.noDataFound.clNoDataFound.visible(true)
+            binding.nestedScrollview.visible(false)
         }
+
     }
 
     private fun setUpProgressDialog() {
@@ -130,11 +139,8 @@ class AddAddressFragment : Fragment() {
 
     // ============== GET CART DATA
     private fun callAddOrUpdateAddressApi() {
-
         addressType = binding.spAddressType.selectedItem.toString()
-        firstLine = addressLines[0]
-        secondLine = addressLines[1]
-        thirdLine = addressLines[2]
+        convertAddressListToLines()
 
         customProgressDialog.show()
         val parameter = Parameters(
@@ -153,6 +159,72 @@ class AddAddressFragment : Fragment() {
             ),
             Gson().toJson(parameter)
         )
+    }
+
+    private fun convertAddressListToLines() {
+        try {
+            if (addressLines.size <= 0) {
+                return
+            } else if (addressLines.size <= 3) {
+                when (addressLines.size) {
+                    3 -> {
+                        firstLine = addressLines[0]
+                        secondLine = addressLines[1]
+                        thirdLine = addressLines[2]
+                    }
+                    2 -> {
+                        firstLine = addressLines[0]
+                        secondLine = addressLines[1]
+                        thirdLine = ""
+                    }
+                    else -> {
+                        firstLine = addressLines[0]
+                        secondLine = ""
+                        thirdLine = ""
+                    }
+                }
+            } else if (addressLines.size == 4) {
+                firstLine = addressLines[0].plus(addressLines[1])
+                secondLine = addressLines[2]
+                thirdLine = addressLines[3]
+            } else {
+                var myChunkSize = 0
+                val rem = addressLines.size % 3
+                myChunkSize = when (rem) {
+                    0 -> addressLines.size / 3
+                    else ->
+                        (addressLines.size / 3) + 1
+                }
+                Log.d("myChunkSize", myChunkSize.toString())
+
+                val chunkList = addressLines.chunked(myChunkSize)
+
+                firstLine = if (chunkList[0].isNotEmpty()) {
+                    chunkList[0].toString().removeSurrounding("[", "]")
+                } else {
+                    ""
+                }
+                secondLine = if (chunkList[1].isNotEmpty()) {
+                    chunkList[1].toString().removeSurrounding("[", "]")
+                } else {
+                    ""
+                }
+                thirdLine = if (chunkList[2].isNotEmpty()) {
+                    chunkList[2].toString().removeSurrounding("[", "]")
+                } else {
+                    ""
+                }
+
+            }
+            Log.d("firstLine ", firstLine)
+            Log.d("secondLine ", secondLine)
+            Log.d("thirdLine ", thirdLine)
+        } catch (e: IndexOutOfBoundsException) {
+            e.printStackTrace()
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+
     }
 
     private fun observeAddOrUpdateAddressResponse(view: View) {

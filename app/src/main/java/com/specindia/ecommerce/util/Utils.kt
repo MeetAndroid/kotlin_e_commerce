@@ -14,6 +14,7 @@ import android.os.Build
 import android.os.Handler
 import android.os.Looper
 import android.text.Editable
+import android.text.InputType
 import android.text.TextWatcher
 import android.util.Base64
 import android.util.Log
@@ -21,9 +22,11 @@ import android.util.Patterns
 import android.view.View
 import android.view.WindowInsets
 import android.view.WindowManager
+import android.view.inputmethod.InputMethodManager
 import android.widget.FrameLayout
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.widget.AppCompatEditText
 import androidx.core.content.ContextCompat
 import androidx.core.util.Predicate
 import androidx.fragment.app.Fragment
@@ -389,5 +392,23 @@ fun getCurrentFragmentInstance(activity: HomeActivity): Fragment? {
     return fragmentManager.primaryNavigationFragment
 }
 
+// This will make Edit Text read only or editable
+fun AppCompatEditText.setReadOnly(value: Boolean, inputType: Int = InputType.TYPE_NULL) {
+    isFocusable = !value
+    isFocusableInTouchMode = !value
+    requestFocusFromTouch()
+    this.inputType = inputType
+}
+
+fun View.showKeyboard() {
+    this.requestFocus()
+    val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+    imm.showSoftInput(this, 0)
+}
+
+fun View.hideKeyboard() {
+    val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+    imm.hideSoftInputFromWindow(windowToken, 0)
+}
 
 

@@ -19,6 +19,7 @@
         <entry key="..\:/EcommerceApp/app/src/main/res/drawable/ic_back.xml" value="0.195" />
         <entry key="..\:/EcommerceApp/app/src/main/res/drawable/ic_baseline_close_24.xml" value="0.1055" />
         <entry key="..\:/EcommerceApp/app/src/main/res/drawable/ic_close.xml" value="0.1055" />
+        <entry key="..\:/EcommerceApp/app/src/main/res/drawable/ic_edit.xml" value="0.1" />
         <entry key="..\:/EcommerceApp/app/src/main/res/drawable/ic_favorite.xml" value="0.195" />
         <entry key="..\:/EcommerceApp/app/src/main/res/drawable/ic_fb.xml" value="0.2115" />
         <entry key="..\:/EcommerceApp/app/src/main/res/drawable/ic_find_food_you_love.xml" value="0.1015" />
@@ -93,7 +94,7 @@
         <entry key="..\:/EcommerceApp/app/src/main/res/layout/item_profile.xml" value="0.17192982456140352" />
         <entry key="..\:/EcommerceApp/app/src/main/res/layout/layout_no_data_found.xml" value="0.17192982456140352" />
         <entry key="..\:/EcommerceApp/app/src/main/res/layout/layout_progress_bar.xml" value="0.17192982456140352" />
-        <entry key="..\:/EcommerceApp/app/src/main/res/layout/row_add_address.xml" value="0.17192982456140352" />
+        <entry key="..\:/EcommerceApp/app/src/main/res/layout/row_add_address.xml" value="0.25" />
         <entry key="..\:/EcommerceApp/app/src/main/res/layout/row_auto_fit_item.xml" value="0.16842105263157894" />
         <entry key="..\:/EcommerceApp/app/src/main/res/layout/row_breaking_news.xml" value="0.17192982456140352" />
         <entry key="..\:/EcommerceApp/app/src/main/res/layout/row_cart_list_item.xml" value="0.18" />
