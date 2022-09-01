@@ -397,13 +397,15 @@ open class SetLocationFragment : Fragment(), OnMapReadyCallback {
                     Log.d("TAG", "Full Address$fullAddress")
                     marker?.title = fullAddress
                     marker?.showInfoWindow()
+                } else {
+                    marker?.hideInfoWindow()
                 }
             }
         }
 
     }
 
-    var resultLauncher =
+    private var resultLauncher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == Activity.RESULT_OK) {
                 Log.d("TAG", "Callback from denied dialog")

@@ -108,11 +108,14 @@ class AddAddressFragment : Fragment() {
 
     private fun setUpRecyclerView() {
 
-        if (fullAddress.isNotEmpty() && fullAddress.contains(",")) {
+        if (fullAddress.isNotEmpty()) {
             binding.noDataFound.clNoDataFound.visible(false)
             binding.nestedScrollview.visible(true)
-
-            addressLines = fullAddress.split(",") as ArrayList<String>
+            if (fullAddress.contains(",")) {
+                addressLines = fullAddress.split(",") as ArrayList<String>
+            } else {
+                addressLines.add(fullAddress)
+            }
             addAddressAdapter = AddAddressAdapter(addressLines, requireContext())
             binding.rvShippingAddress.apply {
                 adapter = addAddressAdapter
