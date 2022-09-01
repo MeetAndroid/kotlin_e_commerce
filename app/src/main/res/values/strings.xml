@@ -166,6 +166,7 @@
     </string-array>
 
     <string name="msg_confirm_delete_address">Are you sure you want to delete the Address?</string>
+    <string name="msg_confirm_delete_address_line">Are you sure you want to delete this address line?</string>
     <string name="add_primary_address">Please add primary address</string>
     <string name="msg_can_not_delete_primary_address">You can\'t remove primary address</string>
     <string name="msg_confirm_logout">Are you sure you want to logout?</string>

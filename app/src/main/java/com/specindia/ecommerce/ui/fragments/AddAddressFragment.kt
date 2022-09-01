@@ -9,9 +9,12 @@ import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.navArgs
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.badge.ExperimentalBadgeUtils
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.android.material.snackbar.Snackbar
 import com.google.gson.Gson
 import com.specindia.ecommerce.R
 import com.specindia.ecommerce.api.network.NetworkResult
@@ -20,11 +23,9 @@ import com.specindia.ecommerce.models.request.Parameters
 import com.specindia.ecommerce.models.response.AuthResponseData
 import com.specindia.ecommerce.ui.activity.HomeActivity
 import com.specindia.ecommerce.ui.adapters.AddAddressAdapter
-import com.specindia.ecommerce.util.MarginDecoration
-import com.specindia.ecommerce.util.getHeaderMap
-import com.specindia.ecommerce.util.showProgressDialog
-import com.specindia.ecommerce.util.visible
+import com.specindia.ecommerce.util.*
 import dagger.hilt.android.AndroidEntryPoint
+
 
 @AndroidEntryPoint
 class AddAddressFragment : Fragment() {
@@ -106,11 +107,27 @@ class AddAddressFragment : Fragment() {
         }
     }
 
+    private fun hideData() {
+        binding.apply {
+            noDataFound.clNoDataFound.visible(true)
+            nestedScrollview.visible(false)
+        }
+
+    }
+
+    private fun showData() {
+        binding.apply {
+            noDataFound.clNoDataFound.visible(false)
+            nestedScrollview.visible(true)
+        }
+
+    }
+
     private fun setUpRecyclerView() {
 
         if (fullAddress.isNotEmpty()) {
-            binding.noDataFound.clNoDataFound.visible(false)
-            binding.nestedScrollview.visible(true)
+            showData()
+
             if (fullAddress.contains(",")) {
                 addressLines = fullAddress.split(",") as ArrayList<String>
             } else {
@@ -125,12 +142,73 @@ class AddAddressFragment : Fragment() {
                 isNestedScrollingEnabled = false
                 layoutManager =
                     LinearLayoutManager(requireActivity())
+
+                swipeToDeleteFunctionality()
             }
         } else {
-            binding.noDataFound.clNoDataFound.visible(true)
-            binding.nestedScrollview.visible(false)
+            hideData()
+
         }
 
+    }
+
+    private fun swipeToDeleteFunctionality() {
+        ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
+            override fun onMove(
+                recyclerView: RecyclerView,
+                viewHolder: RecyclerView.ViewHolder,
+                target: RecyclerView.ViewHolder,
+            ): Boolean {
+                return false
+            }
+
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                val deletedAddressLine: String =
+                    addressLines[viewHolder.adapterPosition]
+                val position = viewHolder.adapterPosition
+                Log.d("position", position.toString())
+                confirmToDeleteAddress((activity as HomeActivity),
+                    deletedAddressLine,
+                    position
+                )
+
+            }
+        }).attachToRecyclerView(binding.rvShippingAddress)
+    }
+
+    fun confirmToDeleteAddress(
+        activity: HomeActivity,
+        deletedAddressLine: String,
+        position: Int,
+    ) {
+        MaterialAlertDialogBuilder(activity)
+            .setCancelable(false)
+            .setTitle(activity.getString(R.string.app_name))
+            .setMessage(activity.getString(R.string.msg_confirm_delete_address_line))
+            .setPositiveButton(activity.getString(R.string.ok)) { _, _ ->
+                // Swipe To delete Functionality
+                addressLines.removeAt(position)
+                addAddressAdapter.notifyItemRemoved(position)
+                activity.showShortToast("You deleted $deletedAddressLine")
+
+                if (addressLines.size > 0) {
+                    showData()
+                } else {
+                    hideData()
+                }
+
+                // Undo Functionality
+                Snackbar.make(binding.rvShippingAddress, deletedAddressLine, Snackbar.LENGTH_LONG)
+                    .setAction(activity.getString(R.string.undo)
+                    ) {
+                        addressLines.add(position, deletedAddressLine)
+                        addAddressAdapter.notifyItemInserted(position)
+                    }.show()
+            }
+            .setNegativeButton(activity.getString(R.string.cancel)) { _, _ ->
+                addAddressAdapter.notifyDataSetChanged()
+            }
+            .show()
     }
 
     private fun setUpProgressDialog() {
