@@ -329,7 +329,7 @@ open class SetLocationFragment : Fragment(), OnMapReadyCallback {
         (activity as HomeActivity).isGpsON = isLocationEnabled(requireActivity())
         isPermissionON = checkPermissions()
 
-        if ((activity as HomeActivity).isGpsON && isPermissionON) {
+        if ((activity as HomeActivity).isGpsON && isPermissionON && fullAddress.isNotEmpty()) {
             binding.btnNext.enable(true)
         } else {
             binding.btnNext.enable(false)
@@ -397,8 +397,10 @@ open class SetLocationFragment : Fragment(), OnMapReadyCallback {
                     Log.d("TAG", "Full Address$fullAddress")
                     marker?.title = fullAddress
                     marker?.showInfoWindow()
+                    binding.btnNext.enable(true)
                 } else {
                     marker?.hideInfoWindow()
+                    binding.btnNext.enable(false)
                 }
             }
         }
