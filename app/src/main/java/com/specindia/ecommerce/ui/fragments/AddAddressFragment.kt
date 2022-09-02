@@ -133,7 +133,8 @@ class AddAddressFragment : Fragment() {
             } else {
                 addressLines.add(fullAddress)
             }
-            addAddressAdapter = AddAddressAdapter(addressLines, requireContext())
+            addAddressAdapter =
+                AddAddressAdapter(addressLines, (activity as HomeActivity), this@AddAddressFragment)
             binding.rvShippingAddress.apply {
                 adapter = addAddressAdapter
                 setHasFixedSize(false)
@@ -204,6 +205,7 @@ class AddAddressFragment : Fragment() {
                         addressLines.add(position, deletedAddressLine)
                         addAddressAdapter.notifyItemInserted(position)
                     }.show()
+                binding.rvShippingAddress.hideKeyboard()
             }
             .setNegativeButton(activity.getString(R.string.cancel)) { _, _ ->
                 addAddressAdapter.notifyDataSetChanged()

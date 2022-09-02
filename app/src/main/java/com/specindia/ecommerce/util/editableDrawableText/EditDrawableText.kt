@@ -12,6 +12,7 @@ import android.view.MotionEvent
 import androidx.appcompat.widget.AppCompatEditText
 import androidx.core.content.ContextCompat
 import com.specindia.ecommerce.R
+import com.specindia.ecommerce.util.showShortToast
 import kotlin.math.abs
 
 class EditDrawableText(context: Context, attrs: AttributeSet) : AppCompatEditText(context, attrs) {
@@ -72,6 +73,7 @@ class EditDrawableText(context: Context, attrs: AttributeSet) : AppCompatEditTex
         val editText = this
         this.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(str: Editable?) {
+
             }
 
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
