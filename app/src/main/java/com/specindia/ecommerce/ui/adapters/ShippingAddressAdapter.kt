@@ -41,7 +41,18 @@ class ShippingAddressAdapter(
                         tvAddress.setTextColor(ContextCompat.getColor(context, R.color.colorGray))
                     }
                     tvAddressType.text = addressType
-                    tvAddress.text = firstLine.plus(secondLine).plus(thirdLine)
+
+                    val fullAddress = if (thirdLine.isEmpty()) {
+                        firstLine.plus(",").plus(secondLine)
+                    } else if (secondLine.isEmpty()) {
+                        firstLine.plus(",")
+                    } else {
+                        firstLine.plus(",").plus(secondLine)
+                            .plus(",")
+                            .plus(thirdLine)
+                    }
+
+                    tvAddress.text = fullAddress
                 }
                 itemView.setOnClickListener {
                     onShippingAddressClickListener.onItemClick(shippingAddress, position)

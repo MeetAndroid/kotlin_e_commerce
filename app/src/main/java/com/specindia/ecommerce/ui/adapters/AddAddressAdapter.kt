@@ -37,7 +37,7 @@ class AddAddressAdapter(
         with(holder) {
             with(binding) {
                 // Initially Add Edit Text are disable by default
-                etAddressLine.setText(addressLine.trim())
+                etAddressLine.setText(addressLine)
                 etAddressLine.setReadOnly(true, InputType.TYPE_NULL)
                 etAddressLine.setTextColor(Color.GRAY)
                 etAddressLine.setCompoundDrawablesWithIntrinsicBounds(null,

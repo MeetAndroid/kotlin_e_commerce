@@ -99,6 +99,7 @@ class AddAddressFragment : Fragment() {
     }
 
     private fun setUpButtonClick() {
+        Log.d("TAG","setUpButtonClick")
         with(binding) {
             btnSave.setOnClickListener {
                 callAddOrUpdateAddressApi()
@@ -133,8 +134,11 @@ class AddAddressFragment : Fragment() {
             } else {
                 addressLines.add(fullAddress)
             }
+
             addAddressAdapter =
-                AddAddressAdapter(addressLines, (activity as HomeActivity), this@AddAddressFragment)
+                AddAddressAdapter(addressLines,
+                    (activity as HomeActivity),
+                    this@AddAddressFragment)
             binding.rvShippingAddress.apply {
                 adapter = addAddressAdapter
                 setHasFixedSize(false)
@@ -185,7 +189,7 @@ class AddAddressFragment : Fragment() {
         MaterialAlertDialogBuilder(activity)
             .setCancelable(false)
             .setTitle(activity.getString(R.string.app_name))
-            .setMessage(activity.getString(R.string.msg_confirm_delete_address_line))
+            .setMessage("You want to delete $deletedAddressLine ?")
             .setPositiveButton(activity.getString(R.string.ok)) { _, _ ->
                 // Swipe To delete Functionality
                 addressLines.removeAt(position)
@@ -320,6 +324,7 @@ class AddAddressFragment : Fragment() {
                     response.data?.let {
 
                         if (response.data.status == "success") {
+                            Log.d("TAG", "SUCCESS")
                             showDialog(getString(R.string.msg_address_added_successesfully),
                                 true,
                                 view)
@@ -352,4 +357,5 @@ class AddAddressFragment : Fragment() {
             }
             .show()
     }
+
 }

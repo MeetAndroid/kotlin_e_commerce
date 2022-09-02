@@ -173,9 +173,17 @@ class ShippingAddressFragment : Fragment(), ShippingAddressAdapter.OnShippingAdd
                             shippingAddressList[viewHolder.adapterPosition]
                         val position = viewHolder.adapterPosition
 
-                        val fullAddress =
-                            deletedAddress.firstLine.plus(deletedAddress.secondLine)
+                        val fullAddress = if (deletedAddress.thirdLine.isEmpty()) {
+                            deletedAddress.firstLine.plus(",").plus(deletedAddress.secondLine)
+                        } else if (deletedAddress.secondLine.isEmpty()) {
+                            deletedAddress.firstLine.plus(",")
+                        } else {
+                            deletedAddress.firstLine.plus(",").plus(deletedAddress.secondLine)
+                                .plus(",")
                                 .plus(deletedAddress.thirdLine)
+                        }
+
+
                         if (deletedAddress.primary) {
                             showDialog(getString(R.string.msg_can_not_delete_primary_address), true)
 

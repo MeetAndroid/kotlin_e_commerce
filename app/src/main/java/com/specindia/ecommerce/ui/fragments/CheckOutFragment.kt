@@ -1,16 +1,17 @@
 package com.specindia.ecommerce.ui.fragments
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.navArgs
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
 import com.specindia.ecommerce.R
 import com.specindia.ecommerce.api.network.NetworkResult
 import com.specindia.ecommerce.databinding.FragmentCheckoutBinding
@@ -23,6 +24,9 @@ import com.specindia.ecommerce.util.showProgressDialog
 import com.specindia.ecommerce.util.showShortToast
 import com.specindia.ecommerce.util.visible
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class CheckOutFragment : Fragment() {
@@ -36,6 +40,7 @@ class CheckOutFragment : Fragment() {
     private var deliveryCost: Int = 0
     private var restaurantId: Int = 0
     private var addressId: Int = 0
+    private var address: GetAddressListData? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -57,29 +62,38 @@ class CheckOutFragment : Fragment() {
         setUpHeader()
         setUpHeaderItemClick()
         setUpButtonClick()
-        setUpData()
         setUpProgressDialog()
+
         val userData = (activity as HomeActivity).dataStoreViewModel.getLoggedInUserData()
         data = Gson().fromJson(userData, AuthResponseData::class.java)
 
-        // (activity as HomeActivity).showOrHideBottomAppBarAndFloatingActionButtonOnScroll()
+        if ((activity as HomeActivity).homeViewModel.getAddressListResponse.value == null) {
+            callGetAddressApi()
+        }
+
+        observeGetAddressResponse()
     }
 
-    private fun setUpData() {
-        val primaryAddressInfo =
-            (activity as HomeActivity).dataStoreViewModel.getPrimaryAddressInfo()
-
-        val addressType = object : TypeToken<GetAddressListData>() {}.type
-        val address = Gson().fromJson<GetAddressListData>(primaryAddressInfo, addressType)
-
+    private fun setUpData(primaryAddress: GetAddressListData?) {
         var fullAddress = ""
-        if (address == null) {
+
+        if (primaryAddress == null) {
             binding.tvChange.text = getString(R.string.add)
         } else {
-            fullAddress = address.firstLine.plus(address.secondLine).plus(address.thirdLine)
+
+            fullAddress = if (primaryAddress.thirdLine.isEmpty()) {
+                primaryAddress.firstLine.plus(",").plus(primaryAddress.secondLine)
+            } else if (primaryAddress.secondLine.isEmpty()) {
+                primaryAddress.firstLine.plus(",")
+            } else {
+                primaryAddress.firstLine.plus(",").plus(primaryAddress.secondLine)
+                    .plus(",")
+                    .plus(primaryAddress.thirdLine)
+            }
+
             binding.tvChange.text = getString(R.string.change)
             binding.tvAddress.text = fullAddress
-            addressId = address.id
+            addressId = primaryAddress.id
         }
 
 
@@ -194,5 +208,55 @@ class CheckOutFragment : Fragment() {
                 }
             }
             .show()
+    }
+
+
+    // ============== GET ADDRESS DATA
+    private fun callGetAddressApi() {
+        Log.e("GetAddress", "Calling...")
+        customProgressDialog.show()
+        (activity as HomeActivity).homeViewModel.getAddressList(
+            getHeaderMap(
+                data.token,
+                true
+            )
+        )
+    }
+
+    // ============== Observe Address List Response
+    private fun observeGetAddressResponse() {
+        (activity as HomeActivity).homeViewModel.getAddressListResponse.observe(
+            viewLifecycleOwner
+        ) { response ->
+
+            when (response) {
+                is NetworkResult.Success -> {
+                    customProgressDialog.dismiss()
+                    response.data?.let { addressList ->
+                        if (addressList.data.isNotEmpty()) {
+                            val primaryAddresses = addressList.data.filter { it.primary }
+                            if (primaryAddresses.isNotEmpty()) {
+                                (activity as HomeActivity).dataStoreViewModel.savePrimaryAddressInfo(
+                                    Gson().toJson(primaryAddresses[0]))
+
+                                address = primaryAddresses[0]
+                            }
+                        }
+                    }
+                }
+                is NetworkResult.Error -> {
+                    customProgressDialog.dismiss()
+                    showDialog(response.message.toString(), false, binding.root)
+                }
+                is NetworkResult.Loading -> {
+                    customProgressDialog.show()
+                }
+            }
+
+            lifecycleScope.launch(Dispatchers.Main) {
+                setUpData(address)
+            }
+
+        }
     }
 }
