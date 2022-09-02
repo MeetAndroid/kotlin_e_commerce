@@ -37,7 +37,7 @@ class AddAddressAdapter(
         with(holder) {
             with(binding) {
                 // Initially Add Edit Text are disable by default
-                etAddressLine.setText(addressLine)
+                etAddressLine.setText(addressLine.trim())
                 etAddressLine.setReadOnly(true, InputType.TYPE_NULL)
                 etAddressLine.setTextColor(Color.GRAY)
                 etAddressLine.setCompoundDrawablesWithIntrinsicBounds(null,
@@ -53,6 +53,7 @@ class AddAddressAdapter(
                         null,
                         ContextCompat.getDrawable(activity, R.drawable.ic_done),
                         null)
+                    etAddressLine.text?.length?.let { it1 -> etAddressLine.setSelection(it1) }
                     etAddressLine.showKeyboard()
                 }
 
