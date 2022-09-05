@@ -285,7 +285,6 @@ class RestaurantDetailsFragment : Fragment(), ProductListAdapter.OnProductItemCl
                         if (!isComeBackFromProductDetails) {
                             callProductsByRestaurantApi(restaurantData.data.id)
                         }
-
                     }
                 }
                 is NetworkResult.Error -> {
@@ -399,8 +398,10 @@ class RestaurantDetailsFragment : Fragment(), ProductListAdapter.OnProductItemCl
                 is NetworkResult.Success -> {
                     customProgressDialog.dismiss()
                     response.data?.let { cartList ->
-                        handleCartBadgeCount(cartList, (activity as HomeActivity),
-                            binding.homeDetailsScreenHeader.frShoppingCart)
+                        handleCartBadgeCount(
+                            cartList, (activity as HomeActivity),
+                            binding.homeDetailsScreenHeader.frShoppingCart
+                        )
 
                         val productsByRestaurant =
                             (activity as HomeActivity).homeViewModel.productsByRestaurant.value
@@ -599,7 +600,6 @@ class RestaurantDetailsFragment : Fragment(), ProductListAdapter.OnProductItemCl
                 isCartExist = false
             )
         }
-
     }
 
 
@@ -628,7 +628,6 @@ class RestaurantDetailsFragment : Fragment(), ProductListAdapter.OnProductItemCl
                                                     break
                                                 }
                                             }
-
                                         }
                                     }
                                 }

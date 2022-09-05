@@ -109,7 +109,7 @@ class ProductListAdapter(
         fun onRemoveAllCartData(cartId: Int)
     }
 
-    /*
+    /**
     1. Remove All Cart by sending cartId as 0
     2. Then Add current Item to cart
     3. This will clear all items of Previous Restaurant from cart and add the new one for current Restaurant
