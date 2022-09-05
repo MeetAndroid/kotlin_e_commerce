@@ -13,6 +13,8 @@ import com.specindia.ecommerce.R
 import com.specindia.ecommerce.databinding.RowProductListItemBinding
 import com.specindia.ecommerce.models.response.home.productsbyrestaurant.ProductsByRestaurantData
 import com.specindia.ecommerce.ui.activity.HomeActivity
+import com.specindia.ecommerce.util.isConnected
+import com.specindia.ecommerce.util.showMaterialSnack
 import com.specindia.ecommerce.util.visible
 
 class ProductListAdapter(
@@ -56,34 +58,72 @@ class ProductListAdapter(
                 }
 
                 btnAdd.setOnClickListener {
-                    val existingRestaurantIdInCart =
-                        activity.dataStoreViewModel.getExistingRestaurantIdFromCart()!!
+                    if (!activity.isConnected) {
+                        showMaterialSnack(
+                            activity,
+                            it,
+                            activity.getString(R.string.message_no_internet_connection)
+                        )
 
-                    if (existingRestaurantIdInCart != 0 && existingRestaurantIdInCart != product.restaurantId) {
-                        btnAdd.visible(true)
-                        clAddOrRemoveProduct.visible(false)
-                        clearItemsFromCartAndAddTheNewOne(product,
-                            position,
-                            btnAdd,
-                            clAddOrRemoveProduct)
                     } else {
-                        btnAdd.visible(false)
-                        clAddOrRemoveProduct.visible(true)
-                        onProductItemClickListener.onAddButtonClick(product, position)
+                        val existingRestaurantIdInCart =
+                            activity.dataStoreViewModel.getExistingRestaurantIdFromCart()!!
+
+                        if (existingRestaurantIdInCart != 0 && existingRestaurantIdInCart != product.restaurantId) {
+                            btnAdd.visible(true)
+                            clAddOrRemoveProduct.visible(false)
+                            clearItemsFromCartAndAddTheNewOne(product,
+                                position,
+                                btnAdd,
+                                clAddOrRemoveProduct)
+                        } else {
+                            btnAdd.visible(false)
+                            clAddOrRemoveProduct.visible(true)
+                            onProductItemClickListener.onAddButtonClick(product, position)
+                        }
+                    }
+                }
+
+                btnRemoveProduct.setOnClickListener {
+                    if (!activity.isConnected) {
+                        showMaterialSnack(
+                            activity,
+                            it,
+                            activity.getString(R.string.message_no_internet_connection)
+                        )
+
+                    } else {
+                        onProductItemClickListener.onRemoveProductButtonClick(product, position)
                     }
 
                 }
 
-                btnRemoveProduct.setOnClickListener {
-                    onProductItemClickListener.onRemoveProductButtonClick(product, position)
-                }
-
                 btnAddProduct.setOnClickListener {
-                    onProductItemClickListener.onAddProductButtonClick(product, position)
+                    if (!activity.isConnected) {
+                        showMaterialSnack(
+                            activity,
+                            it,
+                            activity.getString(R.string.message_no_internet_connection)
+                        )
+
+                    } else {
+                        onProductItemClickListener.onAddProductButtonClick(product, position)
+                    }
+
                 }
 
                 itemView.setOnClickListener {
-                    onProductItemClickListener.onItemClick(product, position)
+                    if (!activity.isConnected) {
+                        showMaterialSnack(
+                            activity,
+                            it,
+                            activity.getString(R.string.message_no_internet_connection)
+                        )
+
+                    } else {
+                        onProductItemClickListener.onItemClick(product, position)
+                    }
+
                 }
             }
         }
@@ -137,7 +177,7 @@ class ProductListAdapter(
                     btnAdd.visible(false)
                     clAddOrRemoveProduct.visible(true)
                     onProductItemClickListener.onAddButtonClick(product, position)
-                },500)
+                }, 500)
 
             }
             .setNegativeButton(activity.getString(R.string.cancel)) { _, _ ->

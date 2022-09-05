@@ -81,18 +81,22 @@ class HomeFragment : Fragment() {
 
         }
         restaurantsAdapter.setOnItemClickListener {
-            view.findNavController()
-                .navigate(HomeFragmentDirections.actionHomeFragmentToRestaurantDetailsFragment(it.id))
+            if (!requireActivity().isConnected) {
+                showMaterialSnack(
+                    requireContext(),
+                    view,
+                    getString(R.string.message_no_internet_connection)
+                )
+            } else {
+                view.findNavController()
+                    .navigate(HomeFragmentDirections.actionHomeFragmentToRestaurantDetailsFragment(
+                        it.id))
+            }
+
         }
         categoryListAdapter.setOnItemClickListener {
             requireActivity().showLongToast("${it.name} clicked")
         }
-
-        binding.tvSearch.setOnClickListener {
-            it.findNavController()
-                .navigate(HomeFragmentDirections.actionHomeFragmentToSearchFragment())
-        }
-
 
         binding.swipeRefreshLayout.setOnRefreshListener {
             binding.swipeRefreshLayout.isRefreshing = false
@@ -167,8 +171,18 @@ class HomeFragment : Fragment() {
                 ivSearch.visible(true)
 
                 ivSearch.setOnClickListener {
-                    view?.findNavController()
-                        ?.navigate(HomeFragmentDirections.actionHomeFragmentToSearchFragment())
+                    if (!requireActivity().isConnected) {
+                        showMaterialSnack(
+                            requireContext(),
+                            it,
+                            getString(R.string.message_no_internet_connection)
+                        )
+
+                    } else {
+                        it.findNavController()
+                            .navigate(HomeFragmentDirections.actionHomeFragmentToSearchFragment())
+                    }
+
                 }
 
             }
@@ -179,8 +193,17 @@ class HomeFragment : Fragment() {
         with(binding) {
             with(homeMenuScreenHeader) {
                 frShoppingCart.setOnClickListener {
-                    view?.findNavController()
-                        ?.navigate(HomeFragmentDirections.actionHomeFragmentToCartListFragment())
+                    if (!requireActivity().isConnected) {
+                        showMaterialSnack(
+                            requireContext(),
+                            it,
+                            getString(R.string.message_no_internet_connection)
+                        )
+                    } else {
+                        view?.findNavController()
+                            ?.navigate(HomeFragmentDirections.actionHomeFragmentToCartListFragment())
+                    }
+
                 }
             }
         }
@@ -240,9 +263,19 @@ class HomeFragment : Fragment() {
                 topProductAdapter.notifyDataSetChanged()
 
                 headerTopDishes.tvViewAll.setOnClickListener {
-                    view?.findNavController()?.navigate(
-                        HomeFragmentDirections.actionHomeFragmentToViewAllProductFragment(Constants.TOP_DISHES)
-                    )
+                    if (!requireActivity().isConnected) {
+                        showMaterialSnack(
+                            requireContext(),
+                            it,
+                            getString(R.string.message_no_internet_connection)
+                        )
+                    } else {
+                        view?.findNavController()?.navigate(
+                            HomeFragmentDirections.actionHomeFragmentToViewAllProductFragment(
+                                Constants.TOP_DISHES)
+                        )
+                    }
+
                 }
             } else {
                 headerTopDishes.listHeader.visible(false)
@@ -267,9 +300,20 @@ class HomeFragment : Fragment() {
                 restaurantsAdapter.notifyDataSetChanged()
 
                 headerPopularRestaurants.tvViewAll.setOnClickListener {
-                    view?.findNavController()?.navigate(
-                        HomeFragmentDirections.actionHomeFragmentToViewAllProductFragment(Constants.RESTAURANT)
-                    )
+                    if (!requireActivity().isConnected) {
+                        showMaterialSnack(
+                            requireContext(),
+                            it,
+                            getString(R.string.message_no_internet_connection)
+                        )
+
+                    } else {
+                        view?.findNavController()?.navigate(
+                            HomeFragmentDirections.actionHomeFragmentToViewAllProductFragment(
+                                Constants.RESTAURANT)
+                        )
+                    }
+
                 }
             } else {
                 headerPopularRestaurants.listHeader.visible(false)
@@ -294,9 +338,20 @@ class HomeFragment : Fragment() {
                 categoryListAdapter.notifyDataSetChanged()
 
                 headerCategoryList.tvViewAll.setOnClickListener {
-                    view?.findNavController()?.navigate(
-                        HomeFragmentDirections.actionHomeFragmentToViewAllProductFragment(Constants.CATEGORY)
-                    )
+                    if (!requireActivity().isConnected) {
+                        showMaterialSnack(
+                            requireContext(),
+                            it,
+                            getString(R.string.message_no_internet_connection)
+                        )
+
+                    } else {
+                        view?.findNavController()?.navigate(
+                            HomeFragmentDirections.actionHomeFragmentToViewAllProductFragment(
+                                Constants.CATEGORY)
+                        )
+                    }
+
                 }
             } else {
                 headerCategoryList.listHeader.visible(false)

@@ -96,8 +96,18 @@ class FoodMenuFragment : Fragment() {
         with(binding) {
             with(foodMenuScreenHeader) {
                 frShoppingCart.setOnClickListener {
-                    view?.findNavController()
-                        ?.navigate(FoodMenuFragmentDirections.actionFoodMenuFragmentToCartListFragment())
+                    if (!requireActivity().isConnected) {
+                        showMaterialSnack(
+                            requireContext(),
+                            it,
+                            getString(R.string.message_no_internet_connection)
+                        )
+
+                    } else {
+                        view?.findNavController()
+                            ?.navigate(FoodMenuFragmentDirections.actionFoodMenuFragmentToCartListFragment())
+                    }
+
                 }
             }
         }

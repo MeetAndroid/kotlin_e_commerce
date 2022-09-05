@@ -19,13 +19,9 @@ import com.specindia.ecommerce.models.request.Parameters
 import com.specindia.ecommerce.models.response.AuthResponseData
 import com.specindia.ecommerce.models.response.home.getaddress.GetAddressListData
 import com.specindia.ecommerce.ui.activity.HomeActivity
-import com.specindia.ecommerce.util.getHeaderMap
-import com.specindia.ecommerce.util.showProgressDialog
-import com.specindia.ecommerce.util.showShortToast
-import com.specindia.ecommerce.util.visible
+import com.specindia.ecommerce.util.*
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
@@ -133,18 +129,34 @@ class CheckOutFragment : Fragment() {
 
     private fun setUpButtonClick() {
         binding.btnSendOrder.setOnClickListener {
-
-            if (addressId != 0) {
-                callCreateOrderApi()
-                observeCreateOrderResponse(it)
+            if (!requireActivity().isConnected) {
+                showMaterialSnack(
+                    requireContext(),
+                    it,
+                    getString(R.string.message_no_internet_connection)
+                )
             } else {
-                (activity as HomeActivity).showShortToast(getString(R.string.add_primary_address))
+                if (addressId != 0) {
+                    callCreateOrderApi()
+                    observeCreateOrderResponse(it)
+                } else {
+                    (activity as HomeActivity).showShortToast(getString(R.string.add_primary_address))
+                }
             }
 
         }
         binding.tvChange.setOnClickListener {
-            it.findNavController()
-                .navigate(CheckOutFragmentDirections.actionCheckOutFragmentToShippingAddressFragment())
+            if (!requireActivity().isConnected) {
+                showMaterialSnack(
+                    requireContext(),
+                    it,
+                    getString(R.string.message_no_internet_connection)
+                )
+            } else {
+                it.findNavController()
+                    .navigate(CheckOutFragmentDirections.actionCheckOutFragmentToShippingAddressFragment())
+            }
+
         }
     }
 

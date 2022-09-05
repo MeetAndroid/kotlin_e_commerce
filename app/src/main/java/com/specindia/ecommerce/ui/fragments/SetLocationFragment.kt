@@ -41,12 +41,9 @@ import com.specindia.ecommerce.R
 import com.specindia.ecommerce.databinding.FragmentSetLocationBinding
 import com.specindia.ecommerce.models.response.AuthResponseData
 import com.specindia.ecommerce.ui.activity.HomeActivity
-import com.specindia.ecommerce.util.CustomInfoWindowForGoogleMap
+import com.specindia.ecommerce.util.*
 import com.specindia.ecommerce.util.PermissionUtils.isLocationEnabled
 import com.specindia.ecommerce.util.PermissionUtils.locationRequest
-import com.specindia.ecommerce.util.enable
-import com.specindia.ecommerce.util.showShortToast
-import com.specindia.ecommerce.util.visible
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -209,11 +206,21 @@ open class SetLocationFragment : Fragment(), OnMapReadyCallback {
     private fun setUpButtonClick() {
         with(binding) {
             btnNext.setOnClickListener {
-                it.findNavController()
-                    .navigate(SetLocationFragmentDirections.actionSetLocationFragmentToAddAddressFragment(
-                        fullAddress = fullAddress,
-                        latitude = latitude.toString(),
-                        longitude = longitude.toString()))
+
+                if (!requireActivity().isConnected) {
+                    showMaterialSnack(
+                        requireContext(),
+                        it,
+                        getString(R.string.message_no_internet_connection)
+                    )
+
+                } else {
+                    it.findNavController()
+                        .navigate(SetLocationFragmentDirections.actionSetLocationFragmentToAddAddressFragment(
+                            fullAddress = fullAddress,
+                            latitude = latitude.toString(),
+                            longitude = longitude.toString()))
+                }
             }
         }
     }

@@ -22,12 +22,10 @@ import com.specindia.ecommerce.models.response.home.product.ViewAllItems
 import com.specindia.ecommerce.ui.activity.HomeActivity
 import com.specindia.ecommerce.ui.adapters.ViewAllAdapter
 import com.specindia.ecommerce.ui.adapters.ViewAllRestaurantAdapter
+import com.specindia.ecommerce.util.*
 import com.specindia.ecommerce.util.Constants.Companion.CATEGORY
 import com.specindia.ecommerce.util.Constants.Companion.RESTAURANT
 import com.specindia.ecommerce.util.Constants.Companion.TOP_DISHES
-import com.specindia.ecommerce.util.getHeaderMap
-import com.specindia.ecommerce.util.showProgressDialog
-import com.specindia.ecommerce.util.visible
 
 class ViewAllProductFragment : Fragment(), ViewAllAdapter.OnViewAllClickListener {
 
@@ -221,10 +219,22 @@ class ViewAllProductFragment : Fragment(), ViewAllAdapter.OnViewAllClickListener
                             viewAllRestaurantAdapter.notifyDataSetChanged()
 
                             viewAllRestaurantAdapter.setOnItemClickListener {
-                                view?.findNavController()
-                                    ?.navigate(ViewAllProductFragmentDirections.actionViewAllProductFragmentToRestaurantDetailsFragment(
-                                        it.id!!
-                                    ))
+                                if (!requireActivity().isConnected) {
+                                    view?.let { it1 ->
+                                        showMaterialSnack(
+                                            requireContext(),
+                                            it1,
+                                            getString(R.string.message_no_internet_connection)
+                                        )
+                                    }
+
+                                } else {
+                                    view?.findNavController()
+                                        ?.navigate(ViewAllProductFragmentDirections.actionViewAllProductFragmentToRestaurantDetailsFragment(
+                                            it.id!!
+                                        ))
+                                }
+
                             }
                         }
                     }

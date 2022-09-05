@@ -9,6 +9,8 @@ import com.specindia.ecommerce.R
 import com.specindia.ecommerce.databinding.RowShippingAddressBinding
 import com.specindia.ecommerce.models.response.home.getaddress.GetAddressListData
 import com.specindia.ecommerce.ui.activity.HomeActivity
+import com.specindia.ecommerce.util.isConnected
+import com.specindia.ecommerce.util.showMaterialSnack
 
 class ShippingAddressAdapter(
     private val arrayList: ArrayList<GetAddressListData>,
@@ -55,7 +57,17 @@ class ShippingAddressAdapter(
                     tvAddress.text = fullAddress
                 }
                 itemView.setOnClickListener {
-                    onShippingAddressClickListener.onItemClick(shippingAddress, position)
+                    if (!context.isConnected) {
+                        showMaterialSnack(
+                            context,
+                            it,
+                            context.getString(R.string.message_no_internet_connection)
+                        )
+
+                    }else{
+                        onShippingAddressClickListener.onItemClick(shippingAddress, position)
+                    }
+
                 }
             }
         }

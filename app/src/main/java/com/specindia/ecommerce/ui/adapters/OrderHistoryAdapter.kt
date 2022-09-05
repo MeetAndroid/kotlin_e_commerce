@@ -6,12 +6,16 @@ import androidx.recyclerview.widget.RecyclerView
 import com.specindia.ecommerce.R
 import com.specindia.ecommerce.databinding.RowOrderHistoryBinding
 import com.specindia.ecommerce.models.response.home.orderlist.OrderData
+import com.specindia.ecommerce.ui.activity.HomeActivity
 import com.specindia.ecommerce.util.Constants
 import com.specindia.ecommerce.util.dateFormat
+import com.specindia.ecommerce.util.isConnected
+import com.specindia.ecommerce.util.showMaterialSnack
 
 class OrderHistoryAdapter(
     private val arrayList: ArrayList<OrderData>,
-    private val onItemOrderHistoryItemClick: OrderHistoryAdapter.OnOrderHistoryItemClickListener,
+    private val onItemOrderHistoryItemClick: OnOrderHistoryItemClickListener,
+    private val activity: HomeActivity,
 ) :
     RecyclerView.Adapter<OrderHistoryAdapter.OrderListViewHolder>() {
 
@@ -40,7 +44,17 @@ class OrderHistoryAdapter(
                     })
 
                 itemView.setOnClickListener {
-                    order.id?.let { it1 -> onItemOrderHistoryItemClick.onItemClick(it1) }
+                    if (!activity.isConnected) {
+                        showMaterialSnack(
+                            activity,
+                            it,
+                            activity.getString(R.string.message_no_internet_connection)
+                        )
+
+                    } else {
+                        order.id?.let { it1 -> onItemOrderHistoryItemClick.onItemClick(it1) }
+                    }
+
                 }
             }
         }

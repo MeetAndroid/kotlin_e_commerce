@@ -99,11 +99,21 @@ class AddAddressFragment : Fragment() {
     }
 
     private fun setUpButtonClick() {
-        Log.d("TAG","setUpButtonClick")
+        Log.d("TAG", "setUpButtonClick")
         with(binding) {
             btnSave.setOnClickListener {
-                callAddOrUpdateAddressApi()
-                observeAddOrUpdateAddressResponse(it)
+                if (!requireActivity().isConnected) {
+                    showMaterialSnack(
+                        requireContext(),
+                        it,
+                        getString(R.string.message_no_internet_connection)
+                    )
+
+                } else {
+                    callAddOrUpdateAddressApi()
+                    observeAddOrUpdateAddressResponse(it)
+                }
+
             }
         }
     }

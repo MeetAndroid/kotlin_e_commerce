@@ -16,12 +16,9 @@ import com.specindia.ecommerce.databinding.FragmentProductDetailsBinding
 import com.specindia.ecommerce.models.response.home.SearchItem
 import com.specindia.ecommerce.models.response.home.productsbyrestaurant.ProductsByRestaurantData
 import com.specindia.ecommerce.ui.activity.HomeActivity
-import com.specindia.ecommerce.util.Constants
+import com.specindia.ecommerce.util.*
 import com.specindia.ecommerce.util.Constants.Companion.IS_FROM_PRODUCT_DETAILS
 import com.specindia.ecommerce.util.Constants.Companion.REQUEST_FROM_RESTAURANT_DETAILS
-import com.specindia.ecommerce.util.setRandomBackgroundColor
-import com.specindia.ecommerce.util.updateCartCountOnUI
-import com.specindia.ecommerce.util.visible
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -121,8 +118,18 @@ class ProductDetailsFragment : Fragment() {
                     it.findNavController().popBackStack()
                 }
                 frShoppingCart.setOnClickListener {
-                    view?.findNavController()
-                        ?.navigate(ProductDetailsFragmentDirections.actionProductDetailsFragmentToCartListFragment())
+                    if (!requireActivity().isConnected) {
+                        showMaterialSnack(
+                            requireContext(),
+                            it,
+                            getString(R.string.message_no_internet_connection)
+                        )
+
+                    } else {
+                        view?.findNavController()
+                            ?.navigate(ProductDetailsFragmentDirections.actionProductDetailsFragmentToCartListFragment())
+                    }
+
 
                 }
             }

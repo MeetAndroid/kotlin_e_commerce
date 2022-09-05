@@ -118,7 +118,7 @@ class SearchFragment : Fragment(), SearchListAdapter.OnSearchItemClickListener {
     }
 
     private fun setupUI(searchList: ArrayList<SearchItem>) {
-        searchListAdapter = SearchListAdapter(searchList, this)
+        searchListAdapter = SearchListAdapter(searchList, this,(activity as HomeActivity))
         binding.rvSearch.adapter = searchListAdapter
     }
 

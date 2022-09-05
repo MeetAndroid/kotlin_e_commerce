@@ -7,10 +7,14 @@ import com.bumptech.glide.Glide
 import com.specindia.ecommerce.R
 import com.specindia.ecommerce.databinding.RowCartListItemBinding
 import com.specindia.ecommerce.models.response.cart.getcart.GetCartData
+import com.specindia.ecommerce.ui.activity.HomeActivity
+import com.specindia.ecommerce.util.isConnected
+import com.specindia.ecommerce.util.showMaterialSnack
 
 class CartListAdapter(
     private val arrayList: ArrayList<GetCartData>,
     private val onCartItemClickListener: OnCartItemClickListener,
+    private val activity: HomeActivity,
 ) :
     RecyclerView.Adapter<CartListAdapter.CartListViewHolder>() {
 
@@ -41,15 +45,44 @@ class CartListAdapter(
                 tvQty.text = cartData.quantity.toString()
 
                 btnRemoveProduct.setOnClickListener {
+                    if (!activity.isConnected) {
+                        showMaterialSnack(
+                            activity,
+                            it,
+                            activity.getString(R.string.message_no_internet_connection)
+                        )
+
+                    } else {
+                        onCartItemClickListener.onRemoveProductButtonClick(cartData, position)
+                    }
                     onCartItemClickListener.onRemoveProductButtonClick(cartData, position)
                 }
 
                 btnAddProduct.setOnClickListener {
-                    onCartItemClickListener.onAddProductButtonClick(cartData, position)
+                    if (!activity.isConnected) {
+                        showMaterialSnack(
+                            activity,
+                            it,
+                            activity.getString(R.string.message_no_internet_connection)
+                        )
+
+                    } else {
+                        onCartItemClickListener.onAddProductButtonClick(cartData, position)
+                    }
+
                 }
 
                 itemView.setOnClickListener {
-                    onCartItemClickListener.onItemClick(cartData, position)
+                    if (!activity.isConnected) {
+                        showMaterialSnack(
+                            activity,
+                            it,
+                            activity.getString(R.string.message_no_internet_connection)
+                        )
+
+                    } else {
+                        onCartItemClickListener.onItemClick(cartData, position)
+                    }
                 }
             }
         }

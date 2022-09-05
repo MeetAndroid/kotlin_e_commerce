@@ -141,11 +141,31 @@ class WelcomeFragment : Fragment() {
             }
 
             btnFacebook.setOnClickListener {
-                doFBLogin()
+                if (!requireActivity().isConnected) {
+                    showMaterialSnack(
+                        requireContext(),
+                        it,
+                        getString(R.string.message_no_internet_connection)
+                    )
+
+                } else {
+                    doFBLogin()
+                }
+
             }
 
             btnGooglePlus.setOnClickListener {
-                signIn()
+                if (!requireActivity().isConnected) {
+                    showMaterialSnack(
+                        requireContext(),
+                        it,
+                        getString(R.string.message_no_internet_connection)
+                    )
+
+                } else {
+                    signIn()
+                }
+
             }
         }
     }
@@ -319,7 +339,7 @@ class WelcomeFragment : Fragment() {
         try {
 //            customProgressDialog.show()
             val account = completedTask.getResult(ApiException::class.java)
-            Log.w(TAG, "signInResult:success code=" +Gson().toJson(account))
+            Log.w(TAG, "signInResult:success code=" + Gson().toJson(account))
             fbUserFirstName = account.givenName.toString()
             fbUserLastName = account.familyName.toString()
             fbToken = account.id.toString()

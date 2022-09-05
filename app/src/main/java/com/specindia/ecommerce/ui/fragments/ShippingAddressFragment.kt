@@ -86,12 +86,32 @@ class ShippingAddressFragment : Fragment(), ShippingAddressAdapter.OnShippingAdd
     private fun setUpButtonClick() {
         with(binding) {
             btnAddNewAddress.setOnClickListener {
-                it.findNavController()
-                    .navigate(ShippingAddressFragmentDirections.actionShippingAddressFragmentToSetLocationFragment())
+                if (!requireActivity().isConnected) {
+                    showMaterialSnack(
+                        requireContext(),
+                        it,
+                        getString(R.string.message_no_internet_connection)
+                    )
+
+                } else {
+                    it.findNavController()
+                        .navigate(ShippingAddressFragmentDirections.actionShippingAddressFragmentToSetLocationFragment())
+                }
+
             }
             noDataFound.tvNoData.setOnClickListener {
-                it.findNavController()
-                    .navigate(ShippingAddressFragmentDirections.actionShippingAddressFragmentToSetLocationFragment())
+                if (!requireActivity().isConnected) {
+                    showMaterialSnack(
+                        requireContext(),
+                        it,
+                        getString(R.string.message_no_internet_connection)
+                    )
+
+                } else {
+                    it.findNavController()
+                        .navigate(ShippingAddressFragmentDirections.actionShippingAddressFragmentToSetLocationFragment())
+                }
+
             }
 
         }
@@ -191,7 +211,8 @@ class ShippingAddressFragment : Fragment(), ShippingAddressAdapter.OnShippingAdd
                             confirmToDeleteAddress((activity as HomeActivity),
                                 deletedAddress,
                                 fullAddress,
-                                position
+                                position,
+                                viewHolder.itemView
                             )
                         }
 
@@ -211,14 +232,26 @@ class ShippingAddressFragment : Fragment(), ShippingAddressAdapter.OnShippingAdd
         deletedAddress: GetAddressListData,
         fullAddress: String,
         position: Int,
+        itemView: View,
     ) {
         MaterialAlertDialogBuilder(activity)
             .setCancelable(false)
             .setTitle(activity.getString(R.string.app_name))
             .setMessage(activity.getString(R.string.msg_confirm_delete_address))
             .setPositiveButton(activity.getString(R.string.ok)) { _, _ ->
-                callRemoveAddressApi(deletedAddress.id)
-                observeRemoveAddressResponse(fullAddress)
+                if (!requireActivity().isConnected) {
+                    showMaterialSnack(
+                        requireContext(),
+                        itemView,
+                        getString(R.string.message_no_internet_connection)
+                    )
+                    shippingAddressAdapter.notifyDataSetChanged()
+                }
+                else{
+                    callRemoveAddressApi(deletedAddress.id)
+                    observeRemoveAddressResponse(fullAddress)
+                }
+
             }
             .setNegativeButton(activity.getString(R.string.cancel)) { _, _ ->
                 shippingAddressAdapter.notifyDataSetChanged()

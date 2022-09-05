@@ -120,7 +120,7 @@ class OrderHistoryFragment : Fragment(), OrderHistoryAdapter.OnOrderHistoryItemC
                             orderList.clear()
                             orderList.addAll(it.data)
                             orderHistoryAdapter =
-                                OrderHistoryAdapter(orderList, this@OrderHistoryFragment)
+                                OrderHistoryAdapter(orderList, this@OrderHistoryFragment,(activity as HomeActivity))
                             rvOrderHistory.adapter = orderHistoryAdapter
 
                             if (orderList.isNotEmpty()) {
