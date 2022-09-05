@@ -160,31 +160,40 @@ class ProductDetailsFragment : Fragment() {
         }
 
         binding.btn1.setOnClickListener {
-            if (tag == Constants.RESTAURANT) {
-                if (existingRestaurantIdInCart == 0) {
-                    callAddButtonApiCall()
-                    observerAddButton()
-                } else {
-                    if (existingRestaurantIdInCart == productsByRestaurantData.restaurantId) {
-                        callAddButtonApiCall()
-                        observerAddButton()
-                    } else {
-                        clearItemsFromCartAndAddTheNewOne()
-                    }
-                }
+            if (!requireActivity().isConnected) {
+                showMaterialSnack(
+                    requireContext(),
+                    it,
+                    getString(R.string.message_no_internet_connection)
+                )
             } else {
-                if (existingRestaurantIdInCart != 0) {
-                    if (existingRestaurantIdInCart == searchItem?.RestaurantId) {
+                if (tag == Constants.RESTAURANT) {
+                    if (existingRestaurantIdInCart == 0) {
                         callAddButtonApiCall()
                         observerAddButton()
                     } else {
-                        clearItemsFromCartAndAddTheNewOne()
+                        if (existingRestaurantIdInCart == productsByRestaurantData.restaurantId) {
+                            callAddButtonApiCall()
+                            observerAddButton()
+                        } else {
+                            clearItemsFromCartAndAddTheNewOne()
+                        }
                     }
                 } else {
-                    callAddButtonApiCall()
-                    observerAddButton()
+                    if (existingRestaurantIdInCart != 0) {
+                        if (existingRestaurantIdInCart == searchItem?.RestaurantId) {
+                            callAddButtonApiCall()
+                            observerAddButton()
+                        } else {
+                            clearItemsFromCartAndAddTheNewOne()
+                        }
+                    } else {
+                        callAddButtonApiCall()
+                        observerAddButton()
+                    }
                 }
             }
+
         }
         binding.btnAddProduct.setOnClickListener {
             if (tag == Constants.RESTAURANT) {
@@ -258,8 +267,16 @@ class ProductDetailsFragment : Fragment() {
                     it.findNavController().popBackStack()
                 }
                 frShoppingCart.setOnClickListener {
-                    view?.findNavController()
-                        ?.navigate(ProductDetailsFragmentDirections.actionProductDetailsFragmentToCartListFragment())
+                    if (!requireActivity().isConnected) {
+                        showMaterialSnack(
+                            requireContext(),
+                            it,
+                            getString(R.string.message_no_internet_connection)
+                        )
+                    } else {
+                        view?.findNavController()
+                            ?.navigate(ProductDetailsFragmentDirections.actionProductDetailsFragmentToCartListFragment())
+                    }
                 }
             }
         }
@@ -316,19 +333,9 @@ class ProductDetailsFragment : Fragment() {
         (activity as HomeActivity).homeViewModel.removeFromCart.observe(
             viewLifecycleOwner
         ) { response ->
-                    if (!requireActivity().isConnected) {
-                        view?.let {
-                            showMaterialSnack(
-                                requireContext(),
-                                it,
-                                getString(R.string.message_no_internet_connection)
-                            )
-                        }
 
-                    } else {
-                        view?.findNavController()
-                            ?.navigate(ProductDetailsFragmentDirections.actionProductDetailsFragmentToCartListFragment())
-                    }
+            view?.findNavController()
+                ?.navigate(ProductDetailsFragmentDirections.actionProductDetailsFragmentToCartListFragment())
 
 
             when (response) {
