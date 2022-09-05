@@ -317,11 +317,13 @@ class ProductDetailsFragment : Fragment() {
             viewLifecycleOwner
         ) { response ->
                     if (!requireActivity().isConnected) {
-                        showMaterialSnack(
-                            requireContext(),
-                            it,
-                            getString(R.string.message_no_internet_connection)
-                        )
+                        view?.let {
+                            showMaterialSnack(
+                                requireContext(),
+                                it,
+                                getString(R.string.message_no_internet_connection)
+                            )
+                        }
 
                     } else {
                         view?.findNavController()
