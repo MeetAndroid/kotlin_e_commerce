@@ -34,24 +34,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tvDelivering" />
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/tvSearch"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="16dp"
-        android:layout_marginTop="10dp"
-        android:background="@drawable/bg_search"
-        android:drawableStart="@drawable/ic_search"
-        android:drawablePadding="5dp"
-        android:fontFamily="@font/roboto_medium"
-        android:paddingHorizontal="16dp"
-        android:paddingVertical="10dp"
-        android:text="@string/search_food"
-        android:textAppearance="@style/TextAppearance.AppCompat.Small"
-        android:textColor="@color/colorHeaderText"
-        android:visibility="gone"
-        app:layout_constraintTop_toBottomOf="@+id/spinnerLocation" />
-
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/swipeRefreshLayout"
         android:layout_width="match_parent"
@@ -60,7 +42,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvSearch">
+        app:layout_constraintTop_toBottomOf="@id/spinnerLocation">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"

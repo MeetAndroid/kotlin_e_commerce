@@ -316,6 +316,18 @@ class ProductDetailsFragment : Fragment() {
         (activity as HomeActivity).homeViewModel.removeFromCart.observe(
             viewLifecycleOwner
         ) { response ->
+                    if (!requireActivity().isConnected) {
+                        showMaterialSnack(
+                            requireContext(),
+                            it,
+                            getString(R.string.message_no_internet_connection)
+                        )
+
+                    } else {
+                        view?.findNavController()
+                            ?.navigate(ProductDetailsFragmentDirections.actionProductDetailsFragmentToCartListFragment())
+                    }
+
 
             when (response) {
                 is NetworkResult.Success -> {

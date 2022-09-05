@@ -11,9 +11,7 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.specindia.ecommerce.R
 import com.specindia.ecommerce.databinding.FragmentMoreBinding
 import com.specindia.ecommerce.ui.activity.HomeActivity
-import com.specindia.ecommerce.util.logout
-import com.specindia.ecommerce.util.updateCartCountOnUI
-import com.specindia.ecommerce.util.visible
+import com.specindia.ecommerce.util.*
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -38,9 +36,19 @@ class MoreFragment : Fragment() {
 
 
         binding.clMyOrder.setOnClickListener {
-            view.findNavController().navigate(
-                MoreFragmentDirections.actionMoreFragmentToOrderHistoryFragment()
-            )
+            if (!requireActivity().isConnected) {
+                showMaterialSnack(
+                    requireContext(),
+                    it,
+                    getString(R.string.message_no_internet_connection)
+                )
+
+            } else {
+                view.findNavController().navigate(
+                    MoreFragmentDirections.actionMoreFragmentToOrderHistoryFragment()
+                )
+            }
+
         }
     }
 
@@ -63,8 +71,18 @@ class MoreFragment : Fragment() {
         with(binding) {
             with(MoreScreenHeader) {
                 frShoppingCart.setOnClickListener {
-                    view?.findNavController()
-                        ?.navigate(MoreFragmentDirections.actionMoreFragmentToCartListFragment())
+                    if (!requireActivity().isConnected) {
+                        showMaterialSnack(
+                            requireContext(),
+                            it,
+                            getString(R.string.message_no_internet_connection)
+                        )
+
+                    } else {
+                        view?.findNavController()
+                            ?.navigate(MoreFragmentDirections.actionMoreFragmentToCartListFragment())
+                    }
+
                 }
             }
         }

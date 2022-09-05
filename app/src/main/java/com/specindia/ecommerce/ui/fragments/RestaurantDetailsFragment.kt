@@ -218,8 +218,18 @@ class RestaurantDetailsFragment : Fragment(), ProductListAdapter.OnProductItemCl
                 }
 
                 frShoppingCart.setOnClickListener {
-                    view?.findNavController()
-                        ?.navigate(RestaurantDetailsFragmentDirections.actionRestaurantDetailsFragmentToCartListFragment())
+                    if (!requireActivity().isConnected) {
+                        showMaterialSnack(
+                            requireContext(),
+                            it,
+                            getString(R.string.message_no_internet_connection)
+                        )
+
+                    } else {
+                        view?.findNavController()
+                            ?.navigate(RestaurantDetailsFragmentDirections.actionRestaurantDetailsFragmentToCartListFragment())
+                    }
+
                 }
             }
         }

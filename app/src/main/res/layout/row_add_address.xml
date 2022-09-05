@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/clAddAddress"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -15,6 +14,7 @@
         android:layout_height="wrap_content"
         app:cardBackgroundColor="@color/white"
         app:cardElevation="7dp"
+        android:background="@null"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -25,18 +25,23 @@
             android:layout_height="match_parent"
             android:padding="8dp">
 
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/tvAddressLine"
+            <com.specindia.ecommerce.util.editableDrawableText.EditDrawableText
+                android:id="@+id/etAddressLine"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@null"
+                android:drawableEnd="@drawable/ic_edit"
+                android:drawablePadding="8dp"
+                android:digits=""
                 android:fontFamily="@font/roboto_bold"
+                android:inputType="text"
                 android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                 android:textColor="@android:color/black"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                tools:text="Home" />
+                />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </com.google.android.material.card.MaterialCardView>
 

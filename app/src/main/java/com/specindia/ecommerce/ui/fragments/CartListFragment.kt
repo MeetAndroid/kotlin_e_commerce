@@ -105,15 +105,25 @@ class CartListFragment : Fragment(), CartListAdapter.OnCartItemClickListener {
     private fun setUpButtonClick() {
         with(binding) {
             btnCheckOut.setOnClickListener {
-                it.findNavController()
-                    .navigate(
-                        CartListFragmentDirections.actionCartListFragmentToCheckOutFragment(
-                            total = total,
-                            subTotal = subTotal,
-                            extraCharges = deliveryCost,
-                            restaurantId = restaurantId
-                        )
+                if (!requireActivity().isConnected) {
+                    showMaterialSnack(
+                        requireContext(),
+                        it,
+                        getString(R.string.message_no_internet_connection)
                     )
+
+                } else {
+                    it.findNavController()
+                        .navigate(
+                            CartListFragmentDirections.actionCartListFragmentToCheckOutFragment(
+                                total = total,
+                                subTotal = subTotal,
+                                extraCharges = deliveryCost,
+                                restaurantId = restaurantId
+                            )
+                        )
+                }
+
             }
         }
     }
@@ -121,7 +131,7 @@ class CartListFragment : Fragment(), CartListAdapter.OnCartItemClickListener {
     private fun setUpRecyclerView() {
         // Carts
         cartList = ArrayList()
-        cartListAdapter = CartListAdapter(cartList, this)
+        cartListAdapter = CartListAdapter(cartList, this, (activity as HomeActivity))
         binding.rvCart.apply {
             adapter = cartListAdapter
             setHasFixedSize(false)

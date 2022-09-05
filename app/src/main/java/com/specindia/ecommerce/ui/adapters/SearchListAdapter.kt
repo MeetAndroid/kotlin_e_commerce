@@ -5,15 +5,16 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.specindia.ecommerce.R
-import com.specindia.ecommerce.databinding.RowProductListItemBinding
 import com.specindia.ecommerce.databinding.RowSearchListItemBinding
 import com.specindia.ecommerce.models.response.home.SearchItem
-import com.specindia.ecommerce.models.response.home.productsbyrestaurant.ProductsByRestaurantData
-import com.specindia.ecommerce.util.visible
+import com.specindia.ecommerce.ui.activity.HomeActivity
+import com.specindia.ecommerce.util.isConnected
+import com.specindia.ecommerce.util.showMaterialSnack
 
 class SearchListAdapter(
     private val arrayList: ArrayList<SearchItem>,
-    private val onSearchItemClickListener: OnSearchItemClickListener
+    private val onSearchItemClickListener: OnSearchItemClickListener,
+    private val activity: HomeActivity,
 ) :
     RecyclerView.Adapter<SearchListAdapter.SearchListViewHolder>() {
 
@@ -42,7 +43,17 @@ class SearchListAdapter(
                 tvProductPrice.text = product.price
 
                 itemView.setOnClickListener {
-                    onSearchItemClickListener.onSearchItemClick(product, position)
+                    if (!activity.isConnected) {
+                        showMaterialSnack(
+                            activity,
+                            it,
+                            activity.getString(R.string.message_no_internet_connection)
+                        )
+
+                    } else {
+                        onSearchItemClickListener.onSearchItemClick(product, position)
+                    }
+
                 }
             }
         }
