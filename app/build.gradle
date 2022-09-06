@@ -60,7 +60,6 @@ kapt {
 
 dependencies {
 
-    implementation 'com.google.firebase:firebase-firestore-ktx:24.2.2'
     def splashApiVersion = "1.0.0"
     def retrofitVersion = "2.6.2"
     def loggingInterceptorVersion = "4.10.0"
@@ -78,10 +77,11 @@ dependencies {
     def lottie_version = "5.2.0"
     def shimmer_effect_version = "0.5.0"
     def kotlin_serialization = "1.4.0-RC"
-    def gmail_version = "20.2.0"
-    def firebase_version = "21.0.7"
+    def gmail_version = "20.3.0"
+    def firebase_version = "24.3.0"
     def google_map_version = "18.1.0"
     def fused_location_version = "20.0.0"
+    def place_api_version = "2.6.0"
 
     // Splash API to support Android 12 and higher devices
     implementation "androidx.core:core-splashscreen:$splashApiVersion"
@@ -155,13 +155,18 @@ dependencies {
 
     //gmail login
     implementation "com.google.android.gms:play-services-auth:$gmail_version"
-//    implementation "com.google.firebase:firebase-auth:$firebase_version"
 
     //Google Map
     implementation "com.google.android.gms:play-services-maps:$google_map_version"
 
     // FusedLocation
     implementation "com.google.android.gms:play-services-location:$fused_location_version"
+
+    // Firebase
+    implementation "com.google.firebase:firebase-firestore-ktx:$firebase_version"
+
+    // Place API
+    implementation "com.google.android.libraries.places:places:$place_api_version"
 
     implementation 'androidx.core:core-ktx:1.8.0'
     implementation 'androidx.appcompat:appcompat:1.5.0'

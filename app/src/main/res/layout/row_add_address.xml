@@ -12,9 +12,9 @@
         android:id="@+id/cardView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@null"
         app:cardBackgroundColor="@color/white"
         app:cardElevation="7dp"
-        android:background="@null"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -25,23 +25,34 @@
             android:layout_height="match_parent"
             android:padding="8dp">
 
-            <com.specindia.ecommerce.util.editableDrawableText.EditDrawableText
-                android:id="@+id/etAddressLine"
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tilAddressLine"
+                style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@null"
-                android:drawableEnd="@drawable/ic_edit"
-                android:drawablePadding="8dp"
-                android:digits=""
-                android:fontFamily="@font/roboto_bold"
-                android:inputType="text"
-                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                android:textColor="@android:color/black"
-                android:textStyle="bold"
+                app:hintEnabled="true"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                />
+                app:layout_constraintTop_toTopOf="parent">
+
+                <com.specindia.ecommerce.util.editableDrawableText.EditDrawableText
+                    android:id="@+id/etAddressLine"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:digits=""
+                    android:drawableEnd="@drawable/ic_edit"
+                    android:drawablePadding="8dp"
+                    android:fontFamily="@font/roboto_bold"
+                    android:inputType="text"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                    android:textColor="@android:color/black"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </com.google.android.material.textfield.TextInputLayout>
+
         </androidx.constraintlayout.widget.ConstraintLayout>
     </com.google.android.material.card.MaterialCardView>
 

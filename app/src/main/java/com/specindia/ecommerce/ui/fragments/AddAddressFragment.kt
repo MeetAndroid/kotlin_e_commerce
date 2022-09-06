@@ -66,6 +66,9 @@ class AddAddressFragment : Fragment() {
         fullAddress = args.fullAddress
         latitude = args.latitude
         longitude = args.longitude
+        firstLine = args.firstLine
+        secondLine = args.secondLine
+        thirdLine = args.thirdLine
 
         setUpHeader()
         setUpHeaderItemClick()
@@ -139,11 +142,15 @@ class AddAddressFragment : Fragment() {
         if (fullAddress.isNotEmpty()) {
             showData()
 
-            if (fullAddress.contains(",")) {
-                addressLines = fullAddress.split(",") as ArrayList<String>
-            } else {
-                addressLines.add(fullAddress)
-            }
+//            if (fullAddress.contains(",")) {
+//                addressLines = fullAddress.split(",") as ArrayList<String>
+//            } else {
+//                addressLines.add(fullAddress)
+//            }
+
+            addressLines.add(firstLine)
+            addressLines.add(secondLine)
+            addressLines.add(thirdLine)
 
             addAddressAdapter =
                 AddAddressAdapter(addressLines,
@@ -237,7 +244,7 @@ class AddAddressFragment : Fragment() {
     // ============== GET CART DATA
     private fun callAddOrUpdateAddressApi() {
         addressType = binding.spAddressType.selectedItem.toString()
-        convertAddressListToLines()
+//        convertAddressListToLines()
 
         customProgressDialog.show()
         val parameter = Parameters(

@@ -19,6 +19,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
@@ -34,6 +35,10 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.MapView
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.model.*
+import com.google.android.libraries.places.api.Places
+import com.google.android.libraries.places.api.model.Place
+import com.google.android.libraries.places.widget.Autocomplete
+import com.google.android.libraries.places.widget.model.AutocompleteActivityMode
 import com.google.android.material.badge.ExperimentalBadgeUtils
 import com.google.firebase.firestore.GeoPoint
 import com.google.gson.Gson
@@ -71,9 +76,13 @@ open class SetLocationFragment : Fragment(), OnMapReadyCallback {
     private var longitude = 0.0
     var currentLocation: LatLng = LatLng(0.0, 0.0)
     private var fullAddress = ""
+    private var firstLine = ""
+    private var secondLine = ""
+    private var thirdLine = ""
 
     private var isPermissionON: Boolean = false
 
+    private var resultLauncherForPlaceApi: ActivityResultLauncher<Intent>? = null
 
     private val locationPermissionRequest = registerForActivityResult(
         ActivityResultContracts.RequestMultiplePermissions()) { permissions ->
@@ -140,6 +149,10 @@ open class SetLocationFragment : Fragment(), OnMapReadyCallback {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         Log.d("TAG", "onCreate")
+        if (!Places.isInitialized()) {
+            Places.initialize((activity as HomeActivity).applicationContext,
+                getString(R.string.google_api_key))
+        }
     }
 
     override fun onCreateView(
@@ -180,6 +193,27 @@ open class SetLocationFragment : Fragment(), OnMapReadyCallback {
                 showGpsPermissionDialogOnDenied(requireActivity())
             }
         }
+
+
+        resultLauncherForPlaceApi =
+            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+                if (result.resultCode == Activity.RESULT_OK) {
+                    val place = result.data?.let { Autocomplete.getPlaceFromIntent(it) }
+                    Log.i("TAG",
+                        "Place: " + (place?.name ?: "") + ", " + (place?.id
+                            ?: "") + ", " + (place?.address
+                            ?: ""))
+
+                    requireActivity().showShortToast("ID: " + (place?.id
+                        ?: "") + "address:" + (place?.address
+                        ?: "") + "Name:" + (place?.name ?: "") + " latlong: " + (place?.latLng
+                        ?: ""))
+                    val address = place?.address
+                    Log.d("TAG", "Address $address")
+                } else if (result.resultCode == Activity.RESULT_CANCELED) {
+                    requireActivity().showShortToast("Canceled")
+                }
+            }
     }
 
     private fun setUpHeader() = with(binding) {
@@ -188,7 +222,7 @@ open class SetLocationFragment : Fragment(), OnMapReadyCallback {
             tvHeaderTitle.text = getString(R.string.select_location)
             ivBack.visible(true)
             ivFavorite.visible(false)
-            ivSearch.visible(false)
+            ivSearch.visible(true)
             frShoppingCart.visible(false)
         }
     }
@@ -199,8 +233,27 @@ open class SetLocationFragment : Fragment(), OnMapReadyCallback {
                 ivBack.setOnClickListener {
                     it.findNavController().popBackStack()
                 }
+                ivSearch.setOnClickListener {
+                    requireActivity().showShortToast("Search Address")
+                    onSearchCalled()
+                }
             }
         }
+    }
+
+    private fun onSearchCalled() {
+        // Set the fields to specify which types of place data to return.
+        // Set the fields to specify which types of place data to return.
+        val fields = listOf(Place.Field.ID,
+            Place.Field.NAME,
+            Place.Field.ADDRESS,
+            Place.Field.LAT_LNG)
+        // Start the autocomplete intent.
+
+        val intent = Autocomplete.IntentBuilder(
+            AutocompleteActivityMode.FULLSCREEN, fields)
+            .build(requireActivity())
+        resultLauncherForPlaceApi?.launch(intent)
     }
 
     private fun setUpButtonClick() {
@@ -217,6 +270,9 @@ open class SetLocationFragment : Fragment(), OnMapReadyCallback {
                 } else {
                     it.findNavController()
                         .navigate(SetLocationFragmentDirections.actionSetLocationFragmentToAddAddressFragment(
+                            firstLine = firstLine,
+                            secondLine = secondLine,
+                            thirdLine = thirdLine,
                             fullAddress = fullAddress,
                             latitude = latitude.toString(),
                             longitude = longitude.toString()))
@@ -399,6 +455,31 @@ open class SetLocationFragment : Fragment(), OnMapReadyCallback {
 
             withContext(Dispatchers.Main) {
                 if (addressList.size > 0) {
+                    Log.d("TAG", "GEO " + addressList[0].toString())
+
+                    val details = addressList[0]
+
+                    details.apply {
+                        val countryName = countryName
+                        val stateName = adminArea
+                        val cityName = subAdminArea
+                        val postalCode = postalCode
+                        val feature = featureName
+                        val thoroughfare = thoroughfare
+                        firstLine = feature.plus(",").plus(thoroughfare)
+                        secondLine = cityName.plus(",").plus(postalCode)
+                        thirdLine =
+                            stateName.plus(",").plus(countryName)
+
+                        Log.d("TAG", """
+                            First line $firstLine
+                            Second line $secondLine
+                            Third line $thirdLine
+                        """.trimIndent())
+
+                    }
+
+
                     fullAddress = addressList[0].getAddressLine(0)
                     //binding.tvAddress.text = fullAddress
                     Log.d("TAG", "Full Address$fullAddress")

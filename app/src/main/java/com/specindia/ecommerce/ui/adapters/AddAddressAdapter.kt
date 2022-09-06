@@ -34,8 +34,16 @@ class AddAddressAdapter(
     override fun onBindViewHolder(holder: AddAddressViewHolder, position: Int) {
         val addressLine = arrayList[holder.adapterPosition]
 
+
         with(holder) {
             with(binding) {
+
+                when (adapterPosition) {
+                    0 -> tilAddressLine.hint = "Address Line1"
+                    1 -> tilAddressLine.hint = "Address Line2 (City/Postal Code)"
+                    2 -> tilAddressLine.hint = "Address Line3 (State/Country)"
+                }
+
                 // Initially Add Edit Text are disable by default
                 etAddressLine.setText(addressLine)
                 etAddressLine.setReadOnly(true, InputType.TYPE_NULL)

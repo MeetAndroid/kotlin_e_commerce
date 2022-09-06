@@ -89,6 +89,18 @@
             android:name="longitude"
             app:argType="string"
             android:defaultValue="0.0" />
+        <argument
+            android:name="first_line"
+            app:argType="string"
+            android:defaultValue="" />
+        <argument
+            android:name="second_line"
+            app:argType="string"
+            android:defaultValue="" />
+        <argument
+            android:name="third_line"
+            app:argType="string"
+            android:defaultValue="" />
         <action
             android:id="@+id/action_addAddressFragment_to_shippingAddressFragment"
             app:destination="@id/shippingAddressFragment"
