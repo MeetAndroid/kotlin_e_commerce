@@ -126,7 +126,6 @@ class ProductDetailsFragment : Fragment() {
                     binding.btn1.isVisible = true
                 }
             }
-
         }
 
         with(binding) {
