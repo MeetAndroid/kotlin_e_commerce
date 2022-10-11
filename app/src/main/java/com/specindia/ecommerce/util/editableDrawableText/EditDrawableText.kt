@@ -10,9 +10,7 @@ import android.text.TextWatcher
 import android.util.AttributeSet
 import android.view.MotionEvent
 import androidx.appcompat.widget.AppCompatEditText
-import androidx.core.content.ContextCompat
-import com.specindia.ecommerce.R
-import com.specindia.ecommerce.util.showShortToast
+import com.spec.spec_ecommerce.R
 import kotlin.math.abs
 
 class EditDrawableText(context: Context, attrs: AttributeSet) : AppCompatEditText(context, attrs) {

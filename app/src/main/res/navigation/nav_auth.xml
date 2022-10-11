@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/authFragment"
-        android:name="com.specindia.ecommerce.ui.fragments.AuthFragment"
+        android:name="com.specindia.ecommerce.ui.authentication.AuthFragment"
         android:label="Auth"
         tools:layout="@layout/fragment_auth">
         <action
@@ -20,7 +20,7 @@
     </fragment>
     <fragment
         android:id="@+id/welcomeFragment"
-        android:name="com.specindia.ecommerce.ui.fragments.WelcomeFragment"
+        android:name="com.specindia.ecommerce.ui.authentication.welcome.WelcomeFragment"
         android:label="Welcome"
         tools:layout="@layout/fragment_welcome">
         <action
@@ -32,7 +32,7 @@
     </fragment>
     <fragment
         android:id="@+id/forgotPasswordFragment"
-        android:name="com.specindia.ecommerce.ui.fragments.ForgotPasswordFragment"
+        android:name="com.specindia.ecommerce.ui.authentication.forgotpassword.ForgotPasswordFragment"
         android:label="fragment_forgot_password"
         tools:layout="@layout/fragment_forgot_password">
 
@@ -45,7 +45,7 @@
     </fragment>
     <fragment
         android:id="@+id/loginFragment"
-        android:name="com.specindia.ecommerce.ui.fragments.LoginFragment"
+        android:name="com.specindia.ecommerce.ui.authentication.login.LoginFragment"
         android:label="Login"
         tools:layout="@layout/fragment_login">
         <action
@@ -59,7 +59,7 @@
     </fragment>
     <fragment
         android:id="@+id/registrationFragment"
-        android:name="com.specindia.ecommerce.ui.fragments.RegistrationFragment"
+        android:name="com.specindia.ecommerce.ui.authentication.registration.RegistrationFragment"
         android:label="fragment_registration"
         tools:layout="@layout/fragment_registration">
         <action
@@ -71,7 +71,7 @@
 
     <fragment
         android:id="@+id/otpFragment"
-        android:name="com.specindia.ecommerce.ui.fragments.OtpFragment"
+        android:name="com.specindia.ecommerce.ui.authentication.otp.OtpFragment"
         android:label="OTP"
         tools:layout="@layout/fragment_otp">
 
@@ -88,7 +88,7 @@
     </fragment>
     <fragment
         android:id="@+id/resetPasswordFragment"
-        android:name="com.specindia.ecommerce.ui.fragments.ResetPasswordFragment"
+        android:name="com.specindia.ecommerce.ui.authentication.resetpassword.ResetPasswordFragment"
         android:label="fragment_reset_password"
         tools:layout="@layout/fragment_reset_password" />
 </navigation>

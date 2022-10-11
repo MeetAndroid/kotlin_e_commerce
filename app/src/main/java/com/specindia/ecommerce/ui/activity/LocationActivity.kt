@@ -12,7 +12,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import com.google.android.gms.location.*
-import com.specindia.ecommerce.databinding.ActivityLocationBinding
+import com.spec.spec_ecommerce.databinding.ActivityLocationBinding
 import com.specindia.ecommerce.util.Constants.Companion.GPS_REQUEST
 import com.specindia.ecommerce.util.Constants.Companion.LOCATION_REQUEST
 import com.specindia.ecommerce.util.GpsUtils

@@ -3,7 +3,7 @@ package com.specindia.ecommerce.ui.adapters
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.specindia.ecommerce.databinding.RowAutoFitItemBinding
+import com.spec.spec_ecommerce.databinding.RowAutoFitItemBinding
 
 class NumberedAdapter(
     private val labels: ArrayList<String>,

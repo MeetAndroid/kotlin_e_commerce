@@ -4,7 +4,7 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import androidx.appcompat.app.AlertDialog
-import com.specindia.ecommerce.R
+import com.spec.spec_ecommerce.R
 
 class CustomProgressDialog(context: Context) : BaseDialogHelper() {
 

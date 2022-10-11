@@ -4,11 +4,10 @@ import android.content.Context
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
-import com.specindia.ecommerce.BuildConfig
+import com.spec.spec_ecommerce.BuildConfig
 import com.specindia.ecommerce.api.EcommerceApiService
 import com.specindia.ecommerce.datastore.abstraction.DataStoreRepository
-import com.specindia.ecommerce.datastore.implementation.DataStoreRepositoryImpl
-import com.specindia.ecommerce.util.Constants
+import com.specindia.ecommerce.datastore.implementation.EncryptedDataStoreRepositoryImpl
 import com.specindia.ecommerce.util.Constants.Companion.CONNECTION_TIME_OUT
 import com.specindia.ecommerce.util.Constants.Companion.READ_TIME_OUT
 import com.specindia.ecommerce.util.Constants.Companion.WRITE_TIME_OUT
@@ -17,9 +16,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
-import okhttp3.Interceptor
 import okhttp3.OkHttpClient
-import okhttp3.Request
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -88,13 +85,13 @@ object AppModule {
         @Provides
         fun provideDataStoreRepository(
             @ApplicationContext app: Context
-        ): DataStoreRepository = DataStoreRepositoryImpl(app)
+        ): DataStoreRepository = EncryptedDataStoreRepositoryImpl(app)
+
 
 
         @Singleton
         @Provides
         fun dataStore(@ApplicationContext context: Context): DataStore<Preferences> =
             preferencesDataStore(name = "data-store").getValue(context, String::javaClass)
-
     }
 }

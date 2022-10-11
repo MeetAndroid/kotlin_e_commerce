@@ -4,8 +4,8 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.specindia.ecommerce.R
-import com.specindia.ecommerce.databinding.ItemProfileBinding
+import com.spec.spec_ecommerce.R
+import com.spec.spec_ecommerce.databinding.ItemProfileBinding
 import com.specindia.ecommerce.models.Profile
 
 class VeilAdapter(

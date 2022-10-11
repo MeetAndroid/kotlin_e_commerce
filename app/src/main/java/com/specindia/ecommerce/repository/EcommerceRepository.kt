@@ -7,7 +7,6 @@ import com.specindia.ecommerce.models.response.cart.addUpdateToCart.AddUpdateToC
 import com.specindia.ecommerce.models.response.cart.getcart.GetCartResponse
 import com.specindia.ecommerce.models.response.cart.removeFromCart.RemoveFromCartResponse
 import com.specindia.ecommerce.models.response.home.DashboardListResponse
-import com.specindia.ecommerce.models.response.home.SearchResponse
 import com.specindia.ecommerce.models.response.home.address.AddOrUpdateAddressResponse
 import com.specindia.ecommerce.models.response.home.createOrder.CreateOrderResponse
 import com.specindia.ecommerce.models.response.home.getaddress.GetAddressListResponse
@@ -16,6 +15,7 @@ import com.specindia.ecommerce.models.response.home.orderlist.OrderListResponse
 import com.specindia.ecommerce.models.response.home.common.CommonResponse
 import com.specindia.ecommerce.models.response.home.product.AllRestaurant
 import com.specindia.ecommerce.models.response.home.product.ViewAllData
+import com.specindia.ecommerce.models.response.home.productsbyrestaurant.ProductsByRestaurantData
 import com.specindia.ecommerce.models.response.home.productsbyrestaurant.ProductsByRestaurantResponse
 import com.specindia.ecommerce.models.response.home.restaurantDetails.RestaurantDetailsResponse
 import com.specindia.ecommerce.models.response.login.LoginResponse
@@ -124,7 +124,7 @@ class EcommerceRepository @Inject constructor(
     suspend fun getSearch(
         headerMap: Map<String, String>,
         parameters: String
-    ): Flow<NetworkResult<SearchResponse>> {
+    ): Flow<NetworkResult<ProductsByRestaurantResponse>> {
         return flow {
             emit(safeApiCall { remoteDataSource.getSearch(headerMap,parameters) })
         }.flowOn(Dispatchers.IO)

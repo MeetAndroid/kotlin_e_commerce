@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/offersFragment"
-        android:name="com.specindia.ecommerce.ui.fragments.OffersFragment"
+        android:name="com.specindia.ecommerce.ui.dashboard.offer.OffersFragment"
         android:label="Offers"
         tools:layout="@layout/fragment_offers" />
 </navigation>

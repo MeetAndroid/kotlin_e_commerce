@@ -39,15 +39,20 @@ import com.google.android.material.badge.BadgeUtils.attachBadgeDrawable
 import com.google.android.material.badge.ExperimentalBadgeUtils
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputEditText
-import com.specindia.ecommerce.R
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
+import com.spec.spec_ecommerce.R
 import com.specindia.ecommerce.models.response.cart.getcart.GetCartResponse
-import com.specindia.ecommerce.ui.activity.AuthActivity
-import com.specindia.ecommerce.ui.activity.HomeActivity
+import com.specindia.ecommerce.models.response.home.productsbyrestaurant.ProductsByRestaurantData
+import com.specindia.ecommerce.ui.authentication.AuthActivity
+import com.specindia.ecommerce.ui.dashboard.home.HomeActivity
 import com.specindia.ecommerce.util.Constants.Companion.APPLICATION_JSON
 import com.specindia.ecommerce.util.Constants.Companion.AUTHORIZATION
 import com.specindia.ecommerce.util.Constants.Companion.BEARER
 import com.specindia.ecommerce.util.Constants.Companion.CONTENT_TYPE
 import com.specindia.ecommerce.util.dialogs.CustomProgressDialog
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.security.MessageDigest
 import java.security.NoSuchAlgorithmException
@@ -55,10 +60,9 @@ import java.text.DateFormat
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
-import java.util.Collections.replaceAll
 import java.util.regex.Matcher
 import java.util.regex.Pattern
-
+import kotlin.collections.ArrayList
 
 fun <A : Activity> Activity.startNewActivity(activity: Class<A>) {
     Intent(this, activity).also {
@@ -354,6 +358,35 @@ fun updateCartCountOnUI(activity: HomeActivity, frameLayout: FrameLayout) {
             )
         }
     }, 500)
+}
+
+fun setRecentItem(activity: HomeActivity, obj: ProductsByRestaurantData) {
+    CoroutineScope(Dispatchers.IO).launch {
+        val recentList = ArrayList<ProductsByRestaurantData>()
+        val prefRecentList = (activity).dataStoreViewModel.getRecentList()
+        if (prefRecentList.isNullOrEmpty()) {
+            recentList.add(obj)
+            val data = Gson().toJson(recentList)
+            (activity).dataStoreViewModel.saveRecentList(data)
+        } else {
+            val arrayType = object : TypeToken<ArrayList<ProductsByRestaurantData>>() {}.type
+            val prefRestaurantList: ArrayList<ProductsByRestaurantData> =
+                Gson().fromJson(prefRecentList, arrayType)
+            recentList.addAll(prefRestaurantList)
+            val currentItemId =
+                recentList.filter { it.productId == obj.productId }
+            if (currentItemId.isNotEmpty()) {
+                recentList.remove(currentItemId[0])
+                recentList.add(obj)
+                val data = Gson().toJson(recentList)
+                (activity).dataStoreViewModel.saveRecentList(data)
+            } else {
+                recentList.add(obj)
+                val data = Gson().toJson(recentList)
+                (activity).dataStoreViewModel.saveRecentList(data)
+            }
+        }
+    }
 }
 
 @ExperimentalBadgeUtils

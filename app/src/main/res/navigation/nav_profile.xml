@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/profileFragment"
-        android:name="com.specindia.ecommerce.ui.fragments.ProfileFragment"
+        android:name="com.specindia.ecommerce.ui.dashboard.profile.ProfileFragment"
         tools:layout="@layout/fragment_profile"
         android:label="Profile" >
         <action
@@ -17,6 +17,6 @@
     <fragment
         android:id="@+id/profileDetailsFragment"
         tools:layout="@layout/fragment_product_details"
-        android:name="com.specindia.ecommerce.ui.fragments.ProfileDetailsFragment"
+        android:name="com.specindia.ecommerce.ui.dashboard.profile.ProfileDetailsFragment"
         android:label="Profile Details" />
 </navigation>

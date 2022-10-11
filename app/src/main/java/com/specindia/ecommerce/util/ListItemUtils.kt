@@ -2,7 +2,7 @@ package com.specindia.ecommerce.util
 
 import android.content.Context
 import androidx.core.content.ContextCompat
-import com.specindia.ecommerce.R
+import com.spec.spec_ecommerce.R
 import com.specindia.ecommerce.models.Profile
 
 object ListItemUtils {

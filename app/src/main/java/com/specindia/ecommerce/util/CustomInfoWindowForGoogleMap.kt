@@ -6,7 +6,7 @@ import android.view.View
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.Marker
 import com.google.android.material.textview.MaterialTextView
-import com.specindia.ecommerce.R
+import com.spec.spec_ecommerce.R
 
 class CustomInfoWindowForGoogleMap(context: Context) : GoogleMap.InfoWindowAdapter {
 

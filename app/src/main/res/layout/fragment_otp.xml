@@ -5,9 +5,7 @@
     android:layout_width="match_parent"
     android:id="@+id/llOtp"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".ui.fragments.OtpFragment">
-
+    android:orientation="vertical">
 
     <androidx.appcompat.widget.AppCompatTextView
         android:layout_width="wrap_content"

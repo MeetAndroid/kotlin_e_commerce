@@ -4,7 +4,6 @@ import com.specindia.ecommerce.models.response.cart.addUpdateToCart.AddUpdateToC
 import com.specindia.ecommerce.models.response.cart.getcart.GetCartResponse
 import com.specindia.ecommerce.models.response.cart.removeFromCart.RemoveFromCartResponse
 import com.specindia.ecommerce.models.response.home.DashboardListResponse
-import com.specindia.ecommerce.models.response.home.SearchResponse
 import com.specindia.ecommerce.models.response.home.address.AddOrUpdateAddressResponse
 import com.specindia.ecommerce.models.response.home.createOrder.CreateOrderResponse
 import com.specindia.ecommerce.models.response.home.getaddress.GetAddressListResponse
@@ -48,7 +47,6 @@ import retrofit2.Response
 import retrofit2.http.*
 
 interface EcommerceApiService {
-
 
     @POST("""$CUSTOMER_END_POINT$SIGN_UP""")
     suspend fun doRegistration(
@@ -115,7 +113,7 @@ interface EcommerceApiService {
     suspend fun getSearch(
         @HeaderMap headers: Map<String, String>,
         @Body parameters: String,
-    ): Response<SearchResponse>
+    ): Response<ProductsByRestaurantResponse>
 
     @GET("""$CART_END_POINT$GET_CART""")
     suspend fun getCart(

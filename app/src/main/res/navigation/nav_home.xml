@@ -6,7 +6,7 @@
     app:startDestination="@id/homeFragment">
     <fragment
         android:id="@+id/homeFragment"
-        android:name="com.specindia.ecommerce.ui.fragments.HomeFragment"
+        android:name="com.specindia.ecommerce.ui.home.HomeFragment"
         android:label="Home"
         tools:layout="@layout/fragment_home">
 
@@ -22,11 +22,14 @@
         <action
             android:id="@+id/action_homeFragment_to_cartListFragment"
             app:destination="@id/cartListFragment" />
+        <action
+            android:id="@+id/action_searchFragment_to_productDetailsFragment"
+            app:destination="@id/productDetailsFragment" />
     </fragment>
 
     <fragment
         android:id="@+id/searchFragment"
-        android:name="com.specindia.ecommerce.ui.fragments.SearchFragment"
+        android:name="com.specindia.ecommerce.ui.search.SearchFragment"
         android:label="Search Fragment"
         tools:layout="@layout/fragment_search">
         <action
@@ -35,7 +38,7 @@
     </fragment>
     <fragment
         android:id="@+id/restaurantDetailsFragment"
-        android:name="com.specindia.ecommerce.ui.fragments.RestaurantDetailsFragment"
+        android:name="com.specindia.ecommerce.ui.restautentdetaills.RestaurantDetailsFragment"
         android:label="Restaurant Details"
         tools:layout="@layout/fragment_restaurant_details">
         <argument
@@ -51,7 +54,7 @@
     </fragment>
     <fragment
         android:id="@+id/productDetailsFragment"
-        android:name="com.specindia.ecommerce.ui.fragments.ProductDetailsFragment"
+        android:name="com.specindia.ecommerce.ui.productdetails.ProductDetailsFragment"
         android:label="Product Details"
         tools:layout="@layout/fragment_product_details">
 
@@ -65,6 +68,11 @@
             android:defaultValue=""
             app:argType="string" />
 
+        <argument
+            android:name="bundle"
+            android:defaultValue=""
+            app:argType="string" />
+
         <action
             android:id="@+id/action_productDetailsFragment_to_cartListFragment"
             app:destination="@id/cartListFragment" />
@@ -73,7 +81,7 @@
 
     <fragment
         android:id="@+id/viewAllProductFragment"
-        android:name="com.specindia.ecommerce.ui.fragments.ViewAllProductFragment"
+        android:name="com.specindia.ecommerce.ui.viewall.ViewAllProductFragment"
         tools:layout="@layout/fragment_view_all_product">
         <argument
             android:name="tag"
@@ -86,7 +94,7 @@
 
     <fragment
         android:id="@+id/cartListFragment"
-        android:name="com.specindia.ecommerce.ui.fragments.CartListFragment"
+        android:name="com.specindia.ecommerce.ui.cart.CartListFragment"
         android:label="Cart List"
         tools:layout="@layout/fragment_cart_list">
         <action
@@ -95,7 +103,7 @@
     </fragment>
     <fragment
         android:id="@+id/checkOutFragment"
-        android:name="com.specindia.ecommerce.ui.fragments.CheckOutFragment"
+        android:name="com.specindia.ecommerce.ui.checkout.CheckOutFragment"
         android:label="Check Out"
         tools:layout="@layout/fragment_checkout">
 
@@ -124,7 +132,7 @@
     </fragment>
     <fragment
         android:id="@+id/shippingAddressFragment"
-        android:name="com.specindia.ecommerce.ui.fragments.ShippingAddressFragment"
+        android:name="com.specindia.ecommerce.ui.checkout.address.ShippingAddressFragment"
         android:label="Shipping Address"
         tools:layout="@layout/fragment_shipping_address">
         <action
@@ -133,7 +141,7 @@
     </fragment>
     <fragment
         android:id="@+id/setLocationFragment"
-        android:name="com.specindia.ecommerce.ui.fragments.SetLocationFragment"
+        android:name="com.specindia.ecommerce.ui.checkout.address.SetLocationFragment"
         android:label="Add New Location"
         tools:layout="@layout/fragment_set_location">
         <action
@@ -142,7 +150,7 @@
     </fragment>
     <fragment
         android:id="@+id/addAddressFragment"
-        android:name="com.specindia.ecommerce.ui.fragments.AddAddressFragment"
+        android:name="com.specindia.ecommerce.ui.checkout.address.AddAddressFragment"
         android:label="Add Address"
         tools:layout="@layout/fragment_add_address">
 

@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:paddingBottom="?actionBarSize"
-    tools:context=".ui.fragments.ProductDetailsFragment">
+    tools:context="com.specindia.ecommerce.ui.fragments.ProductDetailsFragment">
 
     <include
         android:id="@+id/homeDetailsScreenHeader"
@@ -392,8 +392,8 @@
                     android:text="@string/add"
                     android:textAllCaps="false"
                     android:textColor="@color/white"
-                    android:visibility="gone"
                     android:textSize="16sp"
+                    android:visibility="gone"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintStart_toStartOf="parent"
@@ -404,8 +404,8 @@
                     android:id="@+id/clAddOrRemoveProduct"
                     android:layout_width="200dp"
                     android:layout_height="30dp"
-                    android:visibility="gone"
                     android:layout_marginTop="20dp"
+                    android:visibility="gone"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintStart_toStartOf="parent"

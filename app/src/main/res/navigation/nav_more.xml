@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/moreFragment"
-        android:name="com.specindia.ecommerce.ui.fragments.MoreFragment"
+        android:name="com.specindia.ecommerce.ui.dashboard.more.MoreFragment"
         android:label="More"
         tools:layout="@layout/fragment_more">
         <action
@@ -19,7 +19,7 @@
     </fragment>
     <fragment
         android:id="@+id/orderHistoryFragment"
-        android:name="com.specindia.ecommerce.ui.fragments.OrderHistoryFragment"
+        android:name="com.specindia.ecommerce.ui.dashboard.more.orderhistorty.OrderHistoryFragment"
         android:label="Order History"
         tools:layout="@layout/fragment_order_history">
         <action
@@ -29,7 +29,7 @@
 
     <fragment
         android:id="@+id/orderDetailsFragment"
-        android:name="com.specindia.ecommerce.ui.fragments.OrderDetailsFragment"
+        android:name="com.specindia.ecommerce.ui.dashboard.more.orderhistorty.OrderDetailsFragment"
         android:label="Order Details"
         tools:layout="@layout/fragment_order_details">
 
@@ -42,7 +42,7 @@
 
     <fragment
         android:id="@+id/cartListFragment"
-        android:name="com.specindia.ecommerce.ui.fragments.CartListFragment"
+        android:name="com.specindia.ecommerce.ui.cart.CartListFragment"
         android:label="Cart List Fragment"
         tools:layout="@layout/fragment_cart_list">
         <action
@@ -53,7 +53,7 @@
 
     <fragment
         android:id="@+id/checkOutFragment"
-        android:name="com.specindia.ecommerce.ui.fragments.CheckOutFragment"
+        android:name="com.specindia.ecommerce.ui.checkout.CheckOutFragment"
         android:label="Check Out"
         tools:layout="@layout/fragment_checkout">
         <argument
@@ -82,7 +82,7 @@
 
     <fragment
         android:id="@+id/shippingAddressFragment"
-        android:name="com.specindia.ecommerce.ui.fragments.ShippingAddressFragment"
+        android:name="com.specindia.ecommerce.ui.checkout.address.ShippingAddressFragment"
         android:label="Shipping Address"
         tools:layout="@layout/fragment_shipping_address">
         <action
@@ -91,7 +91,7 @@
     </fragment>
     <fragment
         android:id="@+id/setLocationFragment"
-        android:name="com.specindia.ecommerce.ui.fragments.SetLocationFragment"
+        android:name="com.specindia.ecommerce.ui.checkout.address.SetLocationFragment"
         android:label="Add New Location"
         tools:layout="@layout/fragment_set_location">
         <action
@@ -100,7 +100,7 @@
     </fragment>
     <fragment
         android:id="@+id/addAddressFragment"
-        android:name="com.specindia.ecommerce.ui.fragments.AddAddressFragment"
+        android:name="com.specindia.ecommerce.ui.checkout.address.AddAddressFragment"
         android:label="Add Address"
         tools:layout="@layout/fragment_add_address">
 

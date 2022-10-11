@@ -5,10 +5,9 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import androidx.appcompat.app.AppCompatActivity
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.specindia.ecommerce.R
-import com.specindia.ecommerce.databinding.ActivityVeilBinding
+import com.spec.spec_ecommerce.R
+import com.spec.spec_ecommerce.databinding.ActivityVeilBinding
 import com.specindia.ecommerce.models.Profile
 import com.specindia.ecommerce.ui.adapters.VeilAdapter
 import com.specindia.ecommerce.util.ListItemUtils

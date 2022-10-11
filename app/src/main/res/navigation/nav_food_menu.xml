@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/foodMenuFragment"
-        android:name="com.specindia.ecommerce.ui.fragments.FoodMenuFragment"
+        android:name="com.specindia.ecommerce.ui.dashboard.menu.FoodMenuFragment"
         android:label="Menu"
         tools:layout="@layout/fragment_food_menu">
         <action
@@ -16,7 +16,7 @@
     </fragment>
     <fragment
         android:id="@+id/cartListFragment"
-        android:name="com.specindia.ecommerce.ui.fragments.CartListFragment"
+        android:name="com.specindia.ecommerce.ui.cart.CartListFragment"
         android:label="Cart List"
         tools:layout="@layout/fragment_cart_list">
         <action
@@ -25,7 +25,7 @@
     </fragment>
     <fragment
         android:id="@+id/checkOutFragment"
-        android:name="com.specindia.ecommerce.ui.fragments.CheckOutFragment"
+        android:name="com.specindia.ecommerce.ui.checkout.CheckOutFragment"
         android:label="Check Out"
         tools:layout="@layout/fragment_checkout">
         <argument
@@ -53,7 +53,7 @@
     </fragment>
     <fragment
         android:id="@+id/shippingAddressFragment"
-        android:name="com.specindia.ecommerce.ui.fragments.ShippingAddressFragment"
+        android:name="com.specindia.ecommerce.ui.checkout.address.ShippingAddressFragment"
         android:label="Shipping Address"
         tools:layout="@layout/fragment_shipping_address">
         <action
@@ -62,7 +62,7 @@
     </fragment>
     <fragment
         android:id="@+id/setLocationFragment"
-        android:name="com.specindia.ecommerce.ui.fragments.SetLocationFragment"
+        android:name="com.specindia.ecommerce.ui.checkout.address.SetLocationFragment"
         android:label="Add New Location"
         tools:layout="@layout/fragment_set_location">
         <action
@@ -71,7 +71,7 @@
     </fragment>
     <fragment
         android:id="@+id/addAddressFragment"
-        android:name="com.specindia.ecommerce.ui.fragments.AddAddressFragment"
+        android:name="com.specindia.ecommerce.ui.checkout.address.AddAddressFragment"
         android:label="Add Address"
         tools:layout="@layout/fragment_add_address">
 
