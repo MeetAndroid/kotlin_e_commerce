@@ -48,6 +48,9 @@ import kotlinx.coroutines.suspendCancellableCoroutine
 import org.json.JSONException
 import kotlin.coroutines.resumeWithException
 
+/**
+ * This fragment show user login option Facebook,Google,Normal
+ */
 @AndroidEntryPoint
 class WelcomeFragment : Fragment() {
 
@@ -134,6 +137,7 @@ class WelcomeFragment : Fragment() {
     private fun setUpButtonClick(view: View) {
         binding.apply {
             btnStartWithEmailOrPhone.setOnClickListener {
+                //redirect to Registration fragment
                 view.findNavController()
                     .navigate(WelcomeFragmentDirections.actionWelcomeFragmentToRegistrationFragment())
             }
@@ -168,6 +172,7 @@ class WelcomeFragment : Fragment() {
         }
     }
 
+    // Observe Facebook login response
     private fun observeFBResponse() {
         (activity as AuthActivity).authViewModel.socialResponse.observe(viewLifecycleOwner) { response ->
 
@@ -333,6 +338,7 @@ class WelcomeFragment : Fragment() {
         request.executeAsync()
     }
 
+    // handle facebook result response
     private fun handleSignInResult(completedTask: Task<GoogleSignInAccount>) {
         try {
 //            customProgressDialog.show()
@@ -352,11 +358,13 @@ class WelcomeFragment : Fragment() {
         }
     }
 
+    //Google login sigin in api initialize
     private fun signIn() {
         val signInIntent: Intent = googleSignInClient?.signInIntent!!
         resultLauncher?.launch(signInIntent)
     }
 
+    // Google login api call
     private fun callSocialLoginGoogleApi() {
         customProgressDialog.show()
         val parameter = Parameters(

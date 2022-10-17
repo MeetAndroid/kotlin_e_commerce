@@ -13,6 +13,10 @@ import com.specindia.ecommerce.util.emptyEditText
 import com.specindia.ecommerce.util.showMaterialSnack
 import dagger.hilt.android.AndroidEntryPoint
 
+/**
+ * This fragment work to Forgot password to send email on registration email address
+ */
+
 @AndroidEntryPoint
 class ForgotPasswordFragment : Fragment() {
 
@@ -31,9 +35,11 @@ class ForgotPasswordFragment : Fragment() {
             etForgotPasswordEmail.emptyEditText(etForgotPasswordEmail)
             btnForgotPassword.setOnClickListener {
                 if (etForgotPasswordEmail.text.toString().trim().isEmpty()) {
-                    showMaterialSnack(requireContext(),
+                    showMaterialSnack(
+                        requireContext(),
                         nestedScrollview,
-                        getString(R.string.val_msg_enter_address))
+                        getString(R.string.val_msg_enter_address)
+                    )
                 } else if (!Patterns.EMAIL_ADDRESS.matcher(
                         etForgotPasswordEmail.text.toString().trim()
                     )
@@ -47,8 +53,11 @@ class ForgotPasswordFragment : Fragment() {
                 } else {
                     val email = binding.etForgotPasswordEmail.text.toString().trim()
                     view.findNavController()
-                        .navigate(ForgotPasswordFragmentDirections.actionForgotPasswordFragmentToOtpFragment(
-                            email))
+                        .navigate(
+                            ForgotPasswordFragmentDirections.actionForgotPasswordFragmentToOtpFragment(
+                                email
+                            )
+                        )
                 }
             }
         }

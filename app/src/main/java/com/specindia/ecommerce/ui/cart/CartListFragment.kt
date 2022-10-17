@@ -26,6 +26,9 @@ import com.specindia.ecommerce.ui.dashboard.home.HomeActivity
 import com.specindia.ecommerce.util.*
 import dagger.hilt.android.AndroidEntryPoint
 
+/**
+ * This fragment show cart list and total amount of pay your cart item
+ */
 @AndroidEntryPoint
 class CartListFragment : Fragment(), CartListAdapter.OnCartItemClickListener {
 
@@ -79,6 +82,7 @@ class CartListFragment : Fragment(), CartListAdapter.OnCartItemClickListener {
 
     }
 
+    //  set toolbar icon hide show
     private fun setUpHeader() {
         with(binding) {
             with(homeDetailsScreenHeader) {
@@ -92,6 +96,7 @@ class CartListFragment : Fragment(), CartListAdapter.OnCartItemClickListener {
         }
     }
 
+    // click toolbar component
     private fun setUpHeaderItemClick() {
         with(binding) {
             with(homeDetailsScreenHeader) {
@@ -102,6 +107,7 @@ class CartListFragment : Fragment(), CartListAdapter.OnCartItemClickListener {
         }
     }
 
+    //click on checkout button to redirect checkout screen
     private fun setUpButtonClick() {
         with(binding) {
             btnCheckOut.setOnClickListener {
@@ -128,6 +134,7 @@ class CartListFragment : Fragment(), CartListAdapter.OnCartItemClickListener {
         }
     }
 
+    //    set data in recyclerview when get data
     private fun setUpRecyclerView() {
         // Carts
         cartList = ArrayList()
@@ -147,6 +154,7 @@ class CartListFragment : Fragment(), CartListAdapter.OnCartItemClickListener {
         }
     }
 
+    //progress dialog initialize
     private fun setUpProgressDialog() {
         customProgressDialog = showProgressDialog {
             cancelable = false
@@ -154,6 +162,7 @@ class CartListFragment : Fragment(), CartListAdapter.OnCartItemClickListener {
         }
     }
 
+    // show cart list api call
     @ExperimentalBadgeUtils
     private fun setUpCartListUI(
         binding: FragmentCartListBinding,
@@ -178,6 +187,7 @@ class CartListFragment : Fragment(), CartListAdapter.OnCartItemClickListener {
         }
     }
 
+    // set data like total amount of list of items
     private fun calculateAndDisplayTotal(cartList: ArrayList<GetCartData>) {
         subTotal =
             cartList.sumOf { (it.quantity.toInt() * it.amount.toInt()) }
@@ -197,6 +207,7 @@ class CartListFragment : Fragment(), CartListAdapter.OnCartItemClickListener {
         }
     }
 
+    //show message dialog when response any throw error
     private fun showDialog(message: String) {
         MaterialAlertDialogBuilder(requireActivity())
             .setTitle(getString(R.string.app_name))
@@ -209,12 +220,7 @@ class CartListFragment : Fragment(), CartListAdapter.OnCartItemClickListener {
     // ============== GET CART DATA
     private fun callGetCartApi() {
         Log.e("GetCart", "Calling...")
-        (activity as HomeActivity).homeViewModel.getCart(
-            getHeaderMap(
-                user.token,
-                true
-            )
-        )
+        (activity as HomeActivity).homeViewModel.getCart(getHeaderMap(user.token, true))
     }
 
     // ============== Observe Cart Response
@@ -242,10 +248,9 @@ class CartListFragment : Fragment(), CartListAdapter.OnCartItemClickListener {
         }
     }
 
-    override fun onItemClick(data: GetCartData, position: Int) {
+    override fun onItemClick(data: GetCartData, position: Int) {}
 
-    }
-
+    // when user is first time click to add item in cart
     override fun onAddProductButtonClick(data: GetCartData, position: Int) {
         var qty = data.quantity.toInt()
         qty += 1
@@ -264,6 +269,7 @@ class CartListFragment : Fragment(), CartListAdapter.OnCartItemClickListener {
         )
     }
 
+    // Add and remove item from cart list api call
     override fun onRemoveProductButtonClick(data: GetCartData, position: Int) {
 
         if (data.quantity == "1") {

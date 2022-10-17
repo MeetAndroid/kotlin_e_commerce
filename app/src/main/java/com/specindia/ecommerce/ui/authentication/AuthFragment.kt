@@ -9,6 +9,9 @@ import androidx.navigation.findNavController
 import com.spec.spec_ecommerce.databinding.FragmentAuthBinding
 import dagger.hilt.android.AndroidEntryPoint
 
+/**
+ * This fragment use for user select login or create user
+ */
 @AndroidEntryPoint
 class AuthFragment : Fragment() {
     private lateinit var binding: FragmentAuthBinding

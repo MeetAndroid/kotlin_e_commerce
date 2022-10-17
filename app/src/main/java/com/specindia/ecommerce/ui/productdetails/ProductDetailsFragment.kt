@@ -35,6 +35,10 @@ import com.specindia.ecommerce.util.Constants.Companion.IS_FROM_PRODUCT_DETAILS
 import com.specindia.ecommerce.util.Constants.Companion.REQUEST_FROM_RESTAURANT_DETAILS
 import dagger.hilt.android.AndroidEntryPoint
 
+/**
+ * This fragment show product details with add button item into cart
+ * This fragment get some parameter as argument(productid,tag,bundle)
+ */
 @AndroidEntryPoint
 class ProductDetailsFragment : Fragment() {
 
@@ -78,6 +82,7 @@ class ProductDetailsFragment : Fragment() {
 
     }
 
+    //show message dialog when response any throw error
     private fun setUpProgressDialog() {
         customProgressDialog = showProgressDialog {
             cancelable = false
@@ -85,6 +90,7 @@ class ProductDetailsFragment : Fragment() {
         }
     }
 
+    // show header component hide show
     @ExperimentalBadgeUtils
     private fun setUpHeader() {
         with(binding) {
@@ -100,6 +106,7 @@ class ProductDetailsFragment : Fragment() {
         }
     }
 
+    // when show screen to set data in ui
     private fun setUpData() {
         productId = args.productId
         tags = args.tag
@@ -110,15 +117,6 @@ class ProductDetailsFragment : Fragment() {
             (activity as HomeActivity).dataStoreViewModel.getExistingRestaurantIdFromCart()!!
         setRecentItem(activity as HomeActivity, productsByRestaurantData)
 
-        /* if (existingRestaurantIdInCart == 0) {
-             binding.clAddOrRemoveProduct.isVisible = false
-             binding.btn1.isVisible = true
-         } else {
-             binding.clAddOrRemoveProduct.isVisible = true
-             binding.btn1.isVisible = false
-             binding.tvQty.text = productsByRestaurantData.totalQty.toString()
-         }
- */
         with(binding) {
             Glide.with(requireActivity()).load(productsByRestaurantData.productImage)
                 .placeholder(R.drawable.ic_launcher_foreground)
@@ -191,6 +189,7 @@ class ProductDetailsFragment : Fragment() {
         }
     }
 
+    // Handle click event for toolbar items
     private fun setUpHeaderItemClick() {
         with(binding) {
             with(homeDetailsScreenHeader) {
@@ -217,6 +216,7 @@ class ProductDetailsFragment : Fragment() {
         }
     }
 
+    // Show message dialog when any error through by response
     private fun showDialog(message: String) {
         MaterialAlertDialogBuilder(requireActivity()).setTitle(getString(R.string.app_name))
             .setMessage(message).setPositiveButton(getString(R.string.ok)) { _, _ ->
@@ -228,8 +228,6 @@ class ProductDetailsFragment : Fragment() {
     2. Then Add current Item to cart
     3. This will clear all items of Previous Restaurant from cart and add the new one for current Restaurant
      * */
-
-
     private fun clearItemsFromCartAndAddTheNewOne() {
         MaterialAlertDialogBuilder(requireContext()).setTitle(getString(R.string.app_name))
             .setCancelable(false).setMessage(getString(R.string.msg_confirm_change_cart_item))
@@ -243,6 +241,7 @@ class ProductDetailsFragment : Fragment() {
             }.show()
     }
 
+    // remove item from cart response
     private fun callRemoveFromCartApi() {
         val parameter = RemoveFromCartParam(cartId = 0)
         (activity as HomeActivity).homeViewModel.removeFromCart(
@@ -252,6 +251,7 @@ class ProductDetailsFragment : Fragment() {
         )
     }
 
+    // Observe remove item from cart
     private fun observeRemoveFromCartResponse() {
         (activity as HomeActivity).homeViewModel.removeFromCart.observe(
             viewLifecycleOwner
@@ -275,6 +275,7 @@ class ProductDetailsFragment : Fragment() {
         }
     }
 
+    // call add item to cart
     private fun callAddButtonApiCall() {
         val parameter = AddUpdateCartWithProductId(
             productId = productsByRestaurantData.productId.toString(),
@@ -286,6 +287,7 @@ class ProductDetailsFragment : Fragment() {
         )
     }
 
+    // Observe add item cart response
     private fun observerAddButton() {
         (activity as HomeActivity).homeViewModel.addUpdateToCart.observe(viewLifecycleOwner) { res ->
             when (res) {
@@ -355,6 +357,7 @@ class ProductDetailsFragment : Fragment() {
     }
 
 
+    // remove item from cart
     private fun onRemoveProductButtonClick(cart: GetCartData) {
 
         if (cart.quantity == "1") {

@@ -120,10 +120,12 @@ class FoodMenuFragment : Fragment() {
         }
     }
 
+    // call menu list api
     private fun callMenuListApi(data: AuthResponseData) {
         (activity as HomeActivity).homeViewModel.getMenuList(getHeaderMap(data.token, true))
     }
 
+    //Observe menu list
     private fun observeResponse() {
         (activity as HomeActivity).homeViewModel.menuListResponse.observe(viewLifecycleOwner) { response ->
 

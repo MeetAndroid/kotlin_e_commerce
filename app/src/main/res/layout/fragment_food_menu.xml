@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingBottom="?actionBarSize"
-    tools:context=".ui.fragments.FoodMenuFragment">
+    tools:context="com.specindia.ecommerce.ui.dashboard.menu.FoodMenuFragment">
 
     <include
         android:id="@+id/foodMenuScreenHeader"

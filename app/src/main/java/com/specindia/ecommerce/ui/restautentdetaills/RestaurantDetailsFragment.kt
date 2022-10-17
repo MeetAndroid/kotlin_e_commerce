@@ -37,6 +37,11 @@ import com.specindia.ecommerce.util.Constants.Companion.IS_FROM_PRODUCT_DETAILS
 import com.specindia.ecommerce.util.Constants.Companion.REQUEST_FROM_RESTAURANT_DETAILS
 import dagger.hilt.android.AndroidEntryPoint
 
+/**
+ * This fragment show Restaurant details and product list
+ * Get parameter name is restaurant_id (it's define in nav_home file)
+ */
+
 @AndroidEntryPoint
 class RestaurantDetailsFragment : Fragment(), ProductListAdapter.OnProductItemClickListener {
 
@@ -63,12 +68,12 @@ class RestaurantDetailsFragment : Fragment(), ProductListAdapter.OnProductItemCl
                 isComeBackFromProductDetails = bundle.getBoolean(IS_FROM_PRODUCT_DETAILS, false)
             }
         }
-
         return binding.root
     }
 
     override fun onResume() {
         super.onResume()
+        //call restaurant details api call
         if (!isComeBackFromProductDetails) {
             callRestaurantDetailsApi(data)
         }
@@ -93,16 +98,14 @@ class RestaurantDetailsFragment : Fragment(), ProductListAdapter.OnProductItemCl
         observeGetCartResponse()
         customProgressDialog.show()
 
-        //(activity as HomeActivity).showOrHideBottomAppBarAndFloatingActionButtonOnScroll()
-
         binding.swipeRefreshLayout.setOnRefreshListener {
             binding.swipeRefreshLayout.isRefreshing = false
             isComeBackFromProductDetails = false
             callRestaurantDetailsApi(data)
         }
-
     }
 
+    // hide content when not get in api
     private fun hideContent() {
         binding.apply {
             clTopPart.visible(false)
@@ -111,6 +114,7 @@ class RestaurantDetailsFragment : Fragment(), ProductListAdapter.OnProductItemCl
         }
     }
 
+    // show content when not get in api
     private fun showContent() {
         binding.apply {
             clTopPart.visible(true)
@@ -119,6 +123,7 @@ class RestaurantDetailsFragment : Fragment(), ProductListAdapter.OnProductItemCl
         }
     }
 
+    // show header component hide show
     private fun setUpHeader() {
         with(binding) {
             with(homeDetailsScreenHeader) {
@@ -132,6 +137,7 @@ class RestaurantDetailsFragment : Fragment(), ProductListAdapter.OnProductItemCl
         }
     }
 
+    // click to favourite button click hide show
     private fun setUpFavButton(isRestaurantExist: Boolean) {
         if (isRestaurantExist) {
             enableFavButton()
@@ -140,6 +146,7 @@ class RestaurantDetailsFragment : Fragment(), ProductListAdapter.OnProductItemCl
         }
     }
 
+    // set favourite button show
     private fun enableFavButton() {
         binding.homeDetailsScreenHeader.ivFavorite.setColorFilter(
             ContextCompat.getColor(
@@ -150,6 +157,7 @@ class RestaurantDetailsFragment : Fragment(), ProductListAdapter.OnProductItemCl
 
     }
 
+    // set favourite button hide
     private fun disableFavButton() {
         binding.homeDetailsScreenHeader.ivFavorite.setColorFilter(
             ContextCompat.getColor(
@@ -160,6 +168,7 @@ class RestaurantDetailsFragment : Fragment(), ProductListAdapter.OnProductItemCl
 
     }
 
+    // this function handle toolbar component item click
     private fun setUpHeaderItemClick() {
         with(binding) {
             with(homeDetailsScreenHeader) {
@@ -236,7 +245,7 @@ class RestaurantDetailsFragment : Fragment(), ProductListAdapter.OnProductItemCl
         }
     }
 
-
+    // set data recyclerview
     private fun setUpRecyclerView() {
         // Products
         productList = ArrayList()
@@ -250,6 +259,7 @@ class RestaurantDetailsFragment : Fragment(), ProductListAdapter.OnProductItemCl
         }
     }
 
+    //show message dialog when response any throw error
     private fun setUpProgressDialog() {
         customProgressDialog = showProgressDialog {
             cancelable = false
@@ -353,6 +363,7 @@ class RestaurantDetailsFragment : Fragment(), ProductListAdapter.OnProductItemCl
         }
     }
 
+    // set product list in recyclerview for specific restaurant
     private fun setUpProductListUI(
         binding: FragmentRestaurantDetailsBinding,
         productListResponse: ProductsByRestaurantResponse,
@@ -373,6 +384,7 @@ class RestaurantDetailsFragment : Fragment(), ProductListAdapter.OnProductItemCl
         }
     }
 
+    //show message dialog when response any throw error
     private fun showDialog(message: String) {
         MaterialAlertDialogBuilder(requireActivity())
             .setTitle(getString(R.string.app_name))
@@ -491,9 +503,7 @@ class RestaurantDetailsFragment : Fragment(), ProductListAdapter.OnProductItemCl
                 Gson().toJson(parameter)
             )
         }
-
     }
-
 
     // ============== Observe Products By Restaurant Response
     private fun observeAddUpdateCartResponse() {
@@ -520,7 +530,6 @@ class RestaurantDetailsFragment : Fragment(), ProductListAdapter.OnProductItemCl
     }
 
     override fun onItemClick(data: ProductsByRestaurantData, position: Int) {
-
         val bundle = Gson().toJson(data)
         view?.findNavController()?.navigate(
             RestaurantDetailsFragmentDirections.actionRestaurantDetailsFragmentToProductDetailsFragment(
@@ -545,12 +554,13 @@ class RestaurantDetailsFragment : Fragment(), ProductListAdapter.OnProductItemCl
         )
     }
 
-    // - Button Click
+    // Minus Button Click
     override fun onRemoveProductButtonClick(
         data: ProductsByRestaurantData,
         position: Int,
     ) {
         data.totalQty = data.totalQty - 1
+        // when quantity
         if (data.totalQty == 0) {
             // Call Remove Cart API
             callRemoveFromCartApi(data.cartId)
@@ -568,34 +578,26 @@ class RestaurantDetailsFragment : Fragment(), ProductListAdapter.OnProductItemCl
 
     }
 
+    //remove all item from cart when user add different restaurant item in cart so remove previous item all remove then after
+    // add into cart
     override fun onRemoveAllCartData(cartId: Int) {
         callRemoveFromCartApi(cartId)
     }
 
+    //remove single item from cart api call
     private fun callRemoveFromCartApi(cartId: Int) {
-//        customProgressDialog.show()
-
-        val parameter = RemoveFromCartParam(
-            cartId = cartId
-        )
-
-        (activity as HomeActivity).homeViewModel.removeFromCart(
-            getHeaderMap(
-                data.token,
-                true
-            ),
-            Gson().toJson(parameter)
-        )
-
+        val parameter = RemoveFromCartParam(cartId = cartId)
+        (activity as HomeActivity).homeViewModel.removeFromCart(getHeaderMap(data.token, true), Gson().toJson(parameter))
     }
 
-    // Add Button Click
+    // Add button click to first time add item in cart
     override fun onAddButtonClick(
         data: ProductsByRestaurantData,
         position: Int,
     ) {
         data.totalQty = 1
         if (data.isCartExist) {
+            //when item already in cart and quantity is 1 or more available call this api
             callAddUpdateToCartApi(
                 productOrCartId = data.cartId.toString(),
                 qty = data.totalQty.toString(),
@@ -603,6 +605,7 @@ class RestaurantDetailsFragment : Fragment(), ProductListAdapter.OnProductItemCl
                 isCartExist = true
             )
         } else {
+            //when item not in cart and quantity is not available call this api
             callAddUpdateToCartApi(
                 productOrCartId = data.productId.toString(),
                 qty = data.totalQty.toString(),
@@ -612,6 +615,7 @@ class RestaurantDetailsFragment : Fragment(), ProductListAdapter.OnProductItemCl
         }
     }
 
+    //Observe remove cart from list response
     private fun observeRemoveFromCartResponse() {
         (activity as HomeActivity).homeViewModel.removeFromCart.observe(
             viewLifecycleOwner
@@ -649,7 +653,6 @@ class RestaurantDetailsFragment : Fragment(), ProductListAdapter.OnProductItemCl
                     showDialog(response.message.toString())
                 }
                 is NetworkResult.Loading -> {
-//                    customProgressDialog.show()
                 }
             }
         }

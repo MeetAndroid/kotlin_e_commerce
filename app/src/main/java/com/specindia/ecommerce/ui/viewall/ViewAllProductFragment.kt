@@ -27,6 +27,12 @@ import com.specindia.ecommerce.util.Constants.Companion.CATEGORY
 import com.specindia.ecommerce.util.Constants.Companion.RESTAURANT
 import com.specindia.ecommerce.util.Constants.Companion.TOP_DISHES
 
+/**
+ * Show all product,restaurant when you click view all in home fragment.
+ * it click like show Top dishes view all, show top product
+ * when click restaurant view all show all restaurant
+ **/
+
 class ViewAllProductFragment : Fragment(), ViewAllAdapter.OnViewAllClickListener {
 
     private val args: ViewAllProductFragmentArgs by navArgs()
@@ -63,29 +69,31 @@ class ViewAllProductFragment : Fragment(), ViewAllAdapter.OnViewAllClickListener
         setUpProgressDialog()
         setUpHeaderItemClick()
 
+        //get user login response data
         val userData = (activity as HomeActivity).dataStoreViewModel.getLoggedInUserData()
         data = Gson().fromJson(userData, AuthResponseData::class.java)
 
+        //call view all api
         callViewALL(data, false)
 
+        //show top dishes list
         if (title == TOP_DISHES) {
             observeViewAllProducts()
         }
+
+        //show top restaurant list
         if (title == RESTAURANT) {
             observeViewAllRestaurant()
         }
 
-        //(activity as HomeActivity).showOrHideBottomAppBarAndFloatingActionButtonOnScroll()
-
+        //swipe to refresh and api call
         binding.swipeRefreshLayout.setOnRefreshListener {
             binding.swipeRefreshLayout.isRefreshing = false
-
             callViewALL(data, true)
-
         }
-
     }
 
+    //setup header component hide and show as per requirement
     private fun setUpHeader() {
         with(binding) {
             with(homeDetailsScreenHeader) {
@@ -99,6 +107,7 @@ class ViewAllProductFragment : Fragment(), ViewAllAdapter.OnViewAllClickListener
         }
     }
 
+    // when click any component for header
     private fun setUpHeaderItemClick() {
         with(binding) {
             with(homeDetailsScreenHeader) {
@@ -109,6 +118,7 @@ class ViewAllProductFragment : Fragment(), ViewAllAdapter.OnViewAllClickListener
         }
     }
 
+    //loading progress dialog
     private fun setUpProgressDialog() {
         customProgressDialog = showProgressDialog {
             cancelable = false
@@ -230,9 +240,11 @@ class ViewAllProductFragment : Fragment(), ViewAllAdapter.OnViewAllClickListener
 
                                 } else {
                                     view?.findNavController()
-                                        ?.navigate(ViewAllProductFragmentDirections.actionViewAllProductFragmentToRestaurantDetailsFragment(
-                                            it.id!!
-                                        ))
+                                        ?.navigate(
+                                            ViewAllProductFragmentDirections.actionViewAllProductFragmentToRestaurantDetailsFragment(
+                                                it.id!!
+                                            )
+                                        )
                                 }
 
                             }
@@ -250,6 +262,7 @@ class ViewAllProductFragment : Fragment(), ViewAllAdapter.OnViewAllClickListener
         }
     }
 
+    //show message dialog when response any throw error
     private fun showDialog(message: String) {
         MaterialAlertDialogBuilder(requireActivity())
             .setTitle(getString(R.string.app_name))
@@ -259,6 +272,7 @@ class ViewAllProductFragment : Fragment(), ViewAllAdapter.OnViewAllClickListener
             .show()
     }
 
+    //when click any item to get specific position
     override fun onItemClick(position: Int) {
         Log.e("POSITION", position.toString())
     }

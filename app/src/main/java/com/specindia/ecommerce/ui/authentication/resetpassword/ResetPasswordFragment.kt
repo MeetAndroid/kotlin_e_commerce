@@ -38,6 +38,7 @@ class ResetPasswordFragment : Fragment() {
         }
     }
 
+    // Validation for password related
     private fun isEmpty(): Boolean {
 
         binding.apply {

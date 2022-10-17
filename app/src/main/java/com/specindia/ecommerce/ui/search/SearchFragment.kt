@@ -19,6 +19,9 @@ import com.specindia.ecommerce.ui.search.adapter.SearchListAdapter
 import com.specindia.ecommerce.util.Constants
 import com.specindia.ecommerce.util.getHeaderMap
 
+/**
+ * This fragment show to list of search whole product and restaurant as pr keyword type and call api to show list
+ */
 
 class SearchFragment : Fragment(), SearchListAdapter.OnSearchItemClickListener {
     private lateinit var data: AuthResponseData
@@ -41,11 +44,11 @@ class SearchFragment : Fragment(), SearchListAdapter.OnSearchItemClickListener {
 
         val userData = (activity as HomeActivity).dataStoreViewModel.getLoggedInUserData()
         data = Gson().fromJson(userData, AuthResponseData::class.java)
-        Log.e("TOKEN", data.token)
 
         searchList?.let { setupUI(it) }
         setObserver()
 
+        //type your word to search
         binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener,
             androidx.appcompat.widget.SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
@@ -74,6 +77,7 @@ class SearchFragment : Fragment(), SearchListAdapter.OnSearchItemClickListener {
 
     }
 
+    //setup header component hide and show as per requirement
     private fun setUpHeaderItemClick() {
         with(binding) {
             searchView.apply {
@@ -89,6 +93,7 @@ class SearchFragment : Fragment(), SearchListAdapter.OnSearchItemClickListener {
         }
     }
 
+    //Observe by search product response
     private fun setObserver() {
         (activity as HomeActivity).homeViewModel.searchResponse.observe(viewLifecycleOwner) { response ->
 
@@ -111,11 +116,13 @@ class SearchFragment : Fragment(), SearchListAdapter.OnSearchItemClickListener {
         }
     }
 
+    // set to data in recyclerview
     private fun setupUI(searchList: ArrayList<ProductsByRestaurantData>) {
         searchListAdapter = SearchListAdapter(searchList, this, (activity as HomeActivity))
         binding.rvSearch.adapter = searchListAdapter
     }
 
+    // click any item to redirect product details fragment and pass parameter (productid,tag,bundle)
     override fun onSearchItemClick(data: ProductsByRestaurantData, position: Int) {
         val bundle = Gson().toJson(data)
         view?.findNavController()

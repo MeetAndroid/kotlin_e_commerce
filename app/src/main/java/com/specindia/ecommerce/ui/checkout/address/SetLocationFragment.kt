@@ -56,6 +56,10 @@ import java.util.*
 // ================== GOOGLE MAP
 // https://www.geeksforgeeks.org/how-to-implement-current-location-button-feature-in-google-maps-in-android/
 
+/**
+ * this fragment show to map and set location
+ * user are move map to pick location and pass to Add address fragment
+ */
 @AndroidEntryPoint
 open class SetLocationFragment : Fragment(), OnMapReadyCallback {
 
@@ -76,7 +80,8 @@ open class SetLocationFragment : Fragment(), OnMapReadyCallback {
 
 
     private val locationPermissionRequest = registerForActivityResult(
-        ActivityResultContracts.RequestMultiplePermissions()) { permissions ->
+        ActivityResultContracts.RequestMultiplePermissions()
+    ) { permissions ->
         when {
             permissions.getOrDefault(Manifest.permission.ACCESS_FINE_LOCATION, false) -> {
                 // Precise location access granted.
@@ -114,17 +119,24 @@ open class SetLocationFragment : Fragment(), OnMapReadyCallback {
     rationale dialog. For more details, see Request permissions.
      * */
     private fun requestLocationPermission() {
-        locationPermissionRequest.launch(arrayOf(
-            Manifest.permission.ACCESS_FINE_LOCATION,
-            Manifest.permission.ACCESS_COARSE_LOCATION))
+        locationPermissionRequest.launch(
+            arrayOf(
+                Manifest.permission.ACCESS_FINE_LOCATION,
+                Manifest.permission.ACCESS_COARSE_LOCATION
+            )
+        )
     }
 
     // Check if location permissions are granted to the application
     private fun checkPermissions(): Boolean {
-        if (ActivityCompat.checkSelfPermission(requireActivity(),
-                Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED &&
-            ActivityCompat.checkSelfPermission(requireActivity(),
-                Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
+        if (ActivityCompat.checkSelfPermission(
+                requireActivity(),
+                Manifest.permission.ACCESS_COARSE_LOCATION
+            ) == PackageManager.PERMISSION_GRANTED &&
+            ActivityCompat.checkSelfPermission(
+                requireActivity(),
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) == PackageManager.PERMISSION_GRANTED
         ) {
             return true
         }
@@ -171,7 +183,8 @@ open class SetLocationFragment : Fragment(), OnMapReadyCallback {
         val userData = (activity as HomeActivity).dataStoreViewModel.getLoggedInUserData()
         data = Gson().fromJson(userData, AuthResponseData::class.java)
 
-        (activity as HomeActivity).homeViewModel.gpsStatus.observe(viewLifecycleOwner
+        (activity as HomeActivity).homeViewModel.gpsStatus.observe(
+            viewLifecycleOwner
         ) { gpsStatus ->
             if (gpsStatus) {
                 Log.d("TAG", "Observer")
@@ -216,10 +229,13 @@ open class SetLocationFragment : Fragment(), OnMapReadyCallback {
 
                 } else {
                     it.findNavController()
-                        .navigate(SetLocationFragmentDirections.actionSetLocationFragmentToAddAddressFragment(
-                            fullAddress = fullAddress,
-                            latitude = latitude.toString(),
-                            longitude = longitude.toString()))
+                        .navigate(
+                            SetLocationFragmentDirections.actionSetLocationFragmentToAddAddressFragment(
+                                fullAddress = fullAddress,
+                                latitude = latitude.toString(),
+                                longitude = longitude.toString()
+                            )
+                        )
                 }
             }
         }
@@ -266,10 +282,16 @@ open class SetLocationFragment : Fragment(), OnMapReadyCallback {
                     }
                     if (location.latitude != 0.0 && location.longitude != 0.0) {
                         val marker: Marker? =
-                            googleMap.addMarker(MarkerOptions().position(currentLocation)
-                                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED)))
-                        googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLocation,
-                            16F))
+                            googleMap.addMarker(
+                                MarkerOptions().position(currentLocation)
+                                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED))
+                            )
+                        googleMap.animateCamera(
+                            CameraUpdateFactory.newLatLngZoom(
+                                currentLocation,
+                                16F
+                            )
+                        )
 
                         googleMap.setOnCameraMoveListener {
                             val midLatLng = googleMap.cameraPosition.target
@@ -286,8 +308,10 @@ open class SetLocationFragment : Fragment(), OnMapReadyCallback {
                         googleMap.setOnCameraIdleListener {
                             try {
                                 if (latitude != 0.0 && longitude != 0.0) {
-                                    getAndSetAddressOnTextView(GeoPoint(latitude, longitude),
-                                        marker)
+                                    getAndSetAddressOnTextView(
+                                        GeoPoint(latitude, longitude),
+                                        marker
+                                    )
                                 }
                             } catch (e: IOException) {
                                 e.printStackTrace()
@@ -377,7 +401,7 @@ open class SetLocationFragment : Fragment(), OnMapReadyCallback {
         Log.d("TAG", "onLowMemory")
     }
 
-
+    // set picked location to edittext
     private fun getAndSetAddressOnTextView(location: GeoPoint, marker: Marker?) {
         var addressList: ArrayList<Address> = ArrayList()
         fullAddress = ""
@@ -385,13 +409,15 @@ open class SetLocationFragment : Fragment(), OnMapReadyCallback {
         CoroutineScope(Dispatchers.IO).launch {
             // Here 1 represent max location result to returned, by documents it recommended 1 to 5
             if (Build.VERSION.SDK_INT >= 33) {
-                geocoder.getFromLocation(location.latitude,
+                geocoder.getFromLocation(
+                    location.latitude,
                     location.longitude,
                     1
                 )
             } else {
 
-                addressList = geocoder.getFromLocation(location.latitude,
+                addressList = geocoder.getFromLocation(
+                    location.latitude,
                     location.longitude,
                     1
                 ) as ArrayList<Address>
@@ -422,6 +448,7 @@ open class SetLocationFragment : Fragment(), OnMapReadyCallback {
             Log.d("TAG", "resultLauncher")
         }
 
+    // get location permission
     private fun showLocationPermissionDialogOnDenied(context: Context) {
         AlertDialog.Builder(context)
             .setTitle(context.getString(R.string.app_name))
@@ -434,6 +461,7 @@ open class SetLocationFragment : Fragment(), OnMapReadyCallback {
             .show()
     }
 
+    // get gps permission when gps is off
     private fun showGpsPermissionDialogOnDenied(context: Context) {
         AlertDialog.Builder(context)
             .setTitle(context.getString(R.string.app_name))
@@ -451,16 +479,20 @@ open class SetLocationFragment : Fragment(), OnMapReadyCallback {
         val vectorDrawable = ContextCompat.getDrawable(context, vectorResId)
 
         // below line is use to set bounds to our vector drawable.
-        vectorDrawable!!.setBounds(0,
+        vectorDrawable!!.setBounds(
+            0,
             0,
             vectorDrawable.intrinsicWidth,
-            vectorDrawable.intrinsicHeight)
+            vectorDrawable.intrinsicHeight
+        )
 
         // below line is use to create a bitmap for our
         // drawable which we have added.
-        val bitmap = Bitmap.createBitmap(vectorDrawable.intrinsicWidth,
+        val bitmap = Bitmap.createBitmap(
+            vectorDrawable.intrinsicWidth,
             vectorDrawable.intrinsicHeight,
-            Bitmap.Config.ARGB_8888)
+            Bitmap.Config.ARGB_8888
+        )
 
         // below line is use to add bitmap in our canvas.
         val canvas = Canvas(bitmap)

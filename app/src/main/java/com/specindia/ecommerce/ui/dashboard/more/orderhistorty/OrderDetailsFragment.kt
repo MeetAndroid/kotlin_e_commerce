@@ -24,6 +24,9 @@ import com.specindia.ecommerce.ui.dashboard.home.HomeActivity
 import com.specindia.ecommerce.ui.dashboard.more.orderhistorty.adapter.OrderListAdapter
 import com.specindia.ecommerce.util.showProgressDialog
 
+/**
+ * This fragment show order details get to orderId from orderHistory fragment
+ */
 @AndroidEntryPoint
 class OrderDetailsFragment : Fragment() {
     private lateinit var binding: FragmentOrderDetailsBinding

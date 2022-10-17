@@ -8,6 +8,7 @@ import com.spec.spec_ecommerce.R
 import com.spec.spec_ecommerce.databinding.RowCategoryListItemBinding
 import com.specindia.ecommerce.models.response.home.Category
 
+
 class CategoryListAdapter(private val arrayList: ArrayList<Category>) :
     RecyclerView.Adapter<CategoryListAdapter.CategoryListViewHolder>() {
 

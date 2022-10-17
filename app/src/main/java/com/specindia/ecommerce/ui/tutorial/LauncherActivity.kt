@@ -16,6 +16,10 @@ import com.specindia.ecommerce.util.Constants.Companion.SPLASH_SCREEN_TIME_OUT
 import com.specindia.ecommerce.util.startNewActivity
 import dagger.hilt.android.AndroidEntryPoint
 
+/**
+ * when app open first load spalsh screen
+ * also maintain after login which screen open
+ */
 @AndroidEntryPoint
 class LauncherActivity : AppCompatActivity() {
 
@@ -29,20 +33,22 @@ class LauncherActivity : AppCompatActivity() {
         startLoadingContent()
     }
 
+    //when open screen get data in preference and manage which screen open
     private fun startLoadingContent() {
         val isOnBoardingFinished = dataStoreViewModel.getIsFirstTime()
         val isUserLoggedIn = dataStoreViewModel.getUserLoggedIn()
-        val userData =dataStoreViewModel.getLoggedInUserData()
-        val data = Gson().fromJson(userData, AuthResponseData::class.java)
-        if (data!=null){
-            Log.d("LoggedInData", data.toString())
-        }
+
         val authActivity = AuthActivity::class.java
         val onBoardingActivity = OnBoardingActivity::class.java
         val homeAuthActivity = HomeActivity::class.java
 
+        /**
+         * isOnBoardingFinished default false
+         * when user install app and first time open and complete step isOnBoardingFinished =true and save in preference
+         */
         if (isOnBoardingFinished == true) {
             Handler(Looper.getMainLooper()).postDelayed({
+                // when user are login redirect to home activity otherwise authentication activity like login screen
                 if (isUserLoggedIn == true) {
                     startNewActivity(homeAuthActivity)
                 } else {
@@ -51,6 +57,7 @@ class LauncherActivity : AppCompatActivity() {
             }, SPLASH_SCREEN_TIME_OUT)
 
         } else {
+            //open tutorial screen
             Handler(Looper.getMainLooper()).postDelayed({
                 startNewActivity(onBoardingActivity)
             }, SPLASH_SCREEN_TIME_OUT)

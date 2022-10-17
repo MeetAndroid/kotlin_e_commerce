@@ -26,6 +26,10 @@ import com.specindia.ecommerce.ui.dashboard.home.HomeActivity
 import com.specindia.ecommerce.util.*
 import dagger.hilt.android.AndroidEntryPoint
 
+/**
+ * This fragment add address when you picked location map
+ * gert argument like(fillAddress,latitude,longitude)
+ */
 @AndroidEntryPoint
 class AddAddressFragment : Fragment() {
 
@@ -145,14 +149,20 @@ class AddAddressFragment : Fragment() {
             }
 
             addAddressAdapter =
-                AddAddressAdapter(addressLines,
+                AddAddressAdapter(
+                    addressLines,
                     (activity as HomeActivity),
-                    this@AddAddressFragment)
+                    this@AddAddressFragment
+                )
             binding.rvShippingAddress.apply {
                 adapter = addAddressAdapter
                 setHasFixedSize(false)
-                addItemDecoration(MarginDecoration(resources.getDimensionPixelSize(R.dimen.item_margin_16),
-                    false))
+                addItemDecoration(
+                    MarginDecoration(
+                        resources.getDimensionPixelSize(R.dimen.item_margin_16),
+                        false
+                    )
+                )
                 isNestedScrollingEnabled = false
                 layoutManager =
                     LinearLayoutManager(requireActivity())
@@ -166,22 +176,18 @@ class AddAddressFragment : Fragment() {
 
     }
 
+    //    swipe to delete address
     private fun swipeToDeleteFunctionality() {
         ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
-            override fun onMove(
-                recyclerView: RecyclerView,
-                viewHolder: RecyclerView.ViewHolder,
-                target: RecyclerView.ViewHolder,
-            ): Boolean {
-                return false
-            }
+            override fun onMove(recyclerView: RecyclerView,viewHolder: RecyclerView.ViewHolder,target: RecyclerView.ViewHolder,): Boolean { return false }
 
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 val deletedAddressLine: String =
                     addressLines[viewHolder.adapterPosition]
                 val position = viewHolder.adapterPosition
                 Log.d("position", position.toString())
-                confirmToDeleteAddress((activity as HomeActivity),
+                confirmToDeleteAddress(
+                    (activity as HomeActivity),
                     deletedAddressLine,
                     position
                 )
@@ -190,6 +196,7 @@ class AddAddressFragment : Fragment() {
         }).attachToRecyclerView(binding.rvShippingAddress)
     }
 
+    // delete address
     fun confirmToDeleteAddress(
         activity: HomeActivity,
         deletedAddressLine: String,
@@ -213,7 +220,8 @@ class AddAddressFragment : Fragment() {
 
                 // Undo Functionality
                 Snackbar.make(binding.rvShippingAddress, deletedAddressLine, Snackbar.LENGTH_LONG)
-                    .setAction(activity.getString(R.string.undo)
+                    .setAction(
+                        activity.getString(R.string.undo)
                     ) {
                         addressLines.add(position, deletedAddressLine)
                         addAddressAdapter.notifyItemInserted(position)
@@ -226,6 +234,7 @@ class AddAddressFragment : Fragment() {
             .show()
     }
 
+    // Progress dialog initialize
     private fun setUpProgressDialog() {
         customProgressDialog = showProgressDialog {
             cancelable = false
@@ -257,6 +266,7 @@ class AddAddressFragment : Fragment() {
         )
     }
 
+    // when you get address on map in single line string with comma, and split string with set specific edittext position
     private fun convertAddressListToLines() {
         try {
             if (addressLines.size <= 0) {
@@ -323,9 +333,11 @@ class AddAddressFragment : Fragment() {
 
     }
 
+    //Observe add update address response
     private fun observeAddOrUpdateAddressResponse(view: View) {
         (activity as HomeActivity).homeViewModel.addOrUpdateAddressResponse.observe(
-            viewLifecycleOwner) { response ->
+            viewLifecycleOwner
+        ) { response ->
 
             when (response) {
                 is NetworkResult.Success -> {
@@ -334,9 +346,11 @@ class AddAddressFragment : Fragment() {
 
                         if (response.data.status == "success") {
                             Log.d("TAG", "SUCCESS")
-                            showDialog(getString(R.string.msg_address_added_successesfully),
+                            showDialog(
+                                getString(R.string.msg_address_added_successesfully),
                                 true,
-                                view)
+                                view
+                            )
                         } else {
                             showDialog(response.data.message, false, view)
                         }
@@ -354,6 +368,7 @@ class AddAddressFragment : Fragment() {
         }
     }
 
+    //show message dialog when response any throw error
     private fun showDialog(message: String, isGoBack: Boolean, view: View) {
         MaterialAlertDialogBuilder(requireActivity())
             .setTitle(getString(R.string.app_name))

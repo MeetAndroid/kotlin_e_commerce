@@ -94,6 +94,7 @@ class MoreFragment : Fragment() {
         }
     }
 
+    // logout for user
     private fun showLogoutDialog(activity: HomeActivity) {
         MaterialAlertDialogBuilder(activity)
             .setTitle(activity.getString(R.string.app_name))

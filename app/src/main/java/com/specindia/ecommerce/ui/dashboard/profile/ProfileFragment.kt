@@ -72,18 +72,5 @@ class ProfileFragment : Fragment() {
             tvEmail.text = data?.email
         }
 
-//
-//        with(binding) {
-//            with((activity as HomeActivity).dataStoreViewModel) {
-//
-//                Glide.with(ivProfileImage).load(getProfileUrl()).into(ivProfileImage)
-//
-//                tvToken.text = getFBAccessToken()
-//                tvId.text = getUserId()
-//                tvFirstName.text = getFirstName()
-//                tvLastName.text = getLastName()
-//                tvEmail.text = getEmail()
-//            }
-//        }
     }
 }

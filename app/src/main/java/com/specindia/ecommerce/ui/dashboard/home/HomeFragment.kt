@@ -1,4 +1,4 @@
-package com.specindia.ecommerce.ui.home
+package com.specindia.ecommerce.ui.dashboard.home
 
 import android.annotation.SuppressLint
 import android.os.Build
@@ -26,7 +26,6 @@ import com.specindia.ecommerce.models.response.home.DashboardListResponse
 import com.specindia.ecommerce.models.response.home.PopularRestaurent
 import com.specindia.ecommerce.models.response.home.TopProduct
 import com.specindia.ecommerce.models.response.home.productsbyrestaurant.ProductsByRestaurantData
-import com.specindia.ecommerce.ui.dashboard.home.HomeActivity
 import com.specindia.ecommerce.ui.dashboard.home.adapter.CategoryListAdapter
 import com.specindia.ecommerce.ui.dashboard.home.adapter.PopularRestaurantsAdapter
 import com.specindia.ecommerce.ui.dashboard.home.adapter.RecentProductsAdapter
@@ -40,6 +39,10 @@ import kotlinx.coroutines.launch
 import java.util.*
 import kotlin.collections.ArrayList
 
+/**
+ * This fragment show main dashboard of app
+ * its show Top dishes,Product,Restaurant,Recent list
+ */
 @AndroidEntryPoint
 class HomeFragment : Fragment() {
 
@@ -136,11 +139,6 @@ class HomeFragment : Fragment() {
             callDashBoardListApi(data)
         }
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            toBase64()
-        }
-
-
         val prefRecentList1 = (activity as HomeActivity).dataStoreViewModel.getRecentList()
         if (prefRecentList1 != null) {
             binding.headerRecentList.tvTitle.text =
@@ -152,7 +150,6 @@ class HomeFragment : Fragment() {
             recentList.addAll(prefRestaurantList.reversed())
             Log.e("RECENT_LIST", "DATA:- " + Gson().toJson(recentList))
         }
-
 
     }
 
@@ -380,6 +377,7 @@ class HomeFragment : Fragment() {
         }
     }
 
+    // set category list
     @SuppressLint("NotifyDataSetChanged")
     private fun setUpCategoryListUI(
         binding: FragmentHomeBinding,
@@ -465,21 +463,6 @@ class HomeFragment : Fragment() {
                 }
             }
         }
-    }
-
-
-    @RequiresApi(Build.VERSION_CODES.O)
-    fun toBase64() {
-        val oriString = "bezkoder tutorial"
-        val encodedString =
-            Base64.getEncoder().withoutPadding().encodeToString(oriString.toByteArray())
-
-        println(encodedString)
-
-        val decodedBytes = Base64.getDecoder().decode(encodedString)
-        val decodedString = String(decodedBytes)
-
-        println(decodedString)
     }
 }
 

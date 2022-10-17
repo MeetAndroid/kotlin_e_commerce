@@ -76,6 +76,7 @@ class LoginFragment : Fragment() {
         }
     }
 
+    // call login api
     private fun callLoginApi(binding: FragmentLoginBinding) {
         val parameter = Parameters(
             email = binding.etLoginEmail.text.toString().trim(),
@@ -88,6 +89,7 @@ class LoginFragment : Fragment() {
         )
     }
 
+    // Observe login response
     private fun observeResponse() {
         (activity as AuthActivity).authViewModel.loginResponse.observe(viewLifecycleOwner) { response ->
 
@@ -124,6 +126,7 @@ class LoginFragment : Fragment() {
             .show()
     }
 
+    // this function set to redirect registration
     private fun setSpannableText() {
         val spanText = SpannableStringBuilder(getString(R.string.don_t_have_an_account_sign_up))
         val clickableString = object : ClickableSpan() {
@@ -150,6 +153,7 @@ class LoginFragment : Fragment() {
         }
     }
 
+    // when user start to type space not set any space in edit text
     private fun startEditTextSpace() {
         with(binding) {
             etLoginEmail.emptyEditText(etLoginEmail)
@@ -157,6 +161,7 @@ class LoginFragment : Fragment() {
         }
     }
 
+    // validation set
     private fun isEmpty(): Boolean {
         binding.apply {
             if (etLoginEmail.text.toString().trim().isEmpty()) {

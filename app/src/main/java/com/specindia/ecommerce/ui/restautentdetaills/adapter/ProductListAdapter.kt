@@ -72,10 +72,12 @@ class ProductListAdapter(
                         if (existingRestaurantIdInCart != 0 && existingRestaurantIdInCart != product.restaurantId) {
                             btnAdd.visible(true)
                             clAddOrRemoveProduct.visible(false)
-                            clearItemsFromCartAndAddTheNewOne(product,
+                            clearItemsFromCartAndAddTheNewOne(
+                                product,
                                 position,
                                 btnAdd,
-                                clAddOrRemoveProduct)
+                                clAddOrRemoveProduct
+                            )
                         } else {
                             btnAdd.visible(false)
                             clAddOrRemoveProduct.visible(true)
@@ -133,6 +135,9 @@ class ProductListAdapter(
         return arrayList.size
     }
 
+    /**
+     * Click to add,plus,minus button click
+     * */
     interface OnProductItemClickListener {
         fun onItemClick(data: ProductsByRestaurantData, position: Int)
         fun onAddButtonClick(data: ProductsByRestaurantData, position: Int)
@@ -153,7 +158,7 @@ class ProductListAdapter(
     1. Remove All Cart by sending cartId as 0
     2. Then Add current Item to cart
     3. This will clear all items of Previous Restaurant from cart and add the new one for current Restaurant
-    * */
+     * */
 
     private fun clearItemsFromCartAndAddTheNewOne(
         product: ProductsByRestaurantData,

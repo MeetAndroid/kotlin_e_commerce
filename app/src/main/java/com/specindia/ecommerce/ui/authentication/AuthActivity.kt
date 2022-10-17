@@ -10,6 +10,9 @@ import com.specindia.ecommerce.ui.dashboard.viewmodel.DataViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
+/**
+ * This activity load to authentication fragment
+ */
 @AndroidEntryPoint
 class AuthActivity : AppCompatActivity() {
     private val TAG = "Auth Activity"

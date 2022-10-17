@@ -24,6 +24,12 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
+/**
+ * This fragment show send order for user and select payment mode
+ * change delivery address
+ * add credit or debit card
+ * get argument like(total,subtotal,extraCharges,restaurantId)
+ */
 @AndroidEntryPoint
 class CheckOutFragment : Fragment() {
     private lateinit var binding: FragmentCheckoutBinding
@@ -64,12 +70,14 @@ class CheckOutFragment : Fragment() {
         data = Gson().fromJson(userData, AuthResponseData::class.java)
 
         if ((activity as HomeActivity).homeViewModel.getAddressListResponse.value == null) {
+//            call address api
             callGetAddressApi()
         }
 
         observeGetAddressResponse()
     }
 
+    // set data in ui
     private fun setUpData(primaryAddress: GetAddressListData?) {
         var fullAddress = ""
 
@@ -101,7 +109,7 @@ class CheckOutFragment : Fragment() {
         }
     }
 
-
+    // hide show toolbar icon
     private fun setUpHeader() {
         with(binding) {
             with(orderDetailsScreenHeader) {
@@ -115,6 +123,7 @@ class CheckOutFragment : Fragment() {
         }
     }
 
+    // click to toolbar item
     private fun setUpHeaderItemClick() {
         with(binding) {
             with(orderDetailsScreenHeader) {
@@ -126,7 +135,7 @@ class CheckOutFragment : Fragment() {
         }
     }
 
-
+    // click event for button and text like send order,add card
     private fun setUpButtonClick() {
         binding.btnSendOrder.setOnClickListener {
             if (!requireActivity().isConnected) {
@@ -145,6 +154,8 @@ class CheckOutFragment : Fragment() {
             }
 
         }
+
+        // redirect to Shipping fragment
         binding.tvChange.setOnClickListener {
             if (!requireActivity().isConnected) {
                 showMaterialSnack(
@@ -160,6 +171,7 @@ class CheckOutFragment : Fragment() {
         }
     }
 
+    // Progress Dialog initialize
     private fun setUpProgressDialog() {
         customProgressDialog = showProgressDialog {
             cancelable = false
@@ -188,6 +200,7 @@ class CheckOutFragment : Fragment() {
     }
 
 
+    // Observe order create response
     private fun observeCreateOrderResponse(view: View) {
         (activity as HomeActivity).homeViewModel.createOrderResponse.observe(viewLifecycleOwner) { response ->
 
@@ -210,6 +223,7 @@ class CheckOutFragment : Fragment() {
         }
     }
 
+    //show message dialog when response any throw error
     private fun showDialog(message: String, isGoBack: Boolean, view: View) {
         MaterialAlertDialogBuilder(requireActivity())
             .setTitle(getString(R.string.app_name))
@@ -249,7 +263,8 @@ class CheckOutFragment : Fragment() {
                             val primaryAddresses = addressList.data.filter { it.primary }
                             if (primaryAddresses.isNotEmpty()) {
                                 (activity as HomeActivity).dataStoreViewModel.savePrimaryAddressInfo(
-                                    Gson().toJson(primaryAddresses[0]))
+                                    Gson().toJson(primaryAddresses[0])
+                                )
 
                                 address = primaryAddresses[0]
                             }

@@ -1,10 +1,7 @@
 package com.specindia.ecommerce.ui.tutorial
 
-import android.os.Build
 import android.os.Bundle
 import android.util.Log
-import android.view.WindowInsets
-import android.view.WindowManager
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback
@@ -18,12 +15,16 @@ import com.specindia.ecommerce.util.visible
 import com.zhpan.indicator.enums.IndicatorStyle
 import dagger.hilt.android.AndroidEntryPoint
 
+/**
+ * This fragment show app overview for brief describe in three steps
+ */
 @AndroidEntryPoint
 class OnBoardingActivity : AppCompatActivity() {
     private lateinit var binding: ActivityOnboardingBinding
     private val dataStoreViewModel by viewModels<DataViewModel>()
 
     data class OnBoardingData(val imageId: Int, val title: Int, val description: Int)
+
     private val onBoardingContentList = listOf(
         OnBoardingData(
             R.drawable.ic_find_food_you_love,
@@ -46,23 +47,11 @@ class OnBoardingActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityOnboardingBinding.inflate(layoutInflater)
         setContentView(binding.root)
-//        setFullScreen()
         setUpViewPager()
         setNextPreviousClick()
     }
 
-    private fun setFullScreen() {
-        @Suppress("DEPRECATION")
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-            window.insetsController?.hide(WindowInsets.Type.statusBars())
-        } else {
-            window.setFlags(
-                WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN
-            )
-        }
-    }
-
+    // set the step in view pager for change content and images
     private fun setUpViewPager() {
         val adapter =
             OnBoardingViewPagerAdapter(this@OnBoardingActivity, onBoardingContentList)
@@ -95,6 +84,7 @@ class OnBoardingActivity : AppCompatActivity() {
 
     }
 
+    // There are define two text Previous and Next and click to text show next previous screen
     private fun setNextPreviousClick() {
         binding.apply {
             tvPrevious.setOnClickListener {
@@ -114,8 +104,8 @@ class OnBoardingActivity : AppCompatActivity() {
         }
     }
 
+    // get the current show item viewpager
     private fun getItemOfViewPager(i: Int): Int {
         return binding.viewPager.currentItem + i
     }
-
 }

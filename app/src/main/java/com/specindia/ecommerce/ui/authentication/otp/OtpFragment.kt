@@ -12,6 +12,10 @@ import com.spec.spec_ecommerce.databinding.FragmentOtpBinding
 import com.specindia.ecommerce.util.showMaterialSnack
 import dagger.hilt.android.AndroidEntryPoint
 
+/**
+ * This fragment confirm otp to send forgot password
+ * get parameter emailId
+ */
 @AndroidEntryPoint
 class OtpFragment : Fragment() {
 

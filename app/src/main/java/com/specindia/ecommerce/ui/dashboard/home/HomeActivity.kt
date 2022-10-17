@@ -30,7 +30,6 @@ import com.specindia.ecommerce.models.FavRestaurants
 import com.specindia.ecommerce.ui.authentication.AuthActivity
 import com.specindia.ecommerce.ui.checkout.address.SetLocationFragment
 import com.specindia.ecommerce.ui.dashboard.viewmodel.DataViewModel
-import com.specindia.ecommerce.ui.home.HomeFragment
 import com.specindia.ecommerce.util.*
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -100,12 +99,14 @@ class HomeActivity : AppCompatActivity() {
         }
     }
 
+    // set bottom tab background color change
     private fun modifyBottomNavigationView() {
         binding.apply {
             bottomNavigationView.background = null
         }
     }
 
+    // when user logout all preference are clear
     fun performLogout() = lifecycleScope.launch {
         logoutFromFacebook()
         dataStoreViewModel.saveUserLoggedIn(false)

@@ -28,7 +28,6 @@ class ViewAllAdapter(
 
         with(holder) {
             with(binding) {
-
                 Glide.with(itemView)
                     .load(product.productImage)
                     .placeholder(R.drawable.ic_launcher_foreground)
@@ -41,7 +40,6 @@ class ViewAllAdapter(
             itemView.setOnClickListener {
                 onViewAllClickListener.onItemClick(position)
             }
-
         }
     }
 
@@ -49,6 +47,7 @@ class ViewAllAdapter(
         return arrayList.size
     }
 
+    //when click any item to pass position
     interface OnViewAllClickListener {
         fun onItemClick(position: Int)
     }

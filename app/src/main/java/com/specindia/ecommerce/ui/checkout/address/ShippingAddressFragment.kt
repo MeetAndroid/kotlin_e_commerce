@@ -56,6 +56,7 @@ class ShippingAddressFragment : Fragment(), ShippingAddressAdapter.OnShippingAdd
         val userData = (activity as HomeActivity).dataStoreViewModel.getLoggedInUserData()
         data = Gson().fromJson(userData, AuthResponseData::class.java)
 
+        // call get address list api
         callGetAddressApi()
         observeGetAddressResponse(binding)
     }
@@ -85,6 +86,7 @@ class ShippingAddressFragment : Fragment(), ShippingAddressAdapter.OnShippingAdd
 
     private fun setUpButtonClick() {
         with(binding) {
+            //redirect to setLocationFragment
             btnAddNewAddress.setOnClickListener {
                 if (!requireActivity().isConnected) {
                     showMaterialSnack(
@@ -117,6 +119,7 @@ class ShippingAddressFragment : Fragment(), ShippingAddressAdapter.OnShippingAdd
         }
     }
 
+    // set data recyclerview
     private fun setUpRecyclerView() {
         // Addresses
         shippingAddressList = ArrayList()
@@ -125,14 +128,19 @@ class ShippingAddressFragment : Fragment(), ShippingAddressAdapter.OnShippingAdd
         binding.rvShippingAddress.apply {
             adapter = shippingAddressAdapter
             setHasFixedSize(false)
-            addItemDecoration(MarginDecoration(resources.getDimensionPixelSize(R.dimen.item_margin_16),
-                false))
+            addItemDecoration(
+                MarginDecoration(
+                    resources.getDimensionPixelSize(R.dimen.item_margin_16),
+                    false
+                )
+            )
             isNestedScrollingEnabled = false
             layoutManager =
                 LinearLayoutManager(requireActivity())
         }
     }
 
+    // Progress dialog initialize
     private fun setUpProgressDialog() {
         customProgressDialog = showProgressDialog {
             cancelable = false
@@ -140,7 +148,7 @@ class ShippingAddressFragment : Fragment(), ShippingAddressAdapter.OnShippingAdd
         }
     }
 
-
+    //show message dialog when response any throw error
     private fun showDialog(message: String, isFromSwipeToDelete: Boolean) {
         MaterialAlertDialogBuilder(requireActivity())
             .setTitle(getString(R.string.app_name))
@@ -153,6 +161,7 @@ class ShippingAddressFragment : Fragment(), ShippingAddressAdapter.OnShippingAdd
             .show()
     }
 
+    // show address list recyclerview
     private fun setUpAddressListUI(
         binding: FragmentShippingAddressBinding,
         addressListResponse: GetAddressListResponse,
@@ -171,7 +180,8 @@ class ShippingAddressFragment : Fragment(), ShippingAddressAdapter.OnShippingAdd
                 val primaryAddresses = addressListResponse.data.filter { it.primary }
                 if (primaryAddresses.isNotEmpty()) {
                     (activity as HomeActivity).dataStoreViewModel.savePrimaryAddressInfo(
-                        Gson().toJson(primaryAddresses[0]))
+                        Gson().toJson(primaryAddresses[0])
+                    )
                 }
 
                 shippingAddressList.addAll(addressListResponse.data)
@@ -208,7 +218,8 @@ class ShippingAddressFragment : Fragment(), ShippingAddressAdapter.OnShippingAdd
                             showDialog(getString(R.string.msg_can_not_delete_primary_address), true)
 
                         } else {
-                            confirmToDeleteAddress((activity as HomeActivity),
+                            confirmToDeleteAddress(
+                                (activity as HomeActivity),
                                 deletedAddress,
                                 fullAddress,
                                 position,
@@ -227,6 +238,7 @@ class ShippingAddressFragment : Fragment(), ShippingAddressAdapter.OnShippingAdd
         }
     }
 
+    // delete to save address but when your address is primary not delete
     fun confirmToDeleteAddress(
         activity: HomeActivity,
         deletedAddress: GetAddressListData,
@@ -246,8 +258,7 @@ class ShippingAddressFragment : Fragment(), ShippingAddressAdapter.OnShippingAdd
                         getString(R.string.message_no_internet_connection)
                     )
                     shippingAddressAdapter.notifyDataSetChanged()
-                }
-                else{
+                } else {
                     callRemoveAddressApi(deletedAddress.id)
                     observeRemoveAddressResponse(fullAddress)
                 }
@@ -335,18 +346,10 @@ class ShippingAddressFragment : Fragment(), ShippingAddressAdapter.OnShippingAdd
         }
     }
 
+    // call to remove address api
     private fun callRemoveAddressApi(id: Int) {
-
-        val parameter = Parameters(
-            id = id.toString()
-        )
-        (activity as HomeActivity).homeViewModel.removeAddress(
-            getHeaderMap(
-                data.token,
-                true
-            ),
-            Gson().toJson(parameter)
-        )
+        val parameter = Parameters(id = id.toString())
+        (activity as HomeActivity).homeViewModel.removeAddress(getHeaderMap(data.token, true), Gson().toJson(parameter))
     }
 
     // Observe Remove Address Response
@@ -373,6 +376,7 @@ class ShippingAddressFragment : Fragment(), ShippingAddressAdapter.OnShippingAdd
         }
     }
 
+    // set to primary address when user click address
     override fun onItemClick(data: GetAddressListData, position: Int) {
         callSetPrimaryAddressApi(data.id)
         observePrimaryAddressResponse(data)

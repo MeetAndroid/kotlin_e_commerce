@@ -49,6 +49,7 @@ class ViewAllRestaurantAdapter(
 
     private var onItemClickListener: ((RestaurantItems) -> Unit)? = null
 
+    //when click any item to pass position
     fun setOnItemClickListener(listener: (RestaurantItems) -> Unit) {
         onItemClickListener = listener
     }

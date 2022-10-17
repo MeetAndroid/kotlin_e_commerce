@@ -115,22 +115,9 @@ class Constants {
         const val REQUEST_CHECK_SETTINGS = 3000
     }
 
-
-    object DataStore {
-        val DATA = stringPreferencesKey("data")
-        val SECURED_DATA = stringPreferencesKey("secured_data")
-    }
-
     object DateFormat {
         const val INPUT_FORMAT = "yyyy-MM-dd'T'hh:mm:ss.SSS'Z'"
         const val OUTPUT_FORMAT = "dd-MM-yyyy hh:mm"
     }
 
-    enum class ScreenNameToNavigateCartList {
-        HOME_SCREEN,
-        RESTAURANT_DETAILS_SCREEN,
-        PRODUCT_DETAILS_SCREEN,
-        FOOD_MENU_SCREEN,
-        MORE_SCREEN
-    }
 }

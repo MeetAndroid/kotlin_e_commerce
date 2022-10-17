@@ -22,6 +22,9 @@ import com.specindia.ecommerce.util.getHeaderMap
 import com.specindia.ecommerce.util.showProgressDialog
 import com.specindia.ecommerce.util.visible
 
+/**
+ * This fragment show order history list
+ */
 class OrderHistoryFragment : Fragment(), OrderHistoryAdapter.OnOrderHistoryItemClickListener {
 
     private lateinit var binding: FragmentOrderHistoryBinding
@@ -55,7 +58,7 @@ class OrderHistoryFragment : Fragment(), OrderHistoryAdapter.OnOrderHistoryItemC
 
     private fun swipeToRefresh() {
         binding.srOrderHistory.setOnRefreshListener {
-            orderList?.clear()
+            orderList.clear()
             binding.srOrderHistory.isRefreshing = false
             callOrderListApi()
         }
@@ -108,6 +111,7 @@ class OrderHistoryFragment : Fragment(), OrderHistoryAdapter.OnOrderHistoryItemC
         }
     }
 
+    // Observe order list response
     private fun setObserver() {
         (activity as HomeActivity).homeViewModel.orderListResponse.observe(viewLifecycleOwner) { response ->
 
@@ -120,7 +124,7 @@ class OrderHistoryFragment : Fragment(), OrderHistoryAdapter.OnOrderHistoryItemC
                             orderList.clear()
                             orderList.addAll(it.data)
                             orderHistoryAdapter =
-                                OrderHistoryAdapter(orderList, this@OrderHistoryFragment,(activity as HomeActivity))
+                                OrderHistoryAdapter(orderList, this@OrderHistoryFragment, (activity as HomeActivity))
                             rvOrderHistory.adapter = orderHistoryAdapter
 
                             if (orderList.isNotEmpty()) {
@@ -153,6 +157,7 @@ class OrderHistoryFragment : Fragment(), OrderHistoryAdapter.OnOrderHistoryItemC
             .show()
     }
 
+    // Redirect to Order Details fragment
     override fun onItemClick(orderId: Int) {
         Log.e("TAG", orderId.toString())
         binding.root.findNavController()
