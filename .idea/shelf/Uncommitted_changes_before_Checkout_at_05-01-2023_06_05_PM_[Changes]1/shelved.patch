@@ -1,0 +1,85 @@
+Index: build.gradle
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>// Top-level build file where you can add configuration options common to all sub-projects/modules.\r\nbuildscript {\r\n    repositories {\r\n        google()\r\n        maven { url 'https://jitpack.io' }\r\n    }\r\n\r\n    dependencies {\r\n        def navigationVersion = \"2.5.1\"\r\n        classpath \"androidx.navigation:navigation-safe-args-gradle-plugin:$navigationVersion\"\r\n\r\n        // Hilt\r\n        def hiltVersion = \"2.43.2\"\r\n        classpath \"com.google.dagger:hilt-android-gradle-plugin:$hiltVersion\"\r\n    }\r\n}\r\n\r\nplugins {\r\n    id 'com.android.application' version '7.2.2' apply false\r\n    id 'com.android.library' version '7.2.2' apply false\r\n    id 'org.jetbrains.kotlin.android' version '1.7.10' apply false\r\n    id 'com.google.gms.google-services' version '4.3.13' apply false\r\n\r\n}\r\n\r\ntask clean(type: Delete) {\r\n    delete rootProject.buildDir\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/build.gradle b/build.gradle
+--- a/build.gradle	
++++ b/build.gradle	
+@@ -2,7 +2,7 @@
+ buildscript {
+     repositories {
+         google()
+-        maven { url 'https://jitpack.io' }
++        //maven { url 'https://jitpack.io' }
+     }
+ 
+     dependencies {
+@@ -16,8 +16,8 @@
+ }
+ 
+ plugins {
+-    id 'com.android.application' version '7.2.2' apply false
+-    id 'com.android.library' version '7.2.2' apply false
++    id 'com.android.application' version '7.3.1' apply false
++    id 'com.android.library' version '7.3.1' apply false
+     id 'org.jetbrains.kotlin.android' version '1.7.10' apply false
+     id 'com.google.gms.google-services' version '4.3.13' apply false
+ 
+Index: app/src/main/java/com/specindia/ecommerce/datastore/implementation/DataStoreRepositoryImpl.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.specindia.ecommerce.datastore.implementation\r\n\r\nimport android.content.Context\r\nimport androidx.datastore.core.DataStore\r\nimport androidx.datastore.preferences.core.*\r\nimport androidx.datastore.preferences.preferencesDataStore\r\nimport com.specindia.ecommerce.datastore.abstraction.DataStoreRepository\r\nimport kotlinx.coroutines.flow.first\r\nimport javax.inject.Inject\r\n\r\nprivate const val PREFERENCE_NAME = \"ecommerce_preference\"\r\nprivate val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = PREFERENCE_NAME)\r\n\r\nclass DataStoreRepositoryImpl @Inject constructor(\r\n    private val context: Context\r\n) : DataStoreRepository {\r\n\r\n\r\n    // SET\r\n    override suspend fun putString(key: String, value: String) {\r\n        val preferencesKey = stringPreferencesKey(key)\r\n        context.dataStore.edit { preferences ->\r\n            preferences[preferencesKey] = value\r\n        }\r\n    }\r\n\r\n    override suspend fun putInt(key: String, value: Int) {\r\n        val preferencesKey = intPreferencesKey(key)\r\n        context.dataStore.edit { preferences ->\r\n            preferences[preferencesKey] = value\r\n        }\r\n    }\r\n\r\n    override suspend fun putFloat(key: String, value: Float) {\r\n        val preferencesKey = floatPreferencesKey(key)\r\n        context.dataStore.edit { preferences ->\r\n            preferences[preferencesKey] = value\r\n        }\r\n    }\r\n\r\n    override suspend fun putDouble(key: String, value: Double) {\r\n        val preferencesKey = doublePreferencesKey(key)\r\n        context.dataStore.edit { preferences ->\r\n            preferences[preferencesKey] = value\r\n        }\r\n    }\r\n\r\n    override suspend fun putLong(key: String, value: Long) {\r\n        val preferencesKey = longPreferencesKey(key)\r\n        context.dataStore.edit { preferences ->\r\n            preferences[preferencesKey] = value\r\n        }\r\n    }\r\n\r\n    override suspend fun putBoolean(key: String, value: Boolean) {\r\n        val preferencesKey = booleanPreferencesKey(key)\r\n        context.dataStore.edit { preferences ->\r\n            preferences[preferencesKey] = value\r\n        }\r\n    }\r\n\r\n    override suspend fun clearPreferences() {\r\n        context.dataStore.edit {\r\n            it.clear()\r\n        }\r\n    }\r\n\r\n    // GET\r\n    override suspend fun getString(key: String): String? {\r\n        val preferencesKey = stringPreferencesKey(key)\r\n        val preferences = context.dataStore.data.first()\r\n        return preferences[preferencesKey]\r\n    }\r\n\r\n    override suspend fun getInt(key: String): Int? {\r\n        val preferencesKey = intPreferencesKey(key)\r\n        val preferences = context.dataStore.data.first()\r\n        return preferences[preferencesKey]\r\n    }\r\n\r\n    override suspend fun getFloat(key: String): Float? {\r\n        val preferencesKey = floatPreferencesKey(key)\r\n        val preferences = context.dataStore.data.first()\r\n        return preferences[preferencesKey]\r\n    }\r\n\r\n    override suspend fun getDouble(key: String): Double? {\r\n        val preferencesKey = doublePreferencesKey(key)\r\n        val preferences = context.dataStore.data.first()\r\n        return preferences[preferencesKey]\r\n    }\r\n\r\n    override suspend fun getLong(key: String): Long? {\r\n        val preferencesKey = longPreferencesKey(key)\r\n        val preferences = context.dataStore.data.first()\r\n        return preferences[preferencesKey]\r\n    }\r\n\r\n    override suspend fun getBoolean(key: String): Boolean? {\r\n        val preferencesKey = booleanPreferencesKey(key)\r\n        val preferences = context.dataStore.data.first()\r\n        return preferences[preferencesKey]\r\n    }\r\n\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/specindia/ecommerce/datastore/implementation/DataStoreRepositoryImpl.kt b/app/src/main/java/com/specindia/ecommerce/datastore/implementation/DataStoreRepositoryImpl.kt
+--- a/app/src/main/java/com/specindia/ecommerce/datastore/implementation/DataStoreRepositoryImpl.kt	
++++ b/app/src/main/java/com/specindia/ecommerce/datastore/implementation/DataStoreRepositoryImpl.kt	
+@@ -1,6 +1,7 @@
+ package com.specindia.ecommerce.datastore.implementation
+ 
+ import android.content.Context
++import android.util.Base64
+ import androidx.datastore.core.DataStore
+ import androidx.datastore.preferences.core.*
+ import androidx.datastore.preferences.preferencesDataStore
+Index: gradle/wrapper/gradle-wrapper.properties
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>#Tue Jul 05 12:29:24 IST 2022\r\ndistributionBase=GRADLE_USER_HOME\r\ndistributionUrl=https\\://services.gradle.org/distributions/gradle-7.3.3-bin.zip\r\ndistributionPath=wrapper/dists\r\nzipStorePath=wrapper/dists\r\nzipStoreBase=GRADLE_USER_HOME\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>ISO-8859-1
+===================================================================
+diff --git a/gradle/wrapper/gradle-wrapper.properties b/gradle/wrapper/gradle-wrapper.properties
+--- a/gradle/wrapper/gradle-wrapper.properties	
++++ b/gradle/wrapper/gradle-wrapper.properties	
+@@ -1,6 +1,6 @@
+ #Tue Jul 05 12:29:24 IST 2022
+ distributionBase=GRADLE_USER_HOME
+-distributionUrl=https\://services.gradle.org/distributions/gradle-7.3.3-bin.zip
++distributionUrl=https\://services.gradle.org/distributions/gradle-7.4-bin.zip
+ distributionPath=wrapper/dists
+ zipStorePath=wrapper/dists
+ zipStoreBase=GRADLE_USER_HOME
+Index: app/src/main/res/layout/activity_home.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    xmlns:app=\"http://schemas.android.com/apk/res-auto\"\r\n    xmlns:tools=\"http://schemas.android.com/tools\"\r\n    android:id=\"@+id/coordinatorLayout\"\r\n    android:layout_width=\"match_parent\"\r\n    android:layout_height=\"match_parent\"\r\n    tools:context=\".ui.activity.HomeActivity\">\r\n\r\n    <androidx.fragment.app.FragmentContainerView\r\n        android:id=\"@+id/navControllerView\"\r\n        android:name=\"androidx.navigation.fragment.NavHostFragment\"\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"match_parent\"\r\n        app:defaultNavHost=\"true\"\r\n        app:navGraph=\"@navigation/nav_main\" />\r\n\r\n    <com.google.android.material.bottomappbar.BottomAppBar\r\n        android:id=\"@+id/bottomAppBar\"\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:layout_gravity=\"bottom\"\r\n        app:fabCradleMargin=\"10dp\"\r\n        app:fabCradleRoundedCornerRadius=\"5dp\"\r\n        app:fabCradleVerticalOffset=\"5dp\"\r\n        app:hideOnScroll=\"false\">\r\n\r\n        <com.google.android.material.bottomnavigation.BottomNavigationView\r\n            android:id=\"@+id/bottomNavigationView\"\r\n            android:layout_width=\"match_parent\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:layout_marginEnd=\"16dp\"\r\n            android:background=\"@android:color/transparent\"\r\n            app:labelVisibilityMode=\"labeled\"\r\n            app:menu=\"@menu/menu_bottom_view\" />\r\n    </com.google.android.material.bottomappbar.BottomAppBar>\r\n\r\n    <com.google.android.material.floatingactionbutton.FloatingActionButton\r\n        android:id=\"@+id/fabAdd\"\r\n        android:layout_width=\"wrap_content\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:contentDescription=\"@null\"\r\n        android:src=\"@drawable/ic_menu_home\"\r\n        app:layout_anchor=\"@id/bottomAppBar\" />\r\n</androidx.coordinatorlayout.widget.CoordinatorLayout>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/layout/activity_home.xml b/app/src/main/res/layout/activity_home.xml
+--- a/app/src/main/res/layout/activity_home.xml	
++++ b/app/src/main/res/layout/activity_home.xml	
+@@ -41,5 +41,6 @@
+         android:layout_height="wrap_content"
+         android:contentDescription="@null"
+         android:src="@drawable/ic_menu_home"
+-        app:layout_anchor="@id/bottomAppBar" />
++        app:layout_anchor="@id/bottomAppBar"
++        tools:ignore="SpeakableTextPresentCheck,ImageContrastCheck" />
+ </androidx.coordinatorlayout.widget.CoordinatorLayout>
+\ No newline at end of file

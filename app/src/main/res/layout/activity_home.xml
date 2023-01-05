@@ -41,5 +41,6 @@
         android:layout_height="wrap_content"
         android:contentDescription="@null"
         android:src="@drawable/ic_menu_home"
-        app:layout_anchor="@id/bottomAppBar" />
+        app:layout_anchor="@id/bottomAppBar"
+        tools:ignore="SpeakableTextPresentCheck,ImageContrastCheck" />
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
